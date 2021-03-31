@@ -225,165 +225,22 @@ do --this can save some main file locals
 	end
 
 	specialChatIcons = {
-		-- Elv
-		['Elv-Spirestone']			= itsElv,
-		['Elvz-Spirestone']			= itsElv,
-		['Fleshlite-Spirestone']	= itsElv,
-		['Elvidan-Spirestone']		= itsElv,
-		['Elvilas-Spirestone']		= itsElv,
-		['Fraku-Spirestone']		= itsElv,
-		['Jarvix-Spirestone']		= itsElv,
-		['Watermelon-Spirestone']	= itsElv,
-		['Zinxbe-Spirestone']		= itsElv,
-		['Whorlock-Spirestone']		= itsElv,
-		-- Blazeflack
-		['Blazii-Silvermoon']	= ElvBlue, -- Priest
-		['Chazii-Silvermoon']	= ElvBlue, -- Shaman
-		-- Nihilistzsche
-		['Dirishia-WyrmrestAccord']		= itsTheFlyestNihilist('Warlock'),
-		['Xanikani-WyrmrestAccord']		= itsTheFlyestNihilist('Mage'),
-		['Rikanza-WyrmrestAccord']		= itsTheFlyestNihilist('Monk'),
-		['Onaguda-WyrmrestAccord']		= itsTheFlyestNihilist('Druid'),
-		['Cerishia-WyrmrestAccord']		= itsTheFlyestNihilist('Priest'),
-		['Vellilara-WyrmrestAccord']	= itsTheFlyestNihilist('DemonHunter'),
-		['Sayalia-WyrmrestAccord']		= itsTheFlyestNihilist('DeathKnight'),
-		['Pakasta-WyrmrestAccord']		= itsTheFlyestNihilist('Paladin'),
-		['Orlyrala-WyrmrestAccord']		= itsTheFlyestNihilist('Shaman'),
-		['Scerila-WyrmrestAccord']		= itsTheFlyestNihilist('Rogue'),
-		['Ralaniki-WyrmrestAccord']		= itsTheFlyestNihilist('Hunter'),
-		['Moyanza-WyrmrestAccord']		= itsTheFlyestNihilist('Warrior'),
-		['Erasaya-WyrmrestAccord']		= itsTheFlyestNihilist('DeathKnight'),
-		['Linabla-WyrmrestAccord']		= itsTheFlyestNihilist('Druid'),
-		['Dirikoa-WyrmrestAccord']		= itsTheFlyestNihilist('Hunter'),
-		['Elaedarel-WyrmrestAccord']	= itsTheFlyestNihilist('Warlock'),
-		['Alydrer-WyrmrestAccord']		= itsTheFlyestNihilist('Warlock'),
-		['Issia-WyrmrestAccord']		= itsTheFlyestNihilist('Priest'),
-		['Leitara-WyrmrestAccord']		= itsTheFlyestNihilist('Warrior'),
-		['Cherlyth-WyrmrestAccord']		= itsTheFlyestNihilist('Druid'),
-		['Tokashami-WyrmrestAccord']	= itsTheFlyestNihilist('Shaman'),
-		['Millop-WyrmrestAccord']		= itsTheFlyestNihilist('Hunter'),
-		['Aeondalew-WyrmrestAccord']	= itsTheFlyestNihilist('DeathKnight'),
-		-- Merathilis
-		['Asragoth-Shattrath']		= ElvPurple,	-- [Alliance] Warlock
-		['Brítt-Shattrath'] 		= ElvBlue,		-- [Alliance] Warrior
-		['Damará-Shattrath']		= ElvRed,		-- [Alliance] Paladin
-		['Jazira-Shattrath']		= ElvBlue,		-- [Alliance] Priest
-		['Jústice-Shattrath']		= ElvYellow,	-- [Alliance] Rogue
-		['Maithilis-Shattrath']		= ElvGreen,		-- [Alliance] Monk
-		['Mattdemôn-Shattrath']		= ElvPurple,	-- [Alliance] DH
-		['Melisendra-Shattrath']	= ElvBlue,		-- [Alliance] Mage
-		['Merathilis-Shattrath']	= ElvOrange,	-- [Alliance] Druid
-		['Merathilîs-Shattrath']	= ElvBlue,		-- [Alliance] Shaman
-		['Róhal-Shattrath']			= ElvGreen,		-- [Alliance] Hunter
-		-- Luckyone
-		['Luckyone-LaughingSkull']		= Clover,
-		['Luckypriest-LaughingSkull']	= Clover,
-		['Luckymonkas-LaughingSkull']	= Clover,
-		['Luckydk-LaughingSkull']		= Clover,
-		['Luckyhunter-LaughingSkull']	= Clover,
-		['Unluckyone-LaughingSkull']	= Clover,
-		['Notlucky-LaughingSkull']		= Clover,
-		['Luckymage-LaughingSkull']		= Clover,
-		['Luckydh-LaughingSkull']		= Clover,
-		['Luckywl-LaughingSkull']		= Clover,
-		['Luckyrogue-LaughingSkull']	= Clover,
-		['Luckypala-LaughingSkull']		= Clover,
 		-- Simpy
-		['Arieva-Cenarius']				= itsSimpy, -- Hunter
-		['Buddercup-Cenarius']			= itsSimpy, -- Rogue
-		['Cutepally-Cenarius']			= itsSimpy, -- Paladin
-		['Ezek-Cenarius']				= itsSimpy, -- DK
-		['Glice-Cenarius']				= itsSimpy, -- Warrior
-		['Kalline-Cenarius']			= itsSimpy, -- Shaman
-		['Puttietat-Cenarius']			= itsSimpy, -- Druid
-		['Simpy-Cenarius']				= itsSimpy, -- Warlock
-		['Twigly-Cenarius']				= itsSimpy, -- Monk
-		['Imsobeefy-Cenarius']			= itsSimpy, -- [Horde] Shaman
-		['Imsocheesy-Cenarius']			= itsSimpy, -- [Horde] Priest
-		['Imsojelly-Cenarius']			= itsSimpy, -- [Horde] DK
-		['Imsojuicy-Cenarius']			= itsSimpy, -- [Horde] Druid
-		['Imsopeachy-Cenarius']			= itsSimpy, -- [Horde] DH
-		['Imsosalty-Cenarius']			= itsSimpy, -- [Horde] Paladin
-		['Imsospicy-Cenarius']			= itsSimpy, -- [Horde] Mage
-		['Imsonutty-Cenarius']			= itsSimpy, -- [Horde] Hunter
-		['Imsotasty-Cenarius']			= itsSimpy, -- [Horde] Monk
-		['Imsosaucy-Cenarius']			= itsSimpy, -- [Horde] Warlock
-		['Imsodrippy-Cenarius']			= itsSimpy, -- [Horde] Rogue
-		['Bunne-CenarionCircle']		= itsSimpy, -- [RP] Warrior
-		['Loppie-CenarionCircle']		= itsSimpy, -- [RP] Monk
-		['Loppybunny-CenarionCircle']	= itsSimpy, -- [RP] Mage
-		['Rubee-CenarionCircle']		= itsSimpy, -- [RP] DH
-		['Wennie-CenarionCircle']		= itsSimpy, -- [RP] Priest
-		-- Melbelle (Simpys Bestie)
-		['Melbelle-Bladefist']		= itsMel, -- Hunter
-		['Deathchaser-Bladefist']	= itsMel, -- DH
-		['Alyosha-Cenarius']		= itsMel, -- Warrior
-		['Dãwn-Cenarius']			= itsMel, -- Paladin
-		['Faelen-Cenarius']			= itsMel, -- Rogue
-		['Freckles-Cenarius']		= itsMel, -- DK
-		['Lõvi-Cenarius']			= itsMel, -- Priest
-		['Melbelle-Cenarius']		= itsMel, -- Druid
-		['Perìwìnkle-Cenarius']		= itsMel, -- Shaman
-		['Pìper-Cenarius']			= itsMel, -- Warlock
-		['Spãrkles-Cenarius']		= itsMel, -- Mage
-		['Alybones-Cenarius']		= itsMel, -- [Horde] DK
-		['Alyfreeze-Cenarius']		= itsMel, -- [Horde] Mage
-		['Alykins-Cenarius']		= itsMel, -- [Horde] DH
-		['Alyrage-Cenarius']		= itsMel, -- [Horde] Warrior
-		['Alysneaks-Cenarius']		= itsMel, -- [Horde] Rogue
-		['Alytotes-Cenarius']		= itsMel, -- [Horde] Shaman
-		-- Lulupeep (Nihilist's wife)
-		['Arïä-WyrmrestAccord'] 		= Deathly,
-		['Belladonnä-WyrmrestAccord'] 	= Deathly,
-		['Cadense-WyrmrestAccord']		= Deathly,
-		['Cäydence-WyrmrestAccord'] 	= Deathly,
-		['Esmæ-WyrmrestAccord']			= Deathly,
-		['Falorya-WyrmrestAccord']		= Deathly,
-		['Fufus-WyrmrestAccord']		= Deathly,
-		['Gemmä-WyrmrestAccord']		= Deathly,
-		['Lilliës-WyrmrestAccord']		= Deathly,
-		['Louisianagrl-WyrmrestAccord']	= Deathly,
-		['Lulupeep-WyrmrestAccord']		= Deathly,
-		['Nolalove-WyrmrestAccord']		= Deathly,
-		['Onyxnovä-WyrmrestAccord']		= Deathly,
-		['Rukíá-WyrmrestAccord']		= Deathly,
-		['Songbïrd-WyrmrestAccord']		= Deathly,
-		['Vidiä-WyrmrestAccord']		= Deathly,
-		-- Quickhanz (Nihilist's absolute bestie)
-		['Zandahanz-Area52']	= GoldShield,
-		-- AcidWeb
-		['Livarax-BurningLegion']		= Gem,
-		['Filevandrel-BurningLegion']	= Gem,
-		['Akavaya-BurningLegion']		= Gem,
-		-- Affinity
-		['Affinichi-Illidan']	= Bathrobe,
-		['Affinitii-Illidan']	= Bathrobe,
-		['Affinity-Illidan']	= Bathrobe,
-		['Uplift-Illidan']		= Bathrobe,
-		-- Tirain (NOTE: lol)
-		['Tierone-Spirestone']	= TyroneBiggums,
-		['Tirain-Spirestone']	= TyroneBiggums,
-		['Sinth-Spirestone']	= TyroneBiggums,
-		['Tee-Spirestone']		= TyroneBiggums,
-		-- Mis (NOTE: I will forever have the picture you accidently shared of the manikin wearing a strapon burned in my brain)
-		['Misdîrect-Spirestone']	= itsMis,
-		['Misoracle-Spirestone']	= itsMis,
-		['MisLight-Spirestone']		= itsMis,
-		['MisDivine-Spirestone']	= itsMis,
-		['MisMayhem-Spirestone']	= itsMis,
-		['Mismonk-Spirestone']		= itsMis,
-		['Misillidan-Spirestone']	= itsMis,
-		['Mispel-Spirestone']		= itsMis,
-		['Misdecay-Spirestone']		= itsMis,
-		['Mislust-Spirestone'] 		= itsMis,
-		['Misdivine-Spirestone']	= itsMis,
-		['Mislight-Spirestone']		= itsMis,
-		--Bladesdruid
-		['Bladedemonz-Spirestone']	= SuperBear,
-		['Bladesdruid-Spirestone']	= SuperBear,
-		['Rollerblade-Spirestone']	= SuperBear,
-		--Bozaum
-		['Bozaum-Spirestone']	= Beer,
+		["Simpy-Atiesh"]		= itsSimpy, -- Warlock
+		["Simpy-Myzrael"]		= itsSimpy, -- Warlock
+		["Cutepally-Myzrael"]	= itsSimpy, -- Paladin
+		["Imsocheesy-Myzrael"]	= itsSimpy, -- [Horde] Priest
+		["Imsospicy-Myzrael"]	= itsSimpy, -- [Horde] Mage
+		-- Blazeflack
+		["Freezly-MirageRaceway"]	= ElvBlue, -- Mage
+		["Blazii-MirageRaceway"]	= ElvBlue, -- Priest
+		-- Luckyone
+		["Luckyone-Shazzrah"]		= Clover, -- Hunter
+		["Luckyfear-Shazzrah"]		= Clover, -- Warlock
+		["Luckydruid-Shazzrah"]		= Clover, -- Druid
+		["Luckyp-Shazzrah"]			= Clover, -- Priest
+		["Luckyr-Shazzrah"]			= Clover, -- Rogue
+		["Elvuidevtest-Shazzrah"]	= Clover, -- Warrior
 	}
 end
 
