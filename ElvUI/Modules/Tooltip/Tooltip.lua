@@ -331,7 +331,7 @@ function TT:INSPECT_READY(event, unitGUID)
 	end
 end
 
-function TT:GetSpecializationInfo(unit, isPlayer)
+--[[function TT:GetSpecializationInfo(unit, isPlayer)
 	local spec = (isPlayer and GetSpecialization()) or (unit and GetInspectSpecialization(unit))
 	if spec and spec > 0 then
 		if isPlayer then
@@ -340,7 +340,7 @@ function TT:GetSpecializationInfo(unit, isPlayer)
 			return select(2, GetSpecializationInfoByID(spec))
 		end
 	end
-end
+end]]
 
 local lastGUID
 function TT:AddInspectInfo(tooltip, unit, numTries, r, g, b)
