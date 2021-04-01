@@ -4,7 +4,6 @@ local TT = E:GetModule('Tooltip')
 local Skins = E:GetModule('Skins')
 local Search = E.Libs.ItemSearch
 
-
 local _G = _G
 local type, ipairs, next, unpack, select, pcall = type, ipairs, next, unpack, select, pcall
 local tinsert, tremove, twipe, tmaxn = tinsert, tremove, wipe, table.maxn
