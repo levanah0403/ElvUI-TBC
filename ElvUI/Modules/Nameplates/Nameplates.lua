@@ -516,7 +516,6 @@ function NP:ToggleStaticPlate()
 		_G.ElvNP_StaticSecure:Hide()
 	end
 
-	NP:SetCVar('nameplateShowSelf', (isStatic or not playerEnabled) and 0 or 1)
 end
 
 function NP:ConfigurePlates(init)
