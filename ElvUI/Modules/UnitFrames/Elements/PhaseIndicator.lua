@@ -32,22 +32,3 @@ function UF:Construct_PhaseIcon(frame)
 
 	return PhaseIndicator
 end
-
-function UF:Configure_PhaseIcon(frame)
-	local PhaseIndicator = frame.PhaseIndicator
-	PhaseIndicator:ClearAllPoints()
-	PhaseIndicator:Point(frame.db.phaseIndicator.anchorPoint, frame.Health, frame.db.phaseIndicator.anchorPoint, frame.db.phaseIndicator.xOffset, frame.db.phaseIndicator.yOffset)
-
-	local size = 32 * (frame.db.phaseIndicator.scale or 1)
-	PhaseIndicator:Size(size)
-	PhaseIndicator.Center:Size(size)
-	PhaseIndicator.Center:ClearAllPoints()
-	PhaseIndicator.Center:SetAllPoints(PhaseIndicator)
-
-	if frame.db.phaseIndicator.enable and not frame:IsElementEnabled('PhaseIndicator') then
-		frame:EnableElement('PhaseIndicator')
-	elseif not frame.db.phaseIndicator.enable and frame:IsElementEnabled('PhaseIndicator') then
-		frame:DisableElement('PhaseIndicator')
-		PhaseIndicator.Center:Hide()
-	end
-end

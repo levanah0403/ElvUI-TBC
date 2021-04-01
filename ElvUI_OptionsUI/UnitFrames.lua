@@ -1876,49 +1876,6 @@ local function GetOptionsTable_Name(updateFunc, groupName, numUnits, subGroup)
 	return config
 end
 
-local function GetOptionsTable_PhaseIndicator(updateFunc, groupName, numGroup)
-	local config = {
-		type = 'group',
-		name = L["Phase Indicator"],
-		get = function(info) return E.db.unitframe.units[groupName].phaseIndicator[info[#info]] end,
-		set = function(info, value) E.db.unitframe.units[groupName].phaseIndicator[info[#info]] = value; updateFunc(UF, groupName, numGroup) end,
-		args = {
-			enable = {
-				order = 2,
-				type = 'toggle',
-				name = L["Enable"],
-			},
-			scale = {
-				order = 3,
-				type = 'range',
-				name = L["Scale"],
-				isPercent = true,
-				min = 0.5, max = 1.5, step = 0.01,
-			},
-			anchorPoint = {
-				order = 5,
-				type = 'select',
-				name = L["Anchor Point"],
-				values = positionValues,
-			},
-			xOffset = {
-				order = 6,
-				type = 'range',
-				name = L["X-Offset"],
-				min = -100, max = 100, step = 1,
-			},
-			yOffset = {
-				order = 7,
-				type = 'range',
-				name = L["Y-Offset"],
-				min = -100, max = 100, step = 1,
-			},
-		},
-	}
-
-	return config
-end
-
 local function GetOptionsTable_Portrait(updateFunc, groupName, numUnits)
 	local config = {
 		type = 'group',
@@ -4397,7 +4354,6 @@ E.Options.args.unitframe.args.individualUnits.args.target = {
 		health = GetOptionsTable_Health(false, UF.CreateAndUpdateUF, 'target'),
 		infoPanel = GetOptionsTable_InformationPanel(UF.CreateAndUpdateUF, 'target'),
 		name = GetOptionsTable_Name(UF.CreateAndUpdateUF, 'target'),
-		phaseIndicator = GetOptionsTable_PhaseIndicator(UF.CreateAndUpdateUF, 'target'),
 		portrait = GetOptionsTable_Portrait(UF.CreateAndUpdateUF, 'target'),
 		power = GetOptionsTable_Power(true, UF.CreateAndUpdateUF, 'target', nil, true),
 		pvpIcon = GetOptionsTable_PVPIcon(UF.CreateAndUpdateUF, 'target'),
@@ -5113,7 +5069,6 @@ E.Options.args.unitframe.args.groupUnits.args.party = {
 		health = GetOptionsTable_Health(true, UF.CreateAndUpdateHeaderGroup, 'party'),
 		infoPanel = GetOptionsTable_InformationPanel(UF.CreateAndUpdateHeaderGroup, 'party'),
 		name = GetOptionsTable_Name(UF.CreateAndUpdateHeaderGroup, 'party'),
-		phaseIndicator = GetOptionsTable_PhaseIndicator(UF.CreateAndUpdateHeaderGroup, 'party'),
 		portrait = GetOptionsTable_Portrait(UF.CreateAndUpdateHeaderGroup, 'party'),
 		power = GetOptionsTable_Power(false, UF.CreateAndUpdateHeaderGroup, 'party'),
 		raidicon = GetOptionsTable_RaidIcon(UF.CreateAndUpdateHeaderGroup, 'party'),
@@ -5183,7 +5138,6 @@ E.Options.args.unitframe.args.groupUnits.args.raid = {
 		health = GetOptionsTable_Health(true, UF.CreateAndUpdateHeaderGroup, 'raid'),
 		infoPanel = GetOptionsTable_InformationPanel(UF.CreateAndUpdateHeaderGroup, 'raid'),
 		name = GetOptionsTable_Name(UF.CreateAndUpdateHeaderGroup, 'raid'),
-		phaseIndicator = GetOptionsTable_PhaseIndicator(UF.CreateAndUpdateHeaderGroup, 'raid'),
 		portrait = GetOptionsTable_Portrait(UF.CreateAndUpdateHeaderGroup, 'raid'),
 		power = GetOptionsTable_Power(false, UF.CreateAndUpdateHeaderGroup, 'raid'),
 		raidicon = GetOptionsTable_RaidIcon(UF.CreateAndUpdateHeaderGroup, 'raid'),
@@ -5251,7 +5205,6 @@ E.Options.args.unitframe.args.groupUnits.args.raid40 = {
 		health = GetOptionsTable_Health(true, UF.CreateAndUpdateHeaderGroup, 'raid40'),
 		infoPanel = GetOptionsTable_InformationPanel(UF.CreateAndUpdateHeaderGroup, 'raid40'),
 		name = GetOptionsTable_Name(UF.CreateAndUpdateHeaderGroup, 'raid40'),
-		phaseIndicator = GetOptionsTable_PhaseIndicator(UF.CreateAndUpdateHeaderGroup, 'raid40'),
 		portrait = GetOptionsTable_Portrait(UF.CreateAndUpdateHeaderGroup, 'raid40'),
 		power = GetOptionsTable_Power(false, UF.CreateAndUpdateHeaderGroup, 'raid40'),
 		raidicon = GetOptionsTable_RaidIcon(UF.CreateAndUpdateHeaderGroup, 'raid40'),

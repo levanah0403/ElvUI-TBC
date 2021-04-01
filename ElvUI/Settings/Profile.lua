@@ -1216,14 +1216,6 @@ local UF_Name = {
 	yOffset = 0,
 }
 
-local UF_PhaseIndicator = {
-	anchorPoint = 'CENTER',
-	enable = true,
-	scale = 0.8,
-	xOffset = 0,
-	yOffset = 0,
-}
-
 local UF_PartyIndicator = {
 	anchorPoint = 'TOPRIGHT',
 	enable = true,
@@ -1641,7 +1633,6 @@ P.unitframe = {
 			health = CopyTable(UF_Health),
 			infoPanel = CopyTable(UF_InfoPanel),
 			name = CopyTable(UF_Name),
-			phaseIndicator = CopyTable(UF_PhaseIndicator),
 			portrait = CopyTable(UF_Portrait),
 			power = CopyTable(UF_Power),
 			pvpIcon = CopyTable(UF_PVPIcon),
@@ -1824,7 +1815,6 @@ P.unitframe = {
 			infoPanel = CopyTable(UF_InfoPanel),
 			name = CopyTable(UF_Name),
 			petsGroup = CopyTable(UF_SubGroup),
-			phaseIndicator = CopyTable(UF_PhaseIndicator),
 			portrait = CopyTable(UF_Portrait),
 			power = CopyTable(UF_Power),
 			raidicon = CopyTable(UF_RaidIcon),
