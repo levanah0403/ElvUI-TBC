@@ -84,10 +84,6 @@ local EnglishSpecName = {
 	[581] = 'Vengeance',
 }
 
-local function GetSpecName()
-	return EnglishSpecName[GetSpecializationInfo(GetSpecialization())] or UNKNOWN
-end
-
 function E:CreateStatusContent(num, width, parent, anchorTo, content)
 	if not content then content = CreateFrame('Frame', nil, parent) end
 	content:SetSize(width, (num * 20) + ((num-1)*5)) --20 height and 5 spacing
@@ -318,11 +314,9 @@ function E:UpdateStatusFrame()
 	local Section2 = StatusFrame.Section2
 	Section2.Content.Line3.Text:SetFormattedText('Display Mode: |cff4beb2c%s|r', E:GetDisplayMode())
 	Section2.Content.Line4.Text:SetFormattedText('Resolution: |cff4beb2c%s|r', E.resolution)
-
 	local Section3 = StatusFrame.Section3
-	Section3.Content.Line4.Text:SetFormattedText('Specialization: |cff4beb2c%s|r', GetSpecName())
-	Section3.Content.Line5.Text:SetFormattedText('Level: |cff4beb2c%s|r', E.mylevel)
-	Section3.Content.Line6.Text:SetFormattedText('Zone: |cff4beb2c%s|r', GetRealZoneText() or UNKNOWN)
+	Section3.Content.Line4.Text:SetFormattedText('Level: |cff4beb2c%s|r', E.mylevel)
+	Section3.Content.Line5.Text:SetFormattedText('Zone: |cff4beb2c%s|r', GetRealZoneText() or UNKNOWN)
 
 	StatusFrame.TitleLogoFrame.LogoTop:SetVertexColor(unpack(E.media.rgbvaluecolor))
 end
