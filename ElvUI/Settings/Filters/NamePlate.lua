@@ -38,7 +38,7 @@ G.nameplate.filters = {
 			}
 		},
 		actions = {
-			alpha = 60
+			alpha = 50
 		}
 	},
 	ElvUI_TankNonTarget = {
@@ -85,7 +85,6 @@ E.StyleFilterDefaults = {
 		isTarget = false,
 		notTarget = false,
 		requireTarget = false,
-		questBoss = false,
 		level = false,
 		casting = {
 			isCasting = false,
@@ -97,6 +96,11 @@ E.StyleFilterDefaults = {
 			spells = {}
 		},
 		role = {
+			tank = false,
+			healer = false,
+			damager = false
+		},
+		unitRole = {
 			tank = false,
 			healer = false,
 			damager = false
@@ -122,7 +126,7 @@ E.StyleFilterDefaults = {
 			skull = false
 		},
 		talent = {
-			type = "normal",
+			type = 'normal',
 			enabled = false,
 			requireAll = false,
 			tier1enabled = false,
@@ -170,15 +174,15 @@ E.StyleFilterDefaults = {
 			Demon = false,
 			Dragonkin = false,
 			Elemental = false,
-			["Gas Cloud"] = false,
+			['Gas Cloud'] = false,
 			Giant = false,
 			Humanoid = false,
 			Mechanical = false,
-			["Not specified"] = false,
+			['Not specified'] = false,
 			Totem = false,
 			Undead = false,
-			["Wild Pet"] = false,
-			["Non-combat Pet"] = false
+			['Wild Pet'] = false,
+			['Non-combat Pet'] = false
 		},
 		nameplateType = {
 			enable = false,
@@ -205,7 +209,18 @@ E.StyleFilterDefaults = {
 			scenario = false,
 			party = false,
 			raid = false,
-			pvp = false,
+			arena = false,
+			pvp = false
+		},
+		location = {
+			mapIDEnabled = false,
+			mapIDs = {},
+			instanceIDEnabled = false,
+			instanceIDs = {},
+			zoneNamesEnabled = false,
+			zoneNames = {},
+			subZoneNamesEnabled = false,
+			subZoneNames = {},
 		},
 		keyMod = {
 			enable = false,
@@ -225,7 +240,7 @@ E.StyleFilterDefaults = {
 				normal = false,
 				heroic = false,
 				mythic = false,
-				["mythic+"] = false,
+				['mythic+'] = false,
 				timewalking = false
 			},
 			raid = {
@@ -249,7 +264,9 @@ E.StyleFilterDefaults = {
 			missing = false,
 			names = {},
 			minTimeLeft = 0,
-			maxTimeLeft = 0
+			maxTimeLeft = 0,
+			hasStealable = false,
+			hasNoStealable = false
 		},
 		debuffs = {
 			mustHaveAll = false,
@@ -271,6 +288,11 @@ E.StyleFilterDefaults = {
 		isNotTapDenied = false,
 		playerCanAttack = false,
 		playerCanNotAttack = false,
+		hasTitleNPC = false,
+		noTitleNPC = false,
+		isQuest = false,
+		notQuest = false,
+		questBoss = false,
 		-- combat
 		inCombat = false,
 		outOfCombat = false,
@@ -293,7 +315,7 @@ E.StyleFilterDefaults = {
 		},
 		texture = {
 			enable = false,
-			texture = "ElvUI Norm"
+			texture = 'ElvUI Norm'
 		},
 		flash = {
 			enable = false,
