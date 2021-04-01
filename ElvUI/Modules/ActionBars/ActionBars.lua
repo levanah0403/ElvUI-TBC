@@ -14,7 +14,6 @@ local GetSpellBookItemInfo = GetSpellBookItemInfo
 local HasOverrideActionBar = HasOverrideActionBar
 local hooksecurefunc = hooksecurefunc
 local InCombatLockdown = InCombatLockdown
-local IsPossessBarVisible = IsPossessBarVisible
 local PetDismiss = PetDismiss
 local RegisterStateDriver = RegisterStateDriver
 local SecureHandlerSetFrameRef = SecureHandlerSetFrameRef
@@ -818,7 +817,7 @@ end
 
 function AB:FadeParent_OnEvent()
 	if UnitCastingInfo('player') or UnitChannelInfo('player') or UnitExists('target') or UnitExists('focus') or UnitExists('vehicle')
-	or UnitAffectingCombat('player') or (UnitHealth('player') ~= UnitHealthMax('player')) or IsPossessBarVisible() or HasOverrideActionBar() then
+	or UnitAffectingCombat('player') or (UnitHealth('player') ~= UnitHealthMax('player')) or HasOverrideActionBar() then
 		self.mouseLock = true
 		E:UIFrameFadeIn(self, 0.2, self:GetAlpha(), 1)
 		AB:FadeBlings(1)
@@ -1282,10 +1281,10 @@ function AB:ToggleCooldownOptions()
 end
 
 function AB:SetButtonDesaturation(button, duration)
-	if button.LevelLinkLockIcon:IsShown() then
+	--[[if button.LevelLinkLockIcon:IsShown() then
 		button.saturationLocked = nil
 		return
-	end
+	end]]
 
 	if AB.db.desaturateOnCooldown and (duration and duration > 1.5) then
 		button.icon:SetDesaturated(true)

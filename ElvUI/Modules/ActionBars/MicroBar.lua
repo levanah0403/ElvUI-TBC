@@ -173,7 +173,7 @@ function AB:UpdateMicroPositionDimensions()
 	AB:UpdateMicroBarVisibility()
 end
 
-function AB:UpdateMicroButtons()
+--[[function AB:UpdateMicroButtons()
 	local GuildMicroButton = _G.GuildMicroButton
 	local GuildMicroButtonTabard = _G.GuildMicroButtonTabard
 	GuildMicroButtonTabard:SetInside(GuildMicroButton)
@@ -184,7 +184,7 @@ function AB:UpdateMicroButtons()
 	GuildMicroButtonTabard.emblem:Point('BOTTOMRIGHT', GuildMicroButton, 'BOTTOMRIGHT', -4, 8)
 
 	AB:UpdateMicroPositionDimensions()
-end
+end]]
 
 function AB:SetupMicroBar()
 	microBar:CreateBackdrop(AB.db.transparent and 'Transparent', nil, nil, nil, nil, nil, nil, 0)
@@ -203,7 +203,7 @@ function AB:SetupMicroBar()
 
 	AB:SecureHook('UpdateMicroButtonsParent')
 	AB:SecureHook('MoveMicroButtons', 'UpdateMicroPositionDimensions')
-	AB:SecureHook('UpdateMicroButtons')
+	--AB:SecureHook('UpdateMicroButtons')
 	UpdateMicroButtonsParent(microBar)
 	AB:MainMenuMicroButton_SetNormal()
 	AB:UpdateMicroPositionDimensions()
