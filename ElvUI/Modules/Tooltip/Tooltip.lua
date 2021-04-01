@@ -43,7 +43,6 @@ local UnitCreatureType = UnitCreatureType
 local UnitExists = UnitExists
 local UnitGroupRolesAssigned = UnitGroupRolesAssigned
 local UnitGUID = UnitGUID
-local UnitHasVehicleUI = UnitHasVehicleUI
 local UnitInParty = UnitInParty
 local UnitInRaid = UnitInRaid
 local UnitIsAFK = UnitIsAFK
@@ -409,7 +408,7 @@ function TT:GameTooltip_OnTooltipSetUnit(tt)
 		local unitTarget = unit..'target'
 		if TT.db.targetInfo and unit ~= 'player' and UnitExists(unitTarget) then
 			local targetColor
-			if UnitIsPlayer(unitTarget) and not UnitHasVehicleUI(unitTarget) then
+			if UnitIsPlayer(unitTarget) then
 				local _, class = UnitClass(unitTarget)
 				targetColor = E:ClassColor(class) or PRIEST_COLOR
 			else
