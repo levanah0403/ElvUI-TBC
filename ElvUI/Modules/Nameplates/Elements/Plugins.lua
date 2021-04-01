@@ -29,7 +29,7 @@ function NP:Construct_QuestIcons(nameplate)
 	return QuestIcons
 end
 
-function NP:Update_QuestIcons(nameplate)
+--[[function NP:Update_QuestIcons(nameplate)
 	local frameType = nameplate.frameType
 	local db = frameType and NP.db.units[frameType].questIcon
 
@@ -58,7 +58,7 @@ function NP:Update_QuestIcons(nameplate)
 	elseif nameplate:IsElementEnabled('QuestIcons') then
 		nameplate:DisableElement('QuestIcons')
 	end
-end
+end]]
 
 function NP:Construct_ClassificationIndicator(nameplate)
 	return nameplate:CreateTexture(nameplate:GetName() .. 'ClassificationIndicator', 'OVERLAY')

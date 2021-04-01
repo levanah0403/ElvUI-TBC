@@ -33,9 +33,7 @@ local UnitIsUnit = UnitIsUnit
 local UnitName = UnitName
 local UnitReaction = UnitReaction
 local UnitWidgetSet = UnitWidgetSet
-local UnitSelectionType = UnitSelectionType
 local UnitThreatSituation = UnitThreatSituation
-local UnitNameplateShowsWidgetsOnly = UnitNameplateShowsWidgetsOnly
 local ShowBossFrameWhenUninteractable = ShowBossFrameWhenUninteractable
 local C_NamePlate_SetNamePlateEnemyClickThrough = C_NamePlate.SetNamePlateEnemyClickThrough
 local C_NamePlate_SetNamePlateEnemySize = C_NamePlate.SetNamePlateEnemySize
@@ -44,23 +42,6 @@ local C_NamePlate_SetNamePlateFriendlySize = C_NamePlate.SetNamePlateFriendlySiz
 local C_NamePlate_SetNamePlateSelfClickThrough = C_NamePlate.SetNamePlateSelfClickThrough
 local C_NamePlate_SetNamePlateSelfSize = C_NamePlate.SetNamePlateSelfSize
 local hooksecurefunc = hooksecurefunc
-
-do	-- credit: oUF/private.lua
-	local selectionTypes = {[0]=0,[1]=1,[2]=2,[3]=3,[4]=4,[5]=5,[6]=6,[7]=7,[8]=8,[9]=9,[13]=13}
-	-- 10 and 11 are unavailable to players, 12 is inconsistent due to bugs and its reliance on cvars
-
-	function NP:UnitExists(unit)
-		return unit and UnitExists(unit) or ShowBossFrameWhenUninteractable(unit)
-	end
-
-	function NP:UnitSelectionType(unit, considerHostile)
-		if considerHostile and UnitThreatSituation('player', unit) then
-			return 0
-		else
-			return selectionTypes[UnitSelectionType(unit, true)]
-		end
-	end
-end
 
 local Blacklist = {
 	PLAYER = {
@@ -317,7 +298,7 @@ end
 function NP:UpdatePlate(nameplate, updateBase)
 	NP:Update_RaidTargetIndicator(nameplate)
 	NP:Update_Portrait(nameplate)
-	NP:Update_QuestIcons(nameplate)
+	--NP:Update_QuestIcons(nameplate)
 
 	local db = NP:PlateDB(nameplate)
 	if db.nameOnly or not db.enable then
@@ -665,41 +646,24 @@ function NP:UpdatePlateBase(nameplate)
 end
 
 function NP:NamePlateCallBack(nameplate, event, unit)
-	if event == 'UNIT_FACTION' then
-		if nameplate.widgetsOnly then return end
+	if event == 'NAME_PLATE_UNIT_ADDED' then
+		local updateBase = NP:StyleFilterClear(nameplate) -- keep this at the top
 
-		nameplate.faction = UnitFactionGroup(unit)
-		nameplate.reaction = UnitReaction('player', unit) -- Player Reaction
-		nameplate.repReaction = UnitReaction(unit, 'player') -- Reaction to Player
-		nameplate.isFriend = UnitIsFriend('player', unit)
-		nameplate.isEnemy = UnitIsEnemy('player', unit)
-
-		NP:UpdatePlateType(nameplate)
-		NP:UpdatePlateSize(nameplate)
-		NP:UpdatePlateBase(nameplate)
-
-		NP:StyleFilterUpdate(nameplate, event) -- keep this after UpdatePlateBase
-		nameplate.StyleFilterBaseAlreadyUpdated = nil -- keep after StyleFilterUpdate
-	elseif event == 'PLAYER_TARGET_CHANGED' then -- we need to check if nameplate exists in here
-		NP:SetupTarget(nameplate) -- pass it, even as nil here
-	elseif event == 'NAME_PLATE_UNIT_ADDED' then
-		if not unit then unit = nameplate.unit end
+		unit = unit or nameplate.unit
 
 		nameplate.blizzPlate = nameplate:GetParent().UnitFrame
 		nameplate.className, nameplate.classFile, nameplate.classID = UnitClass(unit)
-		nameplate.widgetsOnly = UnitNameplateShowsWidgetsOnly(unit)
-		nameplate.widgetSet = UnitWidgetSet(unit)
 		nameplate.classification = UnitClassification(unit)
 		nameplate.creatureType = UnitCreatureType(unit)
 		nameplate.isMe = UnitIsUnit(unit, 'player')
 		nameplate.isPet = UnitIsUnit(unit, 'pet')
 		nameplate.isFriend = UnitIsFriend('player', unit)
-		nameplate.isEnemy = UnitIsEnemy('player', unit)
 		nameplate.isPlayer = UnitIsPlayer(unit)
 		nameplate.isPVPSanctuary = UnitIsPVPSanctuary(unit)
+		nameplate.isPlayerControlled = UnitPlayerControlled(unit)
 		nameplate.faction = UnitFactionGroup(unit)
-		nameplate.reaction = UnitReaction('player', unit) -- Player Reaction
-		nameplate.repReaction = UnitReaction(unit, 'player') -- Reaction to Player
+		nameplate.reaction = UnitReaction('player', unit)
+		nameplate.repReaction = UnitReaction(unit, 'player')
 		nameplate.unitGUID = UnitGUID(unit)
 		nameplate.unitName = UnitName(unit)
 		nameplate.npcID = nameplate.unitGUID and select(6, strsplit('-', nameplate.unitGUID))
@@ -708,67 +672,71 @@ function NP:NamePlateCallBack(nameplate, event, unit)
 			NP:UpdatePlateGUID(nameplate, nameplate.unitGUID)
 		end
 
-		NP:UpdatePlateType(nameplate)
-		NP:UpdatePlateSize(nameplate)
+		NP:StyleFilterSetVariables(nameplate) -- sets: isTarget, isTargetingMe, isFocused
 
-		if nameplate.widgetsOnly then
-			NP:DisablePlate(nameplate)
+		if nameplate.isMe then
+			nameplate.frameType = 'PLAYER'
 
-			if nameplate.RaisedElement:IsShown() then
-				nameplate.RaisedElement:Hide()
+			if NP.db.units.PLAYER.enable then
+				NP.PlayerNamePlateAnchor:ClearAllPoints()
+				NP.PlayerNamePlateAnchor:SetParent(NP.db.units.PLAYER.useStaticPosition and _G.ElvNP_Player or nameplate)
+				NP.PlayerNamePlateAnchor:SetAllPoints(NP.db.units.PLAYER.useStaticPosition and _G.ElvNP_Player or nameplate)
+				NP.PlayerNamePlateAnchor:Show()
 			end
-
-			nameplate.widgetContainer = nameplate.blizzPlate.WidgetContainer
-			if nameplate.widgetContainer then
-				nameplate.widgetContainer:SetParent(nameplate)
-				nameplate.widgetContainer:ClearAllPoints()
-				nameplate.widgetContainer:SetPoint('BOTTOM', nameplate, 'TOP')
+		elseif nameplate.isPVPSanctuary then
+			nameplate.frameType = 'FRIENDLY_PLAYER'
+		elseif nameplate.isPlayer then
+			nameplate.frameType = (nameplate.isFriend and 'FRIENDLY_PLAYER') or 'ENEMY_PLAYER'
+		else -- must be an npc
+			if nameplate.faction == 'Neutral' or (nameplate.reaction and nameplate.reaction >= 5) then
+				nameplate.frameType = 'FRIENDLY_NPC'
+			else
+				nameplate.frameType = 'ENEMY_NPC'
 			end
-
-			nameplate.previousType = nil -- dont get the plate stuck for next unit
-		else
-			if not nameplate.RaisedElement:IsShown() then
-				nameplate.RaisedElement:Show()
-			end
-
-			NP:UpdatePlateBase(nameplate)
-
-			NP:StyleFilterEventWatch(nameplate) -- fire up the watcher
-			NP:StyleFilterSetVariables(nameplate) -- sets: isTarget, isTargetingMe, isFocused
 		end
 
-		if (NP.db.fadeIn and not NP.SkipFading) and nameplate.frameType ~= 'PLAYER' then
+		if nameplate.frameType == 'PLAYER' then
+			nameplate.width, nameplate.height = NP.db.plateSize.personalWidth, NP.db.plateSize.personalHeight
+		elseif nameplate.frameType == 'FRIENDLY_PLAYER' or nameplate.frameType == 'FRIENDLY_NPC' then
+			nameplate.width, nameplate.height = NP.db.plateSize.friendlyWidth, NP.db.plateSize.friendlyHeight
+		else
+			nameplate.width, nameplate.height = NP.db.plateSize.enemyWidth, NP.db.plateSize.enemyHeight
+		end
+
+		nameplate:Size(nameplate.width, nameplate.height)
+
+		NP:UpdatePlate(nameplate, updateBase or (nameplate.frameType ~= nameplate.previousType))
+		nameplate.previousType = nameplate.frameType
+
+		if NP.db.fadeIn and (nameplate ~= _G.ElvNP_Player or (NP.db.units.PLAYER.enable and NP.db.units.PLAYER.useStaticPosition)) then
 			NP:PlateFade(nameplate, 1, 0, 1)
 		end
-	elseif event == 'NAME_PLATE_UNIT_REMOVED' then
-		if nameplate ~= _G.ElvNP_Test then
-			if nameplate.frameType == 'PLAYER' then
-				NP.PlayerNamePlateAnchor:Hide()
-			end
 
-			if nameplate.isTarget then
-				NP:ScalePlate(nameplate, 1, true)
-				NP:SetupTarget(nameplate, true)
-			end
+		NP:StyleFilterUpdate(nameplate, event) -- keep this at the end
+	elseif event == 'NAME_PLATE_UNIT_REMOVED' then
+		if nameplate.frameType == 'PLAYER' and (nameplate ~= _G.ElvNP_Test) then
+			NP.PlayerNamePlateAnchor:Hide()
+		end
+
+		if nameplate.isTarget then
+			NP:SetupTarget(nameplate, true)
+			NP:ScalePlate(nameplate, 1, true)
 		end
 
 		if nameplate.unitGUID then
 			NP:UpdatePlateGUID(nameplate)
 		end
 
-		if not nameplate.widgetsOnly then
-			NP:StyleFilterEventWatch(nameplate, true) -- shut down the watcher
-			NP:StyleFilterClearVariables(nameplate)
-		elseif nameplate.widgetContainer then -- Place Widget Back on Blizzard Plate
-			nameplate.widgetContainer:SetParent(nameplate.blizzPlate)
-			nameplate.widgetContainer:ClearAllPoints()
-			nameplate.widgetContainer:SetPoint('TOP', nameplate.blizzPlate.castBar, 'BOTTOM')
-		end
+		-- Vars that we need to keep in a nonstale state
+		--- Cutaway
+		nameplate.Health.cur = nil
+		nameplate.Power.cur = nil
+		--- WidgetXPBar
+		nameplate.npcID = nil
 
-		-- vars that we need to keep in a nonstale state
-		nameplate.Health.cur = nil -- cutaway
-		nameplate.Power.cur = nil -- cutaway
-		nameplate.npcID = nil -- just cause
+		NP:StyleFilterClearVariables(nameplate) -- keep this at the end
+	elseif event == 'PLAYER_TARGET_CHANGED' then -- we need to check if nameplate exists in here
+		NP:SetupTarget(nameplate) -- pass it, even as nil here
 	end
 end
 

@@ -22,7 +22,6 @@ local UnitCanAttack = UnitCanAttack
 local UnitExists = UnitExists
 local UnitHealth = UnitHealth
 local UnitHealthMax = UnitHealthMax
-local UnitInVehicle = UnitInVehicle
 local UnitIsOwnerOrControllerOfUnit = UnitIsOwnerOrControllerOfUnit
 local UnitIsPVP = UnitIsPVP
 local UnitInParty = UnitInParty
@@ -746,17 +745,6 @@ function mod:StyleFilterConditionCheck(frame, filter, trigger)
 		if (trigger.isTapDenied and tapDenied) or (trigger.isNotTapDenied and not tapDenied) then passed = true else return end
 	end
 
-	-- Player Vehicle
-	if trigger.inVehicle or trigger.outOfVehicle then
-		local inVehicle = UnitInVehicle('player')
-		if (trigger.inVehicle and inVehicle) or (trigger.outOfVehicle and not inVehicle) then passed = true else return end
-	end
-
-	-- Unit Vehicle
-	if trigger.inVehicleUnit or trigger.outOfVehicleUnit then
-		if (trigger.inVehicleUnit and frame.inVehicle) or (trigger.outOfVehicleUnit and not frame.inVehicle) then passed = true else return end
-	end
-
 	-- Player Can Attack
 	if trigger.playerCanAttack or trigger.playerCanNotAttack then
 		local canAttack = UnitCanAttack('player', frame.unit)
@@ -1050,11 +1038,6 @@ function mod:StyleFilterSort(place)
 	end
 end
 
-function mod:StyleFilterVehicleFunction(_, unit)
-	unit = unit or self.unit
-	self.inVehicle = UnitInVehicle(unit) or nil
-end
-
 mod.StyleFilterEventFunctions = { -- a prefunction to the injected ouf watch
 	PLAYER_TARGET_CHANGED = function(self)
 		self.isTarget = self.unit and UnitIsUnit(self.unit, 'target') or nil
@@ -1187,12 +1170,6 @@ function mod:StyleFilterConfigure()
 
 				if t.raidTarget and (t.raidTarget.star or t.raidTarget.circle or t.raidTarget.diamond or t.raidTarget.triangle or t.raidTarget.moon or t.raidTarget.square or t.raidTarget.cross or t.raidTarget.skull) then
 					events.RAID_TARGET_UPDATE = 1
-				end
-
-				if t.unitInVehicle then
-					events.UNIT_ENTERED_VEHICLE = 1
-					events.UNIT_EXITED_VEHICLE = 1
-					events.VEHICLE_UPDATE = 1
 				end
 
 				if t.healthThreshold then
