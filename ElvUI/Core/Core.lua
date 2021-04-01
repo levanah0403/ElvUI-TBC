@@ -65,7 +65,7 @@ E.myLocalizedRace, E.myrace = UnitRace('player')
 E.myname = UnitName('player')
 E.myrealm = GetRealmName()
 E.mynameRealm = format('%s - %s', E.myname, E.myrealm) -- contains spaces/dashes in realm (for profile keys)
-E.myspec = GetSpecialization()
+--E.myspec = GetSpecialization()
 E.wowpatch, E.wowbuild = GetBuildInfo()
 E.wowbuild = tonumber(E.wowbuild)
 E.isMacClient = IsMacClient()
@@ -1074,10 +1074,10 @@ do -- BFA Convert, deprecated..
 			end
 		end
 
-		--Remove stale font settings from Cooldown system for top auras
+		--[[Remove stale font settings from Cooldown system for top auras
 		if E.db.auras.cooldown.fonts then
 			E.db.auras.cooldown.fonts = nil
-		end
+		end]]
 
 		--Convert Nameplate Aura Duration to new Cooldown system
 		if E.db.nameplates.durationFont then
@@ -1908,7 +1908,7 @@ function E:Initialize()
 	E.private = E.charSettings.profile
 	E.global = E.data.global
 	E.db = E.data.profile
-	E.Libs.DualSpec:EnhanceDatabase(E.data, 'ElvUI')
+	--E.Libs.DualSpec:EnhanceDatabase(E.data, 'ElvUI')
 
 	-- default the non thing pixel border color to 191919, otherwise its 000000
 	if not E.PixelMode then P.general.bordercolor = { r = 0.1, g = 0.1, b = 0.1 } end

@@ -28,8 +28,8 @@ local UnitGroupRolesAssigned = UnitGroupRolesAssigned
 local UnitHasVehicleUI = UnitHasVehicleUI
 local UnitIsMercenary = UnitIsMercenary
 local UnitStat = UnitStat
-local C_PetBattles_IsInBattle = C_PetBattles.IsInBattle
-local C_PvP_IsRatedBattleground = C_PvP.IsRatedBattleground
+--local C_PetBattles_IsInBattle = C_PetBattles.IsInBattle
+--local C_PvP_IsRatedBattleground = C_PvP.IsRatedBattleground
 local FACTION_HORDE = FACTION_HORDE
 local FACTION_ALLIANCE = FACTION_ALLIANCE
 local ERR_NOT_IN_COMBAT = ERR_NOT_IN_COMBAT
@@ -125,7 +125,7 @@ function E:GetPlayerRole()
 	return assignedRole
 end
 
-function E:CheckRole()
+--[[function E:CheckRole()
 	self.myspec = GetSpecialization()
 	self.myrole = E:GetPlayerRole()
 
@@ -157,7 +157,7 @@ function E:CheckRole()
 	if self.myrole and (self.myclass ~= 'PRIEST' and dispel ~= nil) then
 		dispel.Magic = (self.myrole == 'HEALER')
 	end
-end
+end]]
 
 function E:IsDispellableByMe(debuffType)
 	local dispel = self.DispelClasses[self.myclass]
@@ -484,7 +484,7 @@ function E:RequestBGInfo()
 	RequestBattlefieldScoreData()
 end
 
-function E:PLAYER_ENTERING_WORLD(_, initLogin, isReload)
+--[[function E:PLAYER_ENTERING_WORLD(_, initLogin, isReload)
 	self:CheckRole()
 
 	if initLogin or not ElvDB.LuaErrorDisabledAddOns then
@@ -508,7 +508,7 @@ function E:PLAYER_ENTERING_WORLD(_, initLogin, isReload)
 		self:CancelTimer(self.BGTimer)
 		self.BGTimer = nil
 	end
-end
+end]]
 
 function E:PLAYER_REGEN_ENABLED()
 	if self.CVarUpdate then

@@ -80,7 +80,7 @@ E.WorldMap = E:NewModule('WorldMap','AceHook-3.0','AceEvent-3.0','AceTimer-3.0')
 E.twoPixelsPlease = false -- changing this option is not supported! :P
 
 -- Item Qualitiy stuff - used by MerathilisUI
-E.QualityColors = {}
+--[[E.QualityColors = {}
 local qualityColors = BAG_ITEM_QUALITY_COLORS
 for index, value in pairs(qualityColors) do
 	E.QualityColors[index] = {r = value.r, g = value.g, b = value.b}
@@ -88,6 +88,7 @@ end
 E.QualityColors[-1] = {r = 0, g = 0, b = 0}
 E.QualityColors[Enum.ItemQuality.Poor] = {r = .61, g = .61, b = .61}
 E.QualityColors[Enum.ItemQuality.Common] = {r = 0, g = 0, b = 0}
+]]
 
 do -- this is different from E.locale because we need to convert for ace locale files
 	local convert = {enGB = 'enUS', esES = 'esMX', itIT = 'enUS'}
