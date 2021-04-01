@@ -250,6 +250,7 @@ function TT:SetUnitText(tt, unit)
 				GameTooltip:AddDoubleLine(L["ElvUI Version:"], addonUser, r,g,b, v and 0 or 1, v and 1 or 0, 0)
 			end
 		end
+		print(unit)
 
 		return nameColor
 	else

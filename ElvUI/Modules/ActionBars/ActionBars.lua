@@ -11,7 +11,6 @@ local ClearPetActionHighlightMarks = ClearPetActionHighlightMarks
 local CreateFrame = CreateFrame
 local GetBindingKey = GetBindingKey
 local GetSpellBookItemInfo = GetSpellBookItemInfo
-local HasOverrideActionBar = HasOverrideActionBar
 local hooksecurefunc = hooksecurefunc
 local InCombatLockdown = InCombatLockdown
 local PetDismiss = PetDismiss
@@ -486,7 +485,6 @@ function AB:ReassignBindings(event)
 	if event == 'UPDATE_BINDINGS' then
 		AB:UpdatePetBindings()
 		AB:UpdateStanceBindings()
-		AB:UpdateExtraBindings()
 	end
 
 	AB:UnregisterEvent('PLAYER_REGEN_DISABLED')
@@ -586,7 +584,6 @@ function AB:UpdateButtonSettings(specific)
 
 		AB:UpdatePetBindings()
 		AB:UpdateStanceBindings() -- call after AdjustMaxStanceButtons
-		AB:UpdateExtraBindings()
 
 		AB:UpdateFlyoutButtons()
 	end
@@ -1421,10 +1418,6 @@ function AB:Initialize()
 	-- We handle actionbar lock for regular bars, but the lock on PetBar needs to be handled by WoW so make some necessary updates
 	SetCVar('lockActionBars', (AB.db.lockActionBars == true and 1 or 0))
 	_G.LOCK_ACTIONBAR = (AB.db.lockActionBars == true and '1' or '0') -- Keep an eye on this, in case it taints
-
-	hooksecurefunc(_G.SpellFlyout, 'Show', AB.UpdateFlyoutButtons)
-	_G.SpellFlyout:HookScript('OnEnter', AB.SpellFlyout_OnEnter)
-	_G.SpellFlyout:HookScript('OnLeave', AB.SpellFlyout_OnLeave)
 end
 
 E:RegisterModule(AB:GetName())

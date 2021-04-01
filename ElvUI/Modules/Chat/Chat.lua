@@ -2350,7 +2350,7 @@ function CH:HandleChatVoiceIcons()
 	if CH.db.hideVoiceButtons then
 		_G.ChatFrameChannelButton:Hide()
 	elseif CH.db.pinVoiceButtons then
-		Skins:HandleButton(_G.ChatFrameChannelButton, nil, nil, nil, true)
+		Skins:HandleButton(_G.ChatFrameChannelButton)
 		_G.ChatFrameChannelButton.Icon:SetDesaturated(CH.db.desaturateVoiceIcons)
 		_G.ChatFrameChannelButton:ClearAllPoints()
 		_G.ChatFrameChannelButton:Point('RIGHT', _G.GeneralDockManager, 'RIGHT', 2, 0)
@@ -2393,7 +2393,7 @@ function CH:CreateChatVoicePanel()
 end
 
 function CH:BuildCopyChatFrame()
-	local frame = CreateFrame('Frame', 'CopyChatFrame', E.UIParent)
+	local frame = CreateFrame('Frame', 'CopyChatFrame', E.UIParent, 'BackdropTemplate')
 	tinsert(_G.UISpecialFrames, 'CopyChatFrame')
 	frame:SetTemplate('Transparent')
 	frame:Size(700, 200)
@@ -2460,7 +2460,7 @@ function CH:BuildCopyChatFrame()
 		end
 	end)
 
-	local close = CreateFrame('Button', 'CopyChatFrameCloseButton', frame, 'UIPanelCloseButton')
+	local close = CreateFrame('Button', 'CopyChatFrameCloseButton', frame, 'UIPanelCloseButton, BackdropTemplate')
 	close:Point('TOPRIGHT')
 	close:SetFrameLevel(close:GetFrameLevel() + 1)
 	close:EnableMouse(true)

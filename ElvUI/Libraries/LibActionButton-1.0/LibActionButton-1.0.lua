@@ -436,9 +436,9 @@ function Generic:UpdateState(state)
 	self:SetAttribute(format("labaction-%s", state), self.state_actions[state])
 	if state ~= tostring(self:GetAttribute("state")) then return end
 	if self.header then
-		SecureHandlerSetFrameRef(self.header, "updateButton", self)
-		SecureHandlerExecute(self.header, [[
-			local frame = self:GetAttribute("frameref-updateButton")
+		self.header:SetFrameRef("updateButton", self)
+		self.header:Execute([[
+			local frame = self:GetFrameRef("updateButton")
 			control:RunFor(frame, frame:GetAttribute("UpdateState"), frame:GetAttribute("state"))
 		]])
 	else
@@ -611,8 +611,8 @@ function Generic:PostClick()
 		end
 		local oldType, oldAction = self._state_type, self._state_action
 		local kind, data, subtype, extra = GetCursorInfo()
-		SecureHandlerSetFrameRef(self.header, "updateButton", self)
-		SecureHandlerExecute(self.header, format([[
+		self.header:SetFrameRef("updateButton", self)
+		self.header:Execute(format([[
 			local frame = self:GetAttribute("frameref-updateButton")
 			control:RunFor(frame, frame:GetAttribute("OnReceiveDrag"), %s, %s, %s, %s)
 			control:RunFor(frame, frame:GetAttribute("UpdateState"), %s)
@@ -1184,8 +1184,8 @@ function Update(self, fromUpdateConfig)
 	if not InCombatLockdown() and self._state_type == "action" then
 		local onStateChanged = self:GetAttribute("OnStateChanged")
 		if onStateChanged then
-			SecureHandlerSetFrameRef(self.header, "updateButton", self)
-			SecureHandlerExecute(self.header, ([[
+			self.header:SetFrameRef("updateButton", self)
+			self.header:Execute(([[
 				local frame = self:GetAttribute("frameref-updateButton")
 				control:RunFor(frame, frame:GetAttribute("OnStateChanged"), %s, %s, %s)
 			]]):format(formatHelper(self:GetAttribute("state")), formatHelper(self._state_type), formatHelper(self._state_action)))

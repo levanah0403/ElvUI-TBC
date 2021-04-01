@@ -308,9 +308,7 @@ function M:Initialize()
 	self:LoadLootRoll()
 	self:LoadChatBubbles()
 	self:LoadLoot()
-	self:ToggleItemLevelInfo(true)
 	self:RegisterEvent('MERCHANT_SHOW')
-	self:RegisterEvent('RESURRECT_REQUEST')
 	self:RegisterEvent('PLAYER_REGEN_DISABLED', 'ErrorFrameToggle')
 	self:RegisterEvent('PLAYER_REGEN_ENABLED', 'ErrorFrameToggle')
 	self:RegisterEvent('CHAT_MSG_BG_SYSTEM_HORDE', 'PVPMessageEnhancement')
@@ -351,8 +349,6 @@ function M:Initialize()
 	else
 		self:RegisterEvent('ADDON_LOADED')
 	end
-
-	M:Hook('BossBanner_ConfigureLootFrame', nil, true) -- fix blizz thing x.x
 end
 
 E:RegisterModule(M:GetName())
