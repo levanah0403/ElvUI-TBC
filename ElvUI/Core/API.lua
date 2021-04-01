@@ -484,8 +484,8 @@ function E:RequestBGInfo()
 	RequestBattlefieldScoreData()
 end
 
---[[function E:PLAYER_ENTERING_WORLD(_, initLogin, isReload)
-	self:CheckRole()
+function E:PLAYER_ENTERING_WORLD(_, initLogin, isReload)
+--	self:CheckRole()
 
 	if initLogin or not ElvDB.LuaErrorDisabledAddOns then
 		ElvDB.LuaErrorDisabledAddOns = {}
@@ -508,7 +508,7 @@ end
 		self:CancelTimer(self.BGTimer)
 		self.BGTimer = nil
 	end
-end]]
+end
 
 function E:PLAYER_REGEN_ENABLED()
 	if self.CVarUpdate then
@@ -575,10 +575,6 @@ function E:GetUnitBattlefieldFaction(unit)
 	return englishFaction, localizedFaction
 end
 
-function E:NEUTRAL_FACTION_SELECT_RESULT()
-	E.myfaction, E.myLocalizedFaction = UnitFactionGroup('player')
-end
-
 function E:PLAYER_LEVEL_UP(_, level)
 	E.mylevel = level
 end
@@ -588,10 +584,9 @@ function E:LoadAPI()
 	E:RegisterEvent('PLAYER_ENTERING_WORLD')
 	E:RegisterEvent('PLAYER_REGEN_ENABLED')
 	E:RegisterEvent('PLAYER_REGEN_DISABLED')
-	E:RegisterEvent('NEUTRAL_FACTION_SELECT_RESULT')
 	E:RegisterEvent('PET_BATTLE_CLOSE', 'AddNonPetBattleFrames')
 	E:RegisterEvent('PET_BATTLE_OPENING_START', 'RemoveNonPetBattleFrames')
-	E:RegisterEvent('PLAYER_SPECIALIZATION_CHANGED', 'CheckRole')
+	--E:RegisterEvent('PLAYER_SPECIALIZATION_CHANGED', 'CheckRole')
 	E:RegisterEvent('UNIT_ENTERED_VEHICLE', 'EnterVehicleHideFrames')
 	E:RegisterEvent('UNIT_EXITED_VEHICLE', 'ExitVehicleShowFrames')
 	E:RegisterEvent('UI_SCALE_CHANGED', 'PixelScaleChanged')

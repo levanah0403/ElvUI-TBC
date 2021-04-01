@@ -592,17 +592,7 @@ end
 
 ElvUF.Tags.Events['difficultycolor'] = 'UNIT_LEVEL PLAYER_LEVEL_UP'
 ElvUF.Tags.Methods['difficultycolor'] = function(unit)
-	local c
-	--[[if UnitIsWildBattlePet(unit) or UnitIsBattlePetCompanion(unit) then
-		local level = UnitBattlePetLevel(unit)
-
-		local teamLevel = C_PetJournal_GetPetTeamAverageLevel();
-		if teamLevel < level or teamLevel > level then
-			c = GetRelativeDifficultyColor(teamLevel, level)
-		else
-			c = QuestDifficultyColors.difficult
-		end]]
-	c = GetCreatureDifficultyColor(UnitEffectiveLevel(unit))
+	local c = GetCreatureDifficultyColor(UnitEffectiveLevel(unit))
 
 	return Hex(c.r, c.g, c.b)
 end

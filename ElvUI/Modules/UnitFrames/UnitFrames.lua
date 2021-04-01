@@ -1067,6 +1067,7 @@ function UF:LoadUnits()
 			groupFilter, template, headerTemplate = unpack(groupOptions)
 		end
 
+		print(group)
 		UF:CreateAndUpdateHeaderGroup(group, groupFilter, template, headerTemplate)
 	end
 	UF.headerstoload = nil
@@ -1498,17 +1499,17 @@ function UF:Initialize()
 		E.RaidUtility.Initialize = E.noop
 	end
 
-	if E.private.unitframe.disabledBlizzardFrames.arena then
-		UF:SecureHook('UnitFrameThreatIndicator_Initialize')
+	--if E.private.unitframe.disabledBlizzardFrames.arena then
+	--	UF:SecureHook('UnitFrameThreatIndicator_Initialize')
 
-		Arena_LoadUI = E.noop -- Blizzard_ArenaUI should not be loaded, called on PLAYER_ENTERING_WORLD if in pvp or arena
+	--	Arena_LoadUI = E.noop -- Blizzard_ArenaUI should not be loaded, called on PLAYER_ENTERING_WORLD if in pvp or arena
 
-		if IsAddOnLoaded('Blizzard_ArenaUI') then
-			ElvUF:DisableBlizzard('arena')
-		else
-			UF:RegisterEvent('ADDON_LOADED')
-		end
-	end
+	--	if IsAddOnLoaded('Blizzard_ArenaUI') then
+	--		ElvUF:DisableBlizzard('arena')
+	--	else
+	--		UF:RegisterEvent('ADDON_LOADED')
+	--	end
+	--end
 
 	UF:UpdateRangeCheckSpells()
 

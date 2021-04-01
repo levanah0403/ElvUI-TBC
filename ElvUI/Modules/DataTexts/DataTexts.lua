@@ -18,12 +18,6 @@ local MouseIsOver = MouseIsOver
 local RegisterStateDriver = RegisterStateDriver
 local UIDropDownMenu_SetAnchor = UIDropDownMenu_SetAnchor
 local UnregisterStateDriver = UnregisterStateDriver
-local C_CurrencyInfo_GetCurrencyInfo = C_CurrencyInfo.GetCurrencyInfo
-local C_CurrencyInfo_GetCurrencyListSize = C_CurrencyInfo.GetCurrencyListSize
-local C_CurrencyInfo_GetCurrencyListInfo = C_CurrencyInfo.GetCurrencyListInfo
-local C_CurrencyInfo_GetCurrencyListLink = C_CurrencyInfo.GetCurrencyListLink
-local C_CurrencyInfo_GetCurrencyIDFromLink = C_CurrencyInfo.GetCurrencyIDFromLink
-local C_CurrencyInfo_ExpandCurrencyList = C_CurrencyInfo.ExpandCurrencyList
 local GetNumSpecializations = GetNumSpecializations
 local GetSpecializationInfo = GetSpecializationInfo
 local MISCELLANEOUS = MISCELLANEOUS
@@ -768,7 +762,7 @@ function DT:Initialize()
 
 	LDB.RegisterCallback(E, 'LibDataBroker_DataObjectCreated', DT.SetupObjectLDB)
 	DT:RegisterLDB() -- LibDataBroker
-	DT:RegisterCustomCurrencyDT() -- Register all the user created currency datatexts from the 'CustomCurrency' DT.
+	--DT:RegisterCustomCurrencyDT() -- Register all the user created currency datatexts from the 'CustomCurrency' DT.
 
 	for name, db in pairs(E.global.datatexts.customPanels) do
 		DT:BuildPanelFrame(name, db, true)
@@ -779,12 +773,12 @@ function DT:Initialize()
 		DT.BattleStats.RIGHT.panel = _G.RightChatDataPanel.dataPanels
 	end
 
-	hooksecurefunc(_G.C_CurrencyInfo, 'SetCurrencyBackpack', function() DT:ForceUpdate_DataText('Currencies') end)
+--	hooksecurefunc(_G.C_CurrencyInfo, 'SetCurrencyBackpack', function() DT:ForceUpdate_DataText('Currencies') end)
 
-	DT:PopulateData()
+--	DT:PopulateData()
 	DT:RegisterHyperDT()
 	DT:RegisterEvent('PLAYER_ENTERING_WORLD')
-	DT:RegisterEvent('CURRENCY_DISPLAY_UPDATE')
+--	DT:RegisterEvent('CURRENCY_DISPLAY_UPDATE')
 end
 
 --[[

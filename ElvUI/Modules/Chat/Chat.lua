@@ -49,11 +49,9 @@ local ToggleFrame = ToggleFrame
 local ToggleQuickJoinPanel = ToggleQuickJoinPanel
 local UnitExists, UnitIsUnit = UnitExists, UnitIsUnit
 local UnitGroupRolesAssigned = UnitGroupRolesAssigned
-local IsActivePlayerMentor = IsActivePlayerMentor
 local UnitName = UnitName
 
 local C_DateAndTime_GetCurrentCalendarTime = C_DateAndTime.GetCurrentCalendarTime
---local C_PlayerMentorship_IsActivePlayerConsideredNewcomer = C_PlayerMentorship.IsActivePlayerConsideredNewcomer
 --local C_BattleNet_GetAccountInfoByID = C_BattleNet.GetAccountInfoByID
 --local C_BattleNet_GetFriendAccountInfo = C_BattleNet.GetFriendAccountInfo
 --local C_BattleNet_GetFriendGameAccountInfo = C_BattleNet.GetFriendGameAccountInfo

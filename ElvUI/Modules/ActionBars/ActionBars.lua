@@ -10,9 +10,7 @@ local ClearOverrideBindings = ClearOverrideBindings
 local ClearPetActionHighlightMarks = ClearPetActionHighlightMarks
 local CreateFrame = CreateFrame
 local GetBindingKey = GetBindingKey
-local GetOverrideBarIndex = GetOverrideBarIndex
 local GetSpellBookItemInfo = GetSpellBookItemInfo
-local GetVehicleBarIndex = GetVehicleBarIndex
 local HasOverrideActionBar = HasOverrideActionBar
 local hooksecurefunc = hooksecurefunc
 local InCombatLockdown = InCombatLockdown
@@ -41,7 +39,6 @@ local SPELLS_PER_PAGE = SPELLS_PER_PAGE
 local TOOLTIP_UPDATE_TIME = TOOLTIP_UPDATE_TIME
 local NUM_ACTIONBAR_BUTTONS = NUM_ACTIONBAR_BUTTONS
 local COOLDOWN_TYPE_LOSS_OF_CONTROL = COOLDOWN_TYPE_LOSS_OF_CONTROL
-local C_PetBattles_IsInBattle = C_PetBattles.IsInBattle
 
 local LAB = E.Libs.LAB
 local LSM = E.Libs.LSM
@@ -60,7 +57,7 @@ AB.barDefaults = {
 	bar1 = {
 		page = 1,
 		bindButtons = 'ACTIONBUTTON',
-		conditions = format('[overridebar] %d; [vehicleui] %d; [possessbar] %d; [shapeshift] 13; [form,noform] 0; [bar:2] 2; [bar:3] 3; [bar:4] 4; [bar:5] 5; [bar:6] 6;', GetOverrideBarIndex(), GetVehicleBarIndex(), GetVehicleBarIndex()),
+		conditions = '[bonusbar:5] 11; [shapeshift] 13; [form,noform] 0; [bar:2] 2; [bar:3] 3; [bar:4] 4; [bar:5] 5; [bar:6] 6;',
 		position = 'BOTTOM,ElvUIParent,BOTTOM,-1,191',
 	},
 	bar2 = {
@@ -940,9 +937,11 @@ function AB:DisableBlizzard()
 		_G.UIPARENT_MANAGED_FRAME_POSITIONS[name] = nil
 
 		local frame = _G[name]
-		if i < 6 then frame:UnregisterAllEvents() end
-		frame:SetParent(hiddenParent)
-		AB:SetNoopsi(frame)
+		if frame then
+			if i < 6 then frame:UnregisterAllEvents() end
+			frame:SetParent(hiddenParent)
+			AB:SetNoopsi(frame)
+		end
 	end
 
 	-- let spell book buttons work without tainting by replacing this function
@@ -961,19 +960,19 @@ function AB:DisableBlizzard()
 
 	-- shut down some events for things we dont use
 	AB:SetNoopsi(_G.MainMenuBarArtFrame)
-	AB:SetNoopsi(_G.MainMenuBarArtFrameBackground)
+	--AB:SetNoopsi(_G.MainMenuBarArtFrameBackground)
 	_G.MainMenuBarArtFrame:UnregisterAllEvents()
-	_G.StatusTrackingBarManager:UnregisterAllEvents()
+	--_G.StatusTrackingBarManager:UnregisterAllEvents()
 	_G.ActionBarButtonEventsFrame:UnregisterAllEvents()
 	_G.ActionBarButtonEventsFrame:RegisterEvent('ACTIONBAR_SLOT_CHANGED') -- these are needed to let the ExtraActionButton show
 	_G.ActionBarButtonEventsFrame:RegisterEvent('ACTIONBAR_UPDATE_COOLDOWN') -- needed for ExtraActionBar cooldown
 	_G.ActionBarActionEventsFrame:UnregisterAllEvents()
 	_G.ActionBarController:UnregisterAllEvents()
-	_G.ActionBarController:RegisterEvent('UPDATE_EXTRA_ACTIONBAR') -- this is needed to let the ExtraActionBar show
+	--_G.ActionBarController:RegisterEvent('UPDATE_EXTRA_ACTIONBAR') -- this is needed to let the ExtraActionBar show
 
 	-- lets only keep ExtraActionButtons in here
-	hooksecurefunc(_G.ActionBarButtonEventsFrame, 'RegisterFrame', AB.ButtonEventsRegisterFrame)
-	AB.ButtonEventsRegisterFrame()
+	--hooksecurefunc(_G.ActionBarButtonEventsFrame, 'RegisterFrame', AB.ButtonEventsRegisterFrame)
+	--AB.ButtonEventsRegisterFrame()
 
 	-- this would taint along with the same path as the SetNoopers: ValidateActionBarTransition
 	_G.VerticalMultiBarsContainer:Size(10, 10) -- dummy values so GetTop etc doesnt fail without replacing
@@ -994,7 +993,7 @@ function AB:DisableBlizzard()
 	_G.InterfaceOptionsActionBarsPanelLockActionBars:SetScale(0.0001)
 	_G.InterfaceOptionsActionBarsPanelLockActionBars:SetAlpha(0)
 
-	AB:IconIntroTracker_Toggle() --Enable/disable functionality to automatically put spells on the actionbar.
+	--AB:IconIntroTracker_Toggle() --Enable/disable functionality to automatically put spells on the actionbar.
 	AB:SecureHook('BlizzardOptionsPanel_OnEvent')
 
 	if _G.PlayerTalentFrame then
@@ -1373,11 +1372,6 @@ function AB:Initialize()
 	AB.fadeParent:RegisterEvent('PLAYER_REGEN_DISABLED')
 	AB.fadeParent:RegisterEvent('PLAYER_REGEN_ENABLED')
 	AB.fadeParent:RegisterEvent('PLAYER_TARGET_CHANGED')
-	AB.fadeParent:RegisterEvent('UPDATE_OVERRIDE_ACTIONBAR')
-	AB.fadeParent:RegisterEvent('UPDATE_POSSESS_BAR')
-	AB.fadeParent:RegisterEvent('VEHICLE_UPDATE')
-	AB.fadeParent:RegisterUnitEvent('UNIT_ENTERED_VEHICLE', 'player')
-	AB.fadeParent:RegisterUnitEvent('UNIT_EXITED_VEHICLE', 'player')
 	AB.fadeParent:RegisterUnitEvent('UNIT_SPELLCAST_START', 'player')
 	AB.fadeParent:RegisterUnitEvent('UNIT_SPELLCAST_STOP', 'player')
 	AB.fadeParent:RegisterUnitEvent('UNIT_SPELLCAST_CHANNEL_START', 'player')
@@ -1397,7 +1391,6 @@ function AB:Initialize()
 	end
 
 	AB:DisableBlizzard()
-	AB:SetupExtraButton()
 	AB:SetupMicroBar()
 
 	for i = 1, 10 do
@@ -1424,11 +1417,7 @@ function AB:Initialize()
 		AB:RegisterEvent('ADDON_LOADED', 'SwapKeybindButton')
 	end
 
-	if C_PetBattles_IsInBattle() then
-		AB:RemoveBindings()
-	else
-		AB:ReassignBindings()
-	end
+	AB:ReassignBindings()
 
 	-- We handle actionbar lock for regular bars, but the lock on PetBar needs to be handled by WoW so make some necessary updates
 	SetCVar('lockActionBars', (AB.db.lockActionBars == true and 1 or 0))

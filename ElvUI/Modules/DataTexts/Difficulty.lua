@@ -6,10 +6,6 @@ local pairs, format = pairs, format
 local GetDungeonDifficultyID, GetRaidDifficultyID, GetLegacyRaidDifficultyID = GetDungeonDifficultyID, GetRaidDifficultyID, GetLegacyRaidDifficultyID
 local SetDungeonDifficultyID, SetRaidDifficultyID, SetLegacyRaidDifficultyID = SetDungeonDifficultyID, SetRaidDifficultyID, SetLegacyRaidDifficultyID
 local GetInstanceInfo, GetDifficultyInfo, ResetInstances = GetInstanceInfo, GetDifficultyInfo, ResetInstances
-local C_ChallengeMode_GetActiveChallengeMapID = C_ChallengeMode.GetActiveChallengeMapID
-local C_ChallengeMode_GetActiveKeystoneInfo = C_ChallengeMode.GetActiveKeystoneInfo
-local C_ChallengeMode_IsChallengeModeActive = C_ChallengeMode.IsChallengeModeActive
-local C_MythicPlus_IsMythicPlusActive = C_MythicPlus.IsMythicPlusActive
 
 local DungeonTexture, RaidTexture, LegacyTexture = CreateAtlasMarkup('Dungeon', 20, 20), CreateAtlasMarkup('Raid', 20, 20), CreateAtlasMarkup('worldquest-icon-raid', 20, 20)
 local DungeonDifficultyID, RaidDifficultyID, LegacyRaidDifficultyID = GetDungeonDifficultyID(), GetRaidDifficultyID(), GetLegacyRaidDifficultyID()
@@ -106,11 +102,8 @@ end
 
 local function OnEvent(self)
 	local name, instanceType, difficultyID, _, _, _, _, instanceID = GetInstanceInfo()
-	local keyStoneLevel = C_MythicPlus_IsMythicPlusActive() and C_ChallengeMode_GetActiveChallengeMapID() and C_ChallengeMode_IsChallengeModeActive() and C_ChallengeMode_GetActiveKeystoneInfo()
 
-	if keyStoneLevel then
-		self.text:SetFormattedText('%s %s +%s', GetLabelTexture(difficultyID), name, keyStoneLevel)
-	elseif instanceType ~= 'none' and difficultyID and not Garrison[instanceID] then
+	if instanceType ~= 'none' and difficultyID and not Garrison[instanceID] then
 		self.text:SetFormattedText('%s %s %s', GetLabelTexture(difficultyID), name, GetDiffIDLabel(difficultyID))
 	else
 		DungeonDifficultyID, RaidDifficultyID, LegacyRaidDifficultyID = GetDungeonDifficultyID(), GetRaidDifficultyID(), GetLegacyRaidDifficultyID()

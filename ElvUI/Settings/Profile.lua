@@ -2138,8 +2138,15 @@ P.unitframe.units.tank.targetsGroup.healPrediction = nil
 
 P.unitframe.units.assist = CopyTable(P.unitframe.units.tank)
 
-for i = 1, GetNumClasses() do
-	local classDisplayName, classTag = GetClassInfo(i)
+--for i = 1, GetNumClasses() do
+--	local classDisplayName, classTag = GetClassInfo(i)
+--	P.unitframe.units.party['CLASS'..i] = classTag
+--	P.unitframe.units.raid['CLASS'..i] = classTag
+--	P.unitframe.units.raid40['CLASS'..i] = classTag
+--	P.unitframe.units.raidpet['CLASS'..i] = classTag
+--end
+
+for i, classTag in ipairs(CLASS_SORT_ORDER) do
 	P.unitframe.units.party['CLASS'..i] = classTag
 	P.unitframe.units.raid['CLASS'..i] = classTag
 	P.unitframe.units.raid40['CLASS'..i] = classTag

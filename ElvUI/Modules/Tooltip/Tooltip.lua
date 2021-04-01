@@ -37,9 +37,6 @@ local IsShiftKeyDown = IsShiftKeyDown
 local NotifyInspect = NotifyInspect
 local SetTooltipMoney = SetTooltipMoney
 local UnitAura = UnitAura
-local UnitBattlePetLevel = UnitBattlePetLevel
-local UnitBattlePetType = UnitBattlePetType
-local UnitBuff = UnitBuff
 local UnitClass = UnitClass
 local UnitClassification = UnitClassification
 local UnitCreatureType = UnitCreatureType
@@ -51,14 +48,12 @@ local UnitHasVehicleUI = UnitHasVehicleUI
 local UnitInParty = UnitInParty
 local UnitInRaid = UnitInRaid
 local UnitIsAFK = UnitIsAFK
-local UnitIsBattlePetCompanion = UnitIsBattlePetCompanion
 local UnitIsDeadOrGhost = UnitIsDeadOrGhost
 local UnitIsDND = UnitIsDND
 local UnitIsPlayer = UnitIsPlayer
 local UnitIsPVP = UnitIsPVP
 local UnitIsTapDenied = UnitIsTapDenied
 local UnitIsUnit = UnitIsUnit
-local UnitIsWildBattlePet = UnitIsWildBattlePet
 local UnitLevel = UnitLevel
 local UnitName = UnitName
 local UnitPVPName = UnitPVPName
@@ -68,13 +63,6 @@ local UnitRealmRelationship = UnitRealmRelationship
 local UnitSex = UnitSex
 
 local C_QuestLog_GetQuestIDForLogIndex = C_QuestLog.GetQuestIDForLogIndex
-local C_CurrencyInfo_GetCurrencyListLink = C_CurrencyInfo.GetCurrencyListLink
-local C_CurrencyInfo_GetBackpackCurrencyInfo = C_CurrencyInfo.GetBackpackCurrencyInfo
-local C_MountJournal_GetMountIDs = C_MountJournal.GetMountIDs
-local C_MountJournal_GetMountInfoByID = C_MountJournal.GetMountInfoByID
-local C_MountJournal_GetMountInfoExtraByID = C_MountJournal.GetMountInfoExtraByID
-local C_PetJournalGetPetTeamAverageLevel = C_PetJournal.GetPetTeamAverageLevel
-local C_PetBattles_IsInBattle = C_PetBattles.IsInBattle
 local PRIEST_COLOR = RAID_CLASS_COLORS.PRIEST
 local UNKNOWN = UNKNOWN
 
@@ -287,31 +275,12 @@ function TT:SetUnitText(tt, unit)
 	else
 		local levelLine = TT:GetLevelLine(tt, 2)
 		if levelLine then
-			local isPetWild, isPetCompanion = UnitIsWildBattlePet(unit), UnitIsBattlePetCompanion(unit);
 			local creatureClassification = UnitClassification(unit)
 			local creatureType = UnitCreatureType(unit) or ''
-			local pvpFlag, classificationString, diffColor = '', ''
+			local pvpFlag, classificationString = '', ''
 
 			local level = UnitEffectiveLevel(unit)
-			if isPetWild or isPetCompanion then
-				level = UnitBattlePetLevel(unit)
-
-				local petType = _G['BATTLE_PET_NAME_'..UnitBattlePetType(unit)]
-				if creatureType then
-					creatureType = format('%s %s', creatureType, petType)
-				else
-					creatureType = petType
-				end
-
-				local teamLevel = C_PetJournalGetPetTeamAverageLevel()
-				if teamLevel then
-					diffColor = GetRelativeDifficultyColor(teamLevel, level)
-				else
-					diffColor = GetCreatureDifficultyColor(level)
-				end
-			else
-				diffColor = GetCreatureDifficultyColor(level)
-			end
+			local diffColor = GetCreatureDifficultyColor(level)
 
 			if UnitIsPVP(unit) then
 				pvpFlag = format(' (%s)', _G.PVP)
@@ -454,31 +423,6 @@ function TT:GameTooltip_OnTooltipSetUnit(tt)
 	local isShiftKeyDown = IsShiftKeyDown()
 	local isControlKeyDown = IsControlKeyDown()
 	local color = TT:SetUnitText(tt, unit)
-	if TT.db.showMount and isPlayerUnit and unit ~= 'player' and not isShiftKeyDown then
-		for i = 1, 40 do
-			local name, _, _, _, _, _, _, _, _, id = UnitBuff(unit, i)
-			if not name then break end
-
-			if TT.MountIDs[id] then
-				local _, _, sourceText = C_MountJournal_GetMountInfoExtraByID(TT.MountIDs[id])
-				tt:AddDoubleLine(format('%s:', _G.MOUNT), name, nil, nil, nil, 1, 1, 1)
-
-				if sourceText and isControlKeyDown then
-					local sourceModified = gsub(sourceText, '|n', '\10')
-					for x in gmatch(sourceModified, '[^\10]+\10?') do
-						local left, right = strmatch(x, '(.-|r)%s?([^\10]+)\10?')
-						if left and right then
-							tt:AddDoubleLine(left, right, nil, nil, nil, 1, 1, 1)
-						else
-							tt:AddDoubleLine(_G.FROM, gsub(sourceText, '|c%x%x%x%x%x%x%x%x',''), nil, nil, nil, 1, 1, 1)
-						end
-					end
-				end
-
-				break
-			end
-		end
-	end
 
 	if not isShiftKeyDown and not isControlKeyDown then
 		local unitTarget = unit..'target'
@@ -514,16 +458,6 @@ function TT:GameTooltip_OnTooltipSetUnit(tt)
 
 	if isShiftKeyDown and isPlayerUnit then
 		TT:AddInspectInfo(tt, unit, 0, color.r, color.g, color.b)
-	end
-
-	-- NPC ID's
-	if unit and not isPlayerUnit and TT:IsModKeyDown() then
-		if C_PetBattles_IsInBattle() then return end
-		local guid = UnitGUID(unit) or ''
-		local id = tonumber(strmatch(guid, '%-(%d-)%-%x-$'), 10)
-		if id then
-			tt:AddLine(format(IDLine, _G.ID, id))
-		end
 	end
 
 	if color then
@@ -696,17 +630,7 @@ function TT:SetUnitAura(tt, unit, index, filter)
 	local _, _, _, _, _, _, caster, _, _, id = UnitAura(unit, index, filter)
 
 	if id then
-		local sourceText
-		if TT.MountIDs[id] then
-			_, _, sourceText = C_MountJournal_GetMountInfoExtraByID(TT.MountIDs[id])
-			tt:AddLine(' ')
-			tt:AddLine(sourceText, 1, 1, 1)
-		end
-
 		if TT:IsModKeyDown() then
-			if sourceText then
-				tt:AddLine(' ')
-			end
 			if caster then
 				local name = UnitName(caster)
 				local _, class = UnitClass(caster)
@@ -842,12 +766,6 @@ end
 function TT:Initialize()
 	TT.db = E.db.tooltip
 
-	TT.MountIDs = {}
-	local mountIDs = C_MountJournal_GetMountIDs();
-	for _, mountID in ipairs(mountIDs) do
-		TT.MountIDs[select(2, C_MountJournal_GetMountInfoByID(mountID))] = mountID
-	end
-
 	if E.private.tooltip.enable ~= true then return end
 	TT.Initialized = true
 
@@ -875,15 +793,15 @@ function TT:Initialize()
 
 	TT:SecureHook('SetItemRef')
 	TT:SecureHook('GameTooltip_SetDefaultAnchor')
-	TT:SecureHook('EmbeddedItemTooltip_SetItemByID', 'EmbeddedItemTooltip_ID')
-	TT:SecureHook('EmbeddedItemTooltip_SetSpellWithTextureByID', 'EmbeddedItemTooltip_ID')
-	TT:SecureHook('EmbeddedItemTooltip_SetCurrencyByID', 'EmbeddedItemTooltip_ID')
-	TT:SecureHook('EmbeddedItemTooltip_SetItemByQuestReward', 'EmbeddedItemTooltip_QuestReward')
-	TT:SecureHook('EmbeddedItemTooltip_SetSpellByQuestReward', 'EmbeddedItemTooltip_QuestReward')
-	TT:SecureHook(GameTooltip, 'SetToyByItemID')
-	TT:SecureHook(GameTooltip, 'SetCurrencyToken')
-	TT:SecureHook(GameTooltip, 'SetCurrencyTokenByID')
-	TT:SecureHook(GameTooltip, 'SetBackpackToken')
+	--TT:SecureHook('EmbeddedItemTooltip_SetItemByID', 'EmbeddedItemTooltip_ID')
+	--TT:SecureHook('EmbeddedItemTooltip_SetSpellWithTextureByID', 'EmbeddedItemTooltip_ID')
+	--TT:SecureHook('EmbeddedItemTooltip_SetCurrencyByID', 'EmbeddedItemTooltip_ID')
+	--TT:SecureHook('EmbeddedItemTooltip_SetItemByQuestReward', 'EmbeddedItemTooltip_QuestReward')
+	--TT:SecureHook('EmbeddedItemTooltip_SetSpellByQuestReward', 'EmbeddedItemTooltip_QuestReward')
+	--TT:SecureHook(GameTooltip, 'SetToyByItemID')
+	--TT:SecureHook(GameTooltip, 'SetCurrencyToken')
+	--TT:SecureHook(GameTooltip, 'SetCurrencyTokenByID')
+	--TT:SecureHook(GameTooltip, 'SetBackpackToken')
 	TT:SecureHook(GameTooltip, 'SetUnitAura')
 	TT:SecureHook(GameTooltip, 'SetUnitBuff', 'SetUnitAura')
 	TT:SecureHook(GameTooltip, 'SetUnitDebuff', 'SetUnitAura')
@@ -895,8 +813,8 @@ function TT:Initialize()
 	TT:SecureHookScript(_G.ElvUISpellBookTooltip, 'OnTooltipSetSpell', 'GameTooltip_OnTooltipSetSpell')
 	TT:RegisterEvent('MODIFIER_STATE_CHANGED')
 
-	TT:SecureHook('QuestMapLogTitleButton_OnEnter', 'QuestID')
-	TT:SecureHook('TaskPOI_OnEnter', 'QuestID')
+	--TT:SecureHook('QuestMapLogTitleButton_OnEnter', 'QuestID')
+	--TT:SecureHook('TaskPOI_OnEnter', 'QuestID')
 
 	--Variable is localized at top of file, then set here when we're sure the frame has been created
 	--Used to check if keybinding is active, if so then don't hide tooltips on actionbars

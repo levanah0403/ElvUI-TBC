@@ -167,8 +167,6 @@ function DB:Initialize()
 
 	DB:ExperienceBar()
 	DB:ReputationBar()
-	DB:HonorBar()
-	DB:AzeriteBar()
 	DB:ThreatBar()
 
 	DB:UpdateAll()

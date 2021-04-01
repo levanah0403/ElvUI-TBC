@@ -4,9 +4,6 @@ local DT = E:GetModule('DataTexts')
 local _G = _G
 local tinsert, tremove, next = tinsert, tremove, next
 local ipairs, pairs, format, strjoin = ipairs, pairs, format, strjoin
-local C_CurrencyInfo_GetCurrencyInfo = C_CurrencyInfo.GetCurrencyInfo
-local C_CurrencyInfo_GetCurrencyListInfo = C_CurrencyInfo.GetCurrencyListInfo
-local C_CurrencyInfo_GetCurrencyListSize = C_CurrencyInfo.GetCurrencyListSize
 
 local CustomCurrencies = {}
 local CurrencyListNameToIndex = {}

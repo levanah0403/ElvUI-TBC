@@ -132,10 +132,6 @@ function NP:CVarReset()
 end
 
 function NP:SetCVars()
-	if NP.db.units.ENEMY_NPC.questIcon.enable or NP.db.units.FRIENDLY_NPC.questIcon.enable then
-		NP:SetCVar('showQuestTrackingTooltips', 1)
-	end
-
 	if NP.db.clampToScreen then
 		NP:SetCVar('nameplateOtherTopInset', 0.08)
 		NP:SetCVar('nameplateOtherBottomInset', 0.1)
@@ -154,7 +150,6 @@ function NP:SetCVars()
 
 	-- the order of these is important !!
 	NP:SetCVar('nameplateShowAll', NP.db.visibility.showAll and 1 or 0)
-	NP:SetCVar('nameplateShowSelf', (NP.db.units.PLAYER.useStaticPosition or not NP.db.units.PLAYER.enable) and 0 or 1)
 	NP:SetCVar('nameplateShowEnemyMinions', NP.db.visibility.enemy.minions and 1 or 0)
 	NP:SetCVar('nameplateShowEnemyGuardians', NP.db.visibility.enemy.guardians and 1 or 0)
 	NP:SetCVar('nameplateShowEnemyMinus', NP.db.visibility.enemy.minus and 1 or 0)
@@ -295,7 +290,7 @@ function NP:StylePlate(nameplate)
 	nameplate.ClassificationIndicator = NP:Construct_ClassificationIndicator(nameplate.RaisedElement)
 	nameplate.Castbar = NP:Construct_Castbar(nameplate)
 	nameplate.Portrait = NP:Construct_Portrait(nameplate.RaisedElement)
-	nameplate.QuestIcons = NP:Construct_QuestIcons(nameplate.RaisedElement)
+	--nameplate.QuestIcons = NP:Construct_QuestIcons(nameplate.RaisedElement)
 	nameplate.RaidTargetIndicator = NP:Construct_RaidTargetIndicator(nameplate.RaisedElement)
 	nameplate.TargetIndicator = NP:Construct_TargetIndicator(nameplate)
 	nameplate.ThreatIndicator = NP:Construct_ThreatIndicator(nameplate.RaisedElement)
@@ -303,7 +298,6 @@ function NP:StylePlate(nameplate)
 	nameplate.ClassPower = NP:Construct_ClassPower(nameplate)
 	nameplate.PvPIndicator = NP:Construct_PvPIndicator(nameplate.RaisedElement) -- Horde / Alliance / HonorInfo
 	nameplate.PvPClassificationIndicator = NP:Construct_PvPClassificationIndicator(nameplate.RaisedElement) -- Cart / Flag / Orb / Assassin Bounty
-	nameplate.PVPRole = NP:Construct_PVPRole(nameplate.RaisedElement)
 	nameplate.Cutaway = NP:Construct_Cutaway(nameplate)
 
 	NP:Construct_Auras(nameplate)
@@ -322,7 +316,6 @@ end
 
 function NP:UpdatePlate(nameplate, updateBase)
 	NP:Update_RaidTargetIndicator(nameplate)
-	NP:Update_PVPRole(nameplate)
 	NP:Update_Portrait(nameplate)
 	NP:Update_QuestIcons(nameplate)
 
@@ -372,7 +365,6 @@ NP.DisableInNotNameOnly = {
 	'QuestIcons',
 	'Highlight',
 	'Portrait',
-	'PVPRole'
 }
 
 NP.DisableElements = {
@@ -415,9 +407,6 @@ function NP:DisablePlate(nameplate, nameOnly, nameOnlySF)
 
 		nameplate.Portrait:ClearAllPoints()
 		nameplate.Portrait:Point('RIGHT', nameplate.Name, 'LEFT', -6, 0)
-
-		nameplate.PVPRole:ClearAllPoints()
-		nameplate.PVPRole:Point('RIGHT', (nameplate.Portrait:IsShown() and nameplate.Portrait) or nameplate.Name, 'LEFT', -6, 0)
 
 		nameplate.QuestIcons:ClearAllPoints()
 		nameplate.QuestIcons:Point('LEFT', nameplate.Name, 'RIGHT', 6, 0)
@@ -796,9 +785,11 @@ local optionsTable = {
 function NP:HideInterfaceOptions()
 	for _, x in pairs(optionsTable) do
 		local o = _G['InterfaceOptionsNamesPanelUnitNameplates' .. x]
-		o:SetSize(0.0001, 0.0001)
-		o:SetAlpha(0)
-		o:Hide()
+		if o then
+			o:SetSize(0.0001, 0.0001)
+			o:SetAlpha(0)
+			o:Hide()
+		end
 	end
 end
 
@@ -837,18 +828,18 @@ function NP:Initialize()
 	end
 
 	hooksecurefunc(_G.NamePlateDriverFrame, 'UpdateNamePlateOptions', NP.SetNamePlateSizes)
-	hooksecurefunc(_G.NamePlateDriverFrame, 'SetupClassNameplateBars', function(frame)
-		if not frame or frame:IsForbidden() then
-			return
-		end
-		if frame.classNamePlateMechanicFrame then
-			frame.classNamePlateMechanicFrame:Hide()
-		end
-		if frame.classNamePlatePowerBar then
-			frame.classNamePlatePowerBar:Hide()
-			frame.classNamePlatePowerBar:UnregisterAllEvents()
-		end
-	end)
+	--hooksecurefunc(_G.NamePlateDriverFrame, 'SetupClassNameplateBars', function(frame)
+	--	if not frame or frame:IsForbidden() then
+	--		return
+	--	end
+	--	if frame.classNamePlateMechanicFrame then
+	--		frame.classNamePlateMechanicFrame:Hide()
+	--	end
+	--	if frame.classNamePlatePowerBar then
+	--		frame.classNamePlatePowerBar:Hide()
+	--		frame.classNamePlatePowerBar:UnregisterAllEvents()
+	--	end
+	--end)
 
 	ElvUF:Spawn('player', 'ElvNP_Player', '')
 

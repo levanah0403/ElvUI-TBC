@@ -40,7 +40,7 @@ local type, error, tostring, tonumber, assert, select = type, error, tostring, t
 local setmetatable, wipe, unpack, pairs, next = setmetatable, wipe, unpack, pairs, next
 local str_match, format, tinsert, tremove = string.match, format, tinsert, tremove
 
-local WoWClassic = select(4, GetBuildInfo()) < 20000
+local WoWClassic = WOW_PROJECT_ID == WOW_PROJECT_CLASSIC -- select(4, GetBuildInfo()) < 20000
 
 local KeyBound = LibStub("LibKeyBound-1.0", true)
 local CBH = LibStub("CallbackHandler-1.0")
@@ -1118,7 +1118,7 @@ function Update(self, fromUpdateConfig)
 	local texture = self:GetTexture()
 
 	-- Cooldown desaturate can control saturation, we don't want to override it here
-	local allowSaturation = not self.saturationLocked and not self.LevelLinkLockIcon:IsShown()
+	local allowSaturation = not self.saturationLocked and self.LevelLinkLockIcon and not self.LevelLinkLockIcon:IsShown()
 
 	-- Zone ability button handling
 	self.zoneAbilityDisabled = false

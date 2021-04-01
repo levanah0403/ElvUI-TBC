@@ -235,10 +235,10 @@ function M:Initialize()
 		WorldMapFrame.BlackoutFrame.Blackout:SetTexture()
 		WorldMapFrame.BlackoutFrame:EnableMouse(false)
 
-		self:SecureHook(WorldMapFrame, 'Maximize', 'SetLargeWorldMap')
-		self:SecureHook(WorldMapFrame, 'Minimize', 'SetSmallWorldMap')
-		self:SecureHook(WorldMapFrame, 'SynchronizeDisplayState')
-		self:SecureHook(WorldMapFrame, 'UpdateMaximizedSize')
+		--self:SecureHook(WorldMapFrame, 'Maximize', 'SetLargeWorldMap')
+		--self:SecureHook(WorldMapFrame, 'Minimize', 'SetSmallWorldMap')
+		--self:SecureHook(WorldMapFrame, 'SynchronizeDisplayState')
+		--self:SecureHook(WorldMapFrame, 'UpdateMaximizedSize')
 
 		self:SecureHookScript(WorldMapFrame, 'OnShow', function()
 			if WorldMapFrame:IsMaximized() then

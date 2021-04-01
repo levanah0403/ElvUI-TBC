@@ -16,7 +16,6 @@ local GetCVar = GetCVar
 local GetCVarBool = GetCVarBool
 local GetDifficultyInfo = GetDifficultyInfo
 local GetInstanceInfo = GetInstanceInfo
-local GetNumClasses = GetNumClasses
 local GetNumSpecializationsForClassID = GetNumSpecializationsForClassID
 local GetPvpTalentInfoByID = GetPvpTalentInfoByID
 local GetRealZoneText = GetRealZoneText
@@ -162,8 +161,8 @@ local function UpdateClassSection()
 		if not classTable then
 			local classDisplayName, classTag, classID
 			classTable, classIndexTable = {}, {}
-			for i = 1, GetNumClasses() do
-				classDisplayName, classTag, classID = GetClassInfo(i)
+			for i, classTag in ipairs(CLASS_SORT_ORDER) do
+				classDisplayName = LOCALIZED_CLASS_NAMES_MALE[classTag]
 				if not classTable[classTag] then
 					classTable[classTag] = {}
 				end

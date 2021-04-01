@@ -9,7 +9,6 @@ local format, gsub, ipairs, pairs, select, strmatch, strsplit = format, gsub, ip
 local tconcat, tinsert, tremove, type, wipe, tonumber = table.concat, tinsert, tremove, type, wipe, tonumber
 local GetScreenWidth = GetScreenWidth
 local IsAddOnLoaded = IsAddOnLoaded
-local GetNumClasses = GetNumClasses
 local GetClassInfo = GetClassInfo
 
 -- GLOBALS: ElvUF_Parent, ElvUF_Player, ElvUF_Pet, ElvUF_PetTarget, ElvUF_Party, ElvUF_Raidpet
@@ -2734,9 +2733,8 @@ local function GetOptionsTable_GeneralGroup(updateFunc, groupName, numUnits)
 		config.args.sortingGroup.args.classSetup.inline = true
 
 		local classTable = {}
-		for i = 1, GetNumClasses() do
-			local classDisplayName, classTag = GetClassInfo(i)
-			classTable[classTag] = classDisplayName
+		for i, classTag in next, CLASS_SORT_ORDER do
+			classTable[classTag] = LOCALIZED_CLASS_NAMES_MALE[classTag]
 			config.args.sortingGroup.args.classSetup.args['CLASS'..i] = ACH:Select(' ', nil, i, classTable)
 		end
 	else

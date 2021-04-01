@@ -8,7 +8,6 @@ local type, pairs = type, pairs
 local min, format = min, format
 local CreateFrame = CreateFrame
 local GetXPExhaustion = GetXPExhaustion
-local IsXPUserDisabled = IsXPUserDisabled
 local GetQuestLogRewardXP = GetQuestLogRewardXP
 local IsPlayerAtEffectiveMaxLevel = IsPlayerAtEffectiveMaxLevel
 local C_QuestLog_GetNumQuestLogEntries = C_QuestLog.GetNumQuestLogEntries
@@ -31,7 +30,7 @@ function DB:ExperienceBar_CheckQuests(questID, completedOnly)
 end
 
 function DB:ExperienceBar_ShouldBeVisible()
-	return not IsPlayerAtEffectiveMaxLevel() and not IsXPUserDisabled()
+	return not IsPlayerAtEffectiveMaxLevel()
 end
 
 local function RestedQuestLayering()
@@ -67,7 +66,7 @@ function DB:ExperienceBar_Update()
 		bar:SetValue(1)
 
 		if textFormat ~= 'NONE' then
-			displayString = IsXPUserDisabled() and L["Disabled"] or L["Max Level"]
+			displayString = L["Max Level"]
 		end
 	else
 		bar:SetMinMaxValues(0, XPToLevel)
@@ -192,14 +191,12 @@ function DB:ExperienceBar_Toggle()
 		DB:RegisterEvent('QUEST_LOG_UPDATE', 'ExperienceBar_QuestXP')
 		DB:RegisterEvent('ZONE_CHANGED', 'ExperienceBar_QuestXP')
 		DB:RegisterEvent('ZONE_CHANGED_NEW_AREA', 'ExperienceBar_QuestXP')
-		DB:RegisterEvent('SUPER_TRACKING_CHANGED', 'ExperienceBar_QuestXP')
 	else
 		DB:UnregisterEvent('PLAYER_XP_UPDATE')
 		DB:UnregisterEvent('UPDATE_EXHAUSTION')
 		DB:UnregisterEvent('QUEST_LOG_UPDATE')
 		DB:UnregisterEvent('ZONE_CHANGED')
 		DB:UnregisterEvent('ZONE_CHANGED_NEW_AREA')
-		DB:UnregisterEvent('SUPER_TRACKING_CHANGED')
 	end
 
 	DB:ExperienceBar_Update()

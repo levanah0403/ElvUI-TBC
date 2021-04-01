@@ -1165,7 +1165,6 @@ function E:Contruct_StaticPopups()
 		_G['ElvUI_StaticPopup'..index..'CheckButton']:SetScript('OnClick', E.StaticPopup_CheckButtonOnClick)
 
 		--Skin
-		E.StaticPopupFrames[index].Border:StripTextures()
 		E.StaticPopupFrames[index]:SetTemplate('Transparent')
 
 		for i = 1, 4 do
@@ -1175,7 +1174,7 @@ function E:Contruct_StaticPopups()
 				E.StaticPopup_OnClick(btn:GetParent(), btn:GetID())
 			end)
 
-			Skins:HandleButton(button)
+			--Skins:HandleButton(button)
 		end
 
 		_G['ElvUI_StaticPopup'..index..'CheckButton']:Size(24)

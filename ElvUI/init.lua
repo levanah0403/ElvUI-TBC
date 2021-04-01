@@ -120,7 +120,7 @@ do
 	E:AddLib('ACL', 'AceLocale-3.0-ElvUI')
 	E:AddLib('LAB', 'LibActionButton-1.0-ElvUI')
 	E:AddLib('LDB', 'LibDataBroker-1.1')
-	--E:AddLib('DualSpec', 'LibDualSpec-1.0')
+--	E:AddLib('DualSpec', 'LibDualSpec-1.0')
 	E:AddLib('SimpleSticky', 'LibSimpleSticky-1.0')
 	E:AddLib('SpellRange', 'SpellRange-1.0')
 	E:AddLib('ButtonGlow', 'LibButtonGlow-1.0', true)
