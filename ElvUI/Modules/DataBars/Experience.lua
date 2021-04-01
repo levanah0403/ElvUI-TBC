@@ -121,7 +121,7 @@ function DB:ExperienceBar_QuestXP()
 
 	QuestLogXP = 0
 
-	for i = 1, C_QuestLog_GetNumQuestLogEntries() do
+	--[[for i = 1, C_QuestLog_GetNumQuestLogEntries() do
 		local info = C_QuestLog_GetInfo(i)
 		if info and not info.isHidden then
 			local currentZoneCheck = (bar.db.questCurrentZoneOnly and info.isOnMap) or not bar.db.questCurrentZoneOnly
@@ -130,7 +130,7 @@ function DB:ExperienceBar_QuestXP()
 				DB:ExperienceBar_CheckQuests(info.questID, bar.db.questCompletedOnly)
 			end
 		end
-	end
+	end]]
 
 	if QuestLogXP > 0 then
 		bar.Quest:SetMinMaxValues(0, XPToLevel)
