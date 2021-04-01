@@ -149,15 +149,11 @@ function E:SetupCVars(noDisplayMsg)
 	SetCVar('whisperMode', 'inline')
 	SetCVar('wholeChatWindowClickable', 0)
 	SetCVar('showTutorials', 0)
-	SetCVar('showNPETutorials', 0)
 	SetCVar('UberTooltips', 1)
-	SetCVar('threatWarning', 3)
 	SetCVar('alwaysShowActionBars', 1)
 	SetCVar('lockActionBars', 1)
 	SetCVar('spamFilter', 0)
 	SetCVar('cameraDistanceMaxZoomFactor', 2.6)
-	SetCVar('showQuestTrackingTooltips', 1)
-	SetCVar('fstack_preferParentKeys', 0) --Add back the frame names via fstack!
 
 	NP:CVarReset()
 
