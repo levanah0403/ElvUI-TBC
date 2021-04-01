@@ -57,7 +57,7 @@ V.chat = {
 }
 
 V.skins = {
-	ace3Enable = true,
+	ace3Enable = false,
 	checkBoxSkin = true,
 	parchmentRemoverEnable = false,
 	blizzard = {
