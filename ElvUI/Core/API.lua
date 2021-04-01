@@ -554,7 +554,7 @@ function E:PLAYER_REGEN_DISABLED()
 	end
 end
 
-function E:GetUnitBattlefieldFaction(unit)
+--[[function E:GetUnitBattlefieldFaction(unit)
 	local englishFaction, localizedFaction = UnitFactionGroup(unit)
 
 	-- this might be a rated BG or wargame and if so the player's faction might be altered
@@ -573,7 +573,7 @@ function E:GetUnitBattlefieldFaction(unit)
 	end
 
 	return englishFaction, localizedFaction
-end
+end]]
 
 function E:PLAYER_LEVEL_UP(_, level)
 	E.mylevel = level
