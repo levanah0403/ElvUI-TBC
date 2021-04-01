@@ -90,7 +90,7 @@ end
 
 local function CalculateTimeValues(tooltip)
 	if (tooltip and E.global.datatexts.settings.Time.localTime) or (not tooltip and not E.global.datatexts.settings.Time.localTime) then
-		local dateTable = C_DateAndTime_GetCurrentCalendarTime()
+		local dateTable = date('*t')
 		return ConvertTime(dateTable.hour, dateTable.minute)
 	else
 		local dateTable = date('*t')
@@ -154,7 +154,7 @@ local difficultyTag = { -- Raid Finder, Normal, Heroic, Mythic
 
 local function sortFunc(a,b) return a[1] < b[1] end
 
-local collectedInstanceImages = false
+--local collectedInstanceImages = false
 local function OnEnter()
 	DT.tooltip:ClearLines()
 
@@ -163,7 +163,7 @@ local function OnEnter()
 		RequestRaidInfo()
 	end
 
-	if not collectedInstanceImages then
+	--[[if not collectedInstanceImages then
 		local numTiers = (EJ_GetNumTiers() or 0)
 		if numTiers > 0 then
 			local currentTier = EJ_GetCurrentTier()
@@ -186,11 +186,11 @@ local function OnEnter()
 
 			collectedInstanceImages = true
 		end
-	end
+	end]]
 
 	local addedHeader = false
 
-	for i = 1, GetNumWorldPVPAreas() do
+	--[[for i = 1, GetNumWorldPVPAreas() do
 		local _, localizedName, isActive, _, startTime, canEnter = GetWorldPVPAreaInfo(i)
 
 		if isActive then
@@ -209,7 +209,7 @@ local function OnEnter()
 
 			DT.tooltip:AddDoubleLine(format(formatBattleGroundInfo, localizedName), startTime, 1, 1, 1, lockoutColorNormal.r, lockoutColorNormal.g, lockoutColorNormal.b)
 		end
-	end
+	end]]
 
 	local lockedInstances = {raids = {}, dungeons = {}}
 
@@ -275,7 +275,7 @@ local function OnEnter()
 	end
 
 	local addedLine = false
-	local worldbossLockoutList = {}
+	--[[local worldbossLockoutList = {}
 	for i = 1, GetNumSavedWorldBosses() do
 		local name, _, reset = GetSavedWorldBossInfo(i)
 		tinsert(worldbossLockoutList, {name, reset})
@@ -293,10 +293,10 @@ local function OnEnter()
 			end
 			DT.tooltip:AddDoubleLine(name, SecondsToTime(reset, true, nil, 3), 1, 1, 1, 0.8, 0.8, 0.8)
 		end
-	end
+	end]]
 
 	-- Torghast
-	if not TorghastInfo then
+	--[[if not TorghastInfo then
 		TorghastInfo = C_AreaPoiInfo_GetAreaPOIInfo(1543, 6640)
 	end
 
@@ -319,14 +319,14 @@ local function OnEnter()
 				DT.tooltip:AddDoubleLine(nameText, levelText)
 			end
 		end
-	end
+	end]]
 
 	local Hr, Min, AmPm = CalculateTimeValues(true)
 	if DT.tooltip:NumLines() > 0 then
 		DT.tooltip:AddLine(' ')
 	end
 
-	DT.tooltip:AddDoubleLine(L["Daily Reset"], SecondsToTime(C_DateAndTime_GetSecondsUntilDailyReset()), 1, 1, 1, lockoutColorNormal.r, lockoutColorNormal.g, lockoutColorNormal.b)
+	--DT.tooltip:AddDoubleLine(L["Daily Reset"], SecondsToTime(C_DateAndTime_GetSecondsUntilDailyReset()), 1, 1, 1, lockoutColorNormal.r, lockoutColorNormal.g, lockoutColorNormal.b)
 
 	if AmPm == -1 then
 		DT.tooltip:AddDoubleLine(E.global.datatexts.settings.Time.localTime and TIMEMANAGER_TOOLTIP_REALMTIME or TIMEMANAGER_TOOLTIP_LOCALTIME, format(europeDisplayFormat_nocolor, Hr, Min), 1, 1, 1, lockoutColorNormal.r, lockoutColorNormal.g, lockoutColorNormal.b)
