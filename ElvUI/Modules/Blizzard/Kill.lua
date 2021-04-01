@@ -5,8 +5,8 @@ local _G = _G
 local hooksecurefunc = hooksecurefunc
 
 function B:KillBlizzard()
-	_G.Display_UIScaleSlider:Kill()
-	_G.Display_UseUIScale:Kill()
+	_G.Advanced_UIScaleSlider:Kill()
+	_G.Advanced_UseUIScale:Kill()
 end
 
 local function AcknowledgeTips()
