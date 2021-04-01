@@ -64,9 +64,19 @@ function B:Initialize()
 	B:PositionCaptureBar()
 	B:PositionDurabilityFrame()
 	B:PositionGMFrames()
+	B:SkinBlizzTimers()
+	B:PositionVehicleFrame()
+	B:PositionTalkingHead()
+	B:Handle_LevelUpDisplay_BossBanner()
+	B:Handle_UIWidgets()
 
 	if not (IsAddOnLoaded('DugisGuideViewerZ') or IsAddOnLoaded('!KalielsTracker')) then
-		B:MoveQuestWatchFrame()
+		B:MoveObjectiveFrame()
+	end
+
+	if not IsAddOnLoaded('SimplePowerBar') then
+		B:PositionAltPowerBar()
+		B:SkinAltPowerBar()
 	end
 
 	E:CreateMover(_G.LossOfControlFrame, 'LossControlMover', L["Loss Control Icon"])
@@ -76,6 +86,13 @@ function B:Initialize()
 	E:CreateMover(_G.BNToastFrame, 'BNETMover', L["BNet Frame"], nil, nil, PostBNToastMove)
 	_G.BNToastFrame.mover:Size(_G.BNToastFrame:GetSize())
 	TT:SecureHook(_G.BNToastFrame, 'SetPoint', 'RepositionBNET')
+
+	-- Quick Join Bug
+	CreateFrame('Frame'):SetScript('OnUpdate', function()
+		if _G.LFRBrowseFrame.timeToClear then
+			_G.LFRBrowseFrame.timeToClear = nil
+		end
+	end)
 
 	--Add (+X%) to quest rewards experience text
 	B:SecureHook('QuestInfo_Display', 'QuestXPPercent')
