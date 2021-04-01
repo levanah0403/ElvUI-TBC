@@ -1,17 +1,17 @@
 <Ui xmlns='http://www.blizzard.com/wow/ui/'>
 	<Script file='AddonManager.lua'/>
 	<Script file='AuctionHouse.lua'/>
-	<Script file='Battlefield.lua'/>
+	<!-- <Script file='Battlefield.lua'/> -->
 	<Script file='Bags.lua'/>
 	<Script file='Battlenet.lua'/>
 	<Script file='BGMap.lua'/>
-	<Script file='BGScore.lua'/>
+	<!-- <Script file='BGScore.lua'/> -->
 	<Script file='Binding.lua'/>
 	<Script file='BlizzardOptions.lua'/>
 	<Script file='Channels.lua'/>
 	<Script file='Character.lua'/>
 	<Script file='Communities.lua'/>
-	<Script file='Craft.lua'/>
+	<!-- <Script file='Craft.lua'/> -->
 	<Script file='Debug.lua'/>
 	<Script file='DressingRoom.lua'/>
 	<Script file='Friends.lua'/>
@@ -28,7 +28,7 @@
 	<Script file='Misc.lua'/>
 	<Script file='Petition.lua'/>
 	<Script file='Quest.lua'/>
-	<Script file='QuestTimers.lua'/>
+	<!-- <Script file='QuestTimers.lua'/> -->
 	<Script file='Raid.lua'/>
 	<Script file='SpellBook.lua'/>
 	<Script file='Stable.lua'/>
@@ -40,6 +40,6 @@
 	<Script file='Trade.lua'/>
 	<Script file='TradeSkill.lua'/>
 	<Script file='Trainer.lua'/>
-	<Script file='Tutorial.lua'/>
+	<!-- <Script file='Tutorial.lua'/> -->
 	<Script file='WorldMap.lua'/>
 </Ui>
