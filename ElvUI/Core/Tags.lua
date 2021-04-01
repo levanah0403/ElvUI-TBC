@@ -53,8 +53,6 @@ local UnitIsPlayer = UnitIsPlayer
 local UnitIsPVP = UnitIsPVP
 local UnitIsPVPFreeForAll = UnitIsPVPFreeForAll
 local UnitIsUnit = UnitIsUnit
-local UnitIsWildBattlePet = UnitIsWildBattlePet
-local UnitEffectiveLevel = UnitEffectiveLevel
 local UnitPower = UnitPower
 local UnitPowerMax = UnitPowerMax
 local UnitPowerType = UnitPowerType
@@ -592,7 +590,7 @@ end
 
 ElvUF.Tags.Events['difficultycolor'] = 'UNIT_LEVEL PLAYER_LEVEL_UP'
 ElvUF.Tags.Methods['difficultycolor'] = function(unit)
-	local c = GetCreatureDifficultyColor(UnitEffectiveLevel(unit))
+	local c = GetCreatureDifficultyColor(UnitLevel(unit))
 
 	return Hex(c.r, c.g, c.b)
 end
@@ -622,10 +620,8 @@ end
 
 ElvUF.Tags.Events['smartlevel'] = 'UNIT_LEVEL PLAYER_LEVEL_UP'
 ElvUF.Tags.Methods['smartlevel'] = function(unit)
-	local level = UnitEffectiveLevel(unit)
-	if UnitIsWildBattlePet(unit) or UnitIsBattlePetCompanion(unit) then
-		return UnitBattlePetLevel(unit)
-	elseif level == UnitEffectiveLevel('player') then
+	local level = UnitLevel(unit)
+	if level == UnitLevel('player') then
 		return nil
 	elseif level > 0 then
 		return level
