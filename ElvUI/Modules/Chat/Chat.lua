@@ -53,19 +53,19 @@ local IsActivePlayerMentor = IsActivePlayerMentor
 local UnitName = UnitName
 
 local C_DateAndTime_GetCurrentCalendarTime = C_DateAndTime.GetCurrentCalendarTime
-local C_PlayerMentorship_IsActivePlayerConsideredNewcomer = C_PlayerMentorship.IsActivePlayerConsideredNewcomer
-local C_BattleNet_GetAccountInfoByID = C_BattleNet.GetAccountInfoByID
-local C_BattleNet_GetFriendAccountInfo = C_BattleNet.GetFriendAccountInfo
-local C_BattleNet_GetFriendGameAccountInfo = C_BattleNet.GetFriendGameAccountInfo
-local C_BattleNet_GetFriendNumGameAccounts = C_BattleNet.GetFriendNumGameAccounts
+--local C_PlayerMentorship_IsActivePlayerConsideredNewcomer = C_PlayerMentorship.IsActivePlayerConsideredNewcomer
+--local C_BattleNet_GetAccountInfoByID = C_BattleNet.GetAccountInfoByID
+--local C_BattleNet_GetFriendAccountInfo = C_BattleNet.GetFriendAccountInfo
+--local C_BattleNet_GetFriendGameAccountInfo = C_BattleNet.GetFriendGameAccountInfo
+--local C_BattleNet_GetFriendNumGameAccounts = C_BattleNet.GetFriendNumGameAccounts
 local C_ChatInfo_GetChannelRuleset = C_ChatInfo.GetChannelRuleset
 local C_Club_GetInfoFromLastCommunityChatLine = C_Club.GetInfoFromLastCommunityChatLine
-local C_LFGList_GetActivityInfo = C_LFGList.GetActivityInfo
-local C_LFGList_GetSearchResultInfo = C_LFGList.GetSearchResultInfo
+--local C_LFGList_GetActivityInfo = C_LFGList.GetActivityInfo
+--local C_LFGList_GetSearchResultInfo = C_LFGList.GetSearchResultInfo
 local C_SocialGetLastItem = C_Social.GetLastItem
 local C_SocialIsSocialEnabled = C_Social.IsSocialEnabled
-local C_SocialQueue_GetGroupMembers = C_SocialQueue.GetGroupMembers
-local C_SocialQueue_GetGroupQueues = C_SocialQueue.GetGroupQueues
+--local C_SocialQueue_GetGroupMembers = C_SocialQueue.GetGroupMembers
+--local C_SocialQueue_GetGroupQueues = C_SocialQueue.GetGroupQueues
 local C_VoiceChat_GetMemberName = C_VoiceChat.GetMemberName
 local C_VoiceChat_SetPortraitTexture = C_VoiceChat.SetPortraitTexture
 local ChatChannelRuleset_Mentor = Enum.ChatChannelRuleset.Mentor
@@ -1264,7 +1264,7 @@ function CH:HandleShortChannels(msg)
 	return msg
 end
 
-function CH:GetBNFirstToonClassColor(id)
+--[[function CH:GetBNFirstToonClassColor(id)
 	if not id then return end
 	for i = 1, BNGetNumFriends() do
 		local accountInfo = C_BattleNet_GetFriendAccountInfo(i)
@@ -1282,9 +1282,9 @@ function CH:GetBNFirstToonClassColor(id)
 			break
 		end
 	end
-end
+end]]
 
-function CH:GetBNFriendColor(name, id, useBTag)
+--[[function CH:GetBNFriendColor(name, id, useBTag)
 	local accountInfo = C_BattleNet_GetAccountInfoByID(id)
 	if not accountInfo then return name end
 
@@ -1309,7 +1309,7 @@ function CH:GetBNFriendColor(name, id, useBTag)
 
 	local Color = E:ClassColor(Class)
 	return (Color and format('|c%s%s|r', Color.colorStr, TAG or name)) or TAG or name, isBattleTagFriend and BATTLE_TAG
-end
+end]]
 
 local PluginIconsCalls = {}
 function CH:AddPluginIcons(func)
@@ -1396,7 +1396,7 @@ function CH:ChatFrame_ReplaceIconAndGroupExpressions(message, noIconReplacement,
 end
 
 -- copied from ChatFrame.lua
-local function GetPFlag(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17)
+--[[local function GetPFlag(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17)
 	-- Renaming for clarity:
 	local specialFlag = arg6;
 	--local zoneChannelID = arg7;
@@ -1420,7 +1420,7 @@ local function GetPFlag(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, ar
 	end
 
 	return "";
-end
+end]]
 
 function CH:ChatFrame_MessageEventHandler(frame, event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, isHistory, historyTime, historyName, historyBTag)
 	-- ElvUI Chat History Note: isHistory, historyTime, historyName, and historyBTag are passed from CH:DisplayChatHistory() and need to be on the end to prevent issues in other addons that listen on ChatFrame_MessageEventHandler.
@@ -2337,7 +2337,7 @@ function CH:CheckLFGRoles()
 	end
 end
 
-function CH:SocialQueueIsLeader(playerName, leaderName)
+--[[function CH:SocialQueueIsLeader(playerName, leaderName)
 	if leaderName == playerName then
 		return true
 	end
@@ -2362,7 +2362,7 @@ function CH:SocialQueueIsLeader(playerName, leaderName)
 			end
 		end
 	end
-end
+end]]
 
 local socialQueueCache = {}
 local function RecentSocialQueue(TIME, MSG)
@@ -2397,7 +2397,7 @@ function CH:SocialQueueMessage(guid, message)
 	E:Print(format('|Hsqu:%s|h%s|h', guid, strtrim(message)))
 end
 
-function CH:SocialQueueEvent(_, guid, numAddedItems) -- event, guid, numAddedItems
+--[[function CH:SocialQueueEvent(_, guid, numAddedItems) -- event, guid, numAddedItems
 	if not CH.db.socialQueueMessages then return end
 	if numAddedItems == 0 or not guid then return end
 
@@ -2459,7 +2459,7 @@ function CH:SocialQueueEvent(_, guid, numAddedItems) -- event, guid, numAddedIte
 			CH:SocialQueueMessage(guid, format('%s %s: |cff00CCFF%s|r %s', coloredName, SOCIAL_QUEUE_QUEUED_FOR, output, outputCount))
 		end
 	end
-end
+end]]
 
 local FindURL_Events = {
 	'CHAT_MSG_WHISPER',

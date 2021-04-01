@@ -86,7 +86,6 @@ local UNKNOWN = UNKNOWN
 local LEVEL = LEVEL
 local PVP = PVP
 
-local C_PetJournal_GetPetTeamAverageLevel = C_PetJournal.GetPetTeamAverageLevel
 -- GLOBALS: ElvUF, Hex, _TAGS, _COLORS
 
 --Expose local functions for plugins onto this table
@@ -594,7 +593,7 @@ end
 ElvUF.Tags.Events['difficultycolor'] = 'UNIT_LEVEL PLAYER_LEVEL_UP'
 ElvUF.Tags.Methods['difficultycolor'] = function(unit)
 	local c
-	if UnitIsWildBattlePet(unit) or UnitIsBattlePetCompanion(unit) then
+	--[[if UnitIsWildBattlePet(unit) or UnitIsBattlePetCompanion(unit) then
 		local level = UnitBattlePetLevel(unit)
 
 		local teamLevel = C_PetJournal_GetPetTeamAverageLevel();
@@ -602,10 +601,8 @@ ElvUF.Tags.Methods['difficultycolor'] = function(unit)
 			c = GetRelativeDifficultyColor(teamLevel, level)
 		else
 			c = QuestDifficultyColors.difficult
-		end
-	else
-		c = GetCreatureDifficultyColor(UnitEffectiveLevel(unit))
-	end
+		end]]
+	c = GetCreatureDifficultyColor(UnitEffectiveLevel(unit))
 
 	return Hex(c.r, c.g, c.b)
 end
