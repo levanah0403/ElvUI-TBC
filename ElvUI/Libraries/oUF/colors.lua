@@ -38,6 +38,11 @@ local colors = {
 	debuff = {},
 	reaction = {},
 	power = {},
+	happiness = {
+		[1] = {.69, .31, .31},
+		[2] = {.65, .63, .35},
+		[3] = {.33, .59, .33},
+	},
 	threat = {},
 }
 
