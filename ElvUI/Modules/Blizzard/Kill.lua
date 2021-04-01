@@ -18,8 +18,10 @@ end
 function B:DisableHelpTip() -- auto complete helptips
 	if not E.global.general.disableTutorialButtons then return end
 
-	hooksecurefunc(_G.HelpTip, 'Show', AcknowledgeTips)
-	E:Delay(1, AcknowledgeTips)
+	if _G.HelpTip then
+		hooksecurefunc(_G.HelpTip, 'Show', AcknowledgeTips)
+		E:Delay(1, AcknowledgeTips)
+	end
 end
 
 -- NOTE: ActionBars heavily conflicts with NPE
