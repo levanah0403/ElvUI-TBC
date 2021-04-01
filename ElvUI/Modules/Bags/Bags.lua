@@ -1,16 +1,16 @@
-local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local E, L, V, P, G = unpack(select(2, ...)) --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local B = E:GetModule('Bags')
 local TT = E:GetModule('Tooltip')
 local Skins = E:GetModule('Skins')
 local Search = E.Libs.ItemSearch
 
---Lua functions
+
 local _G = _G
 local type, ipairs, next, unpack, select, pcall = type, ipairs, next, unpack, select, pcall
 local tinsert, tremove, twipe, tmaxn = tinsert, tremove, wipe, table.maxn
 local floor, ceil, abs = floor, ceil, abs
 local format, sub = format, strsub
---WoW API / Variables
+
 local BankFrameItemButton_Update = BankFrameItemButton_Update
 local BankFrameItemButton_UpdateLocked = BankFrameItemButton_UpdateLocked
 local CloseBag, CloseBackpack, CloseBankFrame = CloseBag, CloseBackpack, CloseBankFrame
@@ -61,7 +61,6 @@ local NUM_BANKGENERIC_SLOTS = NUM_BANKGENERIC_SLOTS
 local NUM_CONTAINER_FRAMES = NUM_CONTAINER_FRAMES
 local LE_ITEM_CLASS_QUESTITEM = LE_ITEM_CLASS_QUESTITEM
 local SEARCH = SEARCH
--- GLOBALS: ElvUIBags, ElvUIBagMover, ElvUIBankMover
 
 local GameTooltip = _G.GameTooltip
 
