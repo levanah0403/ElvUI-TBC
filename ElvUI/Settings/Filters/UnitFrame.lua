@@ -1,14 +1,7 @@
-local E, L, V, P, G = unpack(select(2, ...)); --Engine
-local UF = E:GetModule('UnitFrames');
+local E, L, V, P, G = unpack(select(2, ...))
+local UF = E:GetModule('UnitFrames')
 
---Lua functions
 local unpack = unpack
-local strlower = strlower
-local strfind = strfind
---WoW API / Variables
-local IsPlayerSpell = IsPlayerSpell
-local GetSpellSubtext = GetSpellSubtext
-local GetSpellInfo = GetSpellInfo
 
 local function Defaults(priorityOverride)
 	return {
@@ -164,7 +157,7 @@ G.unitframe.aurafilters.CCDebuffs = {
 	},
 }
 
--- These are buffs that can be considered "protection" buffs
+-- These are buffs that can be considered 'protection' buffs
 G.unitframe.aurafilters.TurtleBuffs = {
 	type = 'Whitelist',
 	spells = {
@@ -198,7 +191,6 @@ G.unitframe.aurafilters.TurtleBuffs = {
 	},
 }
 
---Default whitelist for player buffs, still WIP
 G.unitframe.aurafilters.PlayerBuffs = {
 	type = 'Whitelist',
 	spells = {
@@ -349,10 +341,7 @@ G.unitframe.aurafilters.Blacklist = {
 	},
 }
 
---[[
-	This should be a list of important buffs that we always want to see when they are active
-	bloodlust, paladin hand spells, raid cooldowns, etc..
-]]
+-- A list of important buffs that we always want to see
 G.unitframe.aurafilters.Whitelist = {
 	type = 'Whitelist',
 	spells = {
@@ -559,14 +548,9 @@ function UF:AuraWatch_AddSpell(id, point, color, anyUnit, onlyShowMissing, displ
 	local r, g, b = 1, 1, 1
 	if color then r, g, b = unpack(color) end
 
-	local rankText = GetSpellSubtext(id)
-	local spellRank = rankText and strfind(rankText, '%d') and GetSpellSubtext(id) or nil
-
 	return {
 		id = id,
 		enabled = true,
-		name = GetSpellInfo(id),
-		rank = spellRank,
 		point = point or 'TOPLEFT',
 		color = { r = r, g = g, b = b },
 		anyUnit = anyUnit or false,
@@ -880,14 +864,12 @@ G.unitframe.ChannelTicks = {
 	[13544] = 5, --Mend Pet(Rank 7)
 }
 
-local f = CreateFrame("Frame")
-f:RegisterEvent("PLAYER_ENTERING_WORLD")
-f:SetScript("OnEvent", function()
-	if strlower(E.myclass) ~= "priest" then return end
-
-	local penanceTicks = IsPlayerSpell(193134) and 4 or 3
-	E.global.unitframe.ChannelTicks[47540] = penanceTicks --Penance
-end)
+-- Spells Effected By Talents
+G.unitframe.TalentChannelTicks = {
+	-- Priest
+	[47757]  = {tier = 1, column = 1, ticks = 4},	-- Penance (heal)
+	[47758]  = {tier = 1, column = 1, ticks = 4},	-- Penance (dps)
+}
 
 G.unitframe.ChannelTicksSize = {
 	-- Warlock
@@ -901,15 +883,13 @@ G.unitframe.HastedChannelTicks = {
 
 -- This should probably be the same as the whitelist filter + any personal class ones that may be important to watch
 G.unitframe.AuraBarColors = {
-	[2825]  = {r = 0.98, g = 0.57, b = 0.10}, -- Bloodlust
-	[32182] = {r = 0.98, g = 0.57, b = 0.10}, -- Heroism
-	[80353] = {r = 0.98, g = 0.57, b = 0.10}, -- Time Warp
-	[90355] = {r = 0.98, g = 0.57, b = 0.10}, -- Ancient Hysteria
+	[2825]  = { enable = true, color = {r = 0.98, g = 0.57, b = 0.10 }}, -- Bloodlust
+	[32182] = { enable = true, color = {r = 0.98, g = 0.57, b = 0.10 }}, -- Heroism
+	[80353] = { enable = true, color = {r = 0.98, g = 0.57, b = 0.10 }}, -- Time Warp
+	[90355] = { enable = true, color = {r = 0.98, g = 0.57, b = 0.10 }}, -- Ancient Hysteria
 }
 
-G.unitframe.AuraHighlightColors = {
-	[25771] = {enable = false, style = "FILL", color = {r = 0.85, g = 0, b = 0, a = 0.85}},
-}
+G.unitframe.AuraHighlightColors = {}
 
 G.unitframe.specialFilters = {
 	-- Whitelists
@@ -924,6 +904,7 @@ G.unitframe.specialFilters = {
 	notDispellable = true,
 	CastByNPC = true,
 	CastByPlayers = true,
+	BlizzardNameplate = true,
 
 	-- Blacklists
 	blockNonPersonal = true,
