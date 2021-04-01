@@ -1481,7 +1481,6 @@ function E:UpdateChat(skipCallback)
 end
 
 function E:UpdateDataBars(skipCallback)
-	DataBars:AzeriteBar_Toggle()
 	DataBars:ExperienceBar_Toggle()
 	DataBars:HonorBar_Toggle()
 	DataBars:ReputationBar_Toggle()
