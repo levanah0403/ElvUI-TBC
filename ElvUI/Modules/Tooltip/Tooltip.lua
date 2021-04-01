@@ -40,7 +40,6 @@ local UnitAura = UnitAura
 local UnitClass = UnitClass
 local UnitClassification = UnitClassification
 local UnitCreatureType = UnitCreatureType
-local UnitEffectiveLevel = UnitEffectiveLevel
 local UnitExists = UnitExists
 local UnitGroupRolesAssigned = UnitGroupRolesAssigned
 local UnitGUID = UnitGUID
@@ -192,10 +191,10 @@ function TT:SetUnitText(tt, unit)
 		local localeClass, class = UnitClass(unit)
 		if not localeClass or not class then return end
 
-		local nameRealm = (realm and realm ~= '' and format('%s-%s', name, realm)) or name
+		local nameRealm = (realm and realm ~= "" and format("%s-%s", name, realm)) or name
 		local guildName, guildRankName, _, guildRealm = GetGuildInfo(unit)
-		local pvpName, gender = UnitPVPName(unit), UnitSex(unit)
-		local level, realLevel = UnitEffectiveLevel(unit), UnitLevel(unit)
+		local pvpName = UnitPVPName(unit)
+		local level = UnitLevel(unit)
 		local relationship = UnitRealmRelationship(unit)
 		local isShiftKeyDown = IsShiftKeyDown()
 
@@ -205,69 +204,51 @@ function TT:SetUnitText(tt, unit)
 			name = pvpName
 		end
 
-		if realm and realm ~= '' then
+		if realm and realm ~= "" then
 			if isShiftKeyDown or TT.db.alwaysShowRealm then
-				name = name..'-'..realm
-			elseif relationship == _G.LE_REALM_RELATION_COALESCED then
+				name = name.."-"..realm
+			elseif(relationship == _G.LE_REALM_RELATION_COALESCED) then
 				name = name.._G.FOREIGN_SERVER_LABEL
-			elseif relationship == _G.LE_REALM_RELATION_VIRTUAL then
+			elseif(relationship == _G.LE_REALM_RELATION_VIRTUAL) then
 				name = name.._G.INTERACTIVE_SERVER_LABEL
 			end
 		end
 
 		local awayText = UnitIsAFK(unit) and AFK_LABEL or UnitIsDND(unit) and DND_LABEL or ''
-		_G.GameTooltipTextLeft1:SetFormattedText('|c%s%s%s|r', nameColor.colorStr, name or UNKNOWN, awayText)
+		_G.GameTooltipTextLeft1:SetFormattedText("|c%s%s%s|r", nameColor.colorStr, name or UNKNOWN, awayText)
 
 		local lineOffset = 2
 		if guildName then
 			if guildRealm and isShiftKeyDown then
-				guildName = guildName..'-'..guildRealm
+				guildName = guildName.."-"..guildRealm
 			end
 
 			if TT.db.guildRanks then
-				_G.GameTooltipTextLeft2:SetFormattedText('<|cff00ff10%s|r> [|cff00ff10%s|r]', guildName, guildRankName)
+				_G.GameTooltipTextLeft2:SetFormattedText("<|cff00ff10%s|r> [|cff00ff10%s|r]", guildName, guildRankName)
 			else
-				_G.GameTooltipTextLeft2:SetFormattedText('<|cff00ff10%s|r>', guildName)
+				_G.GameTooltipTextLeft2:SetFormattedText("<|cff00ff10%s|r>", guildName)
 			end
 
 			lineOffset = 3
 		end
 
 		local levelLine = TT:GetLevelLine(tt, lineOffset)
+
+		local diffColor = GetCreatureDifficultyColor(level)
+		local race = UnitRace(unit)
+		local levelString = format("|cff%02x%02x%02x%s|r %s |c%s%s|r", diffColor.r * 255, diffColor.g * 255, diffColor.b * 255, level > 0 and level or "??", race or '', nameColor.colorStr, localeClass)
+
 		if levelLine then
-			local diffColor = GetCreatureDifficultyColor(level)
-			local race, englishRace = UnitRace(unit)
-			local _, localizedFaction = E:GetUnitBattlefieldFaction(unit)
-			if localizedFaction and englishRace == 'Pandaren' then race = localizedFaction..' '..race end
-			local hexColor = E:RGBToHex(diffColor.r, diffColor.g, diffColor.b)
-			local unitGender = TT.db.gender and genderTable[gender]
-			if level < realLevel then
-				levelLine:SetFormattedText('%s%s|r |cffFFFFFF(%s)|r %s%s |c%s%s|r', hexColor, level > 0 and level or '??', realLevel, unitGender or '', race or '', nameColor.colorStr, localeClass)
-			else
-				levelLine:SetFormattedText('%s%s|r %s%s |c%s%s|r', hexColor, level > 0 and level or '??', unitGender or '', race or '', nameColor.colorStr, localeClass)
-			end
-		end
-
-		if TT.db.role then
-			local r, g, b, role = 1, 1, 1, UnitGroupRolesAssigned(unit)
-			if IsInGroup() and (UnitInParty(unit) or UnitInRaid(unit)) and (role ~= 'NONE') then
-				if role == 'HEALER' then
-					role, r, g, b = L["Healer"], 0, 1, .59
-				elseif role == 'TANK' then
-					role, r, g, b = _G.TANK, .16, .31, .61
-				elseif role == 'DAMAGER' then
-					role, r, g, b = L["DPS"], .77, .12, .24
-				end
-
-				GameTooltip:AddDoubleLine(format('%s:', _G.ROLE), role, nil, nil, nil, r, g, b)
-			end
+			levelLine:SetText(levelString)
+		else
+			GameTooltip:AddLine(levelString)
 		end
 
 		if TT.db.showElvUIUsers then
 			local addonUser = E.UserList[nameRealm]
 			if addonUser then
-				local same = addonUser == E.version
-				GameTooltip:AddDoubleLine(L["ElvUI Version:"], format('%.2f', addonUser), nil, nil, nil, same and 0.2 or 1, same and 1 or 0.2, 0.2)
+				local v,r,g,b = addonUser == E.version, unpack(E.media.rgbvaluecolor)
+				GameTooltip:AddDoubleLine(L["ElvUI Version:"], addonUser, r,g,b, v and 0 or 1, v and 1 or 0, 0)
 			end
 		end
 
@@ -276,28 +257,28 @@ function TT:SetUnitText(tt, unit)
 		local levelLine = TT:GetLevelLine(tt, 2)
 		if levelLine then
 			local creatureClassification = UnitClassification(unit)
-			local creatureType = UnitCreatureType(unit) or ''
-			local pvpFlag, classificationString = '', ''
-
-			local level = UnitEffectiveLevel(unit)
+			local creatureType = UnitCreatureType(unit)
+			local pvpFlag = ""
+			local level = UnitLevel(unit)
 			local diffColor = GetCreatureDifficultyColor(level)
 
-			if UnitIsPVP(unit) then
-				pvpFlag = format(' (%s)', _G.PVP)
+			if(UnitIsPVP(unit)) then
+				pvpFlag = format(" (%s)", _G.PVP)
 			end
 
-			if creatureClassification == 'rare' or creatureClassification == 'elite' or creatureClassification == 'rareelite' or creatureClassification == 'worldboss' then
+			local classificationString = ''
+			if (creatureClassification == 'rare' or creatureClassification == 'elite' or creatureClassification == 'rareelite' or creatureClassification == 'worldboss') then
 				classificationString = format('%s %s|r', ElvUF.Tags.Methods['classificationcolor'](unit), ElvUF.Tags.Methods['classification'](unit))
 			end
 
-			levelLine:SetFormattedText('|cff%02x%02x%02x%s|r%s %s%s', diffColor.r * 255, diffColor.g * 255, diffColor.b * 255, level > 0 and level or '??', classificationString, creatureType, pvpFlag)
+			levelLine:SetFormattedText("|cff%02x%02x%02x%s|r%s %s%s", diffColor.r * 255, diffColor.g * 255, diffColor.b * 255, level > 0 and level or "??", classificationString, creatureType or "", pvpFlag)
 		end
 
-		local unitReaction = UnitReaction(unit, 'player')
+		local unitReaction = UnitReaction(unit, "player")
 		local nameColor = unitReaction and ((TT.db.useCustomFactionColors and TT.db.factionColors[unitReaction]) or _G.FACTION_BAR_COLORS[unitReaction]) or PRIEST_COLOR
 		local nameColorStr = nameColor.colorStr or E:RGBToHex(nameColor.r, nameColor.g, nameColor.b, 'ff')
 
-		_G.GameTooltipTextLeft1:SetFormattedText('|c%s%s|r', nameColorStr, name or UNKNOWN)
+		_G.GameTooltipTextLeft1:SetFormattedText("|c%s%s|r", nameColorStr, name or UNKNOWN)
 
 		return (UnitIsTapDenied(unit) and TAPPED_COLOR) or nameColor
 	end
