@@ -64,6 +64,11 @@ local UnitStagger = UnitStagger
 local GetCurrentTitle = GetCurrentTitle
 local GetTitleName = GetTitleName
 
+-- TBC
+local GetPetHappiness = GetPetHappiness
+local GetPetLoyalty = GetPetLoyalty
+local GetPetFoodTypes = GetPetFoodTypes
+
 local GetUnitPowerBarTextureInfo = GetUnitPowerBarTextureInfo
 local C_QuestLog_GetTitleForQuestID = C_QuestLog.GetTitleForQuestID
 local C_QuestLog_GetQuestDifficultyLevel = C_QuestLog.GetQuestDifficultyLevel
@@ -679,6 +684,74 @@ ElvUF.Tags.Methods['realm:dash:translit'] = function(unit)
 	end
 end
 
+ElvUF.Tags.Events['happiness:full'] = 'UNIT_HAPPINESS PET_UI_UPDATE'
+ElvUF.Tags.Methods['happiness:full'] = function(unit)
+	local hasPetUI, isHunterPet = HasPetUI()
+	if (UnitIsUnit('pet', unit) and hasPetUI and isHunterPet) then
+		return _G['PET_HAPPINESS'..GetPetHappiness()]
+	end
+end
+
+ElvUF.Tags.Events['happiness:icon'] = 'UNIT_HAPPINESS PET_UI_UPDATE'
+ElvUF.Tags.Methods['happiness:icon'] = function(unit)
+	local hasPetUI, isHunterPet = HasPetUI()
+	if (UnitIsUnit('pet', unit) and hasPetUI and isHunterPet) then
+		local left, right, top, bottom
+		local happiness = GetPetHappiness()
+
+		if(happiness == 1) then
+			left, right, top, bottom = 0.375, 0.5625, 0, 0.359375
+		elseif(happiness == 2) then
+			left, right, top, bottom = 0.1875, 0.375, 0, 0.359375
+		elseif(happiness == 3) then
+			left, right, top, bottom = 0, 0.1875, 0, 0.359375
+		end
+
+		return CreateTextureMarkup([[Interface\PetPaperDollFrame\UI-PetHappiness]], 128, 64, 16, 16, left, right, top, bottom, 0, 0)
+	end
+end
+
+ElvUF.Tags.Events['happiness:discord'] = 'UNIT_HAPPINESS PET_UI_UPDATE'
+ElvUF.Tags.Methods['happiness:discord'] = function(unit)
+	local hasPetUI, isHunterPet = HasPetUI()
+	if (UnitIsUnit('pet', unit) and hasPetUI and isHunterPet) then
+		local happiness = GetPetHappiness()
+
+		if(happiness == 1) then
+			return CreateTextureMarkup([[Interface\AddOns\ElvUI\Media\ChatEmojis\Rage]], 32, 32, 16, 16, 0, 1, 0, 1, 0, 0)
+		elseif(happiness == 2) then
+			return CreateTextureMarkup([[Interface\AddOns\ElvUI\Media\ChatEmojis\SlightFrown]], 32, 32, 16, 16, 0, 1, 0, 1, 0, 0)
+		elseif(happiness == 3) then
+			return CreateTextureMarkup([[Interface\AddOns\ElvUI\Media\ChatEmojis\HeartEyes]], 32, 32, 16, 16, 0, 1, 0, 1, 0, 0)
+		end
+	end
+end
+
+ElvUF.Tags.Events['happiness:color'] = 'UNIT_HAPPINESS PET_UI_UPDATE'
+ElvUF.Tags.Methods['happiness:color'] = function(unit)
+	local hasPetUI, isHunterPet = HasPetUI()
+	if (UnitIsUnit('pet', unit) and hasPetUI and isHunterPet) then
+		return Hex(_COLORS.happiness[GetPetHappiness()])
+	end
+end
+
+ElvUF.Tags.Events['loyalty'] = 'UNIT_HAPPINESS PET_UI_UPDATE'
+ElvUF.Tags.Methods['loyalty'] = function(unit)
+	local hasPetUI, isHunterPet = HasPetUI()
+	if (UnitIsUnit('pet', unit) and hasPetUI and isHunterPet) then
+		local loyalty = gsub(GetPetLoyalty(), '.-(%d).*', '%1')
+		return loyalty
+	end
+end
+
+ElvUF.Tags.Events['diet'] = 'UNIT_HAPPINESS PET_UI_UPDATE'
+ElvUF.Tags.Methods['diet'] = function(unit)
+	local hasPetUI, isHunterPet = HasPetUI()
+	if (UnitIsUnit('pet', unit) and hasPetUI and isHunterPet) then
+		return GetPetFoodTypes()
+	end
+end
+
 ElvUF.Tags.Events['threat:percent'] = 'UNIT_THREAT_LIST_UPDATE UNIT_THREAT_SITUATION_UPDATE GROUP_ROSTER_UPDATE'
 ElvUF.Tags.Methods['threat:percent'] = function(unit)
 	local _, _, percent = UnitDetailedThreatSituation('player', unit)
@@ -1258,6 +1331,7 @@ E.TagInfo = {
 	['classpowercolor'] = { category = 'Colors', description = "Changes the color of the special power based upon its type" },
 	['difficulty'] = { category = 'Colors', description = "Changes color of the next tag based on how difficult the unit is compared to the players level" },
 	['difficultycolor'] = { category = 'Colors', description = "Colors the following tags by difficulty, red for impossible, orange for hard, green for easy" },
+	['happiness:color'] = { category = 'Colors', description = "Colors the following tags based upon pet happiness (e.g. happy = green)" },
 	['healthcolor'] = { category = 'Colors', description = "Changes the text color, depending on the unit's current health" },
 	['namecolor'] = { category = 'Colors', description = "Colors names by player class or NPC reaction (Ex: [namecolor][name])" },
 	['powercolor'] = { category = 'Colors', description = "Colors the power text based upon its type" },
@@ -1310,6 +1384,12 @@ E.TagInfo = {
 	['maxhp'] = { category = 'Health', description = "Displays max HP without decimals" },
 	['missinghp'] = { category = 'Health', description = "Displays the missing health of the unit in whole numbers, when not at full health" },
 	['perhp'] = { category = 'Health', description = "Displays percentage HP without decimals or the % sign. You can display the percent sign by adjusting the tag to [perhp<%]." },
+	--Hunter
+	['diet'] = { category = 'Hunter', description = "Displays the diet of your pet (Fish, Meat, ...)" },
+	['happiness:discord'] = { category = 'Hunter', description = "Displays the pet happiness like a Discord emoji" },
+	['happiness:full'] = { category = 'Hunter', description = "Displays the pet happiness as a word (e.g. 'Happy')" },
+	['happiness:icon'] = { category = 'Hunter', description = "Displays the pet happiness like the default Blizzard icon" },
+	['loyalty'] = { category = 'Hunter', description = "Displays the pet loyalty level" },
 	--Level
 	['level'] = { category = 'Level', description = "Displays the level of the unit" },
 	['smartlevel'] = { category = 'Level', description = "Only display the unit's level if it is not the same as yours" },
