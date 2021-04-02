@@ -388,8 +388,8 @@ function NP:DisablePlate(nameplate, nameOnly, nameOnlySF)
 		nameplate.Portrait:ClearAllPoints()
 		nameplate.Portrait:Point('RIGHT', nameplate.Name, 'LEFT', -6, 0)
 
-		nameplate.QuestIcons:ClearAllPoints()
-		nameplate.QuestIcons:Point('LEFT', nameplate.Name, 'RIGHT', 6, 0)
+		--nameplate.QuestIcons:ClearAllPoints()
+		--nameplate.QuestIcons:Point('LEFT', nameplate.Name, 'RIGHT', 6, 0)
 
 		nameplate.Title:ClearAllPoints()
 		nameplate.Title:Point('TOP', nameplate.Name, 'BOTTOM', 0, -2)
