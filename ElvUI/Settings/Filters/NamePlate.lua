@@ -95,16 +95,6 @@ E.StyleFilterDefaults = {
 			notSpell = false,
 			spells = {}
 		},
-		role = {
-			tank = false,
-			healer = false,
-			damager = false
-		},
-		unitRole = {
-			tank = false,
-			healer = false,
-			damager = false
-		},
 		classification = {
 			worldboss = false,
 			rareelite = false,

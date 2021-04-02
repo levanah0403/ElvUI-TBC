@@ -762,17 +762,6 @@ function mod:StyleFilterConditionCheck(frame, filter, trigger)
 		if trigger.classification[frame.classification] then passed = true else return end
 	end
 
-	-- My Role
-	if trigger.role.tank or trigger.role.healer or trigger.role.damager then
-		if trigger.role[mod.TriggerConditions.roles[E.myrole]] then passed = true else return end
-	end
-
-	-- Unit Role
-	if trigger.unitRole.tank or trigger.unitRole.healer or trigger.unitRole.damager then
-		local role = UnitGroupRolesAssigned(frame.unit)
-		if trigger.unitRole[mod.TriggerConditions.roles[role]] then passed = true else return end
-	end
-
 	-- In Party
 	if trigger.inParty or trigger.notInParty then
 		local inParty = UnitInParty(frame.unit)
@@ -1184,7 +1173,7 @@ function mod:StyleFilterConfigure()
 					events.UNIT_FLAGS = 1
 				end
 
-				if t.inParty or t.notInParty or t.inRaid or t.notInRaid or t.unitRole then
+				if t.inParty or t.notInParty or t.inRaid or t.notInRaid then
 					events.GROUP_ROSTER_UPDATE = 1
 				end
 
