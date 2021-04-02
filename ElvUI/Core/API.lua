@@ -116,49 +116,6 @@ do
 	end
 end
 
-function E:GetPlayerRole()
-	local assignedRole = UnitGroupRolesAssigned('player')
-	if assignedRole == 'NONE' then
-		return E.myspec and GetSpecializationRole(E.myspec)
-	end
-
-	return assignedRole
-end
-
---[[function E:CheckRole()
-	self.myspec = GetSpecialization()
-	self.myrole = E:GetPlayerRole()
-
-	-- myrole = group role; TANK, HEALER, DAMAGER
-	-- role   = class role; Tank, Melee, Caster
-
-	local role
-	if type(self.ClassRole[self.myclass]) == 'string' then
-		role = self.ClassRole[self.myclass]
-	elseif self.myspec then
-		role = self.ClassRole[self.myclass][self.myspec]
-	end
-
-	if not role then
-		local playerint = select(2, UnitStat('player', 4))
-		local playeragi	= select(2, UnitStat('player', 2))
-		local base, posBuff, negBuff = UnitAttackPower('player')
-		local playerap = base + posBuff + negBuff
-
-		role = ((playerap > playerint) or (playeragi > playerint)) and 'Melee' or 'Caster'
-	end
-
-	if self.role ~= role then
-		self.role = role
-		self.callbacks:Fire('RoleChanged')
-	end
-
-	local dispel = self.DispelClasses[self.myclass]
-	if self.myrole and (self.myclass ~= 'PRIEST' and dispel ~= nil) then
-		dispel.Magic = (self.myrole == 'HEALER')
-	end
-end]]
-
 function E:IsDispellableByMe(debuffType)
 	local dispel = self.DispelClasses[self.myclass]
 	return dispel and dispel[debuffType]
@@ -485,7 +442,6 @@ function E:RequestBGInfo()
 end
 
 function E:PLAYER_ENTERING_WORLD(_, initLogin, isReload)
---	self:CheckRole()
 
 	if initLogin or not ElvDB.LuaErrorDisabledAddOns then
 		ElvDB.LuaErrorDisabledAddOns = {}
@@ -586,7 +542,6 @@ function E:LoadAPI()
 	E:RegisterEvent('PLAYER_REGEN_DISABLED')
 	E:RegisterEvent('PET_BATTLE_CLOSE', 'AddNonPetBattleFrames')
 	E:RegisterEvent('PET_BATTLE_OPENING_START', 'RemoveNonPetBattleFrames')
-	--E:RegisterEvent('PLAYER_SPECIALIZATION_CHANGED', 'CheckRole')
 	E:RegisterEvent('UNIT_ENTERED_VEHICLE', 'EnterVehicleHideFrames')
 	E:RegisterEvent('UNIT_EXITED_VEHICLE', 'ExitVehicleShowFrames')
 	E:RegisterEvent('UI_SCALE_CHANGED', 'PixelScaleChanged')

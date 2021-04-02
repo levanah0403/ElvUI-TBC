@@ -825,16 +825,6 @@ function mod:StyleFilterConditionCheck(frame, filter, trigger)
 		if trigger.raidTarget[mod.TriggerConditions.raidTargets[frame.RaidTargetIndex]] then passed = true else return end
 	end
 
-	-- Class and Specialization
-	if trigger.class and next(trigger.class) then
-		local Class = trigger.class[E.myclass]
-		if not Class or (Class.specs and next(Class.specs) and not Class.specs[E.myspec and GetSpecializationInfo(E.myspec)]) then
-			return
-		else
-			passed = true
-		end
-	end
-
 	do
 		local activeID = trigger.location.instanceIDEnabled
 		local activeType = trigger.instanceType.none or trigger.instanceType.scenario or trigger.instanceType.party or trigger.instanceType.raid or trigger.instanceType.arena or trigger.instanceType.pvp
