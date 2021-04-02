@@ -201,9 +201,7 @@ function NP:StyleTargetPlate(nameplate)
 	nameplate.RaisedElement = NP:Construct_RaisedELement(nameplate)
 	nameplate.ClassPower = NP:Construct_ClassPower(nameplate)
 
-	if E.myclass == 'DEATHKNIGHT' then
-		nameplate.Runes = NP:Construct_Runes(nameplate)
-	elseif E.myclass == 'MONK' then
+	if E.myclass == 'MONK' then
 		nameplate.Stagger = NP:Construct_Stagger(nameplate)
 	end
 end
@@ -211,9 +209,7 @@ end
 function NP:UpdateTargetPlate(nameplate)
 	NP:Update_ClassPower(nameplate)
 
-	if E.myclass == 'DEATHKNIGHT' then
-		NP:Update_Runes(nameplate)
-	elseif E.myclass == 'MONK' then
+	if E.myclass == 'MONK' then
 		NP:Update_Stagger(nameplate)
 	end
 
@@ -283,9 +279,7 @@ function NP:StylePlate(nameplate)
 	NP:Construct_Auras(nameplate)
 	NP:StyleFilterEvents(nameplate) -- prepare the watcher
 
-	if E.myclass == 'DEATHKNIGHT' then
-		nameplate.Runes = NP:Construct_Runes(nameplate)
-	elseif E.myclass == 'MONK' then
+	if E.myclass == 'MONK' then
 		nameplate.Stagger = NP:Construct_Stagger(nameplate)
 	end
 
@@ -327,9 +321,7 @@ function NP:UpdatePlate(nameplate, updateBase)
 		NP:Update_ThreatIndicator(nameplate)
 		NP:Update_Cutaway(nameplate)
 
-		if E.myclass == 'DEATHKNIGHT' then
-			NP:Update_Runes(nameplate)
-		elseif E.myclass == 'MONK' then
+		if E.myclass == 'MONK' then
 			NP:Update_Stagger(nameplate)
 		end
 
@@ -361,9 +353,7 @@ NP.DisableElements = {
 	'Auras'
 }
 
-if E.myclass == 'DEATHKNIGHT' then
-	tinsert(NP.DisableElements, 'Runes')
-elseif E.myclass == 'MONK' then
+if E.myclass == 'MONK' then
 	tinsert(NP.DisableElements, 'Stagger')
 end
 
@@ -431,11 +421,7 @@ function NP:SetupTarget(nameplate, removed)
 		TCP.ClassPower:Point('CENTER', anchor, 'CENTER', cp.xOffset, cp.yOffset)
 	end
 
-	if TCP.Runes then
-		TCP.Runes:SetParent(anchor)
-		TCP.Runes:ClearAllPoints()
-		TCP.Runes:Point('CENTER', anchor, 'CENTER', cp.xOffset, cp.yOffset)
-	elseif TCP.Stagger then
+	if TCP.Stagger then
 		TCP.Stagger:SetParent(anchor)
 		TCP.Stagger:ClearAllPoints()
 		TCP.Stagger:Point('CENTER', anchor, 'CENTER', cp.xOffset, cp.yOffset)

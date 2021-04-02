@@ -111,10 +111,6 @@ function E:MassGuildKick(msg)
 		local name, _, rankIndex, level, _, _, note, officerNote, connected, _, classFileName = GetGuildRosterInfo(i)
 		local minLevelx = minLevel
 
-		if classFileName == 'DEATHKNIGHT' then
-			minLevelx = minLevelx + 55
-		end
-
 		if not connected then
 			local years, months, days = GetGuildRosterLastOnline(i)
 			if days ~= nil and ((years > 0 or months > 0 or days >= minDays) and rankIndex >= minRankIndex)

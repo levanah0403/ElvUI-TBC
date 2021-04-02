@@ -3452,11 +3452,6 @@ E.Options.args.unitframe = {
 									name = L["ENERGY"],
 									type = 'color',
 								},
-								RUNIC_POWER = {
-									order = 24,
-									name = L["RUNIC_POWER"],
-									type = 'color',
-								},
 								PAIN = {
 									order = 25,
 									name = L["PAIN"],
@@ -5591,29 +5586,7 @@ if P.unitframe.colors.classResources[E.myclass] then
 			name = L["SOUL_SHARDS"],
 			order = ORDER,
 		}
-	elseif E.myclass == 'DEATHKNIGHT' then
-		E.Options.args.unitframe.args.generalOptionsGroup.args.allColorsGroup.args.classResourceGroup.args[E.myclass] = {
-			type = 'color',
-			name = L["RUNES"],
-			order = ORDER,
-		}
 	end
-end
-
-if E.myclass == 'DEATHKNIGHT' then
-	E.Options.args.unitframe.args.individualUnits.args.player.args.classbar.args.sortDirection = {
-		name = L["Sort Direction"],
-		desc = L["Defines the sort order of the selected sort method."],
-		type = 'select',
-		order = 7,
-		values = {
-			asc = L["Ascending"],
-			desc = L["Descending"],
-			NONE = L["NONE"],
-		},
-		get = function(info) return E.db.unitframe.units.player.classbar[info[#info]] end,
-		set = function(info, value) E.db.unitframe.units.player.classbar[info[#info]] = value; UF:CreateAndUpdateUF('player') end,
-	}
 end
 
 --Custom Texts

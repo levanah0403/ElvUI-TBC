@@ -58,7 +58,6 @@ UF.badHeaderPoints = {
 
 UF.headerFunctions = {}
 UF.classMaxResourceBar = {
-	DEATHKNIGHT = 6,
 	PALADIN = 5,
 	WARLOCK = 5,
 	MONK = 6,
@@ -94,7 +93,7 @@ UF.headerGroupBy = {
 	CLASS = function(header)
 		local groupingOrder = header.db and strjoin(',', header.db.CLASS1, header.db.CLASS2, header.db.CLASS3, header.db.CLASS4, header.db.CLASS5, header.db.CLASS6, header.db.CLASS7, header.db.CLASS8, header.db.CLASS9, header.db.CLASS10, header.db.CLASS11, header.db.CLASS12)
 		local sortMethod = header.db and header.db.sortMethod
-		header:SetAttribute('groupingOrder', groupingOrder or 'DEATHKNIGHT,DEMONHUNTER,DRUID,HUNTER,MAGE,PALADIN,PRIEST,ROGUE,SHAMAN,WARLOCK,WARRIOR,MONK')
+		header:SetAttribute('groupingOrder', groupingOrder or 'DEMONHUNTER,DRUID,HUNTER,MAGE,PALADIN,PRIEST,ROGUE,SHAMAN,WARLOCK,WARRIOR,MONK')
 		header:SetAttribute('sortMethod', sortMethod or 'NAME')
 		header:SetAttribute('groupBy', 'CLASS')
 	end,
@@ -350,7 +349,6 @@ function UF:UpdateColors()
 	ElvUF.colors.power.RAGE = E:SetColorTable(ElvUF.colors.power.RAGE, db.power.RAGE)
 	ElvUF.colors.power.FOCUS = E:SetColorTable(ElvUF.colors.power.FOCUS, db.power.FOCUS)
 	ElvUF.colors.power.ENERGY = E:SetColorTable(ElvUF.colors.power.ENERGY, db.power.ENERGY)
-	ElvUF.colors.power.RUNIC_POWER = E:SetColorTable(ElvUF.colors.power.RUNIC_POWER, db.power.RUNIC_POWER)
 	ElvUF.colors.power.PAIN = E:SetColorTable(ElvUF.colors.power.PAIN, db.power.PAIN)
 	ElvUF.colors.power.FURY = E:SetColorTable(ElvUF.colors.power.FURY, db.power.FURY)
 	ElvUF.colors.power.LUNAR_POWER = E:SetColorTable(ElvUF.colors.power.LUNAR_POWER, db.power.LUNAR_POWER)
@@ -383,7 +381,7 @@ function UF:UpdateColors()
 	ElvUF.colors.ComboPoints[6] = E:SetColorTable(ElvUF.colors.ComboPoints[6], db.classResources.comboPoints[6])
 	ElvUF.colors.chargedComboPoint = E:SetColorTable(ElvUF.colors.chargedComboPoint, db.classResources.chargedComboPoint)
 
-	--Monk, Mage, Paladin and Warlock, Death Knight
+	--Monk, Mage, Paladin and Warlock
 	if not ElvUF.colors.ClassBars then ElvUF.colors.ClassBars = {} end
 	if not ElvUF.colors.ClassBars.MONK then ElvUF.colors.ClassBars.MONK = {} end
 	ElvUF.colors.ClassBars.PALADIN = E:SetColorTable(ElvUF.colors.ClassBars.PALADIN, db.classResources.PALADIN)
@@ -394,7 +392,6 @@ function UF:UpdateColors()
 	ElvUF.colors.ClassBars.MONK[4] = E:SetColorTable(ElvUF.colors.ClassBars.MONK[4], db.classResources.MONK[4])
 	ElvUF.colors.ClassBars.MONK[5] = E:SetColorTable(ElvUF.colors.ClassBars.MONK[5], db.classResources.MONK[5])
 	ElvUF.colors.ClassBars.MONK[6] = E:SetColorTable(ElvUF.colors.ClassBars.MONK[6], db.classResources.MONK[6])
-	ElvUF.colors.ClassBars.DEATHKNIGHT = E:SetColorTable(ElvUF.colors.ClassBars.DEATHKNIGHT, db.classResources.DEATHKNIGHT)
 	ElvUF.colors.ClassBars.WARLOCK = E:SetColorTable(ElvUF.colors.ClassBars.WARLOCK, db.classResources.WARLOCK)
 
 	-- these are just holders.. to maintain and update tables

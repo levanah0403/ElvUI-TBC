@@ -31,7 +31,6 @@ function E:GetDisplayMode()
 end
 
 local EnglishClassName = {
-	DEATHKNIGHT = 'Death Knight',
 	DEMONHUNTER = 'Demon Hunter',
 	DRUID = 'Druid',
 	HUNTER = 'Hunter',

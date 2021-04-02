@@ -4669,9 +4669,6 @@ local function GetUnitSettings(unit, name)
 						desc = L["Descending"],
 						NONE = _G.NONE
 					},
-					hidden = function()
-						return (E.myclass ~= 'DEATHKNIGHT')
-					end
 				}
 			}
 		}
@@ -6245,11 +6242,6 @@ E.Options.args.nameplate = {
 									name = L["RAGE"],
 									type = 'color'
 								},
-								RUNIC_POWER = {
-									order = 10,
-									name = L["RUNIC_POWER"],
-									type = 'color'
-								},
 								ALT_POWER = {
 									order = 11,
 									name = L["Swapped Alt Power"],
@@ -6287,11 +6279,6 @@ E.Options.args.nameplate = {
 									type = 'color',
 									order = 3,
 									name = L["SOUL_SHARDS"]
-								},
-								DEATHKNIGHT = {
-									type = 'color',
-									order = 4,
-									name = L["RUNES"]
 								},
 							}
 						}
@@ -6529,9 +6516,6 @@ E.Options.args.nameplate = {
 								desc = L["Descending"],
 								NONE = L["NONE"]
 							},
-							hidden = function()
-								return (E.myclass ~= 'DEATHKNIGHT')
-							end
 						}
 					}
 				},

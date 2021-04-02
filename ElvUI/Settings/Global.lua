@@ -262,19 +262,6 @@ G.unitframe = {
 				[982] = true -- Mend Pet (45 yards)
 			}
 		},
-		DEATHKNIGHT = {
-			enemySpells = {
-				[49576] = true -- Death Grip
-			},
-			longEnemySpells = {
-				[47541] = true -- Death Coil (Unholy) (40 yards)
-			},
-			friendlySpells = {},
-			resSpells = {
-				[61999] = true -- Raise Ally (40 yards)
-			},
-			petSpells = {}
-		},
 		ROGUE = {
 			enemySpells = {
 				[185565] = true, -- Poisoned Knife (Assassination) (30 yards)

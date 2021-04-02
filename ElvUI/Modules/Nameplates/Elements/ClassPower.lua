@@ -10,7 +10,6 @@ local UnitHasVehicleUI = UnitHasVehicleUI
 
 local MAX_POINTS = {
 	DRUID = 5,
-	DEATHKNIGHT = 6,
 	MAGE = 4,
 	MONK = 6,
 	PALADIN = 5,
@@ -162,95 +161,6 @@ function NP:Update_ClassPower(nameplate)
 		end
 
 		nameplate.ClassPower:Hide()
-	end
-end
-
-function NP:Runes_PostUpdate()
-	if UnitHasVehicleUI('player') then
-		self:Hide()
-	else
-		self:Show()
-	end
-end
-
-function NP:Construct_Runes(nameplate)
-	local frameName = nameplate:GetName()
-	local Runes = CreateFrame('Frame', frameName..'Runes', nameplate)
-	Runes:SetFrameStrata(nameplate:GetFrameStrata())
-	Runes:SetFrameLevel(5)
-	Runes:CreateBackdrop('Transparent', nil, nil, nil, nil, true)
-	Runes:Hide()
-
-	Runes.UpdateColor = E.noop
-	Runes.PostUpdate = NP.Runes_PostUpdate
-
-	local texture = LSM:Fetch('statusbar', NP.db.statusbar)
-	local color = NP.db.colors.classResources.DEATHKNIGHT
-
-	for i = 1, 6 do
-		Runes[i] = CreateFrame('StatusBar', frameName..'Runes'..i, Runes)
-		Runes[i]:SetStatusBarTexture(texture)
-		Runes[i]:SetStatusBarColor(color.r, color.g, color.b)
-		NP.StatusBars[Runes[i]] = true
-
-		Runes[i].bg = Runes[i]:CreateTexture(frameName..'Runes'..i..'bg', 'BORDER')
-		Runes[i].bg:SetVertexColor(color.r * NP.multiplier, color.g * NP.multiplier, color.b * NP.multiplier)
-		Runes[i].bg:SetTexture(texture)
-		Runes[i].bg:SetAllPoints()
-	end
-
-	return Runes
-end
-
-function NP:Update_Runes(nameplate)
-	local db = NP:PlateDB(nameplate)
-
-	local target = nameplate.frameType == 'TARGET'
-	if (target or nameplate.frameType == 'PLAYER') and db.classpower and db.classpower.enable then
-		if not nameplate:IsElementEnabled('Runes') then
-			nameplate:EnableElement('Runes')
-		end
-
-		nameplate.Runes:Show()
-
-		local anchor = target and NP:GetClassAnchor()
-		nameplate.Runes:ClearAllPoints()
-		nameplate.Runes:Point('CENTER', anchor or nameplate, 'CENTER', db.classpower.xOffset, db.classpower.yOffset)
-
-		nameplate.Runes.sortOrder = db.classpower.sortDirection
-
-		local width = db.classpower.width / 6
-		nameplate.Runes:Size(db.classpower.width, db.classpower.height)
-
-		local runeColor = (db.classpower.classColor and E:ClassColor(E.myclass)) or NP.db.colors.classResources.DEATHKNIGHT
-
-		for i = 1, 6 do
-			nameplate.Runes[i]:SetStatusBarColor(runeColor.r, runeColor.g, runeColor.b)
-
-			if i == 1 then
-				nameplate.Runes[i]:Size(width, db.classpower.height)
-				nameplate.Runes[i].bg:Size(width, db.classpower.height)
-
-				nameplate.Runes[i]:ClearAllPoints()
-				nameplate.Runes[i]:Point('LEFT', nameplate.Runes, 'LEFT', 0, 0)
-			else
-				nameplate.Runes[i]:Size(width - 1, db.classpower.height)
-				nameplate.Runes[i].bg:Size(width - 1, db.classpower.height)
-
-				nameplate.Runes[i]:ClearAllPoints()
-				nameplate.Runes[i]:Point('LEFT', nameplate.Runes[i-1], 'RIGHT', 1, 0)
-
-				if i == 6 then
-					nameplate.Runes[6]:Point('RIGHT', nameplate.Runes)
-				end
-			end
-		end
-	else
-		if nameplate:IsElementEnabled('Runes') then
-			nameplate:DisableElement('Runes')
-		end
-
-		nameplate.Runes:Hide()
 	end
 end
 

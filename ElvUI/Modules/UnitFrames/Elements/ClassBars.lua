@@ -97,10 +97,7 @@ function UF:Configure_ClassBar(frame)
 	bars:Width(CLASSBAR_WIDTH - SPACING)
 	bars:Height(frame.CLASSBAR_HEIGHT - SPACING)
 
-	if frame.ClassBar == 'ClassPower' or frame.ClassBar == 'Runes' then
-		if E.myclass == 'DEATHKNIGHT' and frame.ClassBar == 'Runes' then
-			bars.sortOrder = (db.classbar.sortDirection ~= 'NONE') and db.classbar.sortDirection
-		end
+	if frame.ClassBar == 'ClassPower' then
 
 		local maxClassBarButtons = max(UF.classMaxResourceBar[E.myclass] or 0, MAX_COMBO_POINTS)
 		for i = 1, maxClassBarButtons do
@@ -243,9 +240,6 @@ function UF:Configure_ClassBar(frame)
 		if frame.AdditionalPower and not frame:IsElementEnabled('AdditionalPower') then
 			frame:EnableElement('AdditionalPower')
 		end
-		if frame.Runes and not frame:IsElementEnabled('Runes') then
-			frame:EnableElement('Runes')
-		end
 		if frame.Stagger and not frame:IsElementEnabled('Stagger') then
 			frame:EnableElement('Stagger')
 		end
@@ -258,9 +252,6 @@ function UF:Configure_ClassBar(frame)
 		end
 		if frame.AdditionalPower and frame:IsElementEnabled('AdditionalPower') then
 			frame:DisableElement('AdditionalPower')
-		end
-		if frame.Runes and frame:IsElementEnabled('Runes') then
-			frame:DisableElement('Runes')
 		end
 		if frame.Stagger and frame:IsElementEnabled('Stagger') then
 			frame:DisableElement('Stagger')
@@ -376,47 +367,6 @@ function UF:UpdateClassBar(current, maxBars, hasMaxChanged, powerType, chargedIn
 			self[chargedIndex].bg:SetVertexColor(r * .35, g * .35, b * .35)
 		end
 	end
-end
-
--------------------------------------------------------------
--- DEATHKNIGHT
--------------------------------------------------------------
-local function PostUpdateRunes(self)
-	local useRunes = not UnitHasVehicleUI('player')
-	if useRunes then
-		self:Show()
-		UF.ClassPower_UpdateColor(self, 'RUNES')
-	else
-		self:Hide()
-	end
-end
-
-function UF:Construct_DeathKnightResourceBar(frame)
-	local runes = CreateFrame('Frame', '$parent_Runes', frame)
-	runes:CreateBackdrop(nil, nil, nil, nil, true)
-	runes.backdrop:Hide()
-
-	for i = 1, UF.classMaxResourceBar[E.myclass] do
-		runes[i] = CreateFrame('StatusBar', frame:GetName()..'RuneButton'..i, runes)
-		runes[i]:SetStatusBarTexture(E.media.blankTex)
-		runes[i]:GetStatusBarTexture():SetHorizTile(false)
-		UF.statusbars[runes[i]] = true
-
-		runes[i]:CreateBackdrop(nil, nil, nil, nil, true)
-		runes[i].backdrop:SetParent(runes)
-
-		runes[i].bg = runes[i]:CreateTexture(nil, 'BORDER')
-		runes[i].bg:SetAllPoints()
-		runes[i].bg:SetTexture(E.media.blankTex)
-		runes[i].bg.multiplier = 0.35
-	end
-
-	runes.PostUpdate = PostUpdateRunes
-	runes.UpdateColor = E.noop --We handle colors on our own in Configure_ClassBar
-	runes:SetScript('OnShow', ToggleResourceBar)
-	runes:SetScript('OnHide', ToggleResourceBar)
-
-	return runes
 end
 
 -------------------------------------------------------------

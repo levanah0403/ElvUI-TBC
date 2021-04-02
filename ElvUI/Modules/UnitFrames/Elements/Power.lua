@@ -241,7 +241,7 @@ function UF:GetDisplayPower()
 	end
 end
 
-local tokens = {[0]='MANA','RAGE','FOCUS','ENERGY','RUNIC_POWER'}
+local tokens = {[0]='MANA','RAGE','FOCUS','ENERGY',}
 function UF:PostUpdatePowerColor()
 	local parent = self.origParent or self:GetParent()
 	if parent.isForced and not self.colorClass then

@@ -75,7 +75,6 @@ do
 		DRUID = 'AdditionalPower',
 		PRIEST = 'AdditionalPower',
 		SHAMAN = 'AdditionalPower',
-		DEATHKNIGHT = 'Runes'
 	}
 
 	local myClassPower = classPowers[E.myclass]

@@ -13,11 +13,6 @@ local colors = {
 	health = {49 / 255, 207 / 255, 37 / 255},
 	disconnected = {0.6, 0.6, 0.6},
 	tapped = {0.6, 0.6, 0.6},
-	runes = {
-		{247 / 255, 65 / 255, 57 / 255}, -- blood
-		{148 / 255, 203 / 255, 247 / 255}, -- frost
-		{173 / 255, 235 / 255, 66 / 255}, -- unholy
-	},
 	selection = {
 		[ 0] = {255 / 255, 0 / 255, 0 / 255}, -- HOSTILE
 		[ 1] = {255 / 255, 129 / 255, 0 / 255}, -- UNFRIENDLY
@@ -110,8 +105,6 @@ colors.power[1] = colors.power.RAGE
 colors.power[2] = colors.power.FOCUS
 colors.power[3] = colors.power.ENERGY
 colors.power[4] = colors.power.COMBO_POINTS
-colors.power[5] = colors.power.RUNES
-colors.power[6] = colors.power.RUNIC_POWER
 colors.power[7] = colors.power.SOUL_SHARDS
 colors.power[8] = colors.power.LUNAR_POWER
 colors.power[9] = colors.power.HOLY_POWER

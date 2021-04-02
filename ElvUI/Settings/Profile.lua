@@ -554,7 +554,6 @@ P.nameplates = {
 			MANA = {r = 0.31, g = 0.45, b = 0.63},
 			PAIN = {r = 225/255, g = 225/255, b = 225/255, atlas = '_DemonHunter-DemonicPainBar'},
 			RAGE = {r = 0.78, g = 0.25, b = 0.25},
-			RUNIC_POWER = {r = 0, g = 0.82, b = 1},
 			ALT_POWER = {r = 0.2, g = 0.4, b = 0.8},
 		},
 		selection = {
@@ -579,7 +578,6 @@ P.nameplates = {
 				[5] = {r = .33, g = .63, b = .33},
 				[6] = {r = .33, g = .63, b = .33},
 			},
-			DEATHKNIGHT = { r = .31, g = .45, b = .63},
 			PALADIN = { r = 228/255, g = 225/255, b = 16/255},
 			MAGE = { r = 0, g = 157/255, b = 1},
 			MONK = {
@@ -1443,7 +1441,6 @@ P.unitframe = {
 			RAGE = {r = 0.78, g = 0.25, b = 0.25},
 			FOCUS = {r = 0.71, g = 0.43, b = 0.27},
 			ENERGY = {r = 0.65, g = 0.63, b = 0.35},
-			RUNIC_POWER = {r = 0, g = 0.82, b = 1},
 			PAIN = {r = 225/255, g = 225/255, b = 225/255},
 			FURY = {r = 227/255, g = 126/255, b = 39/255},
 			LUNAR_POWER = {r = .9, g = .86, b = .12},
@@ -1498,7 +1495,6 @@ P.unitframe = {
 				[5] = {r = .33, g = .63, b = .33},
 				[6] = {r = .33, g = .63, b = .33},
 			},
-			DEATHKNIGHT = {r = 0, g = 1, b = 1},
 			PALADIN = {r = 228/255, g = 225/255, b = 16/255},
 			MAGE = {r = 0, g = 157/255, b = 255/255},
 			MONK = {

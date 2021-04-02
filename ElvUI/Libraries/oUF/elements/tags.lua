@@ -354,19 +354,6 @@ local tagStrings = {
 		end
 	end]],
 
-	['runes'] = [[function()
-		local amount = 0
-
-		for i = 1, 6 do
-			local _, _, ready = GetRuneCooldown(i)
-			if(ready) then
-				amount = amount + 1
-			end
-		end
-
-		return amount
-	end]],
-
 	['sex'] = [[function(u)
 		local s = UnitSex(u)
 		if(s == 2) then
@@ -545,7 +532,6 @@ local tagEvents = {
 	['pvp']                 = 'UNIT_FACTION',
 	['rare']                = 'UNIT_CLASSIFICATION_CHANGED',
 	['resting']             = 'PLAYER_UPDATE_RESTING',
-	['runes']               = 'RUNE_POWER_UPDATE',
 	['shortclassification'] = 'UNIT_CLASSIFICATION_CHANGED',
 	['smartlevel']          = 'UNIT_LEVEL PLAYER_LEVEL_UP UNIT_CLASSIFICATION_CHANGED',
 	['soulshards']          = 'UNIT_POWER_FREQUENT',
@@ -563,7 +549,6 @@ local unitlessEvents = {
 	PLAYER_TALENT_UPDATE = true,
 	PLAYER_TARGET_CHANGED = true,
 	PLAYER_UPDATE_RESTING = true,
-	RUNE_POWER_UPDATE = true,
 }
 
 local events = {}
