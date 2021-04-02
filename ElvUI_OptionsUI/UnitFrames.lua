@@ -3452,16 +3452,6 @@ E.Options.args.unitframe = {
 									name = L["ENERGY"],
 									type = 'color',
 								},
-								PAIN = {
-									order = 25,
-									name = L["PAIN"],
-									type = 'color',
-								},
-								FURY = {
-									order = 26,
-									name = L["FURY"],
-									type = 'color',
-								},
 								LUNAR_POWER = {
 									order = 27,
 									name = L["LUNAR_POWER"],

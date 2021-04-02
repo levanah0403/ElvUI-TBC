@@ -111,8 +111,6 @@ colors.power[9] = colors.power.HOLY_POWER
 colors.power[11] = colors.power.MAELSTROM
 colors.power[13] = colors.power.INSANITY
 colors.power[16] = colors.power.ARCANE_CHARGES
-colors.power[17] = colors.power.FURY
-colors.power[18] = colors.power.PAIN
 
 -- alternate power, sourced from FrameXML/CompactUnitFrame.lua
 colors.power.ALTERNATE = {0.7, 0.7, 0.6}

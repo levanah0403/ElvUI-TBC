@@ -116,7 +116,6 @@ E.ClassRole = {
 	MAGE		= 'Caster',
 	PRIEST		= 'Caster',
 	WARLOCK		= 'Caster',
-	DEMONHUNTER	= {'Melee',  'Tank'},
 	WARRIOR		= {'Melee',  'Melee',  'Tank'},
 	PALADIN		= {'Caster', 'Tank',   'Melee'},
 	SHAMAN		= {'Caster', 'Melee',  'Caster'},

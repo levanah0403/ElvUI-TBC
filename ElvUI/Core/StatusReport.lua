@@ -31,7 +31,6 @@ function E:GetDisplayMode()
 end
 
 local EnglishClassName = {
-	DEMONHUNTER = 'Demon Hunter',
 	DRUID = 'Druid',
 	HUNTER = 'Hunter',
 	MAGE = 'Mage',
@@ -78,8 +77,6 @@ local EnglishSpecName = {
 	[71] = 'Arms',
 	[72] = 'Fury',
 	[73] = 'Protection',
-	[577] = 'Havoc',
-	[581] = 'Vengeance',
 }
 
 function E:CreateStatusContent(num, width, parent, anchorTo, content)

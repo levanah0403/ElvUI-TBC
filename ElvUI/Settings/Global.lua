@@ -288,18 +288,6 @@ G.unitframe = {
 			resSpells = {},
 			petSpells = {}
 		},
-		DEMONHUNTER = {
-			enemySpells = {
-				[183752] = true -- Consume Magic (20 yards)
-			},
-			longEnemySpells = {
-				[185123] = true, -- Throw Glaive (Havoc) (30 yards)
-				[204021] = true -- Fiery Brand (Vengeance) (30 yards)
-			},
-			friendlySpells = {},
-			resSpells = {},
-			petSpells = {}
-		}
 	}
 }
 

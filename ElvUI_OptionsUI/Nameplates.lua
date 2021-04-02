@@ -6207,11 +6207,6 @@ E.Options.args.nameplate = {
 									name = L["FOCUS"],
 									type = 'color'
 								},
-								FURY = {
-									order = 3,
-									name = L["FURY"],
-									type = 'color'
-								},
 								INSANITY = {
 									order = 4,
 									name = L["INSANITY"],
@@ -6230,11 +6225,6 @@ E.Options.args.nameplate = {
 								MANA = {
 									order = 7,
 									name = L["MANA"],
-									type = 'color'
-								},
-								PAIN = {
-									order = 8,
-									name = L["PAIN"],
 									type = 'color'
 								},
 								RAGE = {
