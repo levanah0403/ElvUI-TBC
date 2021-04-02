@@ -9,7 +9,7 @@ function B:KillBlizzard()
 	_G.Advanced_UseUIScale:Kill()
 end
 
-local function AcknowledgeTips()
+--[[local function AcknowledgeTips()
 	for frame in _G.HelpTip.framePool:EnumerateActive() do
 		frame:Acknowledge()
 	end
@@ -20,7 +20,7 @@ function B:DisableHelpTip() -- auto complete helptips
 
 	hooksecurefunc(_G.HelpTip, 'Show', AcknowledgeTips)
 	E:Delay(1, AcknowledgeTips)
-end
+end]]
 
 -- NOTE: ActionBars heavily conflicts with NPE
 local function ShutdownNPE(event)

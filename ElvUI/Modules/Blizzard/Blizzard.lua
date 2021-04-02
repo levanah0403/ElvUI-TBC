@@ -58,20 +58,20 @@ function B:Initialize()
 
 	B:EnhanceColorPicker()
 	B:KillBlizzard()
-	B:DisableHelpTip()
+	--B:DisableHelpTip()
 	B:DisableNPE()
 	B:AlertMovers()
 	B:PositionCaptureBar()
 	B:PositionDurabilityFrame()
 	B:PositionGMFrames()
-	B:SkinBlizzTimers()
-	B:PositionVehicleFrame()
+	--B:SkinBlizzTimers()
+	--B:PositionVehicleFrame()
 	B:PositionTalkingHead()
-	B:Handle_LevelUpDisplay_BossBanner()
+	--B:Handle_LevelUpDisplay_BossBanner()
 	B:Handle_UIWidgets()
 
 	if not (IsAddOnLoaded('DugisGuideViewerZ') or IsAddOnLoaded('!KalielsTracker')) then
-		B:MoveObjectiveFrame()
+		B:MoveQuestWatchFrame()
 	end
 
 	if not IsAddOnLoaded('SimplePowerBar') then

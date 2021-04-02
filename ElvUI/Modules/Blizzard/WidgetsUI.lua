@@ -130,12 +130,12 @@ function B:Handle_UIWidgets()
 	belowMiniMapcontainer:ClearAllPoints()
 	belowMiniMapcontainer:Point('CENTER', belowMiniMapHolder)
 
-	powerBarContainer:ClearAllPoints()
-	powerBarContainer:Point('CENTER', powerWidgetHolder)
+	--powerBarContainer:ClearAllPoints()
+	--powerBarContainer:Point('CENTER', powerWidgetHolder)
 
 	hooksecurefunc(topCenterContainer, 'SetPoint', TopCenterPosition)
 	hooksecurefunc(belowMiniMapcontainer, 'SetPoint', BelowMinimapPosition)
-	hooksecurefunc(powerBarContainer, 'SetPoint', PowerWidgetPosition)
+	--hooksecurefunc(powerBarContainer, 'SetPoint', PowerWidgetPosition)
 
 	-- Credits ShestakUI
 	hooksecurefunc(_G.UIWidgetTemplateStatusBarMixin, 'Setup', B.UIWidgetTemplateStatusBar)

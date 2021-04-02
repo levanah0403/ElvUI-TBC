@@ -39,7 +39,7 @@ function B:UpdateVehicleFrame()
 	end
 end
 
-function B:PositionVehicleFrame()
+--[[function B:PositionVehicleFrame()
 	local VehicleSeatIndicator = _G.VehicleSeatIndicator
 	if not VehicleSeatIndicator.PositionVehicleFrameHooked then
 		hooksecurefunc(VehicleSeatIndicator, 'SetPoint', SetPosition)
@@ -53,4 +53,4 @@ function B:PositionVehicleFrame()
     if VehicleSeatIndicator.currSkin then
 		VehicleSetUp(VehicleSeatIndicator.currSkin)
     end
-end
+end]]
