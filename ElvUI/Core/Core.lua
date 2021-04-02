@@ -1514,7 +1514,6 @@ end
 
 function E:UpdateMisc(skipCallback)
 	AFK:Toggle()
-	Blizzard:SetObjectiveFrameHeight()
 
 	Totems:PositionAndSize()
 

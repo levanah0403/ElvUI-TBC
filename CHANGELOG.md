@@ -1,5 +1,7 @@
 ### Version 0.03 [ ETA: 🍨 ]
 **• Energy ticks, MP5 ticks**  
+**• Pet Experience DataBar**  
+**• Skins: Addon Manager, Map, Tooltip**  
 **• Statusreport (/estatus)**  
 ___
 ### Version 0.02 [02-04-2021]
