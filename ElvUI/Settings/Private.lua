@@ -145,7 +145,6 @@ V.skins = {
 		taxi = true,
 		timemanager = true,
 		tooltip = true,
-		torghastLevelPicker = true,
 		trade = true,
 		tradeskill = true,
 		trainer = true,

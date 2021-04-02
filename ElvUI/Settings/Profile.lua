@@ -26,7 +26,6 @@ P.general = {
 	objectiveFrameAutoHide = true,
 	objectiveFrameAutoHideInKeystone = false,
 	bonusObjectivePosition = 'LEFT',
-	torghastBuffsPosition = 'LEFT',
 	vehicleSeatIndicatorSize = 128,
 	objectiveTracker = true,
 	resurrectSound = false,

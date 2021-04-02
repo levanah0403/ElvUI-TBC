@@ -254,7 +254,6 @@ local BLIZZARD_ADDONS = {
 	'Blizzard_TalentUI',
 	'Blizzard_TimeManager',
 	'Blizzard_TokenUI',
-	'Blizzard_TorghastLevelPicker',
 	'Blizzard_TradeSkillUI',
 	'Blizzard_TrainerUI',
 	'Blizzard_Tutorial',
