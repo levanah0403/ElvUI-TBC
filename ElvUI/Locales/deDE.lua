@@ -141,7 +141,6 @@ L["FocusTarget Frame"] = "Fokus-Ziel Fenster"
 L["Friends List"] = "Freundesliste"
 L["From time to time you should compare your ElvUI version against the most recent version on our website or the Tukui client."] = "Von Zeit zu Zeit solltest du deine gegenwärtige ElvUI Version mit der auf unsere Homepage oder im Tukui Clienten vergleichen."
 L["G"] = "G"
-L["Garrison"] = "Garnison"
 L["Ghost"] = "Geist"
 L["GM Ticket Frame"] = "GM-Ticket-Fenster"
 L["Gold"] = true --No need to translate

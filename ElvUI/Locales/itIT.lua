@@ -139,7 +139,6 @@ L["FocusTarget"] = true
 L["Friends List"] = true
 L["From time to time you should compare your ElvUI version against the most recent version on our website or the Tukui client."] = true
 L["G"] = true
-L["Garrison"] = true
 L["Ghost"] = true
 L["GM Ticket Frame"] = true
 L["Gold"] = true

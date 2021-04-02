@@ -11,7 +11,6 @@ local CloseAllWindows = CloseAllWindows
 local CloseMenus = CloseMenus
 local PlaySound = PlaySound
 local CreateFrame = CreateFrame
-local GarrisonLandingPageMinimapButton_OnClick = GarrisonLandingPageMinimapButton_OnClick
 local GetMinimapZoneText = GetMinimapZoneText
 local GetZonePVPInfo = GetZonePVPInfo
 local InCombatLockdown = InCombatLockdown
@@ -77,8 +76,6 @@ local menuList = {
 	func = ToggleFriendsFrame},
 	{text = L["Calendar"],
 	func = function() _G.GameTimeFrame:Click() end},
-	{text = _G.GARRISON_TYPE_8_0_LANDING_PAGE_TITLE,
-	func = function() GarrisonLandingPageMinimapButton_OnClick(_G.GarrisonLandingPageMinimapButton) end},
 	{text = _G.LFG_TITLE,
 	func = ToggleLFDParentFrame},
 	{text = _G.ENCOUNTER_JOURNAL,
@@ -114,23 +111,6 @@ local menuList = {
 
 tinsert(menuList, {text = _G.BLIZZARD_STORE, func = function() _G.StoreMicroButton:Click() end})
 tinsert(menuList, {text = _G.HELP_BUTTON, func = ToggleHelpFrame})
-
-function M:HandleGarrisonButton()
-	local button = _G.GarrisonLandingPageMinimapButton
-	if button then
-		local db = E.db.general.minimap.icons.classHall
-		local scale, pos = db.scale or 1, db.position or 'BOTTOMLEFT'
-		button:ClearAllPoints()
-		button:Point(pos, Minimap, pos, db.xOffset or 0, db.yOffset or 0)
-		button:SetScale(scale)
-
-		local box = _G.GarrisonLandingPageTutorialBox
-		if box then
-			box:SetScale(1/scale)
-			box:SetClampedToScreen(true)
-		end
-	end
-end
 
 function M:GetLocTextColor()
 	local pvpType = GetZonePVPInfo()
@@ -274,8 +254,6 @@ function M:UpdateSettings()
 		Minimap.location:Show()
 	end
 
-	M.HandleGarrisonButton()
-
 	_G.MiniMapMailIcon:SetTexture(E.Media.MailIcons[E.db.general.minimap.icons.mail.texture] or E.Media.MailIcons.Mai3)
 
 	local GameTimeFrame = _G.GameTimeFrame
@@ -395,20 +373,6 @@ function M:Initialize()
 	for _, frame in pairs(frames) do
 		frame:Kill()
 	end
-
-	-- Every GarrisonLandingPageMinimapButton_UpdateIcon() call reanchor the button
-	--hooksecurefunc('GarrisonLandingPageMinimapButton_UpdateIcon', M.HandleGarrisonButton)
-
-	--Hide the BlopRing on Minimap
-	--Minimap:SetArchBlobRingAlpha(0)
-	--Minimap:SetArchBlobRingScalar(0)
-	--Minimap:SetQuestBlobRingAlpha(0)
-	--Minimap:SetQuestBlobRingScalar(0)
-
-	--if E.private.general.minimap.hideClassHallReport then
-	--	_G.GarrisonLandingPageMinimapButton:Kill()
-	--	_G.GarrisonLandingPageMinimapButton.IsShown = function() return true end
-	--end
 
 	--_G.QueueStatusMinimapButtonBorder:Hide()
 	--_G.QueueStatusFrame:SetClampedToScreen(true)

@@ -141,23 +141,8 @@ do
 			return
 		end
 
-		E.UIParent:SetHeight(E.UIParent.origHeight - (_G.OrderHallCommandBar:GetHeight() + E.Border))
-
 		if f == SetModifiedHeight then
 			E:UnregisterEventForObject('PLAYER_REGEN_ENABLED', SetModifiedHeight, SetModifiedHeight)
-		end
-	end
-
-	--This function handles disabling of OrderHall Bar or resizing of ElvUIParent if needed
-	function E:HandleCommandBar()
-		if E.global.general.commandBarSetting == 'DISABLED' then
-			_G.OrderHallCommandBar:UnregisterAllEvents()
-			_G.OrderHallCommandBar:SetScript('OnShow', _G.OrderHallCommandBar.Hide)
-			_G.OrderHallCommandBar:Hide()
-			_G.UIParent:UnregisterEvent('UNIT_AURA') --Only used for OrderHall Bar
-		elseif E.global.general.commandBarSetting == 'ENABLED_RESIZEPARENT' then
-			_G.OrderHallCommandBar:HookScript('OnShow', SetModifiedHeight)
-			_G.OrderHallCommandBar:HookScript('OnHide', SetOriginalHeight)
 		end
 	end
 end
@@ -560,25 +545,5 @@ function E:LoadAPI()
 
 	if not strfind(date(), '04/01/') then
 		E.global.aprilFools = nil
-	end
-
-	if _G.OrderHallCommandBar then
-		E:HandleCommandBar()
-	else
-		local frame = CreateFrame('Frame')
-		frame:RegisterEvent('ADDON_LOADED')
-		frame:SetScript('OnEvent', function(Frame, event, addon)
-			if event == 'ADDON_LOADED' and addon == 'Blizzard_OrderHallUI' then
-				if InCombatLockdown() then
-					Frame:RegisterEvent('PLAYER_REGEN_ENABLED')
-				else
-					E:HandleCommandBar()
-				end
-				Frame:UnregisterEvent(event)
-			elseif event == 'PLAYER_REGEN_ENABLED' then
-				E:HandleCommandBar()
-				Frame:UnregisterEvent(event)
-			end
-		end)
 	end
 end

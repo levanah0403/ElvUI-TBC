@@ -139,7 +139,6 @@ L["FocusTarget"] = "焦点目标的目标框架"
 L["Friends List"] = "好友列表"
 L["From time to time you should compare your ElvUI version against the most recent version on our website or the Tukui client."] = true
 L["G"] = "公会"
-L["Garrison"] = "要塞"
 L["Ghost"] = "鬼魂"
 L["GM Ticket Frame"] = "GM对话框"
 L["Gold"] = "金"

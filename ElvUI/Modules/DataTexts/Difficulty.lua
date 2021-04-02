@@ -62,17 +62,6 @@ local IDTexture = {
 	RAID = { 14, 15, 16 },
 }
 
-local Garrison = {
-	[1152] = true,
-	[1330] = true,
-	[1153] = true,
-	[1154] = true,
-	[1158] = true,
-	[1331] = true,
-	[1159] = true,
-	[1160] = true,
-}
-
 local function GetDiffIDLabel(ID)
 	for Name, Info in pairs(DiffIDLabel) do
 		for _, Num in pairs(Info) do
@@ -103,7 +92,7 @@ end
 local function OnEvent(self)
 	local name, instanceType, difficultyID, _, _, _, _, instanceID = GetInstanceInfo()
 
-	if instanceType ~= 'none' and difficultyID and not Garrison[instanceID] then
+	if instanceType ~= 'none' and difficultyID then
 		self.text:SetFormattedText('%s %s %s', GetLabelTexture(difficultyID), name, GetDiffIDLabel(difficultyID))
 	else
 		DungeonDifficultyID, RaidDifficultyID, LegacyRaidDifficultyID = GetDungeonDifficultyID(), GetRaidDifficultyID(), GetLegacyRaidDifficultyID()

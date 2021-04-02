@@ -139,7 +139,6 @@ L["FocusTarget Frame"] = "Quadro do Alvo do Foco"
 L["Friends List"] = "Lista de Amigos"
 L["From time to time you should compare your ElvUI version against the most recent version on our website or the Tukui client."] = true
 L["G"] = "G"
-L["Garrison"] = "Guarnição"
 L["Ghost"] = "Fantasma"
 L["GM Ticket Frame"] = "Quadro de Consulta com GM"
 L["Gold"] = "Ouro"
