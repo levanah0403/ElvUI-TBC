@@ -931,7 +931,7 @@ function B:ConstructContainerFrame(name, isBank)
 	f.sortButton = CreateFrame('Button', name..'SortButton', f, 'BackdropTemplate')
 	f.sortButton:Size(16 + E.Border, 16 + E.Border)
 	f.sortButton:SetTemplate()
-	B:SetButtonTexture(f.sortButton, 'Interface/ICONS/INV_Pet_Broom')
+	B:SetButtonTexture(f.sortButton, 'Interface/AddOns/ElvUI/Media/Textures/INV_Pet_Broom')
 	f.sortButton:StyleButton(nil, true)
 	f.sortButton.ttText = L["Sort Bags"]
 	f.sortButton:SetScript('OnEnter', B.Tooltip_Show)
