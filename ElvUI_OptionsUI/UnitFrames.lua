@@ -3457,16 +3457,6 @@ E.Options.args.unitframe = {
 									name = L["LUNAR_POWER"],
 									type = 'color'
 								},
-								INSANITY = {
-									order = 28,
-									name = L["INSANITY"],
-									type = 'color'
-								},
-								MAELSTROM = {
-									order = 29,
-									name = L["MAELSTROM"],
-									type = 'color'
-								},
 								ALT_POWER = {
 									order = 30,
 									name = L["Swapped Alt Power"],

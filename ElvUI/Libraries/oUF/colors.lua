@@ -108,8 +108,6 @@ colors.power[4] = colors.power.COMBO_POINTS
 colors.power[7] = colors.power.SOUL_SHARDS
 colors.power[8] = colors.power.LUNAR_POWER
 colors.power[9] = colors.power.HOLY_POWER
-colors.power[11] = colors.power.MAELSTROM
-colors.power[13] = colors.power.INSANITY
 colors.power[16] = colors.power.ARCANE_CHARGES
 
 -- alternate power, sourced from FrameXML/CompactUnitFrame.lua
