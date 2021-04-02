@@ -912,9 +912,9 @@ P.datatexts = {
 			backdrop = true,
 			border = true,
 			panelTransparency = false,
-			'Talent/Loot Specialization',
+			'ElvUI Config',
 			'Durability',
-			'BfA Missions'
+			'Combat Time',
 		},
 		RightChatDataPanel = {
 			enable = true,

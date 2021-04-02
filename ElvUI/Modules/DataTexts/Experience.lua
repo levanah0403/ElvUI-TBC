@@ -4,36 +4,34 @@ local DT = E:GetModule('DataTexts')
 local _G = _G
 local format = format
 local UnitXP, UnitXPMax = UnitXP, UnitXPMax
-local IsXPUserDisabled, GetXPExhaustion = IsXPUserDisabled, GetXPExhaustion
-local IsPlayerAtEffectiveMaxLevel = IsPlayerAtEffectiveMaxLevel
+local GetXPExhaustion = GetXPExhaustion
+local GetExpansionLevel = GetExpansionLevel
+local MAX_PLAYER_LEVEL_TABLE = MAX_PLAYER_LEVEL_TABLE
+local displayString = ""
 
 local CurrentXP, XPToLevel, RestedXP, PercentRested
 local PercentXP, RemainXP, RemainTotal, RemainBars
 
 local function OnEvent(self)
-	local displayString = ''
-	if IsXPUserDisabled() then
-		displayString = L["Disabled"]
-	elseif IsPlayerAtEffectiveMaxLevel() then
-		displayString = L["Max Level"]
+	if E.mylevel == MAX_PLAYER_LEVEL_TABLE[GetExpansionLevel()] then
+		displayString = L['Max Level']
 	else
 		CurrentXP, XPToLevel, RestedXP = UnitXP('player'), UnitXPMax('player'), GetXPExhaustion()
-		if XPToLevel <= 0 then XPToLevel = 1 end
 
 		local remainXP = XPToLevel - CurrentXP
-		local remainPercent = remainXP / XPToLevel
+		local remainPercent = E:Round(remainXP / XPToLevel)
 
 		-- values we also use in OnEnter
 		RemainTotal, RemainBars = remainPercent * 100, remainPercent * 20
-		PercentXP, RemainXP = (CurrentXP / XPToLevel) * 100, E:ShortValue(remainXP)
+		PercentXP, RemainXP = E:Round(CurrentXP / XPToLevel) * 100, E:ShortValue(remainXP)
 
 		local textFormat = E.global.datatexts.settings.Experience.textFormat
 		if textFormat == 'PERCENT' then
-			displayString = format('%.2f%%', PercentXP)
+			displayString = format('%d%%', PercentXP)
 		elseif textFormat == 'CURMAX' then
 			displayString = format('%s - %s', E:ShortValue(CurrentXP), E:ShortValue(XPToLevel))
 		elseif textFormat == 'CURPERC' then
-			displayString = format('%s - %.2f%%', E:ShortValue(CurrentXP), PercentXP)
+			displayString = format('%s - %d%%', E:ShortValue(CurrentXP), PercentXP)
 		elseif textFormat == 'CUR' then
 			displayString = format('%s', E:ShortValue(CurrentXP))
 		elseif textFormat == 'REM' then
@@ -41,18 +39,18 @@ local function OnEvent(self)
 		elseif textFormat == 'CURREM' then
 			displayString = format('%s - %s', E:ShortValue(CurrentXP), RemainXP)
 		elseif textFormat == 'CURPERCREM' then
-			displayString = format('%s - %.2f%% (%s)', E:ShortValue(CurrentXP), PercentXP, RemainXP)
+			displayString = format('%s - %d%% (%s)', E:ShortValue(CurrentXP), PercentXP, RemainXP)
 		end
 
 		if RestedXP and RestedXP > 0 then
-			PercentRested = (RestedXP / XPToLevel) * 100
+			PercentRested = E:Round(RestedXP / XPToLevel) * 100
 
 			if textFormat == 'PERCENT' then
-				displayString = format('%s R:%.2f%%', displayString, PercentRested)
+				displayString = displayString..format(' R:%d%%', PercentRested)
 			elseif textFormat == 'CURPERC' then
-				displayString = format('%s R:%s [%.2f%%]', displayString, E:ShortValue(RestedXP), PercentRested)
+				displayString = displayString..format(' R:%s [%d%%]', E:ShortValue(RestedXP), PercentRested)
 			elseif textFormat ~= 'NONE' then
-				displayString = format('%s R:%s', displayString, E:ShortValue(RestedXP))
+				displayString = displayString..format(' R:%s', E:ShortValue(RestedXP))
 			end
 		end
 	end
@@ -61,16 +59,16 @@ local function OnEvent(self)
 end
 
 local function OnEnter()
-	if IsXPUserDisabled() or IsPlayerAtEffectiveMaxLevel() then return end
+	if E.mylevel == MAX_PLAYER_LEVEL_TABLE[GetExpansionLevel()] then return end
 
 	DT.tooltip:ClearLines()
 	DT.tooltip:AddLine(L["Experience"])
 	DT.tooltip:AddLine(' ')
 
 	DT.tooltip:AddDoubleLine(L["XP:"], format(' %d / %d (%.2f%%)', CurrentXP, XPToLevel, PercentXP), 1, 1, 1)
-	DT.tooltip:AddDoubleLine(L["Remaining:"], format(' %s (%.2f%% - %d '..L["Bars"]..')', RemainXP, RemainTotal, RemainBars), 1, 1, 1)
+	DT.tooltip:AddDoubleLine(L["Remaining:"], format(' %d (%.2f%% - %.2f '..L["Bars"]..')', RemainXP, RemainTotal, RemainBars), 1, 1, 1)
 
-	if RestedXP and RestedXP > 0 then
+	if RestedXP then
 		DT.tooltip:AddDoubleLine(L["Rested:"], format('+%d (%.2f%%)', RestedXP, PercentRested), 1, 1, 1)
 	end
 

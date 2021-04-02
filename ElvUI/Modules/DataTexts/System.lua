@@ -11,9 +11,7 @@ local GetAvailableBandwidth = GetAvailableBandwidth
 local GetFileStreamingStatus = GetFileStreamingStatus
 local GetBackgroundLoadingStatus = GetBackgroundLoadingStatus
 local GetDownloadedPercentage = GetDownloadedPercentage
-local SetCVar = SetCVar
 local GetCVar = GetCVar
-local ReloadUI = ReloadUI
 local GetCVarBool = GetCVarBool
 local GetFramerate = GetFramerate
 local GetNetIpTypes = GetNetIpTypes
@@ -21,7 +19,7 @@ local GetNetStats = GetNetStats
 local GetNumAddOns = GetNumAddOns
 local IsAddOnLoaded = IsAddOnLoaded
 local IsShiftKeyDown = IsShiftKeyDown
-local IsControlKeyDown = IsControlKeyDown
+local IsModifierKeyDown = IsModifierKeyDown
 local ResetCPUUsage = ResetCPUUsage
 local UpdateAddOnCPUUsage = UpdateAddOnCPUUsage
 local UpdateAddOnMemoryUsage = UpdateAddOnMemoryUsage
@@ -81,29 +79,9 @@ local function BuildAddonList()
 end
 
 local function OnClick()
-	if IsShiftKeyDown() then
-		if IsControlKeyDown() then
-			SetCVar('scriptProfile', GetCVarBool('scriptProfile') and 0 or 1)
-			ReloadUI()
-		else
-			collectgarbage('collect')
-			ResetCPUUsage()
-		end
-	end
-end
-
-local function displayData(data, totalMEM, totalCPU)
-	if not data then return end
-
-	local name, mem, cpu = data.title, data.mem, data.cpu
-	if cpu then
-		local memRed, cpuRed = mem / totalMEM, cpu / totalCPU
-		local memGreen, cpuGreen = (1 - memRed) + .5, (1 - cpuRed) + .5
-		DT.tooltip:AddDoubleLine(name, format(profilingString, E:RGBToHex(memRed, memGreen, 0), formatMem(mem), E:RGBToHex(cpuRed, cpuGreen, 0), format(homeLatencyString, cpu)), 1, 1, 1)
-	else
-		local red = mem / totalMEM
-		local green = (1 - red) + .5
-		DT.tooltip:AddDoubleLine(name, formatMem(mem), 1, 1, 1, red or 1, green or 1, 0)
+	if IsModifierKeyDown() then
+		collectgarbage('collect')
+		ResetCPUUsage()
 	end
 end
 
@@ -163,10 +141,6 @@ local function OnEnter(_, slow)
 
 			count = count + 1
 			infoDisplay[count] = data
-
-			if data.name == 'ElvUI' or data.name == 'ElvUI_OptionsUI' then
-				infoTable[data.name] = data
-			end
 		end
 	end
 
@@ -176,61 +150,66 @@ local function OnEnter(_, slow)
 	end
 
 	DT.tooltip:AddLine(' ')
-	if not E.global.datatexts.settings.System.ShowOthers then
-		displayData(infoTable.ElvUI, totalMEM, totalCPU)
-		displayData(infoTable.ElvUI_OptionsUI, totalMEM, totalCPU)
-		DT.tooltip:AddLine(' ')
-	else
-		for addon, searchString in pairs(CombineAddOns) do
-			local addonIndex, memoryUsage, cpuUsage = 0, 0, 0
-			for i, data in pairs(infoDisplay) do
-				if data and data.name == addon then
-					addonIndex = i
-					break
-				end
+
+	for addon, searchString in pairs(CombineAddOns) do
+		local addonIndex, memoryUsage, cpuUsage = 0, 0, 0
+		for i, data in pairs(infoDisplay) do
+			if data and data.name == addon then
+				addonIndex = i
+				break
 			end
-			for k, data in pairs(infoDisplay) do
-				if type(data) == 'table' then
-					local name, mem, cpu = data.title, data.mem, data.cpu
-					local stripName = E:StripString(data.title)
-					if name and (strmatch(stripName, searchString) or data.name == addon) then
-						if data.name ~= addon and stripName ~= addon then
-							memoryUsage = memoryUsage + mem;
-							if showByCPU and cpuProfiling then
-								cpuUsage = cpuUsage + cpu;
-							end
-							infoDisplay[k] = false
+		end
+		for k, data in pairs(infoDisplay) do
+			if type(data) == 'table' then
+				local name, mem, cpu = data.title, data.mem, data.cpu
+				local stripName = E:StripString(data.title)
+				if name and (strmatch(stripName, searchString) or data.name == addon) then
+					if data.name ~= addon and stripName ~= addon then
+						memoryUsage = memoryUsage + mem;
+						if showByCPU and cpuProfiling then
+							cpuUsage = cpuUsage + cpu;
 						end
+						infoDisplay[k] = false
 					end
 				end
 			end
-			if addonIndex > 0 and infoDisplay[addonIndex] then
-				if memoryUsage > 0 then infoDisplay[addonIndex].mem = memoryUsage end
-				if cpuProfiling and cpuUsage > 0 then infoDisplay[addonIndex].cpu = cpuUsage end
-			end
 		end
-
-		for i = count, 1, -1 do
-			local data = infoDisplay[i]
-			if type(data) == 'boolean' then
-				tremove(infoDisplay, i)
-			end
-		end
-
-		sort(infoDisplay, displaySort)
-
-		for i = 1, count do
-			displayData(infoDisplay[i], totalMEM, totalCPU)
-		end
-
-		DT.tooltip:AddLine(' ')
-		if showByCPU then
-			DT.tooltip:AddLine(L["(Hold Shift) Memory Usage"])
+		if addonIndex > 0 and infoDisplay[addonIndex] then
+			if memoryUsage > 0 then infoDisplay[addonIndex].mem = memoryUsage end
+			if cpuProfiling and cpuUsage > 0 then infoDisplay[addonIndex].cpu = cpuUsage end
 		end
 	end
 
-	DT.tooltip:AddLine(L["(Shift Click) Collect Garbage"])
-	DT.tooltip:AddLine(L["(Ctrl & Shift Click) Toggle CPU Profiling"])
+	for i = count, 1, -1 do
+		local data = infoDisplay[i]
+		if type(data) == 'boolean' then
+			tremove(infoDisplay, i)
+		end
+	end
+
+	sort(infoDisplay, displaySort)
+
+	for i = 1, count do
+		local data = infoDisplay[i]
+		if data then
+			local name, mem, cpu = data.title, data.mem, data.cpu
+			if cpu then
+				local memRed, cpuRed = mem / totalMEM, cpu / totalCPU
+				local memGreen, cpuGreen = (1 - memRed) + .5, (1 - cpuRed) + .5
+				DT.tooltip:AddDoubleLine(name, format(profilingString, E:RGBToHex(memRed, memGreen, 0), formatMem(mem), E:RGBToHex(cpuRed, cpuGreen, 0), format(homeLatencyString, cpu)), 1, 1, 1)
+			else
+				local red = mem / totalMEM
+				local green = (1 - red) + .5
+				DT.tooltip:AddDoubleLine(name, formatMem(mem), 1, 1, 1, red or 1, green or 1, 0)
+			end
+		end
+	end
+
+	DT.tooltip:AddLine(' ')
+	if showByCPU then
+		DT.tooltip:AddLine(L["(Hold Shift) Memory Usage"])
+	end
+	DT.tooltip:AddLine(L["(Modifer Click) Collect Garbage"])
 	DT.tooltip:Show()
 end
 
@@ -250,7 +229,7 @@ local function OnUpdate(self, elapsed)
 
 		local fps = framerate >= 30 and 1 or (framerate >= 20 and framerate < 30) and 2 or (framerate >= 10 and framerate < 20) and 3 or 4
 		local ping = latency < 150 and 1 or (latency >= 150 and latency < 300) and 2 or (latency >= 300 and latency < 500) and 3 or 4
-		self.text:SetFormattedText(E.global.datatexts.settings.System.NoLabel and '%s%d|r | %s%d|r' or 'FPS: %s%d|r MS: %s%d|r', statusColors[fps], framerate, statusColors[ping], latency)
+		self.text:SetFormattedText('FPS: %s%d|r MS: %s%d|r', statusColors[fps], framerate, statusColors[ping], latency)
 
 		if not enteredFrame then return end
 

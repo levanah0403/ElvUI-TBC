@@ -8,7 +8,6 @@ local _G = _G
 local tostring, format, type, pcall = tostring, format, type, pcall
 local tinsert, ipairs, pairs, wipe, sort = tinsert, ipairs, pairs, wipe, sort
 local next, strfind, strlen, strsplit = next, strfind, strlen, strsplit
-local hooksecurefunc = hooksecurefunc
 local CloseDropDownMenus = CloseDropDownMenus
 local CreateFrame = CreateFrame
 local EasyMenu = EasyMenu
@@ -18,12 +17,8 @@ local MouseIsOver = MouseIsOver
 local RegisterStateDriver = RegisterStateDriver
 local UIDropDownMenu_SetAnchor = UIDropDownMenu_SetAnchor
 local UnregisterStateDriver = UnregisterStateDriver
-local GetNumSpecializations = GetNumSpecializations
-local GetSpecializationInfo = GetSpecializationInfo
 local MISCELLANEOUS = MISCELLANEOUS
 
-local LFG_TYPE_DUNGEON = LFG_TYPE_DUNGEON
-local expansion = _G['EXPANSION_NAME'..GetExpansionLevel()]
 local ActivateHyperMode
 local HyperList = {}
 
@@ -34,7 +29,6 @@ DT.SelectedDatatext = nil
 DT.HyperList = HyperList
 DT.RegisteredPanels = {}
 DT.RegisteredDataTexts = {}
-DT.DataTextList = {}
 DT.LoadedInfo = {}
 DT.PanelPool = {
 	InUse = {},
@@ -54,8 +48,6 @@ DT.UnitEvents = {
 	UNIT_SPELL_HASTE = true
 }
 
-DT.SPECIALIZATION_CACHE = {}
-
 function DT:SetEasyMenuAnchor(menu, dt)
 	local point = E:GetScreenQuadrant(dt)
 	local bottom = point and strfind(point, 'BOTTOM')
@@ -68,7 +60,7 @@ function DT:SetEasyMenuAnchor(menu, dt)
 end
 
 --> [HyperDT Credits] <--
---> Original Work: Nihilistzsche
+--> Original Work: NihilisticPandemonium
 --> Modified by Azilroka! :)
 
 function DT:SingleHyperMode(_, key, active)
@@ -166,7 +158,7 @@ function DT:FetchFrame(givenName)
 		frame = poolFrame
 		DT.PanelPool.Free[poolName] = nil
 	else
-		frame = CreateFrame('Frame', name, E.UIParent, 'BackdropTemplate')
+		frame = CreateFrame('Frame', name, E.UIParent)
 		DT.PanelPool.Count = DT.PanelPool.Count + 1
 	end
 
@@ -203,12 +195,12 @@ function DT:ReleasePanel(givenName)
 end
 
 function DT:BuildPanelFrame(name, db, fromInit)
-	db = db or E.global.datatexts.customPanels[name] or DT:Panel_DefaultGlobalSettings(name)
+	db = db or DT:GetPanelSettings(name)
 
 	local Panel = DT:FetchFrame(name)
 	Panel:ClearAllPoints()
-	Panel:SetPoint('CENTER')
-	Panel:SetSize(db.width or 300, db.height or 22)
+	Panel:Point('CENTER')
+	Panel:Size(db.width, db.height)
 
 	local MoverName = 'DTPanel'..name..'Mover'
 	Panel.moverName = MoverName
@@ -221,7 +213,7 @@ function DT:BuildPanelFrame(name, db, fromInit)
 		E:CreateMover(Panel, MoverName, name, nil, nil, nil, nil, nil, 'datatexts,panels')
 	end
 
-	DT:RegisterPanel(Panel, db.numPoints or 3, db.tooltipAnchor or 'ANCHOR_TOPLEFT', db.tooltipXOffset or -17, db.tooltipYOffset or 4, db.growth == 'VERTICAL')
+	DT:RegisterPanel(Panel, db.numPoints, db.tooltipAnchor, db.tooltipXOffset, db.tooltipYOffset, db.growth == 'VERTICAL')
 
 	if not fromInit then
 		DT:UpdatePanelAttributes(name, db)
@@ -279,6 +271,11 @@ function DT:SetupObjectLDB(name, obj)
 	local data = DT:RegisterDatatext(name, 'Data Broker', nil, onEvent, nil, onClick, onEnter, onLeave)
 	E.valueColorUpdateFuncs[onCallback] = true
 	data.isLibDataBroker = true
+
+	-- Update config if it has been loaded
+	if DT.PanelLayoutOptions then
+		DT:PanelLayoutOptions()
+	end
 end
 
 function DT:RegisterLDB()
@@ -333,8 +330,12 @@ function DT:RegisterPanel(panel, numPoints, anchor, xOff, yOff, vertical)
 	panel.vertical = vertical
 end
 
-function DT:Panel_DefaultGlobalSettings(name)
+function DT:GetPanelSettings(name)
 	local db = E:CopyTable({}, G.datatexts.newPanelInfo)
+
+	if E.global.datatexts.customPanels[name] then
+		db = E:CopyTable(db, E.global.datatexts.customPanels[name])
+	end
 
 	E.global.datatexts.customPanels[name] = db
 
@@ -373,6 +374,7 @@ function DT:AssignPanelToDataText(dt, data, event, ...)
 		if not data.objectEvent then
 			dt:SetScript('OnEvent', data.eventFunc)
 		end
+
 		data.eventFunc(dt, ev, ...)
 	end
 
@@ -481,9 +483,9 @@ function DT:UpdatePanelInfo(panelName, panel, ...)
 	--Restore Panels
 	for i, dt in ipairs(panel.dataPanels) do
 		dt:SetShown(i <= numPoints)
-		dt:SetSize(width, height)
+		dt:Size(width, height)
 		dt:ClearAllPoints()
-		dt:SetPoint(DT:GetDataPanelPoint(panel, i, numPoints, vertical))
+		dt:Point(DT:GetDataPanelPoint(panel, i, numPoints, vertical))
 		dt:UnregisterAllEvents()
 		dt:EnableMouseWheel(false)
 		dt:SetScript('OnUpdate', nil)
@@ -552,9 +554,9 @@ function DT:PanelSizeChanged()
 	local width, height, vertical, numPoints = DT:GetTextAttributes(self, db)
 
 	for i, dt in ipairs(self.dataPanels) do
-		dt:SetSize(width, height)
+		dt:Size(width, height)
 		dt:ClearAllPoints()
-		dt:SetPoint(DT:GetDataPanelPoint(self, i, numPoints, vertical))
+		dt:Point(DT:GetDataPanelPoint(self, i, numPoints, vertical))
 	end
 end
 
@@ -569,7 +571,7 @@ function DT:UpdatePanelAttributes(name, db, fromLoad)
 	Panel.yOff = db.tooltipYOffset
 	Panel.anchor = db.tooltipAnchor
 	Panel.vertical = db.growth == 'VERTICAL'
-	Panel:SetSize(db.width, db.height)
+	Panel:Size(db.width, db.height)
 	Panel:SetFrameStrata(db.frameStrata)
 	Panel:SetFrameLevel(db.frameLevel)
 
@@ -660,70 +662,6 @@ function DT:RegisterHyperDT()
 	DT:RegisterEvent('MODIFIER_STATE_CHANGED', 'SingleHyperMode')
 end
 
-function DT:PopulateData(currencyOnly)
-	local Collapsed = {}
-	local listSize, i = C_CurrencyInfo_GetCurrencyListSize(), 1
-
-	local headerIndex
-	while listSize >= i do
-		local info = C_CurrencyInfo_GetCurrencyListInfo(i)
-		if info.isHeader and not info.isHeaderExpanded then
-			C_CurrencyInfo_ExpandCurrencyList(i, true)
-			listSize = C_CurrencyInfo_GetCurrencyListSize()
-			Collapsed[info.name] = true
-		end
-		if info.isHeader then
-			G.datatexts.settings.Currencies.tooltipData[i] = { info.name, nil, nil, (info.name == expansion or info.name == MISCELLANEOUS) or strfind(info.name, LFG_TYPE_DUNGEON) }
-			E.global.datatexts.settings.Currencies.tooltipData[i] = { info.name, nil, nil, E.global.datatexts.settings.Currencies.headers }
-
-			headerIndex = i
-		end
-		if not info.isHeader then
-			local currencyLink = C_CurrencyInfo_GetCurrencyListLink(i)
-			local currencyID = currencyLink and C_CurrencyInfo_GetCurrencyIDFromLink(currencyLink)
-			if currencyID then
-				DT.CurrencyList[tostring(currencyID)] = info.name
-				G.datatexts.settings.Currencies.tooltipData[i] = { info.name, currencyID, headerIndex, G.datatexts.settings.Currencies.tooltipData[headerIndex][4] }
-				G.datatexts.settings.Currencies.idEnable[currencyID] = G.datatexts.settings.Currencies.tooltipData[headerIndex][4]
-				E.global.datatexts.settings.Currencies.idEnable[currencyID] = E.global.datatexts.settings.Currencies.idEnable[currencyID] == nil and G.datatexts.settings.Currencies.idEnable[currencyID] or E.global.datatexts.settings.Currencies.idEnable[currencyID]
-				E.global.datatexts.settings.Currencies.tooltipData[i] = { info.name, currencyID, headerIndex, E.global.datatexts.settings.Currencies.idEnable[currencyID] }
-			end
-		end
-		i = i + 1
-	end
-
-	for k = 1, listSize do
-		local info = C_CurrencyInfo_GetCurrencyListInfo(k)
-		if not info then
-			break
-		elseif info.isHeader and info.isHeaderExpanded and Collapsed[info.name] then
-			C_CurrencyInfo_ExpandCurrencyList(k, false)
-		end
-	end
-
-	wipe(Collapsed)
-
-	if not currencyOnly then
-		for index = 1, GetNumSpecializations() do
-			local id, name, _, icon, _, statID = GetSpecializationInfo(index)
-
-			if id then
-				DT.SPECIALIZATION_CACHE[index] = { id = id, name = name, icon = icon, statID = statID }
-				DT.SPECIALIZATION_CACHE[id] = { name = name, icon = icon }
-			end
-		end
-	end
-end
-
-function DT:CURRENCY_DISPLAY_UPDATE(_, currencyID)
-	if currencyID and not DT.CurrencyList[tostring(currencyID)] then
-		local info = C_CurrencyInfo_GetCurrencyInfo(currencyID)
-		if info then
-			DT:PopulateData(true)
-		end
-	end
-end
-
 function DT:PLAYER_ENTERING_WORLD()
 	DT:LoadDataTexts()
 end
@@ -750,7 +688,7 @@ function DT:Initialize()
 	end
 
 	if E.private.skins.blizzard.enable and E.private.skins.blizzard.tooltip then
-		TT:SetStyle(DT.tooltip)
+		TT:HookScript(DT.tooltip, 'OnShow', 'SetStyle')
 	end
 
 	-- Ignore header font size on DatatextTooltip
@@ -772,12 +710,8 @@ function DT:Initialize()
 		DT.BattleStats.RIGHT.panel = _G.RightChatDataPanel.dataPanels
 	end
 
---	hooksecurefunc(_G.C_CurrencyInfo, 'SetCurrencyBackpack', function() DT:ForceUpdate_DataText('Currencies') end)
-
---	DT:PopulateData()
 	DT:RegisterHyperDT()
 	DT:RegisterEvent('PLAYER_ENTERING_WORLD')
---	DT:RegisterEvent('CURRENCY_DISPLAY_UPDATE')
 end
 
 --[[
@@ -834,7 +768,6 @@ function DT:RegisterDatatext(name, category, events, eventFunc, updateFunc, clic
 	end
 
 	DT.RegisteredDataTexts[name] = data
-	DT.DataTextList[name] = localizedName or name
 
 	return data
 end

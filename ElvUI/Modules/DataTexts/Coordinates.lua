@@ -1,11 +1,12 @@
 local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local DT = E:GetModule('DataTexts')
 
+--Lua functions
 local _G = _G
 local strjoin = strjoin
 local InCombatLockdown = InCombatLockdown
 
-local displayString = ''
+local displayString = ""
 local inRestrictedArea = false
 local mapInfo = E.MapInfo
 
@@ -26,17 +27,17 @@ local function OnEvent(self)
 		self.text:SetFormattedText(displayString, mapInfo.xText or 0, mapInfo.yText or 0)
 	else
 		inRestrictedArea = true
-		self.text:SetText('N/A')
+		self.text:SetText('')
 	end
 end
 
 local function Click()
 	if InCombatLockdown() then _G.UIErrorsFrame:AddMessage(E.InfoColor.._G.ERR_NOT_IN_COMBAT) return end
-	_G.ToggleFrame(_G.WorldMapFrame)
+	_G.ToggleWorldMap()
 end
 
 local function ValueColorUpdate(hex)
-	displayString = strjoin('', hex, '%.2f|r', ' | ', hex, '%.2f|r')
+	displayString = strjoin("", hex, "%.2f|r", " | ", hex, "%.2f|r")
 end
 E.valueColorUpdateFuncs[ValueColorUpdate] = true
 

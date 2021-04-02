@@ -4,16 +4,14 @@ local DT = E:GetModule('DataTexts')
 --Lua functions
 local strjoin = strjoin
 --WoW API / Variables
-local GetHaste = GetHaste
-local STAT_HASTE = STAT_HASTE
-local CR_HASTE_MELEE = CR_HASTE_MELEE
+local GetSpellCritChance = GetSpellCritChance
+local CRIT_ABBR = CRIT_ABBR
 local STAT_CATEGORY_ENHANCEMENTS = STAT_CATEGORY_ENHANCEMENTS
 
 local displayString, lastPanel = ''
 
 local function OnEvent(self)
-	local haste = GetHaste()
-	self.text:SetFormattedText(displayString, STAT_HASTE, haste)
+	self.text:SetFormattedText(displayString, CRIT_ABBR, GetSpellCritChance())
 
 	lastPanel = self
 end
@@ -27,4 +25,4 @@ local function ValueColorUpdate(hex)
 end
 E.valueColorUpdateFuncs[ValueColorUpdate] = true
 
-DT:RegisterDatatext('Haste', STAT_CATEGORY_ENHANCEMENTS, {'UNIT_STATS', 'UNIT_AURA', 'PLAYER_TALENT_UPDATE', 'UNIT_SPELL_HASTE'}, OnEvent, nil, nil, OnEnter, nil, STAT_HASTE, nil, ValueColorUpdate)
+DT:RegisterDatatext('Spell Crit Chance', STAT_CATEGORY_ENHANCEMENTS, {"UNIT_STATS", "UNIT_AURA", "PLAYER_DAMAGE_DONE_MODS"}, OnEvent, nil, nil, nil, nil, 'Spell Crit Chance')

@@ -36,8 +36,8 @@ local function OnEvent(self, event)
 	lastPanel = self
 
 	if event == 'UNIT_PET' then
-		petGUID = UnitGUID('pet')
-	elseif event == 'PLAYER_REGEN_DISABLED' or event == 'PLAYER_LEAVE_COMBAT' then
+		petGUID = UnitGUID("pet")
+	elseif event == 'PLAYER_REGEN_DISABLED' or event == "PLAYER_LEAVE_COMBAT" then
 		local now = time()
 		if now - lastSegment > 20 then --time since the last segment
 			Reset()
@@ -54,7 +54,7 @@ local function OnEvent(self, event)
 			if timeStamp == 0 then timeStamp = timestamp end
 			lastSegment = timeStamp
 			combatTime = timestamp - timeStamp
-			if Event == 'SWING_DAMAGE' then
+			if Event == "SWING_DAMAGE" then
 				lastDMGAmount = arg12
 			else
 				lastDMGAmount = arg15
@@ -73,9 +73,11 @@ local function OnClick(self)
 end
 
 local function ValueColorUpdate(hex)
-	displayString = strjoin('', '%s: ', hex, '%s')
+	displayString = strjoin("", "%s: ", hex, "%s")
 
-	if lastPanel then OnEvent(lastPanel) end
+	if lastPanel ~= nil then
+		OnEvent(lastPanel)
+	end
 end
 E.valueColorUpdateFuncs[ValueColorUpdate] = true
 

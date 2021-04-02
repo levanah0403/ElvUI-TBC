@@ -8,7 +8,10 @@ local UnitGUID = UnitGUID
 local timeStamp, combatTime, healTotal = 0, 0, 0
 local lastSegment, petGUID = 0
 local displayString, lastPanel = ''
-local events = {SPELL_HEAL = true, SPELL_PERIODIC_HEAL = true}
+local events = {
+	SPELL_HEAL = true,
+	SPELL_PERIODIC_HEAL = true
+}
 
 local function Reset()
 	timeStamp, combatTime, healTotal = 0, 0, 0
@@ -28,8 +31,8 @@ local function OnEvent(self, event)
 	lastPanel = self
 
 	if event == 'UNIT_PET' then
-		petGUID = UnitGUID('pet')
-	elseif event == 'PLAYER_REGEN_DISABLED' or event == 'PLAYER_LEAVE_COMBAT' then
+		petGUID = UnitGUID("pet")
+	elseif event == 'PLAYER_REGEN_DISABLED' or event == "PLAYER_LEAVE_COMBAT" then
 		local now = time()
 		if now - lastSegment > 20 then
 			Reset()
@@ -56,9 +59,11 @@ local function OnClick(self)
 end
 
 local function ValueColorUpdate(hex)
-	displayString = strjoin('', '%s: ', hex, '%s')
+	displayString = strjoin("", "%s: ", hex, "%s")
 
-	if lastPanel then OnEvent(lastPanel) end
+	if lastPanel ~= nil then
+		OnEvent(lastPanel)
+	end
 end
 E.valueColorUpdateFuncs[ValueColorUpdate] = true
 
