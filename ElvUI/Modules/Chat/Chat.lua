@@ -83,7 +83,6 @@ local DEFAULT_STRINGS = {
 }
 
 local hyperlinkTypes = {
-	achievement = true,
 	apower = true,
 	currency = true,
 	enchant = true,
@@ -109,7 +108,6 @@ local historyTypes = { -- the events set on the chats are still in FindURL_Event
 	CHAT_MSG_BN_WHISPER			= 'WHISPER',
 	CHAT_MSG_BN_WHISPER_INFORM	= 'WHISPER',
 	CHAT_MSG_GUILD				= 'GUILD',
-	CHAT_MSG_GUILD_ACHIEVEMENT	= 'GUILD',
 	CHAT_MSG_OFFICER		= 'OFFICER',
 	CHAT_MSG_PARTY			= 'PARTY',
 	CHAT_MSG_PARTY_LEADER	= 'PARTY',

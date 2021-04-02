@@ -160,7 +160,6 @@ end
 
 local BLIZZARD_ADDONS = {
 	'Blizzard_APIDocumentation',
-	'Blizzard_AchievementUI',
 	'Blizzard_AdventureMap',
 	'Blizzard_AlliedRacesUI',
 	'Blizzard_AnimaDiversionUI',
@@ -259,7 +258,6 @@ local BLIZZARD_ADDONS = {
 	'Blizzard_Tutorial',
 	'Blizzard_TutorialTemplates',
 	'Blizzard_UIWidgets',
-	'Blizzard_VoidStorageUI',
 	'Blizzard_WarfrontsPartyPoseUI',
 	'Blizzard_WeeklyRewards',
 	'Blizzard_WorldMap',

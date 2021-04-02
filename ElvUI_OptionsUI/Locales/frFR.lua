@@ -1506,7 +1506,6 @@ Exemple: Interface\AddOns\ElvUI\Media\Textures\Copy
 Ou pour la majorité des utilsateurs, il serait plus simple de mettre le fichier tga dans le dossier de World of Warcraft puis de taper son nom ici.]=]
 
 -- Global Strings
-L["ACHIEVEMENTS"] = "Hauts faits";
 L["ADVENTURE_MAP_TITLE"] = "Reconnaissance";
 L["AFK"] = "ABS";
 L["ALL"] = "Tous";

@@ -1512,7 +1512,6 @@ Or for most users it would be easier to simply put a tga file into your WoW fold
 对多数玩家来说, 较简易的方式是将tga文件放入WoW文件夹中, 然后在此处输入文件名.]=]
 
 -- Global Strings
-L["ACHIEVEMENTS"] = "成就";
 L["ADVENTURE_MAP_TITLE"] = "侦察地图";
 L["AFK"] = "离开";
 L["ALL"] = "全部";

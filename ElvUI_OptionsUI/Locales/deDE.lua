@@ -1511,7 +1511,6 @@ Zum Beispiel: Interface\AddOns\ElvUI\Media\Textures\Copy
 Für die meisten Anwender ist es allerdigns einfacher, eine tga-Datei in ihren WoW-Ordner abzulegen. Anschließend kann man den Namen der Datei hier eingeben.]=]
 
 -- Global Strings
-L["ACHIEVEMENTS"] = "Erfolge";
 L["ADVENTURE_MAP_TITLE"] = "Späherkarte";
 L["AFK"] = "AFK";
 L["ALL"] = "Alle";

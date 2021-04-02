@@ -1504,7 +1504,6 @@ Or for most users it would be easier to simply put a tga file into your WoW fold
 Для большинства пользователей будет легче просто положить tga файл в папку игры, а затем написать имя файла здесь.]=]
 
 -- Global Strings
-L["ACHIEVEMENTS"] = "Достижения";
 L["ADVENTURE_MAP_TITLE"] = "Тактическая карта";
 L["AFK"] = "Отсутствует";
 L["ALL"] = "Все";

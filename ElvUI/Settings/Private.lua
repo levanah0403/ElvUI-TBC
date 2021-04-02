@@ -63,7 +63,6 @@ V.skins = {
 	blizzard = {
 		enable = true,
 
-		achievement = true,
 		addonManager = true,
 		adventureMap = true,
 		alertframes = true,
@@ -150,7 +149,6 @@ V.skins = {
 		trainer = true,
 		transmogrify = true,
 		tutorials = true,
-		voidstorage = true,
 		weeklyRewards = true,
 		worldmap = true,
 	}

@@ -1548,7 +1548,6 @@ Or for most users it would be easier to simply put a tga file into your WoW fold
 간단히는 그림을 와우 설치 폴더에 넣은후 파일명만 적으세요.]=]
 
 -- Global Strings
-L["ACHIEVEMENTS"] = "업적";
 L["ADVENTURE_MAP_TITLE"] = "정찰 지도";
 L["AFK"] = "자리 비움";
 L["ALL"] = "전체";

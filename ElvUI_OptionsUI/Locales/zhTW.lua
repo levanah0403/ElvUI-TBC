@@ -1506,7 +1506,6 @@ Or for most users it would be easier to simply put a tga file into your WoW fold
 對多數玩家來說, 較簡易的方式是將 tga 檔放入魔獸世界資料夾中, 然後在此處輸入檔案名稱.]=]
 
 -- Global Strings
-L["ACHIEVEMENTS"] = "成就";
 L["ADVENTURE_MAP_TITLE"] = "偵察地圖";
 L["AFK"] = "離開";
 L["ALL"] = "全部";
