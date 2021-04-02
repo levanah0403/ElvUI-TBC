@@ -1901,7 +1901,6 @@ function E:Initialize()
 	E.private = E.charSettings.profile
 	E.global = E.data.global
 	E.db = E.data.profile
-	--E.Libs.DualSpec:EnhanceDatabase(E.data, 'ElvUI')
 
 	-- default the non thing pixel border color to 191919, otherwise its 000000
 	if not E.PixelMode then P.general.bordercolor = { r = 0.1, g = 0.1, b = 0.1 } end
