@@ -9,7 +9,6 @@ local format, select, type, ipairs, pairs = format, select, type, ipairs, pairs
 local strmatch, strfind, tonumber, tostring = strmatch, strfind, tonumber, tostring
 local strlen, CreateFrame = strlen, CreateFrame
 local GetAddOnEnableState = GetAddOnEnableState
-local GetBattlefieldArenaFaction = GetBattlefieldArenaFaction
 local GetCVar, SetCVar = GetCVar, SetCVar
 local GetCVarBool = GetCVarBool
 local GetFunctionCPUUsage = GetFunctionCPUUsage
@@ -18,18 +17,12 @@ local GetSpecialization = GetSpecialization
 local GetSpecializationRole = GetSpecializationRole
 local InCombatLockdown = InCombatLockdown
 local IsAddOnLoaded = IsAddOnLoaded
-local IsWargame = IsWargame
-local PLAYER_FACTION_GROUP = PLAYER_FACTION_GROUP
 local RequestBattlefieldScoreData = RequestBattlefieldScoreData
 local UIParentLoadAddOn = UIParentLoadAddOn
 local UnitAttackPower = UnitAttackPower
 local UnitFactionGroup = UnitFactionGroup
-local UnitGroupRolesAssigned = UnitGroupRolesAssigned
 local UnitHasVehicleUI = UnitHasVehicleUI
-local UnitIsMercenary = UnitIsMercenary
 local UnitStat = UnitStat
---local C_PetBattles_IsInBattle = C_PetBattles.IsInBattle
---local C_PvP_IsRatedBattleground = C_PvP.IsRatedBattleground
 local FACTION_HORDE = FACTION_HORDE
 local FACTION_ALLIANCE = FACTION_ALLIANCE
 local ERR_NOT_IN_COMBAT = ERR_NOT_IN_COMBAT
@@ -494,27 +487,6 @@ function E:PLAYER_REGEN_DISABLED()
 		self:Print(ERR_NOT_IN_COMBAT)
 	end
 end
-
---[[function E:GetUnitBattlefieldFaction(unit)
-	local englishFaction, localizedFaction = UnitFactionGroup(unit)
-
-	-- this might be a rated BG or wargame and if so the player's faction might be altered
-	-- should also apply if `player` is a mercenary.
-	if unit == 'player' then
-		if C_PvP_IsRatedBattleground() or IsWargame() then
-			englishFaction = PLAYER_FACTION_GROUP[GetBattlefieldArenaFaction()]
-			localizedFaction = (englishFaction == 'Alliance' and FACTION_ALLIANCE) or FACTION_HORDE
-		elseif UnitIsMercenary(unit) then
-			if englishFaction == 'Alliance' then
-				englishFaction, localizedFaction = 'Horde', FACTION_HORDE
-			else
-				englishFaction, localizedFaction = 'Alliance', FACTION_ALLIANCE
-			end
-		end
-	end
-
-	return englishFaction, localizedFaction
-end]]
 
 function E:PLAYER_LEVEL_UP(_, level)
 	E.mylevel = level
