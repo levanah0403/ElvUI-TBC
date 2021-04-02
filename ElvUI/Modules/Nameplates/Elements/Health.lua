@@ -85,7 +85,7 @@ function NP:Construct_Health(nameplate)
 	nameplate.HealthFlashTexture = healthFlashTexture
 
 	Health.colorTapping = true
-	Health.colorSelection = true
+	Health.colorReaction = true
 	Health.UpdateColor = NP.Health_UpdateColor
 
 	return Health
@@ -95,9 +95,8 @@ function NP:Update_Health(nameplate, skipUpdate)
 	local db = NP:PlateDB(nameplate)
 
 	nameplate.Health.colorTapping = true
-	nameplate.Health.colorSelection = true
+	nameplate.Health.colorReaction = true
 	nameplate.Health.colorClass = db.health.useClassColor
-	nameplate.Health.considerSelectionInCombatHostile = true
 	if skipUpdate then return end
 
 	if db.health.enable then
