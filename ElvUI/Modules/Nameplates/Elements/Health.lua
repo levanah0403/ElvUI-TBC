@@ -124,6 +124,8 @@ end
 
 local bars = { 'myBar', 'otherBar', 'absorbBar', 'healAbsorbBar' }
 function NP:Construct_HealthPrediction(nameplate)
+	if nameplate then return end
+
 	local HealthPrediction = CreateFrame('Frame', nameplate:GetName()..'HealthPrediction', nameplate)
 
 	for _, name in ipairs(bars) do
@@ -164,6 +166,8 @@ function NP:Construct_HealthPrediction(nameplate)
 end
 
 function NP:Update_HealthPrediction(nameplate)
+	if nameplate then return end
+
 	local db = NP:PlateDB(nameplate)
 
 	if db.health.enable and db.health.healPrediction then
