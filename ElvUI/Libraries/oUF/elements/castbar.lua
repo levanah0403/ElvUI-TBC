@@ -129,10 +129,10 @@ local function CastStart(self, real, unit, castGUID)
 	if real == 'UNIT_SPELLCAST_START' and not castGUID then return end
 
 	local element = self.Castbar
-	local name, _, texture, startTime, endTime, isTradeSkill, castID, notInterruptible, spellID = UnitCastingInfo(unit)
+	local name, _, texture, startTime, endTime, isTradeSkill, castID, spellID = UnitCastingInfo(unit)
 	local event = 'UNIT_SPELLCAST_START'
 	if(not name) then
-		name, _, texture, startTime, endTime, isTradeSkill, notInterruptible, spellID = UnitChannelInfo(unit)
+		name, _, texture, startTime, endTime, isTradeSkill, spellID = UnitChannelInfo(unit)
 		event = 'UNIT_SPELLCAST_CHANNEL_START'
 	end
 
@@ -151,7 +151,7 @@ local function CastStart(self, real, unit, castGUID)
 	element.delay = 0
 	element.casting = event == 'UNIT_SPELLCAST_START'
 	element.channeling = event == 'UNIT_SPELLCAST_CHANNEL_START'
-	element.notInterruptible = notInterruptible
+	--element.notInterruptible = notInterruptible
 	element.holdTime = 0
 	element.castID = castID
 	element.spellID = spellID
@@ -179,7 +179,7 @@ local function CastStart(self, real, unit, castGUID)
 	element:SetValue(element.duration)
 
 	if(element.Icon) then element.Icon:SetTexture(texture or FALLBACK_ICON) end
-	if(element.Shield) then element.Shield:SetShown(notInterruptible) end
+	--if(element.Shield) then element.Shield:SetShown(notInterruptible) end
 	if(element.Spark) then element.Spark:Show() end
 	if(element.Text) then element.Text:SetText(name) end
 	if(element.Time) then element.Time:SetText() end
