@@ -1,4 +1,6 @@
 ### Version 0.03 [ ETA: 🍨 ]
+**• Energy ticks, MP5 ticks**  
+**• Statusreport (/estatus)**  
 ___
 ### Version 0.02 [02-04-2021]
 **• Bags, Bank**  
