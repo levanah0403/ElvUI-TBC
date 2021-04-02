@@ -846,12 +846,14 @@ function B:ConstructContainerFrame(name, isBank)
 		f.ContainerHolder[i].icon:SetTexCoord(unpack(E.TexCoords))
 
 		if isBank then
-			f.ContainerHolder[i]:SetID(ContainerIDToInventoryID(bagID))
 			f.ContainerHolder[i].icon:SetTexture('Interface/AddOns/ElvUI/Media/Textures/Button-Backpack-Up')
 			f.ContainerHolder[i]:SetScript('OnClick', function(holder)
 				local inventoryID = holder:GetInventorySlot()
 				PutItemInBag(inventoryID)
 			end)
+			if bagID ~= -1 then
+				f.ContainerHolder[i]:SetID(ContainerIDToInventoryID(bagID))
+			end
 		else
 			if bagID == 0 then --Backpack needs different setup
 				f.ContainerHolder[i]:RegisterForClicks('LeftButtonUp', 'RightButtonUp')
