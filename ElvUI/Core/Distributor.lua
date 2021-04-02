@@ -316,7 +316,6 @@ D.GeneratedKeys = {
 	global = {
 		datatexts = {
 			customPanels = true,
-			customCurrencies = true
 		},
 		unitframe = {
 			aurafilters = true,

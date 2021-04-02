@@ -39,7 +39,6 @@ G.bags = {
 
 G.datatexts = {
 	customPanels = {},
-	customCurrencies = {},
 	settings = {
 		Agility = { Label = '', NoLabel = false },
 		Armor = { Label = '', NoLabel = false },

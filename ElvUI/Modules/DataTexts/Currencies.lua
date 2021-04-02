@@ -100,13 +100,6 @@ local function OnEnter()
 		DT.tooltip:AddLine(' ')
 	end
 
-	for _, info in pairs(E.global.datatexts.customCurrencies) do
-		if info and not DT.CurrencyList[tostring(info.ID)] and info.DISPLAY_IN_MAIN_TOOLTIP then
-			AddInfo(info.ID)
-			addLine2 = true
-		end
-	end
-
 	if addLine2 then
 		DT.tooltip:AddLine(' ')
 	end
