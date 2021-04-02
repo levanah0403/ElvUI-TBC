@@ -21,10 +21,7 @@ local GetPVPTimer = GetPVPTimer
 local GetQuestDifficultyColor = GetQuestDifficultyColor
 local GetCreatureDifficultyColor = GetCreatureDifficultyColor
 local GetRelativeDifficultyColor = GetRelativeDifficultyColor
-local GetSpecialization = GetSpecialization
-local GetSpecializationInfo = GetSpecializationInfo
 local GetThreatStatusColor = GetThreatStatusColor
-local GetRuneCooldown = GetRuneCooldown
 local GetTime = GetTime
 local GetUnitSpeed = GetUnitSpeed
 local IsInGroup = IsInGroup
@@ -58,7 +55,6 @@ local UnitPowerMax = UnitPowerMax
 local UnitPowerType = UnitPowerType
 local UnitPVPName = UnitPVPName
 local UnitReaction = UnitReaction
-local UnitStagger = UnitStagger
 local GetCurrentTitle = GetCurrentTitle
 local GetTitleName = GetTitleName
 
@@ -76,9 +72,6 @@ local CHAT_FLAG_DND = CHAT_FLAG_DND:gsub('<(.-)>', '|r<|cffFFFF33%1|r>')
 
 local SPELL_POWER_MANA = Enum.PowerType.Mana
 local COMBO_POINTS = Enum.PowerType.ComboPoints
-local ALTERNATE_POWER_INDEX = Enum.PowerType.Alternate
-local SPEC_MONK_BREWMASTER = SPEC_MONK_BREWMASTER
-local UNITNAME_SUMMON_TITLE17 = UNITNAME_SUMMON_TITLE17
 local DEFAULT_AFK_MESSAGE = DEFAULT_AFK_MESSAGE
 local UNKNOWN = UNKNOWN
 local LEVEL = LEVEL
@@ -104,10 +97,6 @@ ElvUF.Tags.SharedEvents.INSTANCE_ENCOUNTER_ENGAGE_UNIT = true
 local function UnitName(unit)
 	local name, realm = _G.UnitName(unit)
 
-	if name == UNKNOWN and E.myclass == 'MONK' and UnitIsUnit(unit, 'pet') then
-		name = format(UNITNAME_SUMMON_TITLE17, _G.UnitName('player'))
-	end
-
 	if realm and realm ~= '' then
 		return name, realm
 	else
@@ -130,110 +119,6 @@ local function Abbrev(name)
 	return name
 end
 E.TagFunctions.Abbrev = Abbrev
-
--- percentages at which the bar should change color
-local STAGGER_YELLOW_TRANSITION = STAGGER_YELLOW_TRANSITION
-local STAGGER_RED_TRANSITION = STAGGER_RED_TRANSITION
--- table indices of bar colors
-local STAGGER_GREEN_INDEX = STAGGER_GREEN_INDEX or 1
-local STAGGER_YELLOW_INDEX = STAGGER_YELLOW_INDEX or 2
-local STAGGER_RED_INDEX = STAGGER_RED_INDEX or 3
-
-local ClassPowers = {
-	MONK		= Enum.PowerType.Chi,
-	MAGE		= Enum.PowerType.ArcaneCharges,
-	PALADIN		= Enum.PowerType.HolyPower,
-	DEATHKNIGHT	= Enum.PowerType.Runes,
-	WARLOCK		= Enum.PowerType.SoulShards
-}
-
-local function GetClassPower(Class)
-	local min, max, r, g, b
-
-	-- try stagger
-	if Class == 'MONK' then
-		local spec = GetSpecialization()
-		if spec == SPEC_MONK_BREWMASTER then
-			min = UnitStagger('player')
-			max = UnitHealthMax('player')
-
-			local staggerRatio = min / max
-			if staggerRatio >= STAGGER_RED_TRANSITION then
-				r, g, b = unpack(ElvUF.colors.power.STAGGER[STAGGER_RED_INDEX])
-			elseif staggerRatio >= STAGGER_YELLOW_TRANSITION then
-				r, g, b = unpack(ElvUF.colors.power.STAGGER[STAGGER_YELLOW_INDEX])
-			else
-				r, g, b = unpack(ElvUF.colors.power.STAGGER[STAGGER_GREEN_INDEX])
-			end
-		end
-	end
-
-	-- try special powers or combo points
-	if not r then
-		local barType = ClassPowers[Class]
-		if barType then
-			min = UnitPower('player', barType)
-			max = UnitPowerMax('player', barType)
-
-			if Class == 'DEATHKNIGHT' then
-				min = 0 -- only count full runes
-
-				for i = 1, max do
-					local _, _, runeReady = GetRuneCooldown(i)
-					if runeReady then
-						min = min + 1
-					end
-				end
-			end
-
-			if min > 0 then
-				local powerColor = ElvUF.colors.ClassBars[Class]
-				if Class == 'MONK' then -- chi is a table
-					r, g, b = unpack(powerColor[min])
-				else
-					r, g, b = unpack(powerColor)
-				end
-			end
-		else
-			min = UnitPower('player', COMBO_POINTS)
-			max = UnitPowerMax('player', COMBO_POINTS)
-
-			if min > 0 then
-				local r1, g1, b1 = unpack(ElvUF.colors.ComboPoints[1])
-				local r2, g2, b2 = unpack(ElvUF.colors.ComboPoints[2])
-				local r3, g3, b3 = unpack(ElvUF.colors.ComboPoints[3])
-				r, g, b = ElvUF:ColorGradient(min, max, r1, g1, b1, r2, g2, b2, r3, g3, b3)
-			end
-		end
-	end
-
-	-- try additional mana
-	if not r then
-		local barIndex = _G.ADDITIONAL_POWER_BAR_INDEX == 0 and _G.ALT_MANA_BAR_PAIR_DISPLAY_INFO[Class]
-		if barIndex and barIndex[UnitPowerType('player')] then
-			min = UnitPower('player', SPELL_POWER_MANA)
-			max = UnitPowerMax('player', SPELL_POWER_MANA)
-
-			r, g, b = unpack(ElvUF.colors.power.MANA)
-		end
-	end
-
-	return min or 0, max or 0, r or 1, g or 1, b or 1
-end
-E.TagFunctions.GetClassPower = GetClassPower
-
-ElvUF.Tags.Events['altpowercolor'] = 'UNIT_POWER_UPDATE UNIT_POWER_BAR_SHOW UNIT_POWER_BAR_HIDE'
-ElvUF.Tags.Methods['altpowercolor'] = function(u)
-	local cur = UnitPower(u, ALTERNATE_POWER_INDEX)
-	if cur > 0 then
-		local _, r, g, b = GetUnitPowerBarTextureInfo(u, 3)
-		if not r then
-			r, g, b = 1, 1, 1
-		end
-
-		return Hex(r,g,b)
-	end
-end
 
 ElvUF.Tags.Events['afk'] = 'PLAYER_FLAGS_CHANGED'
 ElvUF.Tags.Methods['afk'] = function(unit)
@@ -384,23 +269,6 @@ for textFormat in pairs(E.GetFormattedTextStyles) do
 		end
 	end
 
-	ElvUF.Tags.Events[format('classpower:%s', tagTextFormat)] = (E.myclass == 'MONK' and 'UNIT_AURA ' or E.myclass == 'DEATHKNIGHT' and 'RUNE_POWER_UPDATE ' or '') .. 'UNIT_POWER_FREQUENT UNIT_DISPLAYPOWER'
-	ElvUF.Tags.Methods[format('classpower:%s', tagTextFormat)] = function()
-		local min, max = GetClassPower(E.myclass)
-		if min ~= 0 then
-			return E:GetFormattedText(textFormat, min, max)
-		end
-	end
-
-	ElvUF.Tags.Events[format('altpower:%s', tagTextFormat)] = 'UNIT_POWER_UPDATE UNIT_POWER_BAR_SHOW UNIT_POWER_BAR_HIDE'
-	ElvUF.Tags.Methods[format('altpower:%s', tagTextFormat)] = function(u)
-		local cur = UnitPower(u, ALTERNATE_POWER_INDEX)
-		if cur > 0 then
-			local max = UnitPowerMax(u, ALTERNATE_POWER_INDEX)
-			return E:GetFormattedText(textFormat, cur, max)
-		end
-	end
-
 	if tagTextFormat ~= 'percent' then
 		ElvUF.Tags.Events[format('health:%s:shortvalue', tagTextFormat)] = 'UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED'
 		ElvUF.Tags.Methods[format('health:%s:shortvalue', tagTextFormat)] = function(unit)
@@ -441,14 +309,6 @@ for textFormat in pairs(E.GetFormattedTextStyles) do
 				if min ~= 0 and tagTextFormat ~= 'deficit' then
 					return E:GetFormattedText(textFormat, min, UnitPowerMax(unit, SPELL_POWER_MANA), nil, true)
 				end
-			end
-		end
-
-		ElvUF.Tags.Events[format('classpower:%s:shortvalue', tagTextFormat)] = (E.myclass == 'MONK' and 'UNIT_AURA ' or E.myclass == 'DEATHKNIGHT' and 'RUNE_POWER_UPDATE ' or '') .. 'UNIT_POWER_FREQUENT UNIT_DISPLAYPOWER'
-		ElvUF.Tags.Methods[format('classpower:%s:shortvalue', tagTextFormat)] = function()
-			local min, max = GetClassPower(E.myclass)
-			if min ~= 0 then
-				return E:GetFormattedText(textFormat, min, max, nil, true)
 			end
 		end
 	end
@@ -814,12 +674,6 @@ ElvUF.Tags.Methods['pvptimer'] = function(unit)
 	end
 end
 
-ElvUF.Tags.Events['classpowercolor'] = 'UNIT_POWER_FREQUENT UNIT_DISPLAYPOWER'
-ElvUF.Tags.Methods['classpowercolor'] = function()
-	local _, _, r, g, b = GetClassPower(E.myclass)
-	return Hex(r, g, b)
-end
-
 ElvUF.Tags.Events['manacolor'] = 'UNIT_POWER_FREQUENT UNIT_DISPLAYPOWER'
 ElvUF.Tags.Methods['manacolor'] = function()
 	local r, g, b = unpack(ElvUF.colors.power.MANA)
@@ -1123,19 +977,6 @@ ElvUF.Tags.Methods['class'] = function(unit)
 	end
 end
 
-ElvUF.Tags.Events['specialization'] = 'PLAYER_TALENT_UPDATE'
-ElvUF.Tags.Methods['specialization'] = function(unit)
-	if UnitIsPlayer(unit) then
-		local currentSpec = GetSpecialization()
-		if currentSpec then
-			local _, currentSpecName = GetSpecializationInfo(currentSpec)
-			if currentSpecName then
-				return currentSpecName
-			end
-		end
-	end
-end
-
 ElvUF.Tags.Events['name:title'] = 'UNIT_NAME_UPDATE INSTANCE_ENCOUNTER_ENGAGE_UNIT'
 ElvUF.Tags.Methods['name:title'] = function(unit)
 	return UnitIsPlayer(unit) and UnitPVPName(unit) or UnitName(unit)
@@ -1281,13 +1122,6 @@ end
 ElvUF.Tags.Events['creature'] = ''
 
 E.TagInfo = {
-	--Altpower
-	['altpower:current-max-percent'] = { category = 'Altpower', description = "Displays altpower text on a unit in current-max-percent format" },
-	['altpower:current-max'] = { category = 'Altpower', description = "Displays altpower text on a unit in current-max format" },
-	['altpower:current-percent'] = { category = 'Altpower', description = "Displays altpower text on a unit in current-percent format" },
-	['altpower:current'] = { category = 'Altpower', description = "Displays altpower text on a unit in current format" },
-	['altpower:deficit'] = { category = 'Altpower', description = "Displays altpower text on a unit in deficit format" },
-	['altpower:percent'] = { category = 'Altpower', description = "Displays altpower text on a unit in percent format" },
 	--Classification
 	['classification:icon'] = { category = 'Classification', description = "Displays the unit's classification in icon form (golden icon for 'ELITE' silver icon for 'RARE')" },
 	['classification'] = { category = 'Classification', description = "Displays the unit's classification (e.g. 'ELITE' and 'RARE')" },
@@ -1295,21 +1129,7 @@ E.TagInfo = {
 	['plus'] = { category = 'Classification', description = "Displays the character '+' if the unit is an elite or rare-elite" },
 	['rare'] = { category = 'Classification', description = "Displays 'Rare' when the unit is a rare or rareelite" },
 	['shortclassification'] = { category = 'Classification', description = "Displays the unit's classification in short form (e.g. '+' for ELITE and 'R' for RARE)" },
-	--Classpower
-	['arcanecharges'] = { category = 'Classpower', description = "Displays the arcane charges (Mage)" },
-	['chi'] = { category = 'Classpower', description = "Displays the chi points (Monk)" },
-	['classpower:current-max-percent'] = { category = 'Classpower', description = "Displays the unit's current and max amount of special power, separated by a dash (% when not full power)" },
-	['classpower:current-max'] = { category = 'Classpower', description = "Displays the unit's current and max amount of special power, separated by a dash" },
-	['classpower:current-percent'] = { category = 'Classpower', description = "Displays the unit's current and percentage amount of special power, separated by a dash" },
-	['classpower:current'] = { category = 'Classpower', description = "Displays the unit's current amount of special power" },
-	['classpower:deficit'] = { category = 'Classpower', description = "Displays the unit's special power as a deficit (Total Special Power - Current Special Power = -Deficit)" },
-	['classpower:percent'] = { category = 'Classpower', description = "Displays the unit's current amount of special power as a percentage" },
-	['cpoints'] = { category = 'Classpower', description = "Displays amount of combo points the player has (only for player, shows nothing on 0)" },
-	['holypower'] = { category = 'Classpower', description = "Displays the holy power (Paladin)" },
-	['runes'] = { category = 'Classpower', description = "Displays the runes (Death Knight)" },
-	['soulshards'] = { category = 'Classpower', description = "Displays the soulshards (Warlock)" },
 	--Colors
-	['altpowercolor'] = { category = 'Colors', description = "Changes the text color to the current alternative power color (Blizzard defined)" },
 	['classificationcolor'] = { category = 'Colors', description = "Changes the text color, depending on the unit's classification" },
 	['classpowercolor'] = { category = 'Colors', description = "Changes the color of the special power based upon its type" },
 	['difficulty'] = { category = 'Colors', description = "Changes color of the next tag based on how difficult the unit is compared to the players level" },
@@ -1396,7 +1216,6 @@ E.TagInfo = {
 	['class'] = { category = 'Miscellaneous', description = "Displays the class of the unit, if that unit is a player" },
 	['race'] = { category = 'Miscellaneous', description = "Displays the race" },
 	['smartclass'] = { category = 'Miscellaneous', description = "Displays the player's class or creature's type" },
-	['specialization'] = { category = 'Miscellaneous', description = "Displays your current specialization as text" },
 	--Names
 	['name:abbrev:long'] = { category = 'Names', description = "Displays the name of the unit with abbreviation (limited to 20 letters)" },
 	['name:abbrev:medium'] = { category = 'Names', description = "Displays the name of the unit with abbreviation (limited to 15 letters)" },
