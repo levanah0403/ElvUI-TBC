@@ -893,9 +893,6 @@ function B:ConstructContainerFrame(name, isBank)
 				f.ContainerHolder[i]:HookScript('OnLeave', GameTooltip_Hide)
 				f.ContainerHolder[i].icon:SetTexture('Interface/ICONS/INV_Misc_Key_03')
 			end
-			if bagID > 0 then
-				f.ContainerHolder[i]:SetID(ContainerIDToInventoryID(bagID))
-			end
 		end
 
 		if i == 1 then
