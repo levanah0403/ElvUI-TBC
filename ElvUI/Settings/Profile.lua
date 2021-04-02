@@ -107,12 +107,6 @@ P.general = {
 				xOffset = 0,
 				yOffset = 0,
 			},
-			challengeMode = {
-				scale = 1,
-				position = 'TOPLEFT',
-				xOffset = 8,
-				yOffset = -8,
-			},
 		}
 	},
 	totems = {

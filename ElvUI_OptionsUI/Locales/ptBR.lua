@@ -1523,7 +1523,6 @@ L["BINDING_HEADER_VOICE_CHAT"] = "Voz";
 L["BLACK_MARKET_AUCTION_HOUSE"] = "Casa de Leilões do Mercado Negro";
 L["BLOCK"] = "Bloquear";
 L["BUFFOPTIONS_LABEL"] = "Bônus e Debuffs";
-L["CHALLENGE_MODE"] = "Modo Desafio";
 L["CHANNELS"] = "Canais";
 L["CHAT_MSG_EMOTE"] = "Expressão";
 L["CLASS"] = "Classe";

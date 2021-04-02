@@ -1564,7 +1564,6 @@ L["BINDING_HEADER_VOICE_CHAT"] = "음성 대화";
 L["BLACK_MARKET_AUCTION_HOUSE"] = "암시장 경매장";
 L["BLOCK"] = "방패 막기";
 L["BUFFOPTIONS_LABEL"] = "강화 및 약화 효과";
-L["CHALLENGE_MODE"] = "도전 모드";
 L["CHANNELS"] = "채널 표시";
 L["CHAT_MSG_EMOTE"] = "감정 표현";
 L["CHI_POWER"] = "기";

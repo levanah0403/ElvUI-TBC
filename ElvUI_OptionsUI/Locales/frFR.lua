@@ -1522,7 +1522,6 @@ L["BINDING_HEADER_VOICE_CHAT"] = "Discussion audio";
 L["BLACK_MARKET_AUCTION_HOUSE"] = "Hôtel des ventes au marché noir";
 L["BLOCK"] = "Blocage";
 L["BUFFOPTIONS_LABEL"] = "Améliorations et affaiblissements";
-L["CHALLENGE_MODE"] = "Mode Défi";
 L["CHANNELS"] = "Canaux";
 L["CHAT_MSG_EMOTE"] = "Emote";
 L["CLASS"] = "Classe";

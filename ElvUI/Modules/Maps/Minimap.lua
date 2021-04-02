@@ -303,15 +303,6 @@ function M:UpdateSettings()
 		GuildInstanceDifficulty:Point(pos, Minimap, pos, x, y)
 		GuildInstanceDifficulty:SetScale(scale)
 	end
-
-	local MiniMapChallengeMode = _G.MiniMapChallengeMode
-	if MiniMapChallengeMode then
-		local pos = E.db.general.minimap.icons.challengeMode.position or 'TOPLEFT'
-		local scale = E.db.general.minimap.icons.challengeMode.scale or 1
-		MiniMapChallengeMode:ClearAllPoints()
-		MiniMapChallengeMode:Point(pos, Minimap, pos, E.db.general.minimap.icons.challengeMode.xOffset or 8, E.db.general.minimap.icons.challengeMode.yOffset or -8)
-		MiniMapChallengeMode:SetScale(scale)
-	end
 end
 
 local function MinimapPostDrag()
@@ -379,7 +370,6 @@ function M:Initialize()
 	_G.MiniMapWorldMapButton:Hide()
 	--_G.MiniMapInstanceDifficulty:SetParent(Minimap)
 	--_G.GuildInstanceDifficulty:SetParent(Minimap)
-	--_G.MiniMapChallengeMode:SetParent(Minimap)
 
 	if _G.TimeManagerClockButton then _G.TimeManagerClockButton:Kill() end
 	if _G.FeedbackUIButton then _G.FeedbackUIButton:Kill() end

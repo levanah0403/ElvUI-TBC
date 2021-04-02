@@ -1522,7 +1522,6 @@ L["BINDING_HEADER_VOICE_CHAT"] = "語音";
 L["BLACK_MARKET_AUCTION_HOUSE"] = "黑市拍賣場";
 L["BLOCK"] = "格擋";
 L["BUFFOPTIONS_LABEL"] = "增益與減益效果";
-L["CHALLENGE_MODE"] = "挑戰模式";
 L["CHANNELS"] = "頻道";
 L["CHAT_MSG_EMOTE"] = "表情指令";
 L["CHI_POWER"] = "真氣";

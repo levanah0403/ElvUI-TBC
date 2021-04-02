@@ -1527,7 +1527,6 @@ L["BINDING_HEADER_VOICE_CHAT"] = "Voicechat";
 L["BLACK_MARKET_AUCTION_HOUSE"] = "Schwarzmarkt-Auktionshaus";
 L["BLOCK"] = "Blocken";
 L["BUFFOPTIONS_LABEL"] = "Stärkungs-/Schwächungszauber"; --edited, cause fucking too long
-L["CHALLENGE_MODE"] = "Herausforderungsmodus";
 L["CHANNELS"] = "Channels";
 L["CHAT_MSG_EMOTE"] = "Emote";
 L["CLASS"] = "Klasse";

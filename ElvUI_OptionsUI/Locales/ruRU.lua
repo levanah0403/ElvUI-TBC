@@ -1520,7 +1520,6 @@ L["BINDING_HEADER_VOICE_CHAT"] = "Голосовой чат";
 L["BLACK_MARKET_AUCTION_HOUSE"] = "Аукцион черного рынка";
 L["BLOCK"] = "Блок";
 L["BUFFOPTIONS_LABEL"] = "Эффекты и ауры";
-L["CHALLENGE_MODE"] = "Режим испытаний";
 L["CHANNELS"] = "Каналы";
 L["CHAT_MSG_EMOTE"] = "Эмоция";
 L["CHI_POWER"] = "Ци";

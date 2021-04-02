@@ -1528,7 +1528,6 @@ L["BINDING_HEADER_VOICE_CHAT"] = "语音聊天";
 L["BLACK_MARKET_AUCTION_HOUSE"] = "黑市拍卖行";
 L["BLOCK"] = "格挡";
 L["BUFFOPTIONS_LABEL"] = "增益效果和负面效果";
-L["CHALLENGE_MODE"] = "挑战模式";
 L["CHANNELS"] = "频道";
 L["CHAT_MSG_EMOTE"] = "表情";
 L["CHI_POWER"] = "真气";
