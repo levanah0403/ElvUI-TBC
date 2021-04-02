@@ -894,7 +894,7 @@ function B:ConstructContainerFrame(name, isBank)
 				f.ContainerHolder[i].icon:SetTexture('Interface/ICONS/INV_Misc_Key_03')
 			end
 			if bagID > 0 then
-				f.ContainerHolder[i]:SetID((bagID - 1) + _G.CharacterBag0Slot:GetID())
+				f.ContainerHolder[i]:SetID(ContainerIDToInventoryID(bagID))
 			end
 		end
 
