@@ -105,9 +105,6 @@ colors.power[1] = colors.power.RAGE
 colors.power[2] = colors.power.FOCUS
 colors.power[3] = colors.power.ENERGY
 colors.power[4] = colors.power.COMBO_POINTS
-colors.power[7] = colors.power.SOUL_SHARDS
-colors.power[9] = colors.power.HOLY_POWER
-colors.power[16] = colors.power.ARCANE_CHARGES
 
 -- alternate power, sourced from FrameXML/CompactUnitFrame.lua
 colors.power.ALTERNATE = {0.7, 0.7, 0.6}

@@ -118,15 +118,6 @@ local tagStrings = {
 		end
 	end]],
 
-	['arcanecharges'] = [[function()
-		if(GetSpecialization() == SPEC_MAGE_ARCANE) then
-			local num = UnitPower('player', Enum.PowerType.ArcaneCharges)
-			if(num > 0) then
-				return num
-			end
-		end
-	end]],
-
 	['arenaspec'] = [[function(u)
 		local id = u:match('arena(%d)$')
 		if(id) then
@@ -203,15 +194,6 @@ local tagStrings = {
 			local raidName, _, group = GetRaidRosterInfo(i)
 			if( raidName == name ) then
 				return group
-			end
-		end
-	end]],
-
-	['holypower'] = [[function()
-		if(GetSpecialization() == SPEC_PALADIN_RETRIBUTION) then
-			local num = UnitPower('player', Enum.PowerType.HolyPower)
-			if(num > 0) then
-				return num
 			end
 		end
 	end]],
@@ -392,13 +374,6 @@ local tagStrings = {
 		end
 	end]],
 
-	['soulshards'] = [[function()
-		local num = UnitPower('player', Enum.PowerType.SoulShards)
-		if(num > 0) then
-			return num
-		end
-	end]],
-
 	['status'] = [[function(u)
 		if(UnitIsDead(u)) then
 			return 'Dead'
@@ -492,7 +467,6 @@ _ENV._VARS = vars
 -- ElvUI sets UNIT_POWER_UPDATE to UNIT_POWER_FREQUENT in tagEvents
 local tagEvents = {
 	['affix']               = 'UNIT_CLASSIFICATION_CHANGED',
-	['arcanecharges']       = 'UNIT_POWER_FREQUENT PLAYER_TALENT_UPDATE',
 	['arenaspec']           = 'ARENA_PREP_OPPONENT_SPECIALIZATIONS',
 	['classification']      = 'UNIT_CLASSIFICATION_CHANGED',
 	['cpoints']             = 'UNIT_POWER_FREQUENT PLAYER_TARGET_CHANGED',
@@ -504,7 +478,6 @@ local tagEvents = {
 	['difficulty']          = 'UNIT_FACTION',
 	['faction']             = 'NEUTRAL_FACTION_SELECT_RESULT',
 	['group']               = 'GROUP_ROSTER_UPDATE',
-	['holypower']           = 'UNIT_POWER_FREQUENT PLAYER_TALENT_UPDATE',
 	['leader']              = 'PARTY_LEADER_CHANGED',
 	['leaderlong']          = 'PARTY_LEADER_CHANGED',
 	['level']               = 'UNIT_LEVEL PLAYER_LEVEL_UP',
@@ -524,7 +497,6 @@ local tagEvents = {
 	['resting']             = 'PLAYER_UPDATE_RESTING',
 	['shortclassification'] = 'UNIT_CLASSIFICATION_CHANGED',
 	['smartlevel']          = 'UNIT_LEVEL PLAYER_LEVEL_UP UNIT_CLASSIFICATION_CHANGED',
-	['soulshards']          = 'UNIT_POWER_FREQUENT',
 	['status']              = 'UNIT_HEALTH PLAYER_UPDATE_RESTING UNIT_CONNECTION',
 	['threat']              = 'UNIT_THREAT_SITUATION_UPDATE',
 	['threatcolor']         = 'UNIT_THREAT_SITUATION_UPDATE',

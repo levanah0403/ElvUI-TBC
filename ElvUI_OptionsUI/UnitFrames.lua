@@ -5514,31 +5514,6 @@ for i in pairs(P.unitframe.colors.classResources.comboPoints) do
 	}
 end
 
-if P.unitframe.colors.classResources[E.myclass] then
-	E.Options.args.unitframe.args.generalOptionsGroup.args.allColorsGroup.args.classResourceGroup.args.spacer5 = ACH:Spacer(20, 'full')
-
-	local ORDER = 30
-	if E.myclass == 'PALADIN' then
-		E.Options.args.unitframe.args.generalOptionsGroup.args.allColorsGroup.args.classResourceGroup.args[E.myclass] = {
-			type = 'color',
-			name = L["HOLY_POWER"],
-			order = ORDER,
-		}
-	elseif E.myclass == 'MAGE' then
-		E.Options.args.unitframe.args.generalOptionsGroup.args.allColorsGroup.args.classResourceGroup.args[E.myclass] = {
-			type = 'color',
-			name = L["POWER_TYPE_ARCANE_CHARGES"],
-			order = ORDER,
-		}
-	elseif E.myclass == 'WARLOCK' then
-		E.Options.args.unitframe.args.generalOptionsGroup.args.allColorsGroup.args.classResourceGroup.args[E.myclass] = {
-			type = 'color',
-			name = L["SOUL_SHARDS"],
-			order = ORDER,
-		}
-	end
-end
-
 --Custom Texts
 function E:RefreshCustomTextsConfigs()
 	--Hide any custom texts that don't belong to current profile

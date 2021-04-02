@@ -6239,23 +6239,7 @@ E.Options.args.nameplate = {
 								t.r, t.g, t.b, t.a = r, g, b, a
 								NP:ConfigureAll()
 							end,
-							args = {
-								PALADIN = {
-									type = 'color',
-									order = 1,
-									name = L["HOLY_POWER"]
-								},
-								MAGE = {
-									type = 'color',
-									order = 2,
-									name = L["POWER_TYPE_ARCANE_CHARGES"]
-								},
-								WARLOCK = {
-									type = 'color',
-									order = 3,
-									name = L["SOUL_SHARDS"]
-								},
-							}
+							args = {},
 						}
 					}
 				}
