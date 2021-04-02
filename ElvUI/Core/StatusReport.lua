@@ -43,9 +43,6 @@ local EnglishClassName = {
 }
 
 local EnglishSpecName = {
-	[250] = 'Blood',
-	[251] = 'Frost',
-	[252] = 'Unholy',
 	[102] = 'Balance',
 	[103] = 'Feral',
 	[104] = 'Guardian',
@@ -55,10 +52,6 @@ local EnglishSpecName = {
 	[255] = 'Survival',
 	[62] = 'Arcane',
 	[63] = 'Fire',
-	[64] = 'Frost',
-	[268] = 'Brewmaster',
-	[270] = 'Mistweaver',
-	[269] = 'Windwalker',
 	[65] = 'Holy',
 	[66] = 'Protection',
 	[70] = 'Retribution',
