@@ -1591,7 +1591,6 @@ L["LEVEL"] = "Level";
 L["LFG_TITLE"] = "Looking For Group";
 L["LOCK_ACTIONBAR_TEXT"] = "Lock ActionBars";
 L["LOSS_OF_CONTROL"] = "Loss of Control Alerts";
-L["LUNAR_POWER"] = "Astral Power";
 L["MACROS"] = "Macros";
 L["MAIL_LABEL"] = "Mail";
 L["MANA"] = "Mana";

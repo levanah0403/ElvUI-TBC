@@ -1597,7 +1597,6 @@ L["LEVEL"] = "Nivel";
 L["LFG_TITLE"] = "Buscar grupo";
 L["LOCK_ACTIONBAR_TEXT"] = "Bloquear barras de acción";
 L["LOSS_OF_CONTROL"] = "Alertas de pérdida de control";
-L["LUNAR_POWER"] = "Poder Astral";
 L["MACROS"] = "Macros";
 L["MAIL_LABEL"] = "Correo";
 L["MANA"] = "Maná";

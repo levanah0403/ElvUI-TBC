@@ -547,7 +547,6 @@ P.nameplates = {
 		power = {
 			ENERGY = {r = 0.65, g = 0.63, b = 0.35},
 			FOCUS = {r = 0.71, g = 0.43, b = 0.27},
-			LUNAR_POWER = {r = .9, g = .86, b = .12, atlas = '_Druid-LunarBar'},
 			MANA = {r = 0.31, g = 0.45, b = 0.63},
 			RAGE = {r = 0.78, g = 0.25, b = 0.25},
 			ALT_POWER = {r = 0.2, g = 0.4, b = 0.8},
@@ -1429,7 +1428,6 @@ P.unitframe = {
 			RAGE = {r = 0.78, g = 0.25, b = 0.25},
 			FOCUS = {r = 0.71, g = 0.43, b = 0.27},
 			ENERGY = {r = 0.65, g = 0.63, b = 0.35},
-			LUNAR_POWER = {r = .9, g = .86, b = .12},
 			ALT_POWER = {r = 0.2, g = 0.4, b = 0.8},
 		},
 		reaction = {

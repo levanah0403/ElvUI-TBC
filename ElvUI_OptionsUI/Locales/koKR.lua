@@ -1639,7 +1639,6 @@ L["LEVEL"] = "레벨";
 L["LFG_TITLE"] = "파티 찾기";
 L["LOCK_ACTIONBAR_TEXT"] = "행동 단축바 잠그기";
 L["LOSS_OF_CONTROL"] = "제어 불가 효과 경보";
-L["LUNAR_POWER"] = "천공의 힘";
 L["MACROS"] = "매크로 설정";
 L["MAIL_LABEL"] = "우편";
 L["MANA"] = "마나";

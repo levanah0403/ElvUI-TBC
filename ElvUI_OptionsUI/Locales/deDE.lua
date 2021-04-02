@@ -1601,7 +1601,6 @@ L["LEVEL"] = "Stufe";
 L["LFG_TITLE"] = "Suche nach Gruppe";
 L["LOCK_ACTIONBAR_TEXT"] = "Leisten fixieren";
 L["LOSS_OF_CONTROL"] = "Alarmierungen für Kontrollverluste";
-L["LUNAR_POWER"] = "Astrale Macht";
 L["MACROS"] = "Makros";
 L["MAIL_LABEL"] = "Post";
 L["MANA"] = "Mana";

@@ -1597,7 +1597,6 @@ L["LEVEL"] = "等級";
 L["LFG_TITLE"] = "尋求組隊";
 L["LOCK_ACTIONBAR_TEXT"] = "鎖定快捷列";
 L["LOSS_OF_CONTROL"] = "喪失控制警告";
-L["LUNAR_POWER"] = "星能";
 L["MACROS"] = "巨集設定";
 L["MAIL_LABEL"] = "郵件";
 L["MANA"] = "法力";

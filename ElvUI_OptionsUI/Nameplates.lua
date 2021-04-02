@@ -6207,11 +6207,6 @@ E.Options.args.nameplate = {
 									name = L["FOCUS"],
 									type = 'color'
 								},
-								LUNAR_POWER = {
-									order = 5,
-									name = L["LUNAR_POWER"],
-									type = 'color'
-								},
 								MANA = {
 									order = 7,
 									name = L["MANA"],

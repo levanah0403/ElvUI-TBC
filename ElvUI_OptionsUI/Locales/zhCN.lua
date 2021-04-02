@@ -1603,7 +1603,6 @@ L["LEVEL"] = "等级";
 L["LFG_TITLE"] = "寻求组队";
 L["LOCK_ACTIONBAR_TEXT"] = "锁定动作条";
 L["LOSS_OF_CONTROL"] = "失控警报";
-L["LUNAR_POWER"] = "星界能量";
 L["MACROS"] = "宏命令设置";
 L["MAIL_LABEL"] = "信件";
 L["MANA"] = "法力值";
