@@ -125,25 +125,6 @@ E.StyleFilterDefaults = {
 			cross = false,
 			skull = false
 		},
-		talent = {
-			type = 'normal',
-			enabled = false,
-			requireAll = false,
-			tier1enabled = false,
-			tier1 = {missing = false, column = 0},
-			tier2enabled = false,
-			tier2 = {missing = false, column = 0},
-			tier3enabled = false,
-			tier3 = {missing = false, column = 0},
-			tier4enabled = false,
-			tier4 = {missing = false, column = 0},
-			tier5enabled = false,
-			tier5 = {missing = false, column = 0},
-			tier6enabled = false,
-			tier6 = {missing = false, column = 0},
-			tier7enabled = false,
-			tier7 = {missing = false, column = 0}
-		},
 		threat = {
 			enable = false,
 			good = false,

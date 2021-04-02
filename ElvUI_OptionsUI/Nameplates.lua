@@ -1050,17 +1050,6 @@ local function UpdateFilterGroup()
 					end,
 					args = {}
 				},
-				talent = {
-					order = 11,
-					type = 'group',
-					name = L["TALENT"],
-					disabled = function()
-						return not (E.db.nameplates and E.db.nameplates.filters and E.db.nameplates.filters[selectedNameplateFilter] and
-							E.db.nameplates.filters[selectedNameplateFilter].triggers and
-							E.db.nameplates.filters[selectedNameplateFilter].triggers.enable)
-					end,
-					args = {}
-				},
 				role = {
 					order = 12,
 					type = 'group',
