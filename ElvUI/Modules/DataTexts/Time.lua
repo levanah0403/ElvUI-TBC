@@ -88,13 +88,14 @@ local function CalculateTimeValues(tooltip)
 	end
 end
 
-local function OnClick(_, btn)
+local function OnClick(self, btn)
 	if InCombatLockdown() then _G.UIErrorsFrame:AddMessage(E.InfoColor.._G.ERR_NOT_IN_COMBAT) return end
-
-	if btn == 'RightButton' then
-		ToggleFrame(_G.TimeManagerFrame)
-	else
-		_G.GameTimeFrame:Click()
+	if btn == "RightButton" then
+		-- Show clock
+		_G.TimeManager_Toggle()
+	elseif btn == "LeftButton" then
+		-- Show stopwatch
+		_G.Stopwatch_Toggle()
 	end
 end
 
