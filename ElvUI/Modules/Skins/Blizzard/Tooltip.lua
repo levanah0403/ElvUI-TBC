@@ -55,9 +55,6 @@ function S:TooltipFrames()
 	TT:SecureHook('GameTooltip_ShowProgressBar') -- Skin Progress Bars
 	TT:SecureHook('GameTooltip_AddQuestRewardsToTooltip') -- Color Progress Bars
 	TT:SecureHook('GameTooltip_UpdateStyle', 'SetStyle') -- GameTooltip_SetBackdropStyle
-
-	-- [Backdrop coloring] There has to be a more elegant way of doing this.
-	TT:SecureHookScript(GameTooltip, 'OnUpdate', 'CheckBackdropColor')
 end
 
 S:AddCallback('TooltipFrames')
