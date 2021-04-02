@@ -71,14 +71,6 @@ Bags.args.general.args.itemLevelGroup.args.itemLevelFont = ACH:SharedMediaFont(L
 Bags.args.general.args.itemLevelGroup.args.itemLevelFontSize = ACH:Range(L["Font Size"], nil, 6, C.Values.FontSize, nil, nil, nil, nil, function() return not E.db.bags.itemLevel end)
 Bags.args.general.args.itemLevelGroup.args.itemLevelFontOutline = ACH:FontFlags(L["Font Outline"], nil, 7, nil, nil, nil, nil, function() return not E.db.bags.itemLevel end)
 
-Bags.args.general.args.itemInfoGroup = ACH:Group(L["Item Info"], nil, 8, nil, nil, function(info, value) E.db.bags[info[#info]] = value B:UpdateItemInfoDisplay() end)
-Bags.args.general.args.itemInfoGroup.inline = true
-Bags.args.general.args.itemInfoGroup.args.itemInfo = ACH:Toggle(L["Display Item Info"], L["Displays item info on center of item."], 1)
-Bags.args.general.args.itemInfoGroup.args.itemInfoColor = ACH:Color(L["COLOR"], nil, 4, nil, nil, function(info) local t = E.db.bags[info[#info]] local d = P.bags[info[#info]] return t.r, t.g, t.b, t.a, d.r, d.g, d.b end, function(info, r, g, b) local t = E.db.bags[info[#info]] t.r, t.g, t.b = r, g, b B:UpdateItemInfoDisplay() end, nil, function() return not E.db.bags.itemInfo end)
-Bags.args.general.args.itemInfoGroup.args.itemInfoFont = ACH:SharedMediaFont(L["Font"], nil, 5, nil, nil, nil, nil, function() return not E.db.bags.itemInfo end)
-Bags.args.general.args.itemInfoGroup.args.itemInfoFontSize = ACH:Range(L["Font Size"], nil, 6, C.Values.FontSize, nil, nil, nil, nil, function() return not E.db.bags.itemInfo end)
-Bags.args.general.args.itemInfoGroup.args.itemInfoFontOutline = ACH:FontFlags(L["Font Outline"], nil, 7, nil, nil, nil, nil, function() return not E.db.bags.itemInfo end)
-
 Bags.args.general.args.playerGroup = ACH:Group(L["Player"], nil, 8, nil, nil, nil, function() return not E.Bags.Initialized end)
 Bags.args.general.args.playerGroup.inline = true
 Bags.args.general.args.playerGroup.args.generalGroup = ACH:Group(' ', nil, 1, nil, nil, function(info, value) E.db.bags[info[#info]] = value B:Layout() end)
