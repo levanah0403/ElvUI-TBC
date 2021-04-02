@@ -9,8 +9,6 @@ local GetAddOnInfo = GetAddOnInfo
 local GetCVarBool = GetCVarBool
 local GetNumAddOns = GetNumAddOns
 local GetRealZoneText = GetRealZoneText
-local GetSpecialization = GetSpecialization
-local GetSpecializationInfo = GetSpecializationInfo
 local UNKNOWN = UNKNOWN
 
 function E:AreOtherAddOnsEnabled()
@@ -40,36 +38,6 @@ local EnglishClassName = {
 	SHAMAN = 'Shaman',
 	WARLOCK = 'Warlock',
 	WARRIOR = 'Warrior',
-}
-
-local EnglishSpecName = {
-	[102] = 'Balance',
-	[103] = 'Feral',
-	[104] = 'Guardian',
-	[105] = 'Restoration',
-	[253] = 'Beast Mastery',
-	[254] = 'Marksmanship',
-	[255] = 'Survival',
-	[62] = 'Arcane',
-	[63] = 'Fire',
-	[65] = 'Holy',
-	[66] = 'Protection',
-	[70] = 'Retribution',
-	[256] = 'Discipline',
-	[257] = 'Holy',
-	[258] = 'Shadow',
-	[259] = 'Assasination',
-	[260] = 'Combat',
-	[261] = 'Sublety',
-	[262] = 'Elemental',
-	[263] = 'Enhancement',
-	[264] = 'Restoration',
-	[265] = 'Affliction',
-	[266] = 'Demonoligy',
-	[267] = 'Destruction',
-	[71] = 'Arms',
-	[72] = 'Fury',
-	[73] = 'Protection',
 }
 
 function E:CreateStatusContent(num, width, parent, anchorTo, content)
@@ -199,16 +167,12 @@ function E:CreateStatusFrame()
 	StatusFrame.Section1 = E:CreateStatusSection(300, 125, nil, 30, StatusFrame, 'TOP', StatusFrame, 'TOP', -30)
 	StatusFrame.Section2 = E:CreateStatusSection(300, 150, nil, 30, StatusFrame, 'TOP', StatusFrame.Section1, 'BOTTOM', 0)
 	StatusFrame.Section3 = E:CreateStatusSection(300, 185, nil, 30, StatusFrame, 'TOP', StatusFrame.Section2, 'BOTTOM', 0)
-	--StatusFrame.Section4 = E:CreateStatusSection(300, 60, nil, 30, StatusFrame, 'TOP', StatusFrame.Section3, 'BOTTOM', 0)
 	PluginFrame.SectionP = E:CreateStatusSection(280, nil, nil, 30, PluginFrame, 'TOP', PluginFrame, 'TOP', -10)
 
 	--Section content
 	StatusFrame.Section1.Content = E:CreateStatusContent(4, 260, StatusFrame.Section1, StatusFrame.Section1.Header)
 	StatusFrame.Section2.Content = E:CreateStatusContent(5, 260, StatusFrame.Section2, StatusFrame.Section2.Header)
 	StatusFrame.Section3.Content = E:CreateStatusContent(6, 260, StatusFrame.Section3, StatusFrame.Section3.Header)
-	--StatusFrame.Section4.Content = CreateFrame('Frame', nil, StatusFrame.Section4)
-	--StatusFrame.Section4.Content:SetSize(240, 25)
-	--StatusFrame.Section4.Content:SetPoint('TOP', StatusFrame.Section4.Header, 'BOTTOM', 0, 0)
 
 	--Content lines
 	StatusFrame.Section1.Content.Line3.Text:SetFormattedText('Recommended Scale: |cff4beb2c%s|r', E:PixelBestSize())
@@ -219,20 +183,6 @@ function E:CreateStatusFrame()
 	StatusFrame.Section3.Content.Line1.Text:SetFormattedText('Faction: |cff4beb2c%s|r', E.myfaction)
 	StatusFrame.Section3.Content.Line2.Text:SetFormattedText('Race: |cff4beb2c%s|r', E.myrace)
 	StatusFrame.Section3.Content.Line3.Text:SetFormattedText('Class: |cff4beb2c%s|r', EnglishClassName[E.myclass])
-
-	--[[Export buttons
-	StatusFrame.Section4.Content.Button1 = CreateFrame('Button', nil, StatusFrame.Section4.Content, 'UIPanelButtonTemplate')
-	StatusFrame.Section4.Content.Button1:SetSize(100, 25)
-	StatusFrame.Section4.Content.Button1:SetPoint('LEFT', StatusFrame.Section4.Content, 'LEFT')
-	StatusFrame.Section4.Content.Button1:SetText('Forum')
-	StatusFrame.Section4.Content.Button1:SetButtonState('DISABLED')
-	StatusFrame.Section4.Content.Button2 = CreateFrame('Button', nil, StatusFrame.Section4.Content, 'UIPanelButtonTemplate')
-	StatusFrame.Section4.Content.Button2:SetSize(100, 25)
-	StatusFrame.Section4.Content.Button2:SetPoint('RIGHT', StatusFrame.Section4.Content, 'RIGHT')
-	StatusFrame.Section4.Content.Button2:SetText('Ticket')
-	StatusFrame.Section4.Content.Button2:SetButtonState('DISABLED')
-	Skins:HandleButton(StatusFrame.Section4.Content.Button1, true)
-	Skins:HandleButton(StatusFrame.Section4.Content.Button2, true)]]
 
 	return StatusFrame
 end
