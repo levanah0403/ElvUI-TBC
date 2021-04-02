@@ -166,6 +166,7 @@ function DB:Initialize()
 	DB.db = E.db.databars
 
 	DB:ExperienceBar()
+	DB:PetExperienceBar()
 	DB:ReputationBar()
 	DB:ThreatBar()
 

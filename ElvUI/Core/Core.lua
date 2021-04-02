@@ -1478,7 +1478,7 @@ end
 
 function E:UpdateDataBars(skipCallback)
 	DataBars:ExperienceBar_Toggle()
-	DataBars:HonorBar_Toggle()
+	DataBars:PetExperienceBar_Toggle()
 	DataBars:ReputationBar_Toggle()
 	DataBars:ThreatBar_Toggle()
 	DataBars:UpdateAll()

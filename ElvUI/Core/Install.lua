@@ -290,7 +290,6 @@ function E:SetupLayout(layout, noDataReset, noDisplayMsg)
 		--DataBars
 			E.db.databars.threat.height = 24
 			E.db.databars.threat.width = 472
-			E.db.databars.azerite.enable = false
 			E.db.databars.reputation.enable = true
 		--General
 			E.db.general.bonusObjectivePosition = 'AUTO'

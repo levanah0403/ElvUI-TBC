@@ -136,8 +136,7 @@ P.databars = {
 		experience = { r = 0, g = .4, b = 1, a = .8 },
 		rested = { r = 1, g = 0, b = 1, a = .4},
 		quest = { r = 0, g = 1, b = 0, a = .4},
-		honor = { r = .94, g = .45, b = .25, a = 1 },
-		azerite = { r = .901, g = .8, b = .601, a = 1 },
+		petExperience = { r = 1, g = 1, b = .41, a = .8 },
 		useCustomFactionColors = false,
 		factionColors = {
 			[1] = { r = .8, g = .3, b = .22 },
@@ -153,7 +152,7 @@ P.databars = {
 	}
 }
 
-for _, databar in pairs({'experience', 'reputation', 'honor', 'threat', 'azerite'}) do
+for _, databar in pairs({'experience', 'reputation', 'petExperience', 'threat'}) do
 	P.databars[databar] = {
 		enable = true,
 		width = 222,
@@ -183,15 +182,13 @@ P.databars.experience.questCompletedOnly = false
 P.databars.experience.questCurrentZoneOnly = false
 P.databars.experience.questTrackedOnly = false
 
+P.databars.petExperience.enable = false
+P.databars.petExperience.hideInCombat = false
+
 P.databars.reputation.enable = false
 P.databars.reputation.hideBelowMaxLevel = false
 P.databars.reputation.showReward = true
 P.databars.reputation.rewardPosition = 'LEFT'
-
-P.databars.honor.hideOutsidePvP = false
-P.databars.honor.hideBelowMaxLevel = false
-
-P.databars.azerite.hideAtMaxLevel = true
 
 --Bags
 P.bags = {
@@ -2398,7 +2395,6 @@ E.LayoutMoverPositions = {
 		ElvUF_Raid40Mover = "BOTTOMLEFT,ElvUIParent,BOTTOMLEFT,4,269",
 		ElvUF_RaidMover = "BOTTOMLEFT,ElvUIParent,BOTTOMLEFT,4,269",
 		ElvUF_PartyMover = "BOTTOMLEFT,ElvUIParent,BOTTOMLEFT,4,269",
-		HonorBarMover = "TOPRIGHT,ElvUIParent,TOPRIGHT,-2,-251",
 		ReputationBarMover = "TOPRIGHT,ElvUIParent,TOPRIGHT,-2,-243"
 	},
 	dpsCaster = {
