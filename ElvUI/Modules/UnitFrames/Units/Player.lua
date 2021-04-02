@@ -36,13 +36,8 @@ function UF:Construct_PlayerFrame(frame)
 	frame.ClassBar = 'ClassPower'
 
 	--Some classes need another set of different classbars.
-	if E.myclass == 'DEATHKNIGHT' then
-		frame.Runes = UF:Construct_DeathKnightResourceBar(frame)
-		frame.ClassBar = 'Runes'
-	elseif E.myclass == 'DRUID' then
+	if E.myclass == 'DRUID' then
 		frame.AdditionalPower = UF:Construct_AdditionalPowerBar(frame)
-	elseif E.myclass == 'MONK' then
-		frame.Stagger = UF:Construct_Stagger(frame)
 	elseif E.myclass == 'PRIEST' then
 		frame.AdditionalPower = UF:Construct_AdditionalPowerBar(frame)
 	elseif E.myclass == 'SHAMAN' then
