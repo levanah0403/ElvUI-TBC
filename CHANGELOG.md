@@ -1,4 +1,7 @@
-### Version 0.03 [ ETA: 🍨 ]
+### Version 0.04 [ ETA: 🍨 ]
+___
+### Version 0.03 [03-04-2021]
+**• DataTexts**  
 **• Energy ticks, MP5 ticks**  
 **• Pet Experience DataBar**  
 **• Skins: Addon Manager, Map, Tooltip**  
