@@ -344,7 +344,7 @@ end
 end]]
 
 local lastGUID
-function TT:AddInspectInfo(tooltip, unit, numTries, r, g, b)
+--[[function TT:AddInspectInfo(tooltip, unit, numTries, r, g, b)
 	if (not unit) or (numTries > 3) or not CanInspect(unit) then return end
 
 	local unitGUID = UnitGUID(unit)
@@ -378,7 +378,7 @@ function TT:AddInspectInfo(tooltip, unit, numTries, r, g, b)
 			TT:INSPECT_READY(nil, unitGUID)
 		end
 	end
-end
+end]]
 
 function TT:GameTooltip_OnTooltipSetUnit(tt)
 	if tt:IsForbidden() or not TT.db.visibility then return end
@@ -437,9 +437,9 @@ function TT:GameTooltip_OnTooltipSetUnit(tt)
 		end
 	end
 
-	if isShiftKeyDown and isPlayerUnit then
+	--[[if isShiftKeyDown and isPlayerUnit then
 		TT:AddInspectInfo(tt, unit, 0, color.r, color.g, color.b)
-	end
+	end]]
 
 	if color then
 		tt.StatusBar:SetStatusBarColor(color.r, color.g, color.b)
