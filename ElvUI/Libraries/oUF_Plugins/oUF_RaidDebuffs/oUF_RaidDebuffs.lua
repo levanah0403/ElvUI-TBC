@@ -94,11 +94,6 @@ do
 			['Poison'] = true,
 			['Disease'] = false,
 		},
-		['MONK'] = {
-			['Magic'] = false,
-			['Disease'] = true,
-			['Poison'] = true,
-		},
 	}
 
 	DispellFilter = dispellClasses[select(2, UnitClass('player'))] or {}
@@ -131,12 +126,6 @@ local function CheckSpec(self, event, levels)
 		end
 	elseif playerClass == "DRUID" then
 		if CheckTalentTree(4) then
-			DispellFilter.Magic = true
-		else
-			DispellFilter.Magic = false
-		end
-	elseif playerClass == "MONK" then
-		if CheckTalentTree(2) then
 			DispellFilter.Magic = true
 		else
 			DispellFilter.Magic = false

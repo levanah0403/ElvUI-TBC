@@ -33,7 +33,7 @@ function UF:ClassPower_UpdateColor(powerType)
 	local custom_backdrop = UF.db.colors.customclasspowerbackdrop and UF.db.colors.classpower_backdrop
 
 	for i, bar in ipairs(self) do
-		local classCombo = (powerType == 'COMBO_POINTS' and UF.db.colors.classResources.comboPoints[i] or powerType == 'CHI' and UF.db.colors.classResources.MONK[i])
+		local classCombo = (powerType == 'COMBO_POINTS' and UF.db.colors.classResources.comboPoints[i])
 		if classCombo then r, g, b = classCombo.r, classCombo.g, classCombo.b end
 
 		bar:SetStatusBarColor(r, g, b)
@@ -85,7 +85,7 @@ function UF:Configure_ClassBar(frame)
 	end
 
 	if frame.USE_MINI_CLASSBAR and not frame.CLASSBAR_DETACHED then
-		if MAX_CLASS_BAR == 1 or frame.ClassBar == 'AdditionalPower' or frame.ClassBar == 'Stagger' or frame.ClassBar == 'AlternativePower' then
+		if MAX_CLASS_BAR == 1 or frame.ClassBar == 'AdditionalPower' or frame.ClassBar == 'AlternativePower' then
 			CLASSBAR_WIDTH = CLASSBAR_WIDTH * 2/3
 		else
 			CLASSBAR_WIDTH = CLASSBAR_WIDTH * (MAX_CLASS_BAR - 1) / MAX_CLASS_BAR
@@ -169,7 +169,7 @@ function UF:Configure_ClassBar(frame)
 		else
 			bars.backdrop:Hide()
 		end
-	elseif frame.ClassBar == 'AdditionalPower' or frame.ClassBar == 'Stagger' or frame.ClassBar == 'AlternativePower' then
+	elseif frame.ClassBar == 'AdditionalPower' or frame.ClassBar == 'AlternativePower' then
 		if frame.CLASSBAR_DETACHED and db.classbar.verticalOrientation then
 			bars:SetOrientation('VERTICAL')
 		else
@@ -240,9 +240,6 @@ function UF:Configure_ClassBar(frame)
 		if frame.AdditionalPower and not frame:IsElementEnabled('AdditionalPower') then
 			frame:EnableElement('AdditionalPower')
 		end
-		if frame.Stagger and not frame:IsElementEnabled('Stagger') then
-			frame:EnableElement('Stagger')
-		end
 		if frame.AlternativePower and not frame:IsElementEnabled('AlternativePower') then
 			frame:EnableElement('AlternativePower')
 		end
@@ -252,9 +249,6 @@ function UF:Configure_ClassBar(frame)
 		end
 		if frame.AdditionalPower and frame:IsElementEnabled('AdditionalPower') then
 			frame:DisableElement('AdditionalPower')
-		end
-		if frame.Stagger and frame:IsElementEnabled('Stagger') then
-			frame:DisableElement('Stagger')
 		end
 		if frame.AlternativePower and frame:IsElementEnabled('AlternativePower') then
 			frame:DisableElement('AlternativePower')
@@ -287,7 +281,7 @@ end
 UF.ToggleResourceBar = ToggleResourceBar --Make available to combobar
 
 -------------------------------------------------------------
--- MONK, PALADIN, WARLOCK, MAGE, and COMBOS
+-- PALADIN, WARLOCK, MAGE, and COMBOS
 -------------------------------------------------------------
 function UF:Construct_ClassBar(frame)
 	local bars = CreateFrame('Frame', '$parent_ClassBar', frame, 'BackdropTemplate')
@@ -428,39 +422,4 @@ function UF:PostVisibilityAdditionalPower(enabled)
 	frame.ClassBar = (enabled and 'AdditionalPower') or 'ClassPower'
 
 	UF:PostVisibility_ClassBars(frame)
-end
-
------------------------------------------------------------
--- Stagger Bar
------------------------------------------------------------
-function UF:Construct_Stagger(frame)
-	local stagger = CreateFrame('Statusbar', '$parent_Stagger', frame)
-	stagger:CreateBackdrop(nil,nil, nil, nil, true)
-	stagger.PostUpdate = UF.PostUpdateStagger
-	stagger.PostVisibility = UF.PostUpdateVisibilityStagger
-	UF.statusbars[stagger] = true
-
-	stagger:SetScript('OnShow', ToggleResourceBar)
-	stagger:SetScript('OnHide', ToggleResourceBar)
-
-	return stagger
-end
-
-function UF:PostUpdateStagger(stagger)
-	local frame = self.origParent or self:GetParent()
-	local db = frame.db
-
-	if not frame.USE_CLASSBAR or (stagger == 0 and db.classbar.autoHide) then
-		self:Hide()
-	else
-		self:Show()
-	end
-end
-
-function UF:PostUpdateVisibilityStagger(_, _, isShown, stateChanged)
-	self.ClassBar = (isShown and 'Stagger') or 'ClassPower'
-
-	if stateChanged then
-		UF:PostVisibility_ClassBars(self)
-	end
 end

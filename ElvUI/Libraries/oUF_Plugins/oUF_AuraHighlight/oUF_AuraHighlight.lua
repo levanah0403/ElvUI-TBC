@@ -25,7 +25,6 @@ else
 	DispelList.SHAMAN	= { Magic = false, Curse = true }
 	DispelList.PALADIN	= { Magic = false, Poison = true, Disease = true }
 	DispelList.DRUID	= { Magic = false, Curse = true, Poison = true, Disease = false }
-	DispelList.MONK		= { Magic = false, Poison = true, Disease = true }
 	DispelList.MAGE		= { Curse = true }
 end
 
@@ -104,8 +103,6 @@ local function CheckSpec()
 		CanDispel.Magic = CheckTalentTree(3)
 	elseif playerClass == 'DRUID' then
 		CanDispel.Magic = CheckTalentTree(4)
-	elseif playerClass == 'MONK' then
-		CanDispel.Magic = CheckTalentTree(2)
 	end
 end
 

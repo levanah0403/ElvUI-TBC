@@ -67,7 +67,7 @@ function UF:FrameGlow_ClassGlowPosition(frame, powerName, glow, offset, fromScri
 	-- check for Additional Power to hook scripts on
 	local useBonusPower, bonus
 	if powerName == 'ClassPower' then
-		local bonusName = (frame.AdditionalPower and 'AdditionalPower') or (frame.Stagger and 'Stagger')
+		local bonusName = (frame.AdditionalPower and 'AdditionalPower')
 		bonus = bonusName and frame[bonusName]
 
 		if bonus then

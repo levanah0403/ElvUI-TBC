@@ -6566,21 +6566,6 @@ E.Options.args.nameplate.args.generalGroup.args.colorsGroup.args.classResources.
 }
 
 for i = 1, 6 do
-	E.Options.args.nameplate.args.generalGroup.args.colorsGroup.args.classResources.args['CHI_POWER' .. i] = {
-		type = 'color',
-		order = i + ORDER,
-		name = L["CHI_POWER"] .. ' #' .. i,
-		get = function(info)
-			local t = E.db.nameplates.colors.classResources.MONK[i]
-			local d = P.nameplates.colors.classResources.MONK[i]
-			return t.r, t.g, t.b, t.a, d.r, d.g, d.b
-		end,
-		set = function(info, r, g, b)
-			local t = E.db.nameplates.colors.classResources.MONK[i]
-			t.r, t.g, t.b = r, g, b
-			NP:ConfigureAll()
-		end
-	}
 	E.Options.args.nameplate.args.generalGroup.args.colorsGroup.args.classResources.args['COMBO_POINTS' .. i] = {
 		type = 'color',
 		order = i + (ORDER * 2),

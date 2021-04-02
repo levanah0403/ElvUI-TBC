@@ -580,14 +580,6 @@ P.nameplates = {
 			},
 			PALADIN = { r = 228/255, g = 225/255, b = 16/255},
 			MAGE = { r = 0, g = 157/255, b = 1},
-			MONK = {
-				[1] = {r = .57, g = .63, b = .35},
-				[2] = {r = .47, g = .63, b = .35},
-				[3] = {r = .37, g = .63, b = .35},
-				[4] = {r = .27, g = .63, b = .33},
-				[5] = {r = .17, g = .63, b = .33},
-				[6] = {r = 12/255, g = 145/255, b = 58/255}
-			},
 			WARLOCK = {r = 148/255, g = 130/255, b = 201/255}
 		},
 	},
@@ -1497,14 +1489,6 @@ P.unitframe = {
 			},
 			PALADIN = {r = 228/255, g = 225/255, b = 16/255},
 			MAGE = {r = 0, g = 157/255, b = 255/255},
-			MONK = {
-				[1] = {r = .57, g = .63, b = .35},
-				[2] = {r = .47, g = .63, b = .35},
-				[3] = {r = .37, g = .63, b = .35},
-				[4] = {r = .27, g = .63, b = .33},
-				[5] = {r = .17, g = .63, b = .33},
-				[6] = {r = 12/255, g = 145/255, b = 58/255}
-			},
 			WARLOCK = {r = 148/255, g = 130/255, b = 201/255}
 		},
 		frameGlow = {
@@ -1569,10 +1553,6 @@ P.unitframe = {
 			},
 			CombatIcon = CopyTable(UF_CombatIcon),
 			classbar = CopyTable(UF_ClassBar),
-			stagger = {
-				enable = true,
-				width = 10,
-			},
 			aurabar = CopyTable(UF_AuraBars),
 			buffs = CopyTable(UF_Auras),
 			castbar = CopyTable(UF_Castbar),

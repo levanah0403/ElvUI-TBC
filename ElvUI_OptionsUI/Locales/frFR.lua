@@ -1531,7 +1531,6 @@ L["BUFFOPTIONS_LABEL"] = "Améliorations et affaiblissements";
 L["CHALLENGE_MODE"] = "Mode Défi";
 L["CHANNELS"] = "Canaux";
 L["CHAT_MSG_EMOTE"] = "Emote";
-L["CHI_POWER"] = "Chi";
 L["CLASS"] = "Classe";
 L["COLLECTIONS"] = "Collections";
 L["COLOR"] = "Couleur";

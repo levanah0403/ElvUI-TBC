@@ -1536,7 +1536,6 @@ L["BUFFOPTIONS_LABEL"] = "Stärkungs-/Schwächungszauber"; --edited, cause fucki
 L["CHALLENGE_MODE"] = "Herausforderungsmodus";
 L["CHANNELS"] = "Channels";
 L["CHAT_MSG_EMOTE"] = "Emote";
-L["CHI_POWER"] = "Chi";
 L["CLASS"] = "Klasse";
 L["COLLECTIONS"] = "Sammlungen";
 L["COLOR"] = "Farbe";

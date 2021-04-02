@@ -35,7 +35,6 @@ local EnglishClassName = {
 	DRUID = 'Druid',
 	HUNTER = 'Hunter',
 	MAGE = 'Mage',
-	MONK = 'Monk',
 	PALADIN = 'Paladin',
 	PRIEST = 'Priest',
 	ROGUE = 'Rogue',

@@ -288,21 +288,6 @@ G.unitframe = {
 			resSpells = {},
 			petSpells = {}
 		},
-		MONK = {
-			enemySpells = {
-				[115546] = true -- Provoke (30 yards)
-			},
-			longEnemySpells = {
-				[117952] = true -- Crackling Jade Lightning (40 yards)
-			},
-			friendlySpells = {
-				[116670] = true -- Vivify (40 yards)
-			},
-			resSpells = {
-				[115178] = true -- Resuscitate (40 yards)
-			},
-			petSpells = {}
-		},
 		DEMONHUNTER = {
 			enemySpells = {
 				[183752] = true -- Consume Magic (20 yards)

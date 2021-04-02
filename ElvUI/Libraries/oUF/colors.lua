@@ -109,7 +109,6 @@ colors.power[7] = colors.power.SOUL_SHARDS
 colors.power[8] = colors.power.LUNAR_POWER
 colors.power[9] = colors.power.HOLY_POWER
 colors.power[11] = colors.power.MAELSTROM
-colors.power[12] = colors.power.CHI
 colors.power[13] = colors.power.INSANITY
 colors.power[16] = colors.power.ARCANE_CHARGES
 colors.power[17] = colors.power.FURY

@@ -118,7 +118,6 @@ E.ClassRole = {
 	WARLOCK		= 'Caster',
 	DEMONHUNTER	= {'Melee',  'Tank'},
 	WARRIOR		= {'Melee',  'Melee',  'Tank'},
-	MONK		= {'Tank',   'Caster', 'Melee'},
 	PALADIN		= {'Caster', 'Tank',   'Melee'},
 	SHAMAN		= {'Caster', 'Melee',  'Caster'},
 	DRUID		= {'Caster', 'Melee',  'Tank',  'Caster'},
@@ -129,7 +128,6 @@ E.DispelClasses = {
 	SHAMAN	= { Magic = false, Curse = true },
 	PALADIN	= { Poison = true, Magic = false,  Disease = true },
 	DRUID	= { Magic = false, Curse = true,   Poison = true,  Disease = false },
-	MONK	= { Magic = false, Disease = true, Poison = true },
 	MAGE	= { Curse = true }
 }
 

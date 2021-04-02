@@ -71,7 +71,6 @@ end
 
 do
 	local classPowers = {
-		MONK = 'Stagger',
 		DRUID = 'AdditionalPower',
 		PRIEST = 'AdditionalPower',
 		SHAMAN = 'AdditionalPower',

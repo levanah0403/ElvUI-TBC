@@ -1532,7 +1532,6 @@ L["BUFFOPTIONS_LABEL"] = "Beneficios y perjuicios";
 L["CHALLENGE_MODE"] = "Modo desafío";
 L["CHANNELS"] = "Canales";
 L["CHAT_MSG_EMOTE"] = "Emoción";
-L["CHI_POWER"] = "Chi";
 L["CLASS"] = "Clase";
 L["COLLECTIONS"] = "Colecciones";
 L["COLOR"] = "Color";

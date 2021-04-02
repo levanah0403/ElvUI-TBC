@@ -1526,7 +1526,6 @@ L["BUFFOPTIONS_LABEL"] = "Buffs and Debuffs";
 L["CHALLENGE_MODE"] = "Challenge Mode";
 L["CHANNELS"] = "Channels";
 L["CHAT_MSG_EMOTE"] = "Emote";
-L["CHI_POWER"] = "Chi";
 L["CLASS"] = "Class";
 L["COLLECTIONS"] = "Collections";
 L["COLOR"] = "Color";

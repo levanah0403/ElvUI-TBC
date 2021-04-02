@@ -11,7 +11,6 @@ local UnitHasVehicleUI = UnitHasVehicleUI
 local MAX_POINTS = {
 	DRUID = 5,
 	MAGE = 4,
-	MONK = 6,
 	PALADIN = 5,
 	ROGUE = 6,
 	WARLOCK = 5
@@ -29,7 +28,7 @@ function NP:ClassPower_UpdateColor(powerType)
 	local db = NP.db.units[self.__owner.frameType]
 	local ClassColor = db and db.classpower and db.classpower.classColor and E:ClassColor(E.myclass)
 	for i = 1, #self do
-		local classColor = ClassColor or (powerType == 'COMBO_POINTS' and NP.db.colors.classResources.comboPoints[i] or powerType == 'CHI' and NP.db.colors.classResources.MONK[i])
+		local classColor = ClassColor or (powerType == 'COMBO_POINTS' and NP.db.colors.classResources.comboPoints[i])
 		if classColor then r, g, b = classColor.r, classColor.g, classColor.b end
 
 		self[i]:SetStatusBarColor(r, g, b)
@@ -161,37 +160,5 @@ function NP:Update_ClassPower(nameplate)
 		end
 
 		nameplate.ClassPower:Hide()
-	end
-end
-
-function NP:Construct_Stagger(nameplate)
-    local Stagger = CreateFrame('StatusBar', nameplate:GetName()..'Stagger', nameplate)
-	Stagger:SetFrameStrata(nameplate:GetFrameStrata())
-	Stagger:SetFrameLevel(5)
-	Stagger:SetStatusBarTexture(LSM:Fetch('statusbar', NP.db.statusbar))
-	Stagger:CreateBackdrop('Transparent', nil, nil, nil, nil, true)
-	Stagger:Hide()
-
-	NP.StatusBars[Stagger] = true
-
-	return Stagger
-end
-
-function NP:Update_Stagger(nameplate)
-	local db = NP:PlateDB(nameplate)
-
-	local target = nameplate.frameType == 'TARGET'
-	if (target or nameplate.frameType == 'PLAYER') and db.classpower and db.classpower.enable then
-		if not nameplate:IsElementEnabled('Stagger') then
-			nameplate:EnableElement('Stagger')
-		end
-
-		local anchor = target and NP:GetClassAnchor()
-		nameplate.Stagger:ClearAllPoints()
-		nameplate.Stagger:Point('CENTER', anchor or nameplate, 'CENTER', db.classpower.xOffset, db.classpower.yOffset)
-
-		nameplate.Stagger:Size(db.classpower.width, db.classpower.height)
-	elseif nameplate:IsElementEnabled('Stagger') then
-		nameplate:DisableElement('Stagger')
 	end
 end

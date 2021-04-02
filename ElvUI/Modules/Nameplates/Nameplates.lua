@@ -200,18 +200,10 @@ function NP:StyleTargetPlate(nameplate)
 
 	nameplate.RaisedElement = NP:Construct_RaisedELement(nameplate)
 	nameplate.ClassPower = NP:Construct_ClassPower(nameplate)
-
-	if E.myclass == 'MONK' then
-		nameplate.Stagger = NP:Construct_Stagger(nameplate)
-	end
 end
 
 function NP:UpdateTargetPlate(nameplate)
 	NP:Update_ClassPower(nameplate)
-
-	if E.myclass == 'MONK' then
-		NP:Update_Stagger(nameplate)
-	end
 
 	nameplate:UpdateAllElements('OnShow')
 end
@@ -279,10 +271,6 @@ function NP:StylePlate(nameplate)
 	NP:Construct_Auras(nameplate)
 	NP:StyleFilterEvents(nameplate) -- prepare the watcher
 
-	if E.myclass == 'MONK' then
-		nameplate.Stagger = NP:Construct_Stagger(nameplate)
-	end
-
 	NP.Plates[nameplate] = nameplate:GetName()
 
 	hooksecurefunc(nameplate, 'UpdateAllElements', NP.PostUpdateAllElements)
@@ -321,10 +309,6 @@ function NP:UpdatePlate(nameplate, updateBase)
 		NP:Update_ThreatIndicator(nameplate)
 		NP:Update_Cutaway(nameplate)
 
-		if E.myclass == 'MONK' then
-			NP:Update_Stagger(nameplate)
-		end
-
 		if nameplate == _G.ElvNP_Player then
 			NP:Update_Fader(nameplate)
 		end
@@ -352,10 +336,6 @@ NP.DisableElements = {
 	'PvPClassificationIndicator',
 	'Auras'
 }
-
-if E.myclass == 'MONK' then
-	tinsert(NP.DisableElements, 'Stagger')
-end
 
 function NP:DisablePlate(nameplate, nameOnly, nameOnlySF)
 	for _, element in ipairs(NP.DisableElements) do
@@ -419,12 +399,6 @@ function NP:SetupTarget(nameplate, removed)
 		TCP.ClassPower:SetParent(anchor)
 		TCP.ClassPower:ClearAllPoints()
 		TCP.ClassPower:Point('CENTER', anchor, 'CENTER', cp.xOffset, cp.yOffset)
-	end
-
-	if TCP.Stagger then
-		TCP.Stagger:SetParent(anchor)
-		TCP.Stagger:ClearAllPoints()
-		TCP.Stagger:Point('CENTER', anchor, 'CENTER', cp.xOffset, cp.yOffset)
 	end
 end
 
