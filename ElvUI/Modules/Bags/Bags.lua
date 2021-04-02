@@ -1109,6 +1109,7 @@ function B:ConstructContainerButton(f, slotID, bagID)
 	local slot = CreateFrame('CheckButton', f.Bags[bagID]:GetName()..'Slot'..slotID, f.Bags[bagID], bagID == -1 and 'BankItemButtonGenericTemplate, BackdropTemplate' or 'ContainerFrameItemButtonTemplate, BackdropTemplate');
 	slot:StyleButton()
 	slot:SetTemplate(E.db.bags.transparent and 'Transparent', true)
+	slot:RegisterForDrag('LeftButton')
 	slot:SetNormalTexture(nil)
 	slot:SetCheckedTexture(nil)
 
