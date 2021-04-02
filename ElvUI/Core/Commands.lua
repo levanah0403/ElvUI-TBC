@@ -252,7 +252,6 @@ local BLIZZARD_ADDONS = {
 	'Blizzard_StoreUI',
 	'Blizzard_SubscriptionInterstitialUI',
 	'Blizzard_TalentUI',
-	'Blizzard_TalkingHeadUI',
 	'Blizzard_TimeManager',
 	'Blizzard_TokenUI',
 	'Blizzard_TorghastLevelPicker',

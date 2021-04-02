@@ -66,7 +66,6 @@ function B:Initialize()
 	B:PositionGMFrames()
 	--B:SkinBlizzTimers()
 	--B:PositionVehicleFrame()
-	B:PositionTalkingHead()
 	--B:Handle_LevelUpDisplay_BossBanner()
 	B:Handle_UIWidgets()
 

@@ -295,7 +295,6 @@ function E:SetupLayout(layout, noDataReset, noDisplayMsg)
 			E.db.general.bonusObjectivePosition = 'AUTO'
 			E.db.general.minimap.size = 220
 			E.db.general.objectiveFrameHeight = 400
-			E.db.general.talkingHeadFrameScale = 1
 			E.db.general.totems.growthDirection = 'HORIZONTAL'
 			E.db.general.totems.size = 50
 			E.db.general.totems.spacing = 8

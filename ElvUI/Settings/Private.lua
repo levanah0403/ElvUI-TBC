@@ -142,7 +142,6 @@ V.skins = {
 		subscriptionInterstitial = true,
 		tabard = true,
 		talent = true,
-		talkinghead = true,
 		taxi = true,
 		timemanager = true,
 		tooltip = true,

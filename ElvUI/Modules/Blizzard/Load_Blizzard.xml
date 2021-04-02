@@ -8,7 +8,6 @@
 	<Script file='Durability.lua'/>
 	<Script file='CaptureBar.lua'/>
 	<Script file='AlertFrame.lua'/>
-	<Script file='TalkingHeadFrame.lua'/>
 	<Script file='LevelUpBossBanner.lua'/>
 	<Script file='QuestWatch.lua'/>
 	<Script file='WidgetsUI.lua'/>

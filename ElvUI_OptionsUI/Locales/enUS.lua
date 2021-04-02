@@ -1191,7 +1191,6 @@ L["Tagged NPC"] = true
 L["Talent to match"] = true
 L["Talking Head Backdrop"] = true
 L["Talking Head Scale"] = true
-L["TalkingHead"] = true
 L["Tank Frames"] = true
 L["Tank Target"] = true
 L["Tank"] = true

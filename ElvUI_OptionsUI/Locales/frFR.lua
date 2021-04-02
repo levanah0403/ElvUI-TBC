@@ -1185,7 +1185,6 @@ L["Tagged NPC"] = "PNJ marqué"
 L["Talent to match"] = true
 L["Talking Head Backdrop"] = true
 L["Talking Head Scale"] = "Zoom du cadre de dialogue flottant"
-L["TalkingHead"] = "Dialogue flottant"
 L["Tank Frames"] = "Cadre des Tanks"
 L["Tank Target"] = "Cible de tank"
 L["Tank"] = true

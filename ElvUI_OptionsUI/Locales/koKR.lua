@@ -1184,7 +1184,6 @@ L["Tagged NPC"] = "선점된 유닛"
 L["Talent to match"] = "일치하는 특성"
 L["Talking Head Backdrop"] = true
 L["Talking Head Scale"] = true
-L["TalkingHead"] = true
 L["Tank Frames"] = "방어전담 프레임"
 L["Tank Target"] = "방어전담 프레임"
 L["Tank"] = "방어 전담"
