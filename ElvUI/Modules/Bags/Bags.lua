@@ -831,7 +831,7 @@ function B:ConstructContainerFrame(name, isBank)
 		local bagName = isBank and format('ElvUIBankBag%d', bagID-4) or bagID == 0 and 'ElvUIMainBagBackpack' or bagID == -2 and 'ElvUIKeyRing' or format('ElvUIMainBag%dSlot', bagID-1)
 		local inherit = isBank and 'BankItemButtonBagTemplate' or (bagID == 0 or bagID == -2) and 'ItemButtonTemplate, ItemAnimTemplate' or 'BagSlotButtonTemplate'
 
-		f.ContainerHolder[i] = CreateFrame('CheckButton', bagName, f.ContainerHolder, inherit..', BackdropTemplate')
+		f.ContainerHolder[i] = CreateFrame('CheckButton', bagName, f.ContainerHolder, 'BackdropTemplate, '..inherit)
 		f.ContainerHolder[i]:SetTemplate(E.db.bags.transparent and 'Transparent', true)
 		f.ContainerHolder[i]:StyleButton()
 		f.ContainerHolder[i]:SetNormalTexture('')
@@ -846,14 +846,12 @@ function B:ConstructContainerFrame(name, isBank)
 		f.ContainerHolder[i].icon:SetTexCoord(unpack(E.TexCoords))
 
 		if isBank then
+			f.ContainerHolder[i]:SetID(bagID - 4)
 			f.ContainerHolder[i].icon:SetTexture('Interface/AddOns/ElvUI/Media/Textures/Button-Backpack-Up')
 			f.ContainerHolder[i]:SetScript('OnClick', function(holder)
 				local inventoryID = holder:GetInventorySlot()
 				PutItemInBag(inventoryID)
 			end)
-			if bagID ~= -1 then
-				f.ContainerHolder[i]:SetID(ContainerIDToInventoryID(bagID))
-			end
 		else
 			if bagID == 0 then --Backpack needs different setup
 				f.ContainerHolder[i]:RegisterForClicks('LeftButtonUp', 'RightButtonUp')
@@ -1111,10 +1109,9 @@ function B:ConstructContainerFrame(name, isBank)
 end
 
 function B:ConstructContainerButton(f, slotID, bagID)
-	local slot = CreateFrame('CheckButton', f.Bags[bagID]:GetName()..'Slot'..slotID, f.Bags[bagID], bagID == -1 and 'BankItemButtonGenericTemplate, BackdropTemplate' or 'ContainerFrameItemButtonTemplate, BackdropTemplate');
+	local slot = CreateFrame('CheckButton', f.Bags[bagID]:GetName()..'Slot'..slotID, f.Bags[bagID], (bagID == -1 or bagID >= 5) and 'BackdropTemplate, BankItemButtonGenericTemplate' or 'BackdropTemplate, ContainerFrameItemButtonTemplate')
 	slot:StyleButton()
 	slot:SetTemplate(E.db.bags.transparent and 'Transparent', true)
-	slot:RegisterForDrag('LeftButton')
 	slot:SetNormalTexture(nil)
 	slot:SetCheckedTexture(nil)
 
