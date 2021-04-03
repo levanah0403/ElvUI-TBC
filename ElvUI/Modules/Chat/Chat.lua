@@ -65,7 +65,6 @@ CH.PluginMessageFilters = {}
 CH.Smileys = {}
 CH.TalkingList = {}
 
-local lfgRoles = {}
 local throttle = {}
 
 local PLAYER_REALM = E:ShortenRealm(E.myrealm)
@@ -1657,11 +1656,6 @@ function CH:ChatFrame_MessageEventHandler(frame, event, arg1, arg2, arg3, arg4, 
 				chatIcon = icon or ''
 			end
 
-			-- LFG Role Flags
-			local lfgRole = lfgRoles[playerName]
-			if lfgRole and (chatType == 'PARTY_LEADER' or chatType == 'PARTY' or chatType == 'RAID' or chatType == 'RAID_LEADER' or chatType == 'INSTANCE_CHAT' or chatType == 'INSTANCE_CHAT_LEADER') then
-				pflag = pflag..lfgRole
-			end
 			-- Special Chat Icon
 			if chatIcon then
 				pflag = pflag..chatIcon

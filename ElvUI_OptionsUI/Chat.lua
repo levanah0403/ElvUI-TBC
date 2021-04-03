@@ -71,16 +71,6 @@ E.Options.args.chat = {
 					name = L["Emotion Icons"],
 					desc = L["Display emotion icons in chat."],
 				},
-				lfgIcons = {
-					order = 6,
-					type = 'toggle',
-					name = L["Role Icon"],
-					desc = L["Display LFG Icons in group chat."],
-					set = function(self, value)
-						E.db.chat.lfgIcons = value;
-						CH:CheckLFGRoles()
-					end,
-				},
 				useAltKey = {
 					order = 12,
 					type = 'toggle',
@@ -96,12 +86,6 @@ E.Options.args.chat = {
 					type = 'toggle',
 					name = L["Use Real ID BattleTag"],
 					desc = L["Use BattleTag instead of Real ID names in chat. Chat History will always use BattleTag."],
-				},
-				socialQueueMessages = {
-					order = 14,
-					type = 'toggle',
-					name = L["Quick Join Messages"],
-					desc = L["Show clickable Quick Join messages inside of the chat."],
 				},
 				copyChatLines = {
 					order = 15,

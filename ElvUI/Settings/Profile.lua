@@ -801,7 +801,6 @@ P.chat = {
 	keywordSound = 'None',
 	noAlertInCombat = false,
 	chatHistory = true,
-	lfgIcons = true,
 	maxLines = 100,
 	channelAlerts = {
 		GUILD = 'None',

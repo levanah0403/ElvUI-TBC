@@ -285,8 +285,6 @@ function E:SetupLayout(layout, noDataReset, noDisplayMsg)
 			E.db.chat.panelWidth = 472
 			E.db.chat.tabFontSize = 12
 			E.db.chat.copyChatLines = true
-		--DataTexts
-			E.db.datatexts.panels.LeftChatDataPanel[3] = 'QuickJoin'
 		--DataBars
 			E.db.databars.threat.height = 24
 			E.db.databars.threat.width = 472
