@@ -69,7 +69,7 @@ V.skins = {
 		bgmap = true,
 		bgscore = true,
 		binding = true,
-		blizzardOptions = true,		calendar = true,
+		blizzardOptions = true,
 		channels = true,
 		character = true,
 		debug = true,
