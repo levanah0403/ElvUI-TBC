@@ -165,7 +165,7 @@ General.args.blizzUIImprovements.args.objectiveFrameGroup.args.bonusObjectivePos
 
 General.args.blizzUIImprovements.args.chatBubblesGroup = ACH:Group(L["Chat Bubbles"], nil, 16, nil, function(info) return E.private.general[info[#info]] end, function(info, value) E.private.general[info[#info]] = value E:StaticPopup_Show('PRIVATE_RL') end)
 General.args.blizzUIImprovements.args.chatBubblesGroup.inline = true
-General.args.blizzUIImprovements.args.chatBubblesGroup.args.warning = ACH:Description('|cffFF0000This does not work in Instances or Garrisons!|r', 0, 'medium')
+General.args.blizzUIImprovements.args.chatBubblesGroup.args.warning = ACH:Description('|cffFF0000This does not work in Instances!|r', 0, 'medium')
 General.args.blizzUIImprovements.args.chatBubblesGroup.args.spacer1 = ACH:Spacer(1, 'full')
 General.args.blizzUIImprovements.args.chatBubblesGroup.args.chatBubbles = ACH:Select(L["Chat Bubbles Style"], L["Skin the blizzard chat bubbles."], 2, { backdrop = L["Skin Backdrop"], nobackdrop = L["Remove Backdrop"], backdrop_noborder = L["Skin Backdrop (No Borders)"], disabled = L["DISABLE"] })
 General.args.blizzUIImprovements.args.chatBubblesGroup.args.chatBubbleName = ACH:Toggle(L["Chat Bubble Names"], L["Display the name of the unit on the chat bubble. This will not work if backdrop is disabled or when you are in an instance."], 3)

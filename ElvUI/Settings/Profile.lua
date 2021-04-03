@@ -74,13 +74,6 @@ P.general = {
 			time = 3,
 		},
 		icons = {
-			classHall = {
-				scale = 0.8,
-				position = 'BOTTOMLEFT',
-				xOffset = 0,
-				yOffset = 0,
-				hide = false,
-			},
 			calendar = {
 				scale = 1,
 				position = 'TOPRIGHT',

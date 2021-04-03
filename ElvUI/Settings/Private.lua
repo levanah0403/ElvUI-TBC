@@ -23,7 +23,6 @@ V.general = {
 	totemBar = true,
 	minimap = {
 		enable = true,
-		hideClassHallReport = false,
 		hideCalendar = true,
 	},
 	classColorMentionsSpeech = true,
