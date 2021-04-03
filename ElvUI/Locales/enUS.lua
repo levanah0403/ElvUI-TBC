@@ -69,7 +69,6 @@ L["Blend Mode"] = true
 L["Blend"] = true
 L["Blizzard Widgets"] = true
 L["BNet Frame"] = true
-L["Boss Button"] = true
 L["Boss Frames"] = true
 L["Building(s) Report:"] = true
 L["Calendar"] = true
@@ -85,7 +84,6 @@ L["Choose a theme layout you wish to use for your initial setup."] = true
 L["Class Totems"] = true
 L["Classbar"] = true
 L["Classic"] = true
-L["Clean Boss Button"] = true
 L["Combat"] = true
 L["Combat/Arena Time"] = true
 L["Config Mode:"] = true
@@ -371,7 +369,6 @@ L["You must purchase a bank slot first!"] = true
 L["Your items have been repaired for: "] = true
 L["Your items have been repaired using guild bank funds for: "] = true
 L["Your profile was successfully recieved by the player."] = true
-L["Zone Ability"] = true
 
 ----------------------------------
 L["DESC_MOVERCONFIG"] = [=[Movers unlocked. Move them now and click Lock when you are done.

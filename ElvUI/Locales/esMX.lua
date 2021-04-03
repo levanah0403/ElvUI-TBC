@@ -69,7 +69,6 @@ L["Blend Mode"] = "Modo de Mezcla"
 L["Blend"] = "Mezcla"
 L["Blizzard Widgets"] = true
 L["BNet Frame"] = "Marco BNet"
-L["Boss Button"] = "Botón de Jefe"
 L["Boss Frames"] = "Marco de Jefe"
 L["Building(s) Report:"] = "Informe de Edificio(s)"
 L["Calendar"] = "Calendario"
@@ -85,7 +84,6 @@ L["Choose a theme layout you wish to use for your initial setup."] = "Elige un t
 L["Class Totems"] = "Tótems de Clase"
 L["Classbar"] = "Barra de Clase"
 L["Classic"] = "Clásico"
-L["Clean Boss Button"] = "Limpiar Botón Jefe"
 L["Combat"] = "Combate"
 L["Combat/Arena Time"] = "Tiempo de Combate / Arena"
 L["Config Mode:"] = "Modo de Configuración"
@@ -371,7 +369,6 @@ L["You must purchase a bank slot first!"] = "¡Debes comprar un hueco del banco 
 L["Your items have been repaired for: "] = "Tus objetos han sido reparados por:"
 L["Your items have been repaired using guild bank funds for: "] = "Tus objetos han sido reparados con fondos del banco de hermandad por:"
 L["Your profile was successfully recieved by the player."] = "Tu perfil ha sido recibido exitosamente por el jugador."
-L["Zone Ability"] = "Habilidad de Zona"
 
 ----------------------------------
 L["DESC_MOVERCONFIG"] = [=[Fijadores desbloqueados. Muévelos ahora y haz clic en Bloquear cuando termines.

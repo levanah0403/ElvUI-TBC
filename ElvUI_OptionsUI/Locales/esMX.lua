@@ -420,7 +420,6 @@ L["Display tick marks on the castbar for channelled spells. This will adjust aut
 L["Displayed Currency"] = true
 L["Displays a detailed report of every item sold when enabled."] = true
 L["Displays item level on equippable items."] = true
-L["Displays the gender of players."] = true
 L["Don't display auras that are longer than this duration (in seconds). Set to zero to disable."] = true
 L["Don't display auras that are shorter than this duration (in seconds). Set to zero to disable."] = true
 L["Donations:"] = "Donativos:"
@@ -520,7 +519,6 @@ L["Friendly"] = "Amistoso"
 L["Full Overlay"] = true
 L["Full"] = true
 L["Gems"] = true
-L["Gender"] = true
 L["General"] = true
 L["Global (Account Settings)"] = true
 L["Global Fade Transparency"] = true
@@ -1403,7 +1401,6 @@ L["You must be targeting a player."] = "Debes enfocar a un jugador."
 L["You need to hold this modifier down in order to blacklist an aura by right-clicking the icon. Set to None to disable the blacklist functionality."] = true
 L["You still have ElvUI_Config installed.  ElvUI_Config has been renamed to ElvUI_OptionsUI, please remove it."] = true
 L["Your Auras First"] = "Tus Auras Primero"
-L["Zone Ability"] = "Habilidad de Zona"
 L["Zone Name"] = "Nombre de Zona"
 
 ----------------------------------

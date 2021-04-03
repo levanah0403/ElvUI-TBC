@@ -420,7 +420,6 @@ L["Display tick marks on the castbar for channelled spells. This will adjust aut
 L["Displayed Currency"] = "Отображаемая валюта"
 L["Displays a detailed report of every item sold when enabled."] = "Показывать подробный отчет по каждому проданному серому предмету."
 L["Displays item level on equippable items."] = "Отображает уровень предметов экипировки."
-L["Displays the gender of players."] = "Отображаеть пол игроков."
 L["Don't display auras that are longer than this duration (in seconds). Set to zero to disable."] = "Не отображать ауры длительностью более этого значения (в секундах). Установите на 0 для отключения."
 L["Don't display auras that are shorter than this duration (in seconds). Set to zero to disable."] = "Не отображать ауры длительностью менее этого значения (в секундах). Установите на 0 для отключения."
 L["Donations:"] = "Финансовая поддержка:"
@@ -1400,7 +1399,6 @@ L["You must be targeting a player."] = "Целью должен быть игр�
 L["You need to hold this modifier down in order to blacklist an aura by right-clicking the icon. Set to None to disable the blacklist functionality."] = "Вам нужно будет удерживать этот модификатор для занесения ауры в черный список при нажатии ПКМ. Установите на \"Нет\" для отключения возможности заносить их туда."
 L["You still have ElvUI_Config installed.  ElvUI_Config has been renamed to ElvUI_OptionsUI, please remove it."] = "У вас все еще стоит ElvUI_Config. Кое-кто переименовал его в ElvUI_OptionsUI, удалите папку со старым именем."
 L["Your Auras First"] = "Сначала свои"
-L["Zone Ability"] = "Способность местности"
 L["Zone Name"] = "Название зоны"
 
 ----------------------------------

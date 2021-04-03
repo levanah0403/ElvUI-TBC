@@ -69,7 +69,6 @@ L["Blend Mode"] = true
 L["Blend"] = true
 L["Blizzard Widgets"] = true
 L["BNet Frame"] = "배틀넷 알림"
-L["Boss Button"] = "특수능력 버튼"
 L["Boss Frames"] = "보스 프레임"
 L["Building(s) Report:"] = "건축 보고서"
 L["Calendar"] = "달력"
@@ -85,7 +84,6 @@ L["Choose a theme layout you wish to use for your initial setup."] = "UI의 전�
 L["Class Totems"] = "직업 토템"
 L["Classbar"] = "직업바"
 L["Classic"] = "클래식"
-L["Clean Boss Button"] = true
 L["Combat"] = "전투"
 L["Combat/Arena Time"] = "전투/투기장 시간"
 L["Config Mode:"] = "표시할 프레임 계열:"
@@ -371,7 +369,6 @@ L["You must purchase a bank slot first!"] = "우선 은행가방 칸을 구입�
 L["Your items have been repaired for: "] = "자동으로 수리하고 비용을 지불했습니다: "
 L["Your items have been repaired using guild bank funds for: "] = "길드자금으로 수리하고 비용을 지불했습니다: "
 L["Your profile was successfully recieved by the player."] = "상대에게 데이터를 성공적으로 전송했습니다."
-L["Zone Ability"] = "지역 특수 능력"
 
 ----------------------------------
 L["DESC_MOVERCONFIG"] = [=[프레임을 드래그로 원하는 위치로 이동시키세요.|n[잠금] 버튼을 누르면 이동모드가 종료됩니다.

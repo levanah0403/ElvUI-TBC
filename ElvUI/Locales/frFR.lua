@@ -69,7 +69,6 @@ L["Blend Mode"] = "Mode de fusion"
 L["Blend"] = "Mélange"
 L["Blizzard Widgets"] = true
 L["BNet Frame"] = "Cadre BNet"
-L["Boss Button"] = "Bouton du Boss"
 L["Boss Frames"] = "Cadre du Boss"
 L["Building(s) Report:"] = "Rapport des bâtiments :"
 L["Calendar"] = "Calendrier"
@@ -85,7 +84,6 @@ L["Choose a theme layout you wish to use for your initial setup."] = "Choisissez
 L["Class Totems"] = "Barre des totems"
 L["Classbar"] = "Barre de classe"
 L["Classic"] = "Classique"
-L["Clean Boss Button"] = "Vider le bouton du boss"
 L["Combat"] = "Combat"
 L["Combat/Arena Time"] = "Temps (Combat/Arène)"
 L["Config Mode:"] = "Mode Configuration :"
@@ -371,7 +369,6 @@ L["You must purchase a bank slot first!"] = "Vous devez d'abord acheter un empla
 L["Your items have been repaired for: "] = "Votre équipement a été réparé pour : "
 L["Your items have been repaired using guild bank funds for: "] = "Votre équipement a été réparé avec l'argent de la banque de guilde pour : "
 L["Your profile was successfully recieved by the player."] = "Votre profil a été reçu avec succès par le joueur."
-L["Zone Ability"] = "Zone d'abilité"
 
 ----------------------------------
 L["DESC_MOVERCONFIG"] = [=[Cadres déverrouillés. Déplacez-les et cliquez sur Verrouiller une fois terminé.

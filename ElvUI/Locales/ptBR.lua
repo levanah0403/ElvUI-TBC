@@ -69,7 +69,6 @@ L["Blend Mode"] = true
 L["Blend"] = true
 L["Blizzard Widgets"] = true
 L["BNet Frame"] = "Quadro do Bnet"
-L["Boss Button"] = "Botão de Chefe"
 L["Boss Frames"] = "Quadros dos Chefes"
 L["Building(s) Report:"] = "Relatório de Construções:"
 L["Calendar"] = "Calendário"
@@ -85,7 +84,6 @@ L["Choose a theme layout you wish to use for your initial setup."] = "Escolha o 
 L["Class Totems"] = "Totems de Classe"
 L["Classbar"] = "Barra da Classe"
 L["Classic"] = "Clássico"
-L["Clean Boss Button"] = "Limpar botão do Boss"
 L["Combat"] = "Combate"
 L["Combat/Arena Time"] = "Tempo de Combate/Arena"
 L["Config Mode:"] = "Modo de configuração"
@@ -371,7 +369,6 @@ L["You must purchase a bank slot first!"] = "Você deve comprar um espaço no ba
 L["Your items have been repaired for: "] = "Seus itens foram reparadas por: "
 L["Your items have been repaired using guild bank funds for: "] = "Seus itens foram reparados usando fundos do banco da guilda por: "
 L["Your profile was successfully recieved by the player."] = "Seu perfil foi recebido com sucesso pelo jogador."
-L["Zone Ability"] = "Habilidade da Zona"
 
 ----------------------------------
 L["DESC_MOVERCONFIG"] = [=[Movedores destravados. Mova-os agora e clique Travar quando acabar.

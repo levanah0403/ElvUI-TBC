@@ -421,7 +421,6 @@ L["Display tick marks on the castbar for channelled spells. This will adjust aut
 L["Displayed Currency"] = "Moeda mostrada"
 L["Displays a detailed report of every item sold when enabled."] = "Mostra um relatório detalhado de cada item vendido quando habilitado."
 L["Displays item level on equippable items."] = "Mostra o item level de itens equipáveis."
-L["Displays the gender of players."] = true
 L["Don't display auras that are longer than this duration (in seconds). Set to zero to disable."] = "Não mostrar auras que são maiores que esta duração (em segundos). Coloque zero para desabilitar."
 L["Don't display auras that are shorter than this duration (in seconds). Set to zero to disable."] = "Não mostrar auras que são menores que esta duração (em segundos). Coloque zero para desabilitar."
 L["Donations:"] = "Doações:"
@@ -521,7 +520,6 @@ L["Friendly"] = "Aliado"
 L["Full Overlay"] = true
 L["Full"] = "Cheio"
 L["Gems"] = "Gemas"
-L["Gender"] = true
 L["General"] = "Geral"
 L["Global (Account Settings)"] = "Global (configurações da conta)"
 L["Global Fade Transparency"] = "Transparência de desvanecimento global"
@@ -1403,7 +1401,6 @@ L["You must be targeting a player."] = "É necessário ter um jogador como alvo.
 L["You need to hold this modifier down in order to blacklist an aura by right-clicking the icon. Set to None to disable the blacklist functionality."] = "Você precisa segurar este modificador e clicar com o botão direito para poder adicionar esta aura a lista-negra. Defina Nenhum para desabilitar a funcionalidade de lista-negra."
 L["You still have ElvUI_Config installed.  ElvUI_Config has been renamed to ElvUI_OptionsUI, please remove it."] = "Você ainda tem ElvUI_Config instalado. ElvUI_Config foi renomeado para ElvUI_OptionsUI, por favor remová-o."
 L["Your Auras First"] = "Suas auras primeiro"
-L["Zone Ability"] = "Habilidade de Zona"
 L["Zone Name"] = "Nome da Zona"
 
 ----------------------------------

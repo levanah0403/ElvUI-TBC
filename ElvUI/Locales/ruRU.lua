@@ -69,7 +69,6 @@ L["Blend Mode"] = "Тип смешивания" --Check back later
 L["Blend"] = "Смешивание" --Check back later
 L["Blizzard Widgets"] = "Виджеты Blizzard"
 L["BNet Frame"] = "Оповещения BNet"
-L["Boss Button"] = "Кнопка босса"
 L["Boss Frames"] = "Боссы"
 L["Building(s) Report:"] = "Отчет зданий:"
 L["Calendar"] = "Календарь"
@@ -85,7 +84,6 @@ L["Choose a theme layout you wish to use for your initial setup."] = "Выбер
 L["Class Totems"] = "Классовые тотемы"
 L["Classbar"] = "Полоса класса"
 L["Classic"] = "Классическая"
-L["Clean Boss Button"] = "Упрощенные кнопки боссов"
 L["Combat"] = "Бой"
 L["Combat/Arena Time"] = "Время боя/арены"
 L["Config Mode:"] = "Режим настройки:"
@@ -371,7 +369,6 @@ L["You must purchase a bank slot first!"] = "Сперва Вы должны пр
 L["Your items have been repaired for: "] = "Ремонт обошелся в "
 L["Your items have been repaired using guild bank funds for: "] = "Ремонт обошелся гильдии в "
 L["Your profile was successfully recieved by the player."] = "Ваш профиль успешно получен целью. Ура, товарищи!"
-L["Zone Ability"] = "Способность зоны"
 
 ----------------------------------
 L["DESC_MOVERCONFIG"] = [=[Блокировка отключена. Передвиньте фреймы и нажмите "Закрепить", когда закончите.

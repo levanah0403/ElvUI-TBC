@@ -20,7 +20,6 @@ E.Options.args.tooltip.args.modifierID = ACH:Select(L["Modifier for IDs"], nil, 
 E.Options.args.tooltip.args.playerTitles = ACH:Toggle(L["Player Titles"], L["Display player titles."], 6)
 E.Options.args.tooltip.args.guildRanks = ACH:Toggle(L["Guild Ranks"], L["Display guild ranks if a unit is guilded."], 7)
 E.Options.args.tooltip.args.showMount = ACH:Toggle(L["Current Mount"], L["Display current mount the unit is riding."], 8)
-E.Options.args.tooltip.args.gender = ACH:Toggle(L["Gender"], L["Displays the gender of players."], 9)
 E.Options.args.tooltip.args.alwaysShowRealm = ACH:Toggle(L["Always Show Realm"], nil, 10)
 E.Options.args.tooltip.args.showElvUIUsers = ACH:Toggle(L["Show ElvUI Users"], L["Show ElvUI users and their version of ElvUI."], 11)
 E.Options.args.tooltip.args.itemCount = ACH:Select(L["Item Count"], L["Display how many of a certain item you have in your possession."], 12, { BAGS_ONLY = L["Bags Only"], BANK_ONLY = L["Bank Only"], BOTH = L["Both"], NONE = L["NONE"] })

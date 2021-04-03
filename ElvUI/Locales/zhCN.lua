@@ -69,7 +69,6 @@ L["Blend Mode"] = "混合模式"
 L["Blend"] = "混合"
 L["Blizzard Widgets"] = true
 L["BNet Frame"] = "战网提示信息"
-L["Boss Button"] = "特殊技能键"
 L["Boss Frames"] = "首领框架"
 L["Building(s) Report:"] = "建筑报告:"
 L["Calendar"] = "日历"
@@ -85,7 +84,6 @@ L["Choose a theme layout you wish to use for your initial setup."] = "为你的�
 L["Class Totems"] = "职业图腾"
 L["Classbar"] = "职业特有条"
 L["Classic"] = "经典"
-L["Clean Boss Button"] = "简洁额外按键"
 L["Combat"] = "战斗"
 L["Combat/Arena Time"] = "战斗时间"
 L["Config Mode:"] = "设置模式:"
@@ -372,7 +370,6 @@ L["You must purchase a bank slot first!"] = "你必需购买一个银行背包�
 L["Your items have been repaired for: "] = "装备已修复: "
 L["Your items have been repaired using guild bank funds for: "] = "物品已使用公会银行资金修复: "
 L["Your profile was successfully recieved by the player."] = "你的配置文件已被其他玩家成功接收."
-L["Zone Ability"] = "区域技能"
 
 ----------------------------------
 L["DESC_MOVERCONFIG"] = [=[解除框架移动锁定. 现在可以移动它们, 移好后请点击「锁定」.

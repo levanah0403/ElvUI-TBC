@@ -70,7 +70,6 @@ L["Blend Mode"] = "Überblendungs-Modus"
 L["Blend"] = "Überblenden"
 L["Blizzard Widgets"] = "Blizzard Widgets"
 L["BNet Frame"] = "BNet-Fenster"
-L["Boss Button"] = "Boss Button"
 L["Boss Frames"] = "Boss Fenster"
 L["Building(s) Report:"] = "Gebäude Bericht:"
 L["Calendar"] = "Kalender"
@@ -86,7 +85,6 @@ L["Choose a theme layout you wish to use for your initial setup."] = "Wähle ein
 L["Class Totems"] = "Klassen Totems"
 L["Classbar"] = "Klassenleiste"
 L["Classic"] = "Klassisch"
-L["Clean Boss Button"] = "Geskinnte Boss Taste"
 L["Combat"] = "Kampf"
 L["Combat/Arena Time"] = "Kampf/Arena Zeit"
 L["Config Mode:"] = "Konfigurationsmodus:"
@@ -377,7 +375,6 @@ L["You must purchase a bank slot first!"] = "Du musst erst ein Bankfach kaufen!"
 L["Your items have been repaired for: "] = "Deine Gegenstände wurden repariert für: "
 L["Your items have been repaired using guild bank funds for: "] = "Deine Gegenstände wurden repariert. Die Gildenbank kostete das: "
 L["Your profile was successfully recieved by the player."] = "Dein Profil wurde erfolgreich von dem Spieler empfangen."
-L["Zone Ability"] = "Zonen Fähigkeit"
 
 ----------------------------------
 L["DESC_MOVERCONFIG"] = [=[Ankerpunkte entriegelt. Bewege die Ankerpunkte und klicke 'sperren', wenn du fertig bist.
