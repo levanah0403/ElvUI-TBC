@@ -25,6 +25,14 @@ function E:SafeGetPoint(frame)
 	end
 end
 
+function E:GetBackdropColor(frame)
+	if frame.pixelBorders then
+		return frame.pixelBorders.CENTER:GetVertexColor()
+	else
+		return frame:GetBackdropColor()
+	end
+end
+
 local function WatchPixelSnap(frame, snap)
 	if (frame and not frame:IsForbidden()) and frame.PixelSnapDisabled and snap then
 		frame.PixelSnapDisabled = nil

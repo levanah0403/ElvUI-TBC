@@ -28,6 +28,16 @@ E.Options.args.tooltip.args.cursorAnchor = ACH:Toggle(L["Cursor Anchor"], L["Sho
 E.Options.args.tooltip.args.cursorAnchorType = ACH:Select(L["Cursor Anchor Type"], nil, 15, { ANCHOR_CURSOR = L["CURSOR"], ANCHOR_CURSOR_LEFT = L["CURSOR_LEFT"], ANCHOR_CURSOR_RIGHT = L["CURSOR_RIGHT"] }, nil, nil, nil, nil, nil, function() return (not E.db.tooltip.cursorAnchor) end)
 E.Options.args.tooltip.args.cursorAnchorX = ACH:Range(L["Cursor Anchor Offset X"], nil, 16, { min = -128, max = 128, step = 1 }, nil, nil, nil, nil, function() return (not E.db.tooltip.cursorAnchor) or (E.db.tooltip.cursorAnchorType == 'ANCHOR_CURSOR') end)
 E.Options.args.tooltip.args.cursorAnchorY = ACH:Range(L["Cursor Anchor Offset Y"], nil, 17, { min = -128, max = 128, step = 1 }, nil, nil, nil, nil, function() return (not E.db.tooltip.cursorAnchor) or (E.db.tooltip.cursorAnchorType == 'ANCHOR_CURSOR') end)
+E.Options.args.tooltip.args.itemQualityBorderColor = {
+	order = 10,
+	type = 'toggle',
+	name = L["Item Border Color"],
+	desc = L["Colorize the tooltip border based on item quality."],
+	set = function(info, value)
+		E.db.tooltip.itemQualityBorderColor = value
+		TT:ToggleItemQualityBorderColor()
+	end
+}
 
 E.Options.args.tooltip.args.fontGroup = ACH:Group(L["Font"], nil, nil, nil, function(info) return E.db.tooltip[info[#info]] end, function(info, value) E.db.tooltip[info[#info]] = value; TT:SetTooltipFonts() end)
 E.Options.args.tooltip.args.fontGroup.args.font = ACH:SharedMediaFont(L["Font"], nil, 1)
