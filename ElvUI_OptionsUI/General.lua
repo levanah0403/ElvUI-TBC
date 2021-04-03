@@ -2,7 +2,6 @@ local E, _, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, Profi
 local C, L = unpack(select(2, ...))
 local Misc = E:GetModule('Misc')
 local Layout = E:GetModule('Layout')
-local Totems = E:GetModule('Totems')
 local Blizzard = E:GetModule('Blizzard')
 local NP = E:GetModule('NamePlates')
 local UF = E:GetModule('UnitFrames')
@@ -51,7 +50,7 @@ General.args.general.args.automation.inline = true
 General.args.general.args.automation.args.interruptAnnounce = ACH:Select(L["Announce Interrupts"], L["Announce when you interrupt a spell to the specified chat channel."], 1, { NONE = L["NONE"], SAY = L["SAY"], YELL = L["YELL"], PARTY = L["Party Only"], RAID = L["Party / Raid"], RAID_ONLY = L["Raid Only"], EMOTE = L["CHAT_MSG_EMOTE"] }, nil, nil, nil, function(info, value) E.db.general[info[#info]] = value if value == 'NONE' then Misc:UnregisterEvent('COMBAT_LOG_EVENT_UNFILTERED') else Misc:RegisterEvent('COMBAT_LOG_EVENT_UNFILTERED') end end)
 General.args.general.args.automation.args.autoAcceptInvite = ACH:Toggle(L["Accept Invites"], L["Automatically accept invites from guild/friends."], 2)
 General.args.general.args.automation.args.autoTrackReputation = ACH:Toggle(L["Auto Track Reputation"], nil, 4)
-General.args.general.args.automation.args.autoRepair = ACH:Select(L["Auto Repair"], L["Automatically repair using the following method when visiting a merchant."], 5, { NONE = L["NONE"], GUILD = L["GUILD"], PLAYER = L["PLAYER"] })
+General.args.general.args.automation.args.autoRepair = ACH:Select(L["Auto Repair"], L["Automatically repair using the following method when visiting a merchant."], 5, { NONE = L["NONE"], PLAYER = L["PLAYER"] })
 
 General.args.general.args.monitor = ACH:Group(L["Monitor"], nil, 50, nil, function(info) return E.global.general[info[#info]] end, function(info, value) E.global.general[info[#info]] = value E:StaticPopup_Show('GLOBAL_RL') end)
 General.args.general.args.monitor.inline = true
@@ -69,14 +68,6 @@ General.args.general.args.scaling.args.ScaleSmall.customWidth = 100
 General.args.general.args.scaling.args.ScaleMedium.customWidth = 100
 General.args.general.args.scaling.args.ScaleLarge.customWidth = 100
 General.args.general.args.scaling.args.ScaleAuto.customWidth = 100
-
-General.args.general.args.totems = ACH:Group(L["Class Totems"], nil, 55, nil, function(info) return E.db.general.totems[info[#info]] end, function(info, value) E.db.general.totems[info[#info]] = value Totems:PositionAndSize() end, function() return not E.private.general.totemBar end)
-General.args.general.args.totems.inline = true
-General.args.general.args.totems.args.enable = ACH:Toggle(L["Enable"], nil, 1, nil, nil, nil, function() return E.private.general.totemBar end, function(_, value) E.private.general.totemBar = value; E:StaticPopup_Show('PRIVATE_RL') end, false)
-General.args.general.args.totems.args.size = ACH:Range(L["Button Size"], nil, 2, { min = 24, max = 60, step = 1 })
-General.args.general.args.totems.args.spacing = ACH:Range(L["Button Spacing"], nil, 3, { min = 1, max = 10, step = 1 })
-General.args.general.args.totems.args.sortDirection = ACH:Select(L["Sort Direction"], nil, 4, { ASCENDING = L["Ascending"], DESCENDING = L["Descending"] })
-General.args.general.args.totems.args.growthDirection = ACH:Select(L["Bar Direction"], nil, 5, { VERTICAL = L["Vertical"], HORIZONTAL = L["Horizontal"] })
 
 General.args.media = ACH:Group(L["Media"], nil, 10, nil, function(info) return E.db.general[info[#info]] end, function(info, value) E.db.general[info[#info]] = value end)
 

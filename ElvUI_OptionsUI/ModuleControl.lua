@@ -114,7 +114,6 @@ local function CreateGeneralConfig()
 	MC:AddConfigOptions(P.general, config)
 
 	config.args.minimap.name = L["MINIMAP_LABEL"]
-	config.args.totems.name = L["Class Totems"]
 	config.args.itemLevel.name = L["Item Level"]
 
 	return config
