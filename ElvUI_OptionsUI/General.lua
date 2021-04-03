@@ -121,26 +121,6 @@ General.args.media.args.colorsGroup.args.spacer1 = ACH:Spacer(4, 'full')
 General.args.media.args.colorsGroup.args.bordercolor = ACH:Color(L["Border Color"], L["Main border color of the UI."], 5)
 General.args.media.args.colorsGroup.args.ufBorderColors = ACH:Color(L["Unitframes Border Color"], nil, 6, nil, nil, function() local t, d = E.db.unitframe.colors.borderColor, P.unitframe.colors.borderColor return t.r, t.g, t.b, t.a, d.r, d.g, d.b, d.a end, function(_, r, g, b, a) local t = E.db.unitframe.colors.borderColor t.r, t.g, t.b, t.a = r, g, b, a E:UpdateMedia() E:UpdateBorderColors() end)
 
-General.args.alternativePowerGroup = ACH:Group(L["Alternative Power"], nil, 15, nil, function(info) return E.db.general.altPowerBar[info[#info]] end, function(info, value) E.db.general.altPowerBar[info[#info]] = value Blizzard:UpdateAltPowerBarSettings() end)
-General.args.alternativePowerGroup.args.enable = ACH:Toggle(L["Enable"], L["Replace Blizzard's Alternative Power Bar"], 1, nil, nil, nil, nil, function(info, value) E.db.general.altPowerBar[info[#info]] = value E:StaticPopup_Show('PRIVATE_RL') end)
-General.args.alternativePowerGroup.args.width = ACH:Range(L["Width"], nil, 2, { min = 50, max = 1000, step = 1 })
-General.args.alternativePowerGroup.args.height = ACH:Range(L["Height"], nil, 3, { min = 5, max = 100, step = 1 })
-
-General.args.alternativePowerGroup.args.statusBarGroup = ACH:Group(L["Status Bar"], nil, 4, nil, nil, function(info, value) E.db.general.altPowerBar[info[#info]] = value Blizzard:UpdateAltPowerBarColors() end)
-General.args.alternativePowerGroup.args.statusBarGroup.inline = true
-General.args.alternativePowerGroup.args.statusBarGroup.args.smoothbars = ACH:Toggle(L["Smooth Bars"], L["Bars will transition smoothly."], 1)
-General.args.alternativePowerGroup.args.statusBarGroup.args.statusBar = ACH:SharedMediaStatusbar(L["StatusBar Texture"], nil, 2)
-General.args.alternativePowerGroup.args.statusBarGroup.args.statusBarColorGradient = ACH:Toggle(L["Color Gradient"], nil, 3)
-General.args.alternativePowerGroup.args.statusBarGroup.args.statusBarColor = ACH:Color(L["COLOR"], nil, 3, nil, nil, function(info) local t, d = E.db.general.altPowerBar[info[#info]], P.general.altPowerBar[info[#info]] return t.r, t.g, t.b, t.a, d.r, d.g, d.b end, function(info, r, g, b) local t = E.db.general.altPowerBar[info[#info]] t.r, t.g, t.b = r, g, b Blizzard:UpdateAltPowerBarColors() end, function() return E.db.general.altPowerBar.statusBarColorGradient end)
-
-General.args.alternativePowerGroup.args.textGroup = ACH:Group(L["Text"], nil, 6)
-General.args.alternativePowerGroup.args.textGroup.inline = true
-General.args.alternativePowerGroup.args.textGroup.args.font = ACH:SharedMediaFont(L["Font"], nil, 1)
-General.args.alternativePowerGroup.args.textGroup.args.fontSize = ACH:Range(L["FONT_SIZE"], nil, 2, C.Values.FontSize)
-General.args.alternativePowerGroup.args.textGroup.args.fontOutline = ACH:FontFlags(L["Font Outline"], nil, 3)
-General.args.alternativePowerGroup.args.textGroup.args.textFormat = ACH:Select(L["Text Format"], nil, 4, { NONE = L["NONE"], NAME = L["NAME"], NAMEPERC = L["Name: Percent"], NAMECURMAX = L["Name: Current / Max"], NAMECURMAXPERC = L["Name: Current / Max - Percent"], PERCENT = L["Percent"], CURMAX = L["Current / Max"], CURMAXPERC = L["Current / Max - Percent"] })
-General.args.alternativePowerGroup.args.textGroup.args.textFormat.sortByValue = true
-
 General.args.blizzUIImprovements = ACH:Group(L["BlizzUI Improvements"], nil, 20)
 
 General.args.blizzUIImprovements.args.lootGroup = ACH:Group(L['Loot'], nil, 1, nil, function(info) return E.private.general[info[#info]] end, function(info, value) E.private.general[info[#info]] = value; E:StaticPopup_Show('PRIVATE_RL') end)
@@ -160,7 +140,6 @@ General.args.blizzUIImprovements.args.general.args.voiceOverlay = ACH:Toggle(L["
 General.args.blizzUIImprovements.args.general.args.resurrectSound = ACH:Toggle(L["Resurrect Sound"], L["Enable to hear sound if you receive a resurrect."], 7)
 General.args.blizzUIImprovements.args.general.args.vehicleSeatIndicatorSize = ACH:Range(L["Vehicle Seat Indicator Size"], nil, 8, { min = 64, max = 128, step = 4 }, nil, nil, function(info, value) E.db.general[info[#info]] = value Blizzard:UpdateVehicleFrame() end)
 General.args.blizzUIImprovements.args.general.args.durabilityScale = ACH:Range(L["Durability Scale"], nil, 9, { min = .5, max = 8, step = .5 }, nil, nil, function(info, value) E.db.general[info[#info]] = value Blizzard:UpdateDurabilityScale() end)
-General.args.blizzUIImprovements.args.general.args.commandBarSetting = ACH:Select(L["Order Hall Command Bar"], nil, 10, { DISABLED = L["Disable"], ENABLED = L["Enable"], ENABLED_RESIZEPARENT = L["Enable + Adjust Movers"] }, nil, nil, function(info) return E.global.general[info[#info]] end, function(info, value) E.global.general[info[#info]] = value E:StaticPopup_Show('GLOBAL_RL') end)
 
 General.args.blizzUIImprovements.args.quest = ACH:Group(L["Quest"], nil, 4)
 General.args.blizzUIImprovements.args.quest.inline = true
