@@ -42,19 +42,6 @@ P.general = {
 	afk = true,
 	numberPrefixStyle = 'ENGLISH',
 	decimalLength = 1,
-	altPowerBar = {
-		enable = true,
-		width = 250,
-		height = 20,
-		font = 'PT Sans Narrow',
-		fontSize = 12,
-		fontOutline = 'OUTLINE',
-		statusBar = 'ElvUI Norm',
-		textFormat = 'NAMECURMAX',
-		statusBarColorGradient = false,
-		statusBarColor = { r = 0.2, g = 0.4, b = 0.8 },
-		smoothbars = false,
-	},
 	fontSize = 12,
 	font = 'PT Sans Narrow',
 	fontStyle = 'OUTLINE',
@@ -553,9 +540,6 @@ P.nameplates = {
 				[5] = {r = .33, g = .63, b = .33},
 				[6] = {r = .33, g = .63, b = .33},
 			},
-			PALADIN = { r = 228/255, g = 225/255, b = 16/255},
-			MAGE = { r = 0, g = 157/255, b = 1},
-			WARLOCK = {r = 148/255, g = 130/255, b = 201/255}
 		},
 	},
 	visibility = {
@@ -1456,9 +1440,6 @@ P.unitframe = {
 				[5] = {r = .33, g = .63, b = .33},
 				[6] = {r = .33, g = .63, b = .33},
 			},
-			PALADIN = {r = 228/255, g = 225/255, b = 16/255},
-			MAGE = {r = 0, g = 157/255, b = 255/255},
-			WARLOCK = {r = 148/255, g = 130/255, b = 201/255}
 		},
 		frameGlow = {
 			mainGlow = {

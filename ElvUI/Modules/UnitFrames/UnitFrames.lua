@@ -374,12 +374,6 @@ function UF:UpdateColors()
 	ElvUF.colors.ComboPoints[5] = E:SetColorTable(ElvUF.colors.ComboPoints[5], db.classResources.comboPoints[5])
 	ElvUF.colors.ComboPoints[6] = E:SetColorTable(ElvUF.colors.ComboPoints[6], db.classResources.comboPoints[6])
 
-	--Mage, Paladin and Warlock
-	if not ElvUF.colors.ClassBars then ElvUF.colors.ClassBars = {} end
-	ElvUF.colors.ClassBars.PALADIN = E:SetColorTable(ElvUF.colors.ClassBars.PALADIN, db.classResources.PALADIN)
-	ElvUF.colors.ClassBars.MAGE = E:SetColorTable(ElvUF.colors.ClassBars.MAGE, db.classResources.MAGE)
-	ElvUF.colors.ClassBars.WARLOCK = E:SetColorTable(ElvUF.colors.ClassBars.WARLOCK, db.classResources.WARLOCK)
-
 	-- these are just holders.. to maintain and update tables
 	if not ElvUF.colors.reaction.good then ElvUF.colors.reaction.good = {} end
 	if not ElvUF.colors.reaction.bad then ElvUF.colors.reaction.bad = {} end
