@@ -23,7 +23,7 @@ local UnitClassification = UnitClassification
 local UnitCreatureType = UnitCreatureType
 local UnitExists = UnitExists
 local UnitFactionGroup = UnitFactionGroup
-local UnitGroupRolesAssigned = UnitGroupRolesAssigned
+--local UnitGroupRolesAssigned = UnitGroupRolesAssigned
 local UnitGUID = UnitGUID
 local UnitIsEnemy = UnitIsEnemy
 local UnitIsFriend = UnitIsFriend
@@ -432,7 +432,7 @@ function NP:Update_StatusBars()
 	end
 end
 
-function NP:GROUP_ROSTER_UPDATE()
+--[[function NP:GROUP_ROSTER_UPDATE()
 	local isInRaid = IsInRaid()
 	NP.IsInGroup = isInRaid or IsInGroup()
 
@@ -446,7 +446,7 @@ function NP:GROUP_ROSTER_UPDATE()
 			end
 		end
 	end
-end
+end]]
 
 function NP:GROUP_LEFT()
 	NP.IsInGroup = IsInRaid() or IsInGroup()
@@ -826,13 +826,13 @@ function NP:Initialize()
 	NP:RegisterEvent('PLAYER_REGEN_DISABLED')
 	NP:RegisterEvent('PLAYER_ENTERING_WORLD')
 	NP:RegisterEvent('COMBAT_LOG_EVENT_UNFILTERED')
-	NP:RegisterEvent('GROUP_ROSTER_UPDATE')
+	--NP:RegisterEvent('GROUP_ROSTER_UPDATE')
 	NP:RegisterEvent('GROUP_LEFT')
 	NP:RegisterEvent('PLAYER_LOGOUT')
 
 	NP:StyleFilterInitialize()
 	NP:HideInterfaceOptions()
-	NP:GROUP_ROSTER_UPDATE()
+	--NP:GROUP_ROSTER_UPDATE()
 	NP:SetCVars()
 end
 
