@@ -2165,14 +2165,6 @@ local function GetOptionsTable_Power(hasDetatchOption, updateFunc, groupName, nu
 		config.args.strataAndLevel = GetOptionsTable_StrataAndFrameLevel(updateFunc, groupName, numUnits, 'power')
 	end
 
-	if groupName == 'party' or groupName == 'raid' or groupName == 'raid40' then
-		config.args.displayAltPower = {
-			type = 'toggle',
-			order = 9,
-			name = L["Swap to Alt Power"],
-		}
-	end
-
 	return config
 end
 
@@ -2541,30 +2533,7 @@ local function GetOptionsTable_ClassBar(updateFunc, groupName, numUnits)
 				},
 			}
 
-	if groupName == 'party' or groupName == 'raid' or groupName == 'raid40' then
-		config.args.altPowerColor = {
-			get = function(info)
-				local t = E.db.unitframe.units[groupName].classbar[info[#info]]
-				local d = P.unitframe.units[groupName].classbar[info[#info]]
-				return t.r, t.g, t.b, t.a, d.r, d.g, d.b
-			end,
-			set = function(info, r, g, b)
-				local t = E.db.unitframe.units[groupName].classbar[info[#info]]
-				t.r, t.g, t.b = r, g, b
-				UF:Update_AllFrames()
-			end,
-			order = 5,
-			name = L["COLOR"],
-			type = 'color',
-		}
-		config.args.altPowerTextFormat = {
-			order = 6,
-			name = L["Text Format"],
-			desc = L["Controls the text displayed. Tags are available in the Available Tags section of the config."],
-			type = 'input',
-			width = 'full',
-		}
-	elseif groupName == 'player' then
+	if groupName == 'player' then
 		config.args.height.max = (E.db.unitframe.units[groupName].classbar.detachFromFrame and 300 or 30)
 		config.args.autoHide = {
 			order = 5,
@@ -5059,7 +5028,6 @@ E.Options.args.unitframe.args.groupUnits.args.party = {
 		summonIcon = GetOptionsTable_SummonIcon(UF.CreateAndUpdateHeaderGroup, 'party'),
 	},
 }
-E.Options.args.unitframe.args.groupUnits.args.party.args.classbar.name = L["Alternative Power"]
 E.Options.args.unitframe.args.groupUnits.args.party.args.targetsGroup.args.name.inline = true
 E.Options.args.unitframe.args.groupUnits.args.party.args.targetsGroup.args.raidicon.inline = true
 
@@ -5128,7 +5096,6 @@ E.Options.args.unitframe.args.groupUnits.args.raid = {
 		summonIcon = GetOptionsTable_SummonIcon(UF.CreateAndUpdateHeaderGroup, 'raid'),
 	},
 }
-E.Options.args.unitframe.args.groupUnits.args.raid.args.classbar.name = L["Alternative Power"]
 
 --Raid-40 Frames
 E.Options.args.unitframe.args.groupUnits.args.raid40 = {
@@ -5195,7 +5162,6 @@ E.Options.args.unitframe.args.groupUnits.args.raid40 = {
 		summonIcon = GetOptionsTable_SummonIcon(UF.CreateAndUpdateHeaderGroup, 'raid40'),
 	},
 }
-E.Options.args.unitframe.args.groupUnits.args.raid40.args.classbar.name = L["Alternative Power"]
 
 --Raid Pet Frames
 E.Options.args.unitframe.args.groupUnits.args.raidpet = {
