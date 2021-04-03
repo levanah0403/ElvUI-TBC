@@ -2185,18 +2185,6 @@ P.actionbar = {
 		frameStrata = 'LOW',
 		frameLevel = 1,
 	},
-	extraActionButton = {
-		alpha = 1,
-		scale = 1,
-		clean = false,
-		inheritGlobalFade = false,
-	},
-	zoneActionButton = {
-		alpha = 1,
-		scale = 1,
-		clean = false,
-		inheritGlobalFade = false,
-	},
 	vehicleExitButton = {
 		enable = true,
 		size = 32,
@@ -2259,7 +2247,7 @@ for i = 1, 10 do
 	}
 end
 
-for _, bar in pairs({ 'barPet', 'stanceBar', 'vehicleExitButton', 'extraActionButton', 'zoneActionButton' }) do
+for _, bar in pairs({ 'barPet', 'stanceBar', 'vehicleExitButton', }) do
 	P.actionbar[bar].frameStrata = 'LOW'
 	P.actionbar[bar].frameLevel = 1
 
@@ -2273,18 +2261,6 @@ for _, bar in pairs({ 'barPet', 'stanceBar', 'vehicleExitButton', 'extraActionBu
 		P.actionbar[bar].counttext = true
 		P.actionbar[bar].countTextPosition = 'BOTTOMRIGHT'
 		P.actionbar[bar].useCountColor = false
-	end
-
-	if bar ~= 'zoneActionButton' then
-		P.actionbar[bar].hotkeyColor = { r = 1, g = 1, b = 1 }
-		P.actionbar[bar].hotkeyFont = 'Homespun'
-		P.actionbar[bar].hotkeyFontOutline = 'MONOCHROMEOUTLINE'
-		P.actionbar[bar].hotkeyFontSize = 10
-		P.actionbar[bar].hotkeytext = true
-		P.actionbar[bar].hotkeyTextPosition = 'TOPRIGHT'
-		P.actionbar[bar].hotkeyTextXOffset = 0
-		P.actionbar[bar].hotkeyTextYOffset = -3
-		P.actionbar[bar].useHotkeyColor = false
 	end
 end
 

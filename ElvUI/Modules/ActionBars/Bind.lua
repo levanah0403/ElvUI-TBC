@@ -205,9 +205,7 @@ function AB:BindUpdate(button, spellmacro)
 		elseif button.action then
 			local action = tonumber(button.action)
 			local modact = 1+(action-1)%12
-			if bind.name == 'ExtraActionButton1' then
-				button.bindstring = 'EXTRAACTIONBUTTON1'
-			elseif action < 25 or action > 72 then
+			if action < 25 or action > 72 then
 				button.bindstring = 'ACTIONBUTTON'..modact
 			elseif action < 73 and action > 60 then
 				button.bindstring = 'MULTIACTIONBAR1BUTTON'..modact

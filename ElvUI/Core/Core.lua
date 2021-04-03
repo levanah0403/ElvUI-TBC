@@ -1281,10 +1281,6 @@ do -- BFA Convert, deprecated..
 end
 
 function E:DBConvertSL()
-	if E.private.skins.cleanBossButton ~= nil then
-		E.db.actionbar.extraActionButton.clean = E.private.skins.cleanBossButton
-		E.private.skins.cleanBossButton = nil
-	end
 
 	if E.global.unitframe.DebuffHighlightColors then
 		E:CopyTable(E.global.unitframe.AuraHighlightColors, E.global.unitframe.DebuffHighlightColors)
@@ -1434,7 +1430,6 @@ function E:UpdateActionBars(skipCallback)
 	ActionBars:UpdateButtonSettings()
 	ActionBars:UpdateMicroPositionDimensions()
 	ActionBars:UpdatePetCooldownSettings()
-	ActionBars:UpdateExtraButtons()
 
 	if not skipCallback then
 		E.callbacks:Fire('StaggeredUpdate')

@@ -425,10 +425,6 @@ function AB:PLAYER_REGEN_ENABLED()
 		AB:AdjustMaxStanceButtons(AB.NeedsAdjustMaxStanceButtons) --sometimes it holds the event, otherwise true. pass it before we nil it.
 		AB.NeedsAdjustMaxStanceButtons = nil
 	end
-	if AB.NeedsReparentExtraButtons then
-		AB:ExtraButtons_Reparent()
-		AB.NeedsReparentExtraButtons = nil
-	end
 
 	AB:UnregisterEvent('PLAYER_REGEN_ENABLED')
 end
@@ -523,7 +519,7 @@ end
 
 do
 	local texts = { 'hotkey', 'macro', 'count' }
-	local bars = { 'barPet', 'stanceBar', 'vehicleExitButton', 'extraActionButton' }
+	local bars = { 'barPet', 'stanceBar', 'vehicleExitButton', }
 
 	local function saveSetting(option, value)
 		for i = 1, 10 do

@@ -33,7 +33,6 @@ local function CreateActionbarsConfig()
 	config.args.barPet.name = L["Pet Bar"]
 	config.args.stanceBar.name = L["Stance Bar"]
 	config.args.microbar.name = L["Micro Bar"]
-	config.args.extraActionButton.name = L["Boss Button"]
 	config.args.vehicleExitButton.name = L["Vehicle Exit"]
 
 	return config
@@ -91,6 +90,7 @@ local function CreateDatatbarsConfig()
 
 	MC:AddConfigOptions(P.databars, config)
 
+	config.args.colors.name = L["Colors"]
 	config.args.experience.name = L["Experience"]
 	config.args.petExperience.name = L["Pet Experience"]
 	config.args.reputation.name = L["Reputation"]
@@ -113,7 +113,6 @@ local function CreateGeneralConfig()
 
 	MC:AddConfigOptions(P.general, config)
 
-	config.args.altPowerBar.name = L["Alternative Power"]
 	config.args.minimap.name = L["MINIMAP_LABEL"]
 	config.args.totems.name = L["Class Totems"]
 	config.args.itemLevel.name = L["Item Level"]

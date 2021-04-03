@@ -303,7 +303,6 @@ G.profileCopy = {
 		barPet = true,
 		stanceBar = true,
 		microbar = true,
-		extraActionButton = true,
 		cooldown = true
 	},
 	auras = {
