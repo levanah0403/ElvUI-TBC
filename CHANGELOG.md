@@ -1,4 +1,11 @@
-### Version 0.04 [ ETA: 🍨 ]
+### Version 0.05 [ ETA: 🍨 ]
+___
+### Version 0.04 [04-04-2021]
+**• Ace3 skin**  
+**• Bags colors**  
+**• Config sections**  
+**• LootRoll**  
+**• Tooltip**  
 ___
 ### Version 0.03 [03-04-2021]
 **• DataTexts**  
