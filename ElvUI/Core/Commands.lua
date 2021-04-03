@@ -207,8 +207,6 @@ local BLIZZARD_ADDONS = {
 	'Blizzard_GuildUI',
 	'Blizzard_HybridMinimap',
 	'Blizzard_InspectUI',
-	'Blizzard_IslandsPartyPoseUI',
-	'Blizzard_IslandsQueueUI',
 	'Blizzard_ItemInteractionUI',
 	'Blizzard_ItemSocketingUI',
 	'Blizzard_ItemUpgradeUI',

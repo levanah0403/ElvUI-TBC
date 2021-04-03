@@ -218,7 +218,6 @@ L["Modulating Blend"] = true
 L["Mov. Speed:"] = STAT_MOVEMENT_SPEED
 L["MT Frames"] = "Quadro do Tank Principal"
 L["Naval Mission(s) Report:"] = "Relatório das Missões Navais:"
-L["Nazjatar Follower XP"] = "EXP do seguidor de Nazjatar"
 L["Need help? Join our Discord: https://discord.gg/xFWcfgE"] = true
 L["No bindings set."] = "Sem atalhos definidos"
 L["No gray items to delete."] = "Nenhum item cinzento para destruir."

@@ -218,7 +218,6 @@ L["Modulating Blend"] = "Mezcla Moduladora"
 L["Mov. Speed:"] = "Velocidad de Movimiento"
 L["MT Frames"] = "Marcos de TP"
 L["Naval Mission(s) Report:"] = "Informe de Misión(es) Navales"
-L["Nazjatar Follower XP"] = "Nazjatar Seguidor XP"
 L["Need help? Join our Discord: https://discord.gg/xFWcfgE"] = true
 L["No bindings set."] = "No hay teclas establecidas."
 L["No gray items to delete."] = "No hay objetos grises para eliminar."

@@ -218,7 +218,6 @@ L["Modulating Blend"] = true
 L["Mov. Speed:"] = true
 L["MT Frames"] = true
 L["Naval Mission(s) Report:"] = true
-L["Nazjatar Follower XP"] = true
 L["Need help? Join our Discord: https://discord.gg/xFWcfgE"] = true
 L["No bindings set."] = true
 L["No gray items to delete."] = true

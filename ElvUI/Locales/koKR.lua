@@ -218,7 +218,6 @@ L["Modulating Blend"] = true
 L["Mov. Speed:"] = _G.STAT_MOVEMENT_SPEED
 L["MT Frames"] = "방어전담 프레임"
 L["Naval Mission(s) Report:"] = "해상 임무 보고서"
-L["Nazjatar Follower XP"] = true
 L["Need help? Join our Discord: https://discord.gg/xFWcfgE"] = "도움이 필요할땐 우리 디스코드에 서버에 참가해보세요: https://discord.gg/xFWcfgE"
 L["No bindings set."] = "설정한 단축키가 없습니다."
 L["No gray items to delete."] = "잡동사니가 없습니다."

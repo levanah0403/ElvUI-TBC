@@ -218,7 +218,6 @@ L["Modulating Blend"] = "Модулирующие смешивание" --Check 
 L["Mov. Speed:"] = _G.STAT_MOVEMENT_SPEED
 L["MT Frames"] = "Танки"
 L["Naval Mission(s) Report:"] = "Отчет морских миссий:"
-L["Nazjatar Follower XP"] = "Опыт соратника Назжатара"
 L["Need help? Join our Discord: https://discord.gg/xFWcfgE"] = "Нужна помощь? Заходи в дискорд Discord: https://discord.gg/xFWcfgE"
 L["No bindings set."] = "Нет назначений"
 L["No gray items to delete."] = "Нет предметов серого качества для удаления."

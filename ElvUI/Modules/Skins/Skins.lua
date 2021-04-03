@@ -860,30 +860,6 @@ function S:HandleFollowerAbilities(followerList)
 	end
 end
 
-function S:HandleShipFollowerPage(followerTab)
-	local traits = followerTab.Traits
-	for i = 1, #traits do
-		local icon = traits[i].Portrait
-		local border = traits[i].Border
-		border:SetTexture() -- I think the default border looks nice, not sure if we want to replace that
-		-- The landing page icons display inner borders
-		if followerTab.isLandingPage then
-			icon:SetTexCoord(unpack(E.TexCoords))
-		end
-	end
-
-	local equipment = followerTab.EquipmentFrame.Equipment
-	for i = 1, #equipment do
-		local icon = equipment[i].Icon
-		local border = equipment[i].Border
-		border:SetAtlas('ShipMission_ShipFollower-TypeFrame') -- This border is ugly though, use the traits border instead
-		-- The landing page icons display inner borders
-		if followerTab.isLandingPage then
-			icon:SetTexCoord(unpack(E.TexCoords))
-		end
-	end
-end
-
 local function UpdateFollowerQuality(self, followerInfo)
 	if followerInfo then
 		local color = E.QualityColors[followerInfo.quality or 1]

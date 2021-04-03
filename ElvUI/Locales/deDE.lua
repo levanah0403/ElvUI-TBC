@@ -221,7 +221,6 @@ L["Modulating Blend"] = "Modulierende Überblendung"
 L["Mov. Speed:"] = _G.STAT_MOVEMENT_SPEED
 L["MT Frames"] = "MT-Fenster"
 L["Naval Mission(s) Report:"] = "Marine Missionsbericht:"
-L["Nazjatar Follower XP"] = "Nazjatar Begleiter EP"
 L["Need help? Join our Discord: https://discord.gg/xFWcfgE"] = "Brauchst du Hilfe? Tritt unseren Discord bei: https://discord.gg/xFWcfgE"
 L["No bindings set."] = "Keine Belegungen gesetzt."
 L["No gray items to delete."] = "Es sind keine grauen Gegenstände zum Löschen vorhanden."

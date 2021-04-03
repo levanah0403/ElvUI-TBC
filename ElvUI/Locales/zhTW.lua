@@ -218,7 +218,6 @@ L["Modulating Blend"] = "無視 Alpha 通道混合"
 L["Mov. Speed:"] = _G.STAT_MOVEMENT_SPEED
 L["MT Frames"] = "主坦克框架"
 L["Naval Mission(s) Report:"] = "海軍任務報告"
-L["Nazjatar Follower XP"] = "納沙塔爾盟友經驗"
 L["Need help? Join our Discord: https://discord.gg/xFWcfgE"] = "需要幫助? 加入我們的 Discord 伺服器(英文): https://discord.gg/xFWcfgE"
 L["No bindings set."] = "未設定快捷綁定."
 L["No gray items to delete."] = "沒有可刪除的灰色物品."
