@@ -79,7 +79,7 @@ DataBars.args.experience.args.conditionGroup.values = {
 	hideInCombat = L["Hide In Combat"],
 }
 
-E.Options.args.databars.args.petExperience = ACH:Group(L["Pet Experience"], nil, nil, nil, function(info) return DB.db.petExperience[info[#info]] end, function(info, value) DB.db.petExperience[info[#info]] = value DB:PetExperienceBar_Update() DB:UpdateAll() end, nil, E.myclass ~= 'HUNTER')
+E.Options.args.databars.args.petExperience = ACH:Group(L["Pet Experience"], nil, 2, nil, function(info) return DB.db.petExperience[info[#info]] end, function(info, value) DB.db.petExperience[info[#info]] = value DB:PetExperienceBar_Update() DB:UpdateAll() end, nil, E.myclass ~= 'HUNTER')
 E.Options.args.databars.args.petExperience.args = CopyTable(SharedOptions)
 E.Options.args.databars.args.petExperience.args.enable.set = function(info, value) DB.db.petExperience[info[#info]] = value DB:PetExperienceBar_Toggle() DB:UpdateAll() end
 E.Options.args.databars.args.petExperience.args.textFormat.set = function(info, value) DB.db.petExperience[info[#info]] = value DB:PetExperienceBar_Update() end
@@ -90,7 +90,7 @@ E.Options.args.databars.args.petExperience.args.conditionGroup.values = {
 	hideInCombat = L["Hide In Combat"],
 }
 
-DataBars.args.reputation = ACH:Group(L["Reputation"], nil, 2, nil, function(info) return DB.db.reputation[info[#info]] end, function(info, value) DB.db.reputation[info[#info]] = value DB:ReputationBar_Update() DB:UpdateAll() end)
+DataBars.args.reputation = ACH:Group(L["Reputation"], nil, 3, nil, function(info) return DB.db.reputation[info[#info]] end, function(info, value) DB.db.reputation[info[#info]] = value DB:ReputationBar_Update() DB:UpdateAll() end)
 DataBars.args.reputation.args = CopyTable(SharedOptions)
 DataBars.args.reputation.args.enable.set = function(info, value) DB.db.reputation[info[#info]] = value DB:ReputationBar_Toggle() DB:UpdateAll() end
 DataBars.args.reputation.args.textFormat.set = function(info, value) DB.db.reputation[info[#info]] = value DB:ReputationBar_Update() end
