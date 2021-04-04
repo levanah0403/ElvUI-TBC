@@ -50,7 +50,6 @@ function S:CharacterFrame()
 		for i = 1, 5 do
 			local frame, icon, text = _G[frameName..i], _G[frameName..i]:GetRegions()
 			frame:Size(24)
-			frame:SetTemplate('Default')
 
 			if i ~= 1 then
 				frame:ClearAllPoints()
@@ -77,7 +76,6 @@ function S:CharacterFrame()
 			local cooldown = _G[slot:GetName()..'Cooldown']
 
 			slot:StripTextures()
-			slot:SetTemplate('Default', true, true)
 			slot:StyleButton()
 
 			S:HandleIcon(icon)
@@ -87,15 +85,6 @@ function S:CharacterFrame()
 			end
 		end
 	end
-
-	hooksecurefunc('PaperDollItemSlotButton_Update', function(self)
-		local rarity = GetInventoryItemQuality('player', self:GetID())
-		if rarity and rarity > 1 then
-			E:SetBackdropBorderColor(self, GetItemQualityColor(rarity))
-		else
-			E:SetBackdropBorderColor(self, unpack(E.media.bordercolor))
-		end
-	end)
 
 	-- PetPaperDollFrame
 	_G.PetPaperDollFrame:StripTextures()
