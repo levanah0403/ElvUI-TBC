@@ -125,7 +125,7 @@ function S:HelpFrame()
 	--Hearth Stone Button
 	local HelpFrameCharacterStuckHearthstone = _G.HelpFrameCharacterStuckHearthstone
 	HelpFrameCharacterStuckHearthstone:StyleButton()
-	HelpFrameCharacterStuckHearthstone:SetTemplate(nil, true)
+	--HelpFrameCharacterStuckHearthstone:SetTemplate(nil, true)
 	HelpFrameCharacterStuckHearthstone.IconTexture:SetInside()
 	HelpFrameCharacterStuckHearthstone.IconTexture:SetTexCoord(unpack(E.TexCoords))
 	HelpFrameCharacterStuckHearthstone:SetHighlightTexture('')
@@ -136,7 +136,7 @@ function S:HelpFrame()
 	for i=1, _G.HelpFrameGM_Response:GetNumChildren() do
 		local child = select(i, _G.HelpFrameGM_Response:GetChildren())
 		if child and child:IsObjectType('Frame') and not child:GetName() then
-			child:SetTemplate()
+			--child:SetTemplate()
 		end
 	end
 end
