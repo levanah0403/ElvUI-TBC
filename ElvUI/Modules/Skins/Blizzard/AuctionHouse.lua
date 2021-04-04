@@ -182,7 +182,7 @@ function S:Blizzard_AuctionUI()
 	_G.AuctionsNumStacksEntry.backdrop:SetAllPoints()
 
 	_G.AuctionsItemButton:StripTextures()
-	_G.AuctionsItemButton:SetTemplate('Default', true)
+	--_G.AuctionsItemButton:SetTemplate('Default', true)
 	_G.AuctionsItemButton:StyleButton()
 
 	_G.AuctionsItemButton:HookScript('OnEvent', function(self, event)
@@ -192,12 +192,12 @@ function S:Blizzard_AuctionUI()
 
 			local quality = select(4, GetAuctionSellItemInfo())
 			if quality and quality > 1 then
-				self:SetBackdropBorderColor(GetItemQualityColor(quality))
+				--self:SetBackdropBorderColor(GetItemQualityColor(quality))
 			else
-				self:SetBackdropBorderColor(unpack(E.media.bordercolor))
+				--self:SetBackdropBorderColor(unpack(E.media.bordercolor))
 			end
 		else
-			self:SetBackdropBorderColor(unpack(E.media.bordercolor))
+			--self:SetBackdropBorderColor(unpack(E.media.bordercolor))
 		end
 	end)
 
@@ -210,7 +210,7 @@ function S:Blizzard_AuctionUI()
 
 	-- Progress Frame
 	_G.AuctionProgressFrame:StripTextures()
-	_G.AuctionProgressFrame:SetTemplate('Transparent')
+	--_G.AuctionProgressFrame:SetTemplate('Transparent')
 
 	local AuctionProgressFrameCancelButton = _G.AuctionProgressFrameCancelButton
 	S:HandleButton(AuctionProgressFrameCancelButton)
@@ -228,7 +228,7 @@ function S:Blizzard_AuctionUI()
 			local Name = _G[Frame..'Button'..i..'Name']
 			local Highlight = _G[Frame..'Button'..i..'Highlight']
 
-			ItemButton:SetTemplate()
+			--ItemButton:SetTemplate()
 			ItemButton:StyleButton()
 			ItemButton.IconBorder:SetAlpha(0)
 
@@ -243,7 +243,7 @@ function S:Blizzard_AuctionUI()
 			S:HandleIcon(Texture)
 			Texture:SetInside()
 
-			if Name then
+			--[[if Name then
 				hooksecurefunc(Name, 'SetVertexColor', function(_, r, g, b)
 					if not (r == g) then
 						ItemButton:SetBackdropBorderColor(r, g, b)
@@ -253,18 +253,18 @@ function S:Blizzard_AuctionUI()
 				end)
 
 				hooksecurefunc(Name, 'Hide', function() ItemButton:SetBackdropBorderColor(unpack(E.media.bordercolor)) end)
-			end
+			end]]
 		end
 	end
 
 	-- Custom Backdrops
 	for _, Frame in pairs({_G.AuctionFrameBrowse, _G.AuctionFrameAuctions}) do
 		Frame.LeftBackground = CreateFrame('Frame', nil, Frame)
-		Frame.LeftBackground:SetTemplate('Transparent')
+		--Frame.LeftBackground:SetTemplate('Transparent')
 		Frame.LeftBackground:SetFrameLevel(Frame:GetFrameLevel() - 1)
 
 		Frame.RightBackground = CreateFrame('Frame', nil, Frame)
-		Frame.RightBackground:SetTemplate('Transparent')
+		--Frame.RightBackground:SetTemplate('Transparent')
 		Frame.RightBackground:SetFrameLevel(Frame:GetFrameLevel() - 1)
 	end
 
