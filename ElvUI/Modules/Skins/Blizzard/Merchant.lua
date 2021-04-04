@@ -33,7 +33,7 @@ function S:MerchantFrame()
 
 		button:StripTextures()
 		button:StyleButton()
-		button:SetTemplate('Default', true)
+		--button:SetTemplate('Default', true)
 		button:Size(40)
 		button:Point('TOPLEFT', item, 'TOPLEFT', 4, -2)
 
@@ -52,7 +52,7 @@ function S:MerchantFrame()
 			local currencyIcon = _G['MerchantItem'..i..'AltCurrencyFrameItem'..j..'Texture']
 
 			currencyIcon.backdrop = CreateFrame('Frame', nil, currencyItem)
-			currencyIcon.backdrop:SetTemplate('Default')
+			--currencyIcon.backdrop:SetTemplate('Default')
 			currencyIcon.backdrop:SetFrameLevel(currencyItem:GetFrameLevel())
 			currencyIcon.backdrop:SetOutside(currencyIcon)
 
@@ -99,7 +99,7 @@ function S:MerchantFrame()
 
 	_G.MerchantBuyBackItemItemButton:StripTextures()
 	_G.MerchantBuyBackItemItemButton:StyleButton()
-	_G.MerchantBuyBackItemItemButton:SetTemplate('Default', true)
+	--_G.MerchantBuyBackItemItemButton:SetTemplate('Default', true)
 	_G.MerchantBuyBackItemItemButton:Size(40)
 	_G.MerchantBuyBackItemItemButton:Point('TOPLEFT', 4, -2)
 
@@ -148,14 +148,14 @@ function S:MerchantFrame()
 
 					if quality and quality > 1 then
 						local r, g, b = GetItemQualityColor(quality)
-						button:SetBackdropBorderColor(r, g, b)
+						--button:SetBackdropBorderColor(r, g, b)
 						name:SetTextColor(r, g, b)
 					else
-						button:SetBackdropBorderColor(unpack(E.media.bordercolor))
+						--button:SetBackdropBorderColor(unpack(E.media.bordercolor))
 						name:SetTextColor(1, 1, 1)
 					end
 				else
-					button:SetBackdropBorderColor(unpack(E.media.bordercolor))
+					--button:SetBackdropBorderColor(unpack(E.media.bordercolor))
 					name:SetTextColor(1, 1, 1)
 				end
 			end
@@ -166,14 +166,14 @@ function S:MerchantFrame()
 
 				if quality and quality > 1 then
 					local r, g, b = GetItemQualityColor(quality)
-					MerchantBuyBackItemItemButton:SetBackdropBorderColor(r, g, b)
+					--MerchantBuyBackItemItemButton:SetBackdropBorderColor(r, g, b)
 					MerchantBuyBackItemName:SetTextColor(r, g, b)
 				else
-					MerchantBuyBackItemItemButton:SetBackdropBorderColor(unpack(E.media.bordercolor))
+					--MerchantBuyBackItemItemButton:SetBackdropBorderColor(unpack(E.media.bordercolor))
 					MerchantBuyBackItemName:SetTextColor(1, 1, 1)
 				end
 			else
-				MerchantBuyBackItemItemButton:SetBackdropBorderColor(unpack(E.media.bordercolor))
+				--MerchantBuyBackItemItemButton:SetBackdropBorderColor(unpack(E.media.bordercolor))
 			end
 		end
 
