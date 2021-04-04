@@ -1,4 +1,6 @@
 ### Version 0.05 [ ETA: 🍨 ]
+**• Keyring texture**  
+**• Skins**  
 ___
 ### Version 0.04 [04-04-2021]
 **• Ace3 skin**  
