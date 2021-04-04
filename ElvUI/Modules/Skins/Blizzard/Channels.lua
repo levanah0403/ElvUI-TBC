@@ -1,13 +1,12 @@
 local E, L, V, P, G = unpack(select(2, ...)) --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local S = E:GetModule('Skins')
 
-
 local _G = _G
 
 local hooksecurefunc = hooksecurefunc
 
 function S:Blizzard_Channels()
-	if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.Channels) then return end
+	if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.channels) then return end
 
 	local ChannelFrame = _G.ChannelFrame
 	S:HandleFrame(ChannelFrame, true, nil, -5)
@@ -43,7 +42,6 @@ function S:Blizzard_Channels()
 
 	-- Hide the Channel Header Textures
 	hooksecurefunc(_G.ChannelButtonHeaderMixin, "Update", function(s)
-		s:SetTemplate("Transparent")
 		s.NormalTexture:SetTexture()
 	end)
 end
