@@ -110,13 +110,8 @@ function S:FriendsFrame()
 	end)
 
 	S:HandleEditBox(_G.AddFriendNameEditBox)
-	S:HandleEditBox(_G.ScrollOfResurrectionSelectionFrameTargetEditBox)
-
-	S:HandleScrollBar(_G.ScrollOfResurrectionSelectionFrameListScrollFrameScrollBar, 4)
 
 	_G.AddFriendFrame:SetTemplate('Transparent')
-	_G.ScrollOfResurrectionSelectionFrame:SetTemplate('Transparent')
-	_G.ScrollOfResurrectionSelectionFrameList:SetTemplate()
 
 	-- Pending invites
 	_G.FriendsFrameFriendsScrollFrame:StripTextures()
@@ -139,43 +134,14 @@ function S:FriendsFrame()
 	end)
 
 	S:HandleFrame(_G.FriendsFriendsFrame, true)
-	S:HandleFrame(_G.RecruitAFriendFrame, true)
-	S:HandleFrame(_G.RecruitAFriendSentFrame, true)
 
 	_G.FriendsFriendsList:StripTextures()
 	_G.IgnoreListFrame:StripTextures()
-	_G.RecruitAFriendNoteFrame:StripTextures()
-	_G.ScrollOfResurrectionFrame:StripTextures()
-	_G.ScrollOfResurrectionFrameNoteFrame:StripTextures()
 
 	S:HandleButton(_G.FriendsFriendsCloseButton)
 	S:HandleButton(_G.FriendsFriendsSendRequestButton)
-	S:HandleButton(_G.RecruitAFriendFrameSendButton)
-	S:HandleButton(_G.RecruitAFriendSentFrame.OKButton)
-	S:HandleButton(_G.ScrollOfResurrectionFrameAcceptButton)
-	S:HandleButton(_G.ScrollOfResurrectionFrameCancelButton)
-
-	S:HandleCloseButton(_G.RecruitAFriendFrameCloseButton)
-	S:HandleCloseButton(_G.RecruitAFriendSentFrameCloseButton)
-
-	_G.ScrollOfResurrectionFrameTargetEditBoxLeft:SetTexture()
-	_G.ScrollOfResurrectionFrameTargetEditBoxMiddle:SetTexture()
-	_G.ScrollOfResurrectionFrameTargetEditBoxRight:SetTexture()
-
-	_G.ScrollOfResurrectionFrame:SetTemplate('Transparent')
-	_G.ScrollOfResurrectionFrameNoteFrame:SetTemplate()
-	_G.ScrollOfResurrectionFrameTargetEditBox:SetTemplate()
-
-	_G.RecruitAFriendFrame.MoreDetails.Text:FontTemplate()
 
 	S:HandleEditBox(_G.FriendsFriendsList)
-	S:HandleEditBox(_G.RecruitAFriendNameEditBox)
-	S:HandleEditBox(_G.RecruitAFriendNoteFrame)
-
-	hooksecurefunc('RecruitAFriend_Send', function()
-		_G.RecruitAFriendSentFrame:ClearAllPoints()
-		_G.RecruitAFriendSentFrame:Point('CENTER', E.UIParent, 'CENTER', 0, 100)
-	end)
 
 	S:HandleScrollBar(_G.FriendsFriendsScrollFrameScrollBar)
 
@@ -402,9 +368,6 @@ function S:FriendsFrame()
 			end
 		end
 	end)
-
-	_G.GuildFrameLFGFrame:StripTextures()
-	_G.GuildFrameLFGFrame:SetTemplate('Transparent')
 
 	S:HandleCheckBox(_G.GuildFrameLFGButton)
 
