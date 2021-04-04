@@ -50,15 +50,6 @@ S.Blizzard.Regions = {
 	'RightTex',
 	'MiddleTex',
 	'Center',
-	-- 9.0 might want these later? (achievement frame uses them and maybe something else)
-	--'BottomEdge',
-	--'LeftEdge',
-	--'RightEdge',
-	--'TopEdge',
-	--'TopLeftCorner',
-	--'TopRightCorner',
-	--'BottomLeftCorner',
-	--'BottomRightCorner',
 }
 
 -- Depends on the arrow texture to be up by default.
@@ -846,62 +837,6 @@ function S:HandleSliderFrame(frame)
 	end
 end
 
--- TODO: Update the function for BFA/Shadowlands
-function S:HandleFollowerAbilities(followerList)
-	local followerTab = followerList and followerList.followerTab
-	local abilityFrame = followerTab.AbilitiesFrame
-	if not abilityFrame then return end
-
-	local abilities = abilityFrame.Abilities
-	if abilities then
-		for i = 1, #abilities do
-			local iconButton = abilities[i].IconButton
-			local icon = iconButton and iconButton.Icon
-			if icon then
-				iconButton.Border:SetAlpha(0)
-				S:HandleIcon(icon, true)
-			end
-		end
-	end
-
-	local equipment = abilityFrame.Equipment
-	if equipment then
-		for i = 1, #equipment do
-			local equip = equipment[i]
-			if equip then
-				equip.Border:SetAlpha(0)
-				equip.BG:SetAlpha(0)
-				S:HandleIcon(equip.Icon, true)
-				equip.Icon.backdrop:SetBackdropColor(1, 1, 1, .15)
-			end
-		end
-	end
-
-	local combatAllySpell = abilityFrame.CombatAllySpell
-	if combatAllySpell then
-		for i = 1, #combatAllySpell do
-			local icon = combatAllySpell[i].iconTexture
-			if icon then
-				S:HandleIcon(icon, true)
-			end
-		end
-	end
-
-	local xpbar = followerTab.XPBar
-	if xpbar and not xpbar.backdrop then
-		xpbar:StripTextures()
-		xpbar:SetStatusBarTexture(E.media.normTex)
-		xpbar:CreateBackdrop('Transparent')
-	end
-end
-
-local function UpdateFollowerQuality(self, followerInfo)
-	if followerInfo then
-		local color = E.QualityColors[followerInfo.quality or 1]
-		self.Portrait.backdrop:SetBackdropBorderColor(color.r, color.g, color.b)
-	end
-end
-
 -- Interface\SharedXML\SharedUIPanelTemplatex.xml - line 780
 function S:HandleTooltipBorderedFrame(frame)
 	assert(frame, 'doesnt exist!')
@@ -1061,6 +996,100 @@ end
 -- World Map related Skinning functions used for WoW 8.0
 function S:WorldMapMixin_AddOverlayFrame(frame, templateName)
 	S[templateName](frame.overlayFrames[#frame.overlayFrames])
+end
+
+-- Classic Specific S functions
+function S:HandleButtonHighlight(frame, r, g, b)
+	if frame.SetHighlightTexture then
+		frame:SetHighlightTexture('')
+	end
+
+	if not r then r = 0.9 end
+	if not g then g = 0.9 end
+	if not b then b = 0.9 end
+
+	local leftGrad = frame:CreateTexture(nil, 'HIGHLIGHT')
+	leftGrad:Size(frame:GetWidth() * 0.5, frame:GetHeight() * 0.95)
+	leftGrad:Point('LEFT', frame, 'CENTER')
+	leftGrad:SetTexture(E.media.blankTex)
+	leftGrad:SetGradientAlpha('Horizontal', r, g, b, 0.35, r, g, b, 0)
+
+	local rightGrad = frame:CreateTexture(nil, 'HIGHLIGHT')
+	rightGrad:Size(frame:GetWidth() * 0.5, frame:GetHeight() * 0.95)
+	rightGrad:Point('RIGHT', frame, 'CENTER')
+	rightGrad:SetTexture(E.media.blankTex)
+	rightGrad:SetGradientAlpha('Horizontal', r, g, b, 0, r, g, b, 0.35)
+end
+
+function S:HandlePointXY(frame, x, y)
+	local a, b, c, d, e = frame:GetPoint()
+	frame:SetPoint(a, b, c, x or d, y or e)
+end
+
+function S:SetNextPrevButtonDirection(frame, arrowDir)
+	local direction = self.ArrowRotation[(arrowDir or 'down')]
+
+	frame:GetNormalTexture():SetRotation(direction)
+	frame:GetDisabledTexture():SetRotation(direction)
+	frame:GetPushedTexture():SetRotation(direction)
+end
+
+do
+	local function SetPanelWindowInfo(frame, name, value, igroneUpdate)
+		frame:SetAttribute('UIPanelLayout-'..name, value)
+
+		if name == 'width' then
+			frame.__uiPanelWidth = value
+		end
+
+		if not igroneUpdate and frame:IsShown() then
+			UpdateUIPanelPositions(frame)
+		end
+	end
+
+	local UI_PANEL_OFFSET = 7
+	local inCombat, panelQueue = nil, {}
+	function S:SetUIPanelWindowInfo(frame, name, value, offset, igroneUpdate)
+		local frameName = frame and frame.GetName and frame:GetName()
+		if not (frameName and UIPanelWindows[frameName]) then return end
+
+		if name == 'width' then
+			value = E:Scale(value or (frame.backdrop and frame.backdrop:GetWidth() or frame:GetWidth())) + (offset or 0) + UI_PANEL_OFFSET
+		end
+
+		if inCombat or InCombatLockdown() then
+			local info = format('%s-%s', frameName, name)
+
+			if panelQueue[info] then
+				if name == 'width' and frame.__uiPanelWidth and frame.__uiPanelWidth == value then
+					panelQueue[info] = nil
+				else
+					panelQueue[info][3] = value
+					panelQueue[info][4] = igroneUpdate
+				end
+			else
+				panelQueue[info] = {frame, name, value, igroneUpdate}
+			end
+
+			if not inCombat then
+				inCombat = true
+				S:RegisterEvent('PLAYER_REGEN_ENABLED')
+			end
+		else
+			SetPanelWindowInfo(frame, name, value, igroneUpdate)
+		end
+	end
+
+	function S:PLAYER_REGEN_ENABLED()
+		S:UnregisterEvent('PLAYER_REGEN_ENABLED')
+		inCombat = nil
+
+		for _, info in pairs(panelQueue) do
+			SetPanelWindowInfo(unpack(info))
+		end
+
+		wipe(panelQueue)
+	end
 end
 
 function S:ADDON_LOADED(_, addonName)
