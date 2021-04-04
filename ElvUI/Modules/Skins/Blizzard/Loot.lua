@@ -38,7 +38,7 @@ local function UpdateLoots()
 				local color = ITEM_QUALITY_COLORS[itemRarity]
 				
 				if (color) then
-					frame.backdrop:SetBackdropBorderColor(color.r, color.g, color.b)
+					--frame.backdrop:SetBackdropBorderColor(color.r, color.g, color.b)
 				end
 			end
 
@@ -55,14 +55,14 @@ function S:LootFrame()
 	LootHistoryFrame:StripTextures()
 	S:HandleCloseButton(LootHistoryFrame.CloseButton)
 	LootHistoryFrame:StripTextures()
-	LootHistoryFrame:SetTemplate('Transparent')
+	--LootHistoryFrame:SetTemplate('Transparent')
 	LootHistoryFrame.ResizeButton:StripTextures()
 	LootHistoryFrame.ResizeButton.text = LootHistoryFrame.ResizeButton:CreateFontString(nil, 'OVERLAY')
 	LootHistoryFrame.ResizeButton.text:FontTemplate(nil, 16, 'OUTLINE')
 	LootHistoryFrame.ResizeButton.text:SetJustifyH('CENTER')
 	LootHistoryFrame.ResizeButton.text:Point('CENTER', LootHistoryFrame.ResizeButton)
 	LootHistoryFrame.ResizeButton.text:SetText('v v v v')
-	LootHistoryFrame.ResizeButton:SetTemplate()
+	--LootHistoryFrame.ResizeButton:SetTemplate()
 	LootHistoryFrame.ResizeButton:Width(LootHistoryFrame:GetWidth())
 	LootHistoryFrame.ResizeButton:Height(19)
 	LootHistoryFrame.ResizeButton:ClearAllPoints()
@@ -75,7 +75,7 @@ function S:LootFrame()
 	-- Master Loot
 	local MasterLooterFrame = _G.MasterLooterFrame
 	MasterLooterFrame:StripTextures()
-	MasterLooterFrame:SetTemplate()
+	--MasterLooterFrame:SetTemplate()
 
 	hooksecurefunc('MasterLooterFrame_Show', function()
 		local b = MasterLooterFrame.Item
@@ -89,7 +89,7 @@ function S:LootFrame()
 			i:SetTexCoord(unpack(E.TexCoords))
 			b:CreateBackdrop()
 			b.backdrop:SetOutside(i)
-			b.backdrop:SetBackdropBorderColor(c.r, c.g, c.b)
+			--b.backdrop:SetBackdropBorderColor(c.r, c.g, c.b)
 		end
 
 		for i=1, MasterLooterFrame:GetNumChildren() do
@@ -99,7 +99,7 @@ function S:LootFrame()
 					if child:GetPushedTexture() then
 						S:HandleCloseButton(child)
 					else
-						child:SetTemplate()
+						--child:SetTemplate()
 						child:StyleButton()
 					end
 					child.isSkinned = true
@@ -134,11 +134,11 @@ function S:LootFrame()
 
 		button.IconBorder:SetTexture()
 		hooksecurefunc(button.IconBorder, 'SetVertexColor', function(s, r, g, b)
-			s:GetParent().backdrop:SetBackdropBorderColor(r, g, b)
+			--s:GetParent().backdrop:SetBackdropBorderColor(r, g, b)
 			s:SetTexture()
 		end)
 		hooksecurefunc(button.IconBorder, 'Hide', function(s)
-			s:GetParent().backdrop:SetBackdropBorderColor(unpack(E.media.bordercolor))
+			--s:GetParent().backdrop:SetBackdropBorderColor(unpack(E.media.bordercolor))
 		end)
 
 		local point, attachTo, point2, x, y = button:GetPoint()
