@@ -110,9 +110,9 @@ function S:SpellBookFrame()
 		local flash = _G['SpellBookSkillLineTab'..i..'Flash']
 
 		tab:StripTextures()
-		tab:SetTemplate()
+		--tab:SetTemplate()
 		tab:StyleButton(nil, true)
-		tab:SetTemplate('Default', true)
+		--tab:SetTemplate('Default', true)
 		tab.pushed = true
 
 		tab:GetNormalTexture():SetInside()
