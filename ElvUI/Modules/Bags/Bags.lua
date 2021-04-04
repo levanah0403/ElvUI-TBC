@@ -1062,7 +1062,7 @@ function B:ConstructContainerFrame(name, isBank)
 		f.keyRingButton:Size(16 + E.Border, 16 + E.Border)
 		f.keyRingButton:SetTemplate()
 		f.keyRingButton:Point('RIGHT', f.vendorGraysButton, 'LEFT', -5, 0)
-		B:SetButtonTexture(f.keyRingButton, 'Interface/ICONS/INV_Misc_Coin_01')
+		B:SetButtonTexture(f.keyRingButton, 'Interface/ICONS/INV_Misc_Key_03')
 		f.keyRingButton:StyleButton(nil, true)
 		f.keyRingButton.ttText = L["Toggle Keyring"]
 		f.keyRingButton:SetScript('OnEnter', B.Tooltip_Show)
