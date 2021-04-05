@@ -30,17 +30,3 @@ local function SkinIt(bar)
 		E:RegisterStatusBar(bar)
 	end
 end
-
---[[function B:START_TIMER()
-	for _, b in pairs(_G.TimerTracker.timerList) do
-		if b.bar and not b.bar.skinned then
-			SkinIt(b.bar)
-			b.bar.skinned = true
-		end
-	end
-end]]
-
---[[function B:SkinBlizzTimers()
-	B:RegisterEvent('START_TIMER')
-	B:START_TIMER()
-end]]
