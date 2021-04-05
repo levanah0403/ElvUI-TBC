@@ -3,7 +3,6 @@
 	<!-- <Script file='BGScore.lua'/> -->
 	<!-- <Script file='CombatLog.lua'/> -->
 	<!-- <Script file='Craft.lua'/> -->
-	<!-- <Script file='QuestTimers.lua'/> -->
 	<Script file='AddonManager.lua'/>
 	<Script file='AuctionHouse.lua'/>
 	<Script file='Bags.lua'/>
@@ -29,6 +28,7 @@
 	<Script file='Misc.lua'/>
 	<Script file='Petition.lua'/>
 	<Script file='Quest.lua'/>
+	<Script file='QuestTimers.lua'/>
 	<Script file='Raid.lua'/>
 	<Script file='Socket.lua'/>
 	<Script file='SpellBook.lua'/>
@@ -41,6 +41,6 @@
 	<Script file='Trade.lua'/>
 	<Script file='TradeSkill.lua'/>
 	<Script file='Trainer.lua'/>
-	<Script file='Tutorial.lua'/>>
+	<Script file='Tutorial.lua'/>
 	<Script file='WorldMap.lua'/>
 </Ui>
