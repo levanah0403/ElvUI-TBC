@@ -31,6 +31,7 @@
 	<Script file='Petition.lua'/>
 	<Script file='Quest.lua'/>
 	<Script file='Raid.lua'/>
+	<Script file='Socket.lua'/>
 	<Script file='SpellBook.lua'/>
 	<Script file='Stable.lua'/>
 	<Script file='Tabard.lua'/>
