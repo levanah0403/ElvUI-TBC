@@ -1,4 +1,7 @@
 ### Version 0.06 [ ETA: 🍨 ]
+**• Bag options**  
+**• BagBar fixes**  
+**• DataBars fixes**  
 ___
 ### Version 0.05 [06-04-2021]
 **• BlizzUI Improvements section**  
