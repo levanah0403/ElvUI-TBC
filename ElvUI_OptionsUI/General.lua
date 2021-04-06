@@ -137,23 +137,6 @@ General.args.blizzUIImprovements.args.quest.inline = true
 General.args.blizzUIImprovements.args.quest.args.questRewardMostValueIcon = ACH:Toggle(L["Mark Quest Reward"], L["Marks the most valuable quest reward with a gold coin."], 1)
 General.args.blizzUIImprovements.args.quest.args.questXPPercent = ACH:Toggle(L["XP Quest Percent"], nil, 2)
 
-General.args.blizzUIImprovements.args.itemLevelInfo = ACH:Group(L["Item Level"], nil, 14, nil, function(info) return E.db.general.itemLevel[info[#info]] end, function(info, value) E.db.general.itemLevel[info[#info]] = value Misc:ToggleItemLevelInfo() end)
-General.args.blizzUIImprovements.args.itemLevelInfo.inline = true
-General.args.blizzUIImprovements.args.itemLevelInfo.args.displayCharacterInfo = ACH:Toggle(L["Display Character Info"], L["Shows item level of each item, enchants, and gems on the character page."], 1)
-General.args.blizzUIImprovements.args.itemLevelInfo.args.displayInspectInfo = ACH:Toggle(L["Display Inspect Info"], L["Shows item level of each item, enchants, and gems when inspecting another player."], 2)
-
-General.args.blizzUIImprovements.args.itemLevelInfo.args.fontGroup = ACH:Group(L["Font Group"], nil, 3, nil, nil, function(info, value) E.db.general.itemLevel[info[#info]] = value Misc:UpdateInspectPageFonts('Character') Misc:UpdateInspectPageFonts('Inspect') end, function() return not E.db.general.itemLevel.displayCharacterInfo and not E.db.general.itemLevel.displayInspectInfo end)
-General.args.blizzUIImprovements.args.itemLevelInfo.args.fontGroup.args.itemLevelFont = ACH:SharedMediaFont(L["Font"], nil, 4)
-General.args.blizzUIImprovements.args.itemLevelInfo.args.fontGroup.args.itemLevelFontSize = ACH:Range(L["FONT_SIZE"], nil, 5, C.Values.FontSize)
-General.args.blizzUIImprovements.args.itemLevelInfo.args.fontGroup.args.itemLevelFontOutline = ACH:FontFlags(L["Font Outline"], nil, 6)
-
-General.args.blizzUIImprovements.args.objectiveFrameGroup = ACH:Group(L["Objective Frame"], nil, 15, nil, function(info) return E.db.general[info[#info]] end, nil, function() return (IsAddOnLoaded('!KalielsTracker') or IsAddOnLoaded('DugisGuideViewerZ')) end)
-General.args.blizzUIImprovements.args.objectiveFrameGroup.inline = true
-General.args.blizzUIImprovements.args.objectiveFrameGroup.args.objectiveFrameAutoHide = ACH:Toggle(L["Auto Hide"], L["Automatically hide the objective frame during boss or arena fights."], 1, nil, nil, nil, nil, function(info, value) E.db.general[info[#info]] = value Blizzard:SetObjectiveFrameAutoHide() end)
-General.args.blizzUIImprovements.args.objectiveFrameGroup.args.objectiveFrameAutoHideInKeystone = ACH:Toggle(L["Hide In Keystone"], nil, 2, nil, nil, nil, nil, nil, nil, function() return not E.db.general.objectiveFrameAutoHide end)
-General.args.blizzUIImprovements.args.objectiveFrameGroup.args.objectiveFrameHeight = ACH:Range(L["Objective Frame Height"], L["Height of the objective tracker. Increase size to be able to see more objectives."], 3, { min = 400, max = E.screenheight, step = 1 }, nil, nil, function(info, value) E.db.general[info[#info]] = value Blizzard:SetObjectiveFrameHeight() end)
-General.args.blizzUIImprovements.args.objectiveFrameGroup.args.bonusObjectivePosition = ACH:Select(L["Bonus Reward Position"], L["Position of bonus quest reward frame relative to the objective tracker."], 4, { RIGHT = L["Right"], LEFT = L["Left"], AUTO = L["Automatic"] })
-
 General.args.blizzUIImprovements.args.chatBubblesGroup = ACH:Group(L["Chat Bubbles"], nil, 16, nil, function(info) return E.private.general[info[#info]] end, function(info, value) E.private.general[info[#info]] = value E:StaticPopup_Show('PRIVATE_RL') end)
 General.args.blizzUIImprovements.args.chatBubblesGroup.inline = true
 General.args.blizzUIImprovements.args.chatBubblesGroup.args.warning = ACH:Description('|cffFF0000This does not work in Instances!|r', 0, 'medium')
