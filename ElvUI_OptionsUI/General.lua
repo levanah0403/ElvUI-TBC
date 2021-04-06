@@ -129,7 +129,6 @@ General.args.blizzUIImprovements.args.general.args.disableTutorialButtons = ACH:
 General.args.blizzUIImprovements.args.general.args.raidUtility = ACH:Toggle(L["RAID_CONTROL"], L["Enables the ElvUI Raid Control panel."], 5, nil, nil, nil, function(info) return E.private.general[info[#info]] end, function(info, value) E.private.general[info[#info]] = value E:StaticPopup_Show('PRIVATE_RL') end)
 General.args.blizzUIImprovements.args.general.args.voiceOverlay = ACH:Toggle(L["Voice Overlay"], L["Replace Blizzard's Voice Overlay."], 6, nil, nil, nil, function(info) return E.private.general[info[#info]] end, function(info, value) E.private.general[info[#info]] = value E:StaticPopup_Show('PRIVATE_RL') end)
 General.args.blizzUIImprovements.args.general.args.resurrectSound = ACH:Toggle(L["Resurrect Sound"], L["Enable to hear sound if you receive a resurrect."], 7)
-General.args.blizzUIImprovements.args.general.args.vehicleSeatIndicatorSize = ACH:Range(L["Vehicle Seat Indicator Size"], nil, 8, { min = 64, max = 128, step = 4 }, nil, nil, function(info, value) E.db.general[info[#info]] = value Blizzard:UpdateVehicleFrame() end)
 General.args.blizzUIImprovements.args.general.args.durabilityScale = ACH:Range(L["Durability Scale"], nil, 9, { min = .5, max = 8, step = .5 }, nil, nil, function(info, value) E.db.general[info[#info]] = value Blizzard:UpdateDurabilityScale() end)
 
 General.args.blizzUIImprovements.args.quest = ACH:Group(L["Quest"], nil, 4)

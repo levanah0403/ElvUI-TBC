@@ -9,6 +9,5 @@
 	<Script file='LevelUpBossBanner.lua'/>
 	<Script file='QuestWatch.lua'/>
 	<Script file='TimerTracker.lua'/>
-	<Script file='Vehicle.lua'/>
 	<Script file='WidgetsUI.lua'/>
 </Ui>
