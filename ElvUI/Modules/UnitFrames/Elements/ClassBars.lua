@@ -5,7 +5,6 @@ local max = max
 local ipairs = ipairs
 local unpack = unpack
 local CreateFrame = CreateFrame
-local UnitHasVehicleUI = UnitHasVehicleUI
 local MAX_COMBO_POINTS = MAX_COMBO_POINTS
 -- GLOBALS: ElvUF_Player
 

@@ -577,7 +577,6 @@ L["Hide Delay"] = "隱藏延遲"
 L["Hide Error Text"] = "隱藏錯誤文字"
 L["Hide Frame"] = "隱藏框架"
 L["Hide In Combat"] = "戰鬥中隱藏"
-L["Hide In Vehicle"] = "騎乘時隱藏"
 L["Hide Keybind Text"] = true
 L["Hide Macro Text"] = true
 L["Hide Outside PvP"] = "PvP外隱藏"

@@ -575,7 +575,6 @@ L["Hide Delay"] = "숨김 지연"
 L["Hide Error Text"] = "전투중 에러 숨기기"
 L["Hide Frame"] = "프레임 숨김"
 L["Hide In Combat"] = "전투시 숨김"
-L["Hide In Vehicle"] = "탈것사용중 숨김"
 L["Hide Keybind Text"] = true
 L["Hide Macro Text"] = true
 L["Hide Outside PvP"] = "PVP가 아닐때 숨김"

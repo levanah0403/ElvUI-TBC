@@ -21,7 +21,6 @@ local RequestBattlefieldScoreData = RequestBattlefieldScoreData
 local UIParentLoadAddOn = UIParentLoadAddOn
 local UnitAttackPower = UnitAttackPower
 local UnitFactionGroup = UnitFactionGroup
-local UnitHasVehicleUI = UnitHasVehicleUI
 local UnitStat = UnitStat
 local FACTION_HORDE = FACTION_HORDE
 local FACTION_ALLIANCE = FACTION_ALLIANCE
@@ -272,65 +271,6 @@ function E:Dump(object, inspect)
 	end
 end
 
-function E:RegisterObjectForVehicleLock(object, originalParent)
-	if not object or not originalParent then
-		E:Print('Error. Usage: RegisterObjectForVehicleLock(object, originalParent)')
-		return
-	end
-
-	object = _G[object] or object
-	--Entering/Exiting vehicles will often happen in combat.
-	--For this reason we cannot allow protected objects.
-	if object.IsProtected and object:IsProtected() then
-		E:Print('Error. Object is protected and cannot be changed in combat.')
-		return
-	end
-
-	--Check if we are already in a vehicles
-	if UnitHasVehicleUI('player') then
-		object:SetParent(E.HiddenFrame)
-	end
-
-	--Add object to table
-	E.VehicleLocks[object] = originalParent
-end
-
-function E:UnregisterObjectForVehicleLock(object)
-	if not object then
-		E:Print('Error. Usage: UnregisterObjectForVehicleLock(object)')
-		return
-	end
-
-	object = _G[object] or object
-	--Check if object was registered to begin with
-	if not E.VehicleLocks[object] then
-		return
-	end
-
-	--Change parent of object back to original parent
-	local originalParent = E.VehicleLocks[object]
-	if originalParent then
-		object:SetParent(originalParent)
-	end
-
-	--Remove object from table
-	E.VehicleLocks[object] = nil
-end
-
-function E:EnterVehicleHideFrames(_, unit)
-	if unit ~= 'player' then return end
-	for object in pairs(E.VehicleLocks) do
-		object:SetParent(E.HiddenFrame)
-	end
-end
-
-function E:ExitVehicleShowFrames(_, unit)
-	if unit ~= 'player' then return end
-	for object, originalParent in pairs(E.VehicleLocks) do
-		object:SetParent(originalParent)
-	end
-end
-
 function E:RequestBGInfo()
 	RequestBattlefieldScoreData()
 end
@@ -413,8 +353,6 @@ function E:LoadAPI()
 	E:RegisterEvent('PLAYER_ENTERING_WORLD')
 	E:RegisterEvent('PLAYER_REGEN_ENABLED')
 	E:RegisterEvent('PLAYER_REGEN_DISABLED')
-	E:RegisterEvent('UNIT_ENTERED_VEHICLE', 'EnterVehicleHideFrames')
-	E:RegisterEvent('UNIT_EXITED_VEHICLE', 'ExitVehicleShowFrames')
 	E:RegisterEvent('UI_SCALE_CHANGED', 'PixelScaleChanged')
 
 	do -- setup cropIcon texCoords

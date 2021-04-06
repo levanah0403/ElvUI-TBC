@@ -2122,7 +2122,7 @@ P.actionbar = {
 		backdropSpacing = 2,
 		alpha = 1,
 		inheritGlobalFade = false,
-		visibility = '[pet,novehicleui,nooverridebar,nopossessbar] show;hide',
+		visibility = '[pet,nooverridebar,nopossessbar] show;hide',
 	},
 	stanceBar = {
 		enabled = true,
@@ -2142,7 +2142,7 @@ P.actionbar = {
 		backdropSpacing = 2,
 		alpha = 1,
 		inheritGlobalFade = false,
-		visibility = '[vehicleui] hide; show',
+		visibility = 'show',
 	},
 	microbar = {
 		enabled = false,
@@ -2191,7 +2191,7 @@ for i = 1, 10 do
 		showGrid = true,
 		flyoutDirection = 'AUTOMATIC',
 		paging = {},
-		visibility = '[vehicleui] hide; [overridebar] hide; show',
+		visibility = '[overridebar] hide; show',
 		countColor = { r = 1, g = 1, b = 1 },
 		countFont = 'Homespun',
 		countFontOutline = 'MONOCHROMEOUTLINE',

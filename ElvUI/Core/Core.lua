@@ -91,7 +91,6 @@ E.RegisteredInitialModules = {}
 E.valueColorUpdateFuncs = {}
 E.TexCoords = {0, 1, 0, 1}
 E.FrameLocks = {}
-E.VehicleLocks = {}
 E.CreditsList = {}
 E.LockedCVars = {}
 E.IgnoredCVars = {}

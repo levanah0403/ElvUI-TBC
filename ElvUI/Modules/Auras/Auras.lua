@@ -374,7 +374,7 @@ function A:CreateAuraHeader(filter)
 	header.filter = filter
 	header.auraType = auraType
 	RegisterStateDriver(header, 'visibility', 'show')
-	RegisterAttributeDriver(header, 'unit', '[vehicleui] vehicle; player')
+	RegisterAttributeDriver(header, 'unit', 'player')
 
 	if filter == 'HELPFUL' then
 		header:SetAttribute('consolidateDuration', -1)

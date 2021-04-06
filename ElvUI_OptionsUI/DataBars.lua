@@ -75,7 +75,6 @@ DataBars.args.experience.args.conditionGroup.values = {
 	questCompletedOnly = L["Completed Quests Only"],
 	questTrackedOnly = L["Tracked Quests Only"],
 	hideAtMaxLevel = L["Hide At Max Level"],
-	hideInVehicle = L["Hide In Vehicle"],
 	hideInCombat = L["Hide In Combat"],
 }
 
@@ -101,7 +100,6 @@ DataBars.args.reputation.args.rewardPosition.set = function(info, value) DB.db.r
 DataBars.args.reputation.args.conditionGroup.get = function(_, key) return DB.db.reputation[key] end
 DataBars.args.reputation.args.conditionGroup.set = function(_, key, value) DB.db.reputation[key] = value DB:ReputationBar_Update() DB:UpdateAll() end
 DataBars.args.reputation.args.conditionGroup.values = {
-	hideInVehicle = L["Hide In Vehicle"],
 	hideInCombat = L["Hide In Combat"],
 }
 

@@ -576,7 +576,6 @@ L["Hide Delay"] = true
 L["Hide Error Text"] = "Cacher les textes d'erreurs"
 L["Hide Frame"] = true
 L["Hide In Combat"] = "Cacher en combat"
-L["Hide In Vehicle"] = "Cacher en véhicule"
 L["Hide Keybind Text"] = true
 L["Hide Macro Text"] = true
 L["Hide Outside PvP"] = "Cacher en dehors du PVP"
