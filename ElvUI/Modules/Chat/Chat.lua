@@ -2034,29 +2034,6 @@ function CH:UpdateChatKeywords()
 	end
 end
 
-function CH:PET_BATTLE_CLOSE()
-	if not CH.db.autoClosePetBattleLog then return end
-
-	-- closing a chat tab (or window) in combat = chat tab (or window) goofs..
-	-- might have something to do with HideUIPanel inside of FCF_Close
-	if InCombatLockdown() then
-		CH:RegisterEvent('PLAYER_REGEN_ENABLED', 'PET_BATTLE_CLOSE')
-		return
-	else -- we can take this off once it goes through once
-		CH:UnregisterEvent('PLAYER_REGEN_ENABLED')
-	end
-
-	for _, frameName in ipairs(_G.CHAT_FRAMES) do
-		local chat = _G[frameName]
-		local tab = CH:GetTab(chat)
-		local text = tab and tab.Text:GetText()
-		if text and strmatch(text, DEFAULT_STRINGS.PET_BATTLE_COMBAT_LOG) then
-			_G.FCF_Close(chat)
-			break -- we found it, dont gotta keep lookin'
-		end
-	end
-end
-
 function CH:FCF_Close(chat)
 	-- clear these off when it's closed, used by FCFTab_UpdateColors
 	local tab = CH:GetTab(chat)

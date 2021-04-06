@@ -272,90 +272,6 @@ function E:Dump(object, inspect)
 	end
 end
 
-function E:AddNonPetBattleFrames()
-	if InCombatLockdown() then
-		E:UnregisterEventForObject('PLAYER_REGEN_DISABLED', E.AddNonPetBattleFrames, E.AddNonPetBattleFrames)
-		return
-	elseif E:IsEventRegisteredForObject('PLAYER_REGEN_DISABLED', E.AddNonPetBattleFrames) then
-		E:UnregisterEventForObject('PLAYER_REGEN_DISABLED', E.AddNonPetBattleFrames, E.AddNonPetBattleFrames)
-	end
-
-	for object, data in pairs(E.FrameLocks) do
-		local parent, strata
-		if type(data) == 'table' then
-			parent, strata = data.parent, data.strata
-		elseif data == true then
-			parent = _G.UIParent
-		end
-
-		local obj = _G[object] or object
-		obj:SetParent(parent)
-		if strata then
-			obj:SetFrameStrata(strata)
-		end
-	end
-end
-
-function E:RemoveNonPetBattleFrames()
-	if InCombatLockdown() then
-		E:RegisterEventForObject('PLAYER_REGEN_DISABLED', E.RemoveNonPetBattleFrames, E.RemoveNonPetBattleFrames)
-		return
-	elseif E:IsEventRegisteredForObject('PLAYER_REGEN_DISABLED', E.RemoveNonPetBattleFrames) then
-		E:UnregisterEventForObject('PLAYER_REGEN_DISABLED', E.RemoveNonPetBattleFrames, E.RemoveNonPetBattleFrames)
-	end
-
-	for object in pairs(E.FrameLocks) do
-		local obj = _G[object] or object
-		obj:SetParent(E.HiddenFrame)
-	end
-end
-
-function E:RegisterPetBattleHideFrames(object, originalParent, originalStrata)
-	if not object or not originalParent then
-		E:Print('Error. Usage: RegisterPetBattleHideFrames(object, originalParent, originalStrata)')
-		return
-	end
-
-	object = _G[object] or object
-
-	--If already doing pokemon
-	if C_PetBattles_IsInBattle() then
-		object:SetParent(E.HiddenFrame)
-	end
-
-	E.FrameLocks[object] = {
-		parent = originalParent,
-		strata = originalStrata or nil,
-	}
-end
-
-function E:UnregisterPetBattleHideFrames(object)
-	if not object then
-		E:Print('Error. Usage: UnregisterPetBattleHideFrames(object)')
-		return
-	end
-
-	object = _G[object] or object
-
-	--Check if object was registered to begin with
-	if not E.FrameLocks[object] then return end
-
-	--Change parent of object back to original parent
-	local originalParent = E.FrameLocks[object].parent
-	if originalParent then
-		object:SetParent(originalParent)
-	end
-
-	--Change strata of object back to original
-	local originalStrata = E.FrameLocks[object].strata
-	if originalStrata then
-		object:SetFrameStrata(originalStrata)
-	end
-
-	--Remove object from table
-	E.FrameLocks[object] = nil
-end
-
 function E:RegisterObjectForVehicleLock(object, originalParent)
 	if not object or not originalParent then
 		E:Print('Error. Usage: RegisterObjectForVehicleLock(object, originalParent)')
@@ -497,8 +413,6 @@ function E:LoadAPI()
 	E:RegisterEvent('PLAYER_ENTERING_WORLD')
 	E:RegisterEvent('PLAYER_REGEN_ENABLED')
 	E:RegisterEvent('PLAYER_REGEN_DISABLED')
-	E:RegisterEvent('PET_BATTLE_CLOSE', 'AddNonPetBattleFrames')
-	E:RegisterEvent('PET_BATTLE_OPENING_START', 'RemoveNonPetBattleFrames')
 	E:RegisterEvent('UNIT_ENTERED_VEHICLE', 'EnterVehicleHideFrames')
 	E:RegisterEvent('UNIT_EXITED_VEHICLE', 'ExitVehicleShowFrames')
 	E:RegisterEvent('UI_SCALE_CHANGED', 'PixelScaleChanged')

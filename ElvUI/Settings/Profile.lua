@@ -842,7 +842,6 @@ P.chat = {
 	useCustomTimeColor = true,
 	customTimeColor = {r = 0.7, g = 0.7, b = 0.7},
 	numScrollMessages = 3,
-	autoClosePetBattleLog = true,
 	socialQueueMessages = false,
 	tabFont = 'PT Sans Narrow',
 	tabFontSize = 12,
@@ -2124,7 +2123,7 @@ P.actionbar = {
 		backdropSpacing = 2,
 		alpha = 1,
 		inheritGlobalFade = false,
-		visibility = '[petbattle] hide;[pet,novehicleui,nooverridebar,nopossessbar] show;hide',
+		visibility = '[pet,novehicleui,nooverridebar,nopossessbar] show;hide',
 	},
 	stanceBar = {
 		enabled = true,
@@ -2144,7 +2143,7 @@ P.actionbar = {
 		backdropSpacing = 2,
 		alpha = 1,
 		inheritGlobalFade = false,
-		visibility = '[vehicleui] hide; [petbattle] hide;show',
+		visibility = '[vehicleui] hide; show',
 	},
 	microbar = {
 		enabled = false,
@@ -2156,7 +2155,7 @@ P.actionbar = {
 		buttonHeight = 28,
 		buttonSpacing = 2,
 		alpha = 1,
-		visibility = '[petbattle] hide; show',
+		visibility = 'show',
 		backdrop = false,
 		backdropSpacing = 2,
 		heightMult = 1,
@@ -2193,7 +2192,7 @@ for i = 1, 10 do
 		showGrid = true,
 		flyoutDirection = 'AUTOMATIC',
 		paging = {},
-		visibility = '[vehicleui] hide; [overridebar] hide; [petbattle] hide; show',
+		visibility = '[vehicleui] hide; [overridebar] hide; show',
 		countColor = { r = 1, g = 1, b = 1 },
 		countFont = 'Homespun',
 		countFontOutline = 'MONOCHROMEOUTLINE',
@@ -2244,7 +2243,7 @@ for _, bar in pairs({ 'barPet', 'stanceBar', 'vehicleExitButton', }) do
 end
 
 P.actionbar.bar1.enabled = true
-P.actionbar.bar1.visibility = '[petbattle] hide; show'
+P.actionbar.bar1.visibility = 'show'
 P.actionbar.bar1.paging = {
 	DRUID = '[bonusbar:1,nostealth] 7; [bonusbar:1,stealth] 8; [bonusbar:2] 8; [bonusbar:3] 9; [bonusbar:4] 10;',
 	ROGUE = '[bonusbar:1] 7;',
