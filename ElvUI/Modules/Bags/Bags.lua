@@ -262,31 +262,6 @@ function B:IsItemEligibleForItemLevelDisplay(classID, subClassID, equipLoc, rari
 	return false
 end
 
-function B:UpdateItemUpgradeIcon(slot)
-	if not E.db.bags.upgradeIcon then
-		slot.UpgradeIcon:SetShown(false)
-		slot:SetScript('OnUpdate', nil)
-		return
-	end
-
-	local itemIsUpgrade = _G.IsContainerItemAnUpgrade(slot:GetParent():GetID(), slot:GetID())
-	if itemIsUpgrade == nil then -- nil means not all the data was available to determine if this is an upgrade.
-		slot.UpgradeIcon:SetShown(false)
-		slot:SetScript('OnUpdate', B.UpgradeCheck_OnUpdate)
-	else
-		slot.UpgradeIcon:SetShown(itemIsUpgrade)
-		slot:SetScript('OnUpdate', nil)
-	end
-end
-
-local ITEM_UPGRADE_CHECK_TIME = 0.5
-function B:UpgradeCheck_OnUpdate(elapsed)
-	self.timeSinceUpgradeCheck = (self.timeSinceUpgradeCheck or 0) + elapsed
-	if self.timeSinceUpgradeCheck >= ITEM_UPGRADE_CHECK_TIME then
-		B:UpdateItemUpgradeIcon(self)
-	end
-end
-
 function B:NewItemGlowSlotSwitch(slot, show)
 	if slot and slot.newItemGlow then
 		if show then
@@ -1117,13 +1092,6 @@ function B:ConstructContainerButton(f, slotID, bagID)
 		slot.questIcon:SetTexCoord(0, 1, 0, 1)
 		slot.questIcon:SetInside()
 		slot.questIcon:Hide()
-	end
-
-	if slot.UpgradeIcon then
-		slot.UpgradeIcon:SetTexture(E.Media.Textures.BagUpgradeIcon)
-		slot.UpgradeIcon:SetTexCoord(0, 1, 0, 1)
-		slot.UpgradeIcon:SetInside()
-		slot.UpgradeIcon:Hide()
 	end
 
 	if not slot.JunkIcon then

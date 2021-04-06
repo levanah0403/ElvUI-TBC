@@ -167,7 +167,7 @@ function B:LoadBagBar()
 	end
 
 	_G.KeyRingButton:StripTextures()
-	_G.KeyRingButton:SetTemplate(nil, true)
+	--_G.KeyRingButton:SetTemplate(nil, true)
 	_G.KeyRingButton:StyleButton(true)
 	_G.KeyRingButton:SetNormalTexture("Interface/ICONS/INV_Misc_Key_03")
 	_G.KeyRingButton:GetNormalTexture():SetTexCoord(unpack(E.TexCoords))

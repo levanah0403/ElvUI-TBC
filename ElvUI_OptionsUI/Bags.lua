@@ -30,10 +30,7 @@ Bags.args.general.args.generalGroup.values = {
 	transparent = L["Transparent"],
 	junkIcon = L["Junk Icon"],
 	junkDesaturate = L["Desaturate Junk"],
-	upgradeIcon = L["Upgrade Icon"],
-	scrapIcon = L["Scrap Icon"],
 	newItemGlow = L["New Item Glow"],
-	showAssignedIcon = L["Assigned Icon"],
 	showBindType = L["Bind on Equip/Use Text"],
 	clearSearchOnClose = L["Clear Search On Close"],
 	reverseLoot = L["REVERSE_NEW_LOOT_TEXT"],
@@ -44,10 +41,7 @@ Bags.args.general.args.generalGroup.values = {
 
 Bags.args.general.args.generalGroup.set = function(_, key, value)
 	E.db.bags[key] = value
-	if key == 'showAssignedIcon' then
-		B:Layout()
-		B:SizeAndPositionBagBar()
-	elseif key == 'reverseLoot' then
+	if key == 'reverseLoot' then
 		SetInsertItemsLeftToRight(value)
 	elseif key == 'reverseSlots' or key == 'transparent' then
 		B:UpdateAll()
