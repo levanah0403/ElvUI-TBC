@@ -1,4 +1,8 @@
-### Version 0.05 [ ETA: 🍨 ]
+### Version 0.06 [ ETA: 🍨 ]
+___
+### Version 0.05 [06-04-2021]
+**• BlizzUI Improvements section**  
+**• DataBars fixes**  
 **• Keyring texture**  
 **• Skins**  
 ___
