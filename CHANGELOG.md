@@ -2,6 +2,8 @@
 **• Bag options**  
 **• BagBar fixes**  
 **• DataBars fixes**  
+**• Minimap icon: Battlefield queue**  
+**• Skins**  
 ___
 ### Version 0.05 [06-04-2021]
 **• BlizzUI Improvements section**  
