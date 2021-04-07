@@ -387,11 +387,7 @@ function M:Initialize()
 		frame:Kill()
 	end
 
-	--_G.QueueStatusMinimapButtonBorder:Hide()
-	--_G.QueueStatusFrame:SetClampedToScreen(true)
 	_G.MiniMapWorldMapButton:Hide()
-	--_G.MiniMapInstanceDifficulty:SetParent(Minimap)
-	--_G.GuildInstanceDifficulty:SetParent(Minimap)
 
 	if _G.TimeManagerClockButton then _G.TimeManagerClockButton:Kill() end
 	if _G.FeedbackUIButton then _G.FeedbackUIButton:Kill() end
