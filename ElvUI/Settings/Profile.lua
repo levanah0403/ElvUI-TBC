@@ -74,6 +74,12 @@ P.general = {
 				xOffset = 0,
 				yOffset = 0,
 			},
+			battlefield = {
+				scale = 1.25,
+				position = 'BOTTOMLEFT',
+				xOffset = 0,
+				yOffset = -4,
+			}
 		}
 	},
 	kittys = false
