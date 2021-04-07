@@ -2,7 +2,6 @@
 	<!-- <Script file='Battlefield.lua'/> -->
 	<!-- <Script file='BGScore.lua'/> -->
 	<!-- <Script file='CombatLog.lua'/> -->
-	<!-- <Script file='Craft.lua'/> -->
 	<Script file='AddonManager.lua'/>
 	<Script file='AuctionHouse.lua'/>
 	<Script file='Bags.lua'/>
