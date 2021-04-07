@@ -3,7 +3,6 @@ local DB = E:GetModule('DataBars')
 
 local pairs, select, wipe = pairs, select, wipe
 
-local GetThreatStatusColor = GetThreatStatusColor
 local IsInGroup, IsInRaid = IsInGroup, IsInRaid
 local UnitClass = UnitClass
 local UnitAffectingCombat = UnitAffectingCombat
@@ -15,6 +14,10 @@ local UnitName = UnitName
 local UnitReaction = UnitReaction
 local UNKNOWN = UNKNOWN
 -- GLOBALS: ElvUF
+
+local function GetThreatStatusColor(status)
+	return unpack(ElvUF.colors.threat[status])
+end
 
 function DB:ThreatBar_GetLargestThreatOnList(percent)
 	local largestValue, largestUnit = 0, nil
