@@ -123,7 +123,7 @@ function S:BlizzardMiscFrames()
 			end
 		end)
 		StaticPopup:StripTextures()
-		--StaticPopup:SetTemplate('Transparent')
+		StaticPopup:SetTemplate('Transparent')
 
 		for j = 1, 4 do
 			local button = StaticPopup['button'..j]
@@ -293,7 +293,7 @@ function S:BlizzardMiscFrames()
 		S:HandleNextPrevButton(btn)
 
 		if btn.SetTemplate then
-			--btn:SetTemplate('NoBackdrop')
+			btn:SetTemplate('NoBackdrop')
 		end
 	end
 
