@@ -34,7 +34,6 @@ E.Options.args.skins.args.blizzard.values = {
 	blizzardOptions = L["INTERFACE_OPTIONS"],
 	channels  = L["CHANNELS"],
 	character = L["Character Frame"],
-	deathRecap = L["DEATH_RECAP_TITLE"],
 	debug = L["Debug Tools"],
 	dressingroom = L["DRESSUP_FRAME"],
 	friends = L["FRIENDS"],
