@@ -153,6 +153,7 @@ L["Bank Only"] = "은행 안에만"
 L["Bar %s is used for stance or forms.|N You will have to adjust paging to use this bar.|N Are you sure?"] = true
 L["Bar Direction"] = "바 방향"
 L["Bars will transition smoothly."] = "바의 증감을 부드럽게 표현합니다."
+L["Battlefield"] = true
 L["Battleground Friendly"] = true
 L["Battleground Texts"] = "전장에서 표시전환"
 L["Begin a new row or column after this many auras."] = "한 줄에 아이콘이 이 값보다 많으면 다음 줄에 배치합니다."

@@ -154,6 +154,7 @@ L["Bank Only"] = "仅银行"
 L["Bar %s is used for stance or forms.|N You will have to adjust paging to use this bar.|N Are you sure?"] = true
 L["Bar Direction"] = "背包条排序方向"
 L["Bars will transition smoothly."] = "状态条平滑增减"
+L["Battlefield"] = true
 L["Battleground Friendly"] = "战场友好"
 L["Battleground Texts"] = "战场信息"
 L["Begin a new row or column after this many auras."] = "在这些光环旁开始新的行或列"

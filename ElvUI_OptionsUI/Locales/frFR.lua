@@ -153,6 +153,7 @@ L["Bank Only"] = "Banque seulement"
 L["Bar %s is used for stance or forms.|N You will have to adjust paging to use this bar.|N Are you sure?"] = true
 L["Bar Direction"] = "Direction de la barre"
 L["Bars will transition smoothly."] = "La transitions des barres seront fluides."
+L["Battlefield"] = true
 L["Battleground Friendly"] = true
 L["Battleground Texts"] = "Textes des champs de bataille"
 L["Begin a new row or column after this many auras."] = "Commencer une nouvelle ligne ou colonne après cette limite d'auras."

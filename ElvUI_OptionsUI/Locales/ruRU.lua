@@ -153,6 +153,7 @@ L["Bank Only"] = "Только в банке"
 L["Bar %s is used for stance or forms.|N You will have to adjust paging to use this bar.|N Are you sure?"] = "Панель %s используется под стойку или форму.|N Вам придется изменить настройки переключения для этой панели.|N Вы уверены?"
 L["Bar Direction"] = "Направление панели"
 L["Bars will transition smoothly."] = "Полосы будут изменяться плавно"
+L["Battlefield"] = true
 L["Battleground Friendly"] = "Свои на БГ/Арене"
 L["Battleground Texts"] = "Текст ПБ"
 L["Begin a new row or column after this many auras."] = "Начинать новый ряд/столбец после этого количества аур."
