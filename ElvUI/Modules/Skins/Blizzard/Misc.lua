@@ -42,10 +42,10 @@ function S:BlizzardMiscFrames()
 		'ReadyCheckFrame'
 	}
 
-	for i = 1, #skins do
-		_G[skins[i]]:StripTextures()
-		_G[skins[i]]:SetTemplate('Transparent')
-	end
+	--for i = 1, #skins do
+		--_G[skins[i]]:StripTextures()
+		--_G[skins[i]]:SetTemplate('Transparent')
+	--end
 
 	S:HandleButton(_G.StaticPopup1ExtraButton)
 
