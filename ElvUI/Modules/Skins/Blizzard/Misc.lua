@@ -42,10 +42,10 @@ function S:BlizzardMiscFrames()
 		'ReadyCheckFrame'
 	}
 
-	--for i = 1, #skins do
-		--_G[skins[i]]:StripTextures()
+	for i = 1, #skins do
+		_G[skins[i]]:StripTextures()
 		--_G[skins[i]]:SetTemplate('Transparent')
-	--end
+	end
 
 	S:HandleButton(_G.StaticPopup1ExtraButton)
 
@@ -74,7 +74,7 @@ function S:BlizzardMiscFrames()
 	hooksecurefunc('CinematicFrame_OnDisplaySizeChanged', function(s)
 		if s and s.closeDialog and not s.closeDialog.template then
 			s.closeDialog:StripTextures()
-			s.closeDialog:SetTemplate('Transparent')
+			--s.closeDialog:SetTemplate('Transparent')
 			s:SetScale(_G.UIParent:GetScale())
 			local dialogName = s.closeDialog.GetName and s.closeDialog:GetName()
 			local closeButton = s.closeDialog.ConfirmButton or (dialogName and _G[dialogName..'ConfirmButton'])
@@ -91,7 +91,7 @@ function S:BlizzardMiscFrames()
 		if s and s.CloseDialog and not s.CloseDialog.template then
 			s:SetScale(_G.UIParent:GetScale())
 			s.CloseDialog:StripTextures()
-			s.CloseDialog:SetTemplate('Transparent')
+			--s.CloseDialog:SetTemplate('Transparent')
 			S:HandleButton(s.CloseDialog.ConfirmButton)
 			S:HandleButton(s.CloseDialog.ResumeButton)
 		end
@@ -106,9 +106,9 @@ function S:BlizzardMiscFrames()
 
 	for i = 1, #ChatMenus do
 		if _G[ChatMenus[i]] == _G.ChatMenu then
-			_G[ChatMenus[i]]:HookScript('OnShow', function(self) self:SetTemplate('Transparent', true) self:SetBackdropColor(unpack(E.media.backdropfadecolor)) self:ClearAllPoints() self:Point('BOTTOMLEFT', _G.ChatFrame1, 'TOPLEFT', 0, 30) end)
+			_G[ChatMenus[i]]:HookScript('OnShow', function(self) --[[self:SetTemplate('Transparent', true)]] self:SetBackdropColor(unpack(E.media.backdropfadecolor)) self:ClearAllPoints() self:Point('BOTTOMLEFT', _G.ChatFrame1, 'TOPLEFT', 0, 30) end)
 		else
-			_G[ChatMenus[i]]:HookScript('OnShow', function(self) self:SetTemplate('Transparent', true) self:SetBackdropColor(unpack(E.media.backdropfadecolor)) end)
+			_G[ChatMenus[i]]:HookScript('OnShow', function(self) --[[self:SetTemplate('Transparent', true)]] self:SetBackdropColor(unpack(E.media.backdropfadecolor)) end)
 		end
 	end
 
@@ -123,7 +123,7 @@ function S:BlizzardMiscFrames()
 			end
 		end)
 		StaticPopup:StripTextures()
-		StaticPopup:SetTemplate('Transparent')
+		--StaticPopup:SetTemplate('Transparent')
 
 		for j = 1, 4 do
 			local button = StaticPopup['button'..j]
@@ -148,7 +148,7 @@ function S:BlizzardMiscFrames()
 		_G['StaticPopup'..i..'EditBox'].backdrop:Point('TOPLEFT', -2, -4)
 		_G['StaticPopup'..i..'EditBox'].backdrop:Point('BOTTOMRIGHT', 2, 4)
 		_G['StaticPopup'..i..'ItemFrameNameFrame']:Kill()
-		_G['StaticPopup'..i..'ItemFrame']:SetTemplate()
+		--_G['StaticPopup'..i..'ItemFrame']:SetTemplate()
 		_G['StaticPopup'..i..'ItemFrame']:StyleButton()
 		_G['StaticPopup'..i..'ItemFrame'].IconBorder:SetAlpha(0)
 		_G['StaticPopup'..i..'ItemFrameIconTexture']:SetTexCoord(unpack(E.TexCoords))
@@ -172,7 +172,7 @@ function S:BlizzardMiscFrames()
 	end
 
 	_G.OpacityFrame:StripTextures()
-	_G.OpacityFrame:SetTemplate('Transparent')
+	--_G.OpacityFrame:SetTemplate('Transparent')
 
 	--DropDownMenu
 	hooksecurefunc('UIDropDownMenu_CreateFrames', function(level, index)
@@ -189,11 +189,11 @@ function S:BlizzardMiscFrames()
 
 		local Backdrop = _G[listFrameName..'Backdrop']
 		if not Backdrop.template then Backdrop:StripTextures() end
-		Backdrop:SetTemplate('Transparent')
+		--Backdrop:SetTemplate('Transparent')
 
 		local menuBackdrop = _G[listFrameName..'MenuBackdrop']
 		if not menuBackdrop.template then menuBackdrop:StripTextures() end
-		menuBackdrop:SetTemplate('Transparent')
+		--menuBackdrop:SetTemplate('Transparent')
 	end)
 
 	hooksecurefunc('UIDropDownMenu_SetIconImage', function(icon, texture)
@@ -262,7 +262,7 @@ function S:BlizzardMiscFrames()
 	SideDressUpFrame.BGTopLeft:Hide()
 	SideDressUpFrame.BGBottomLeft:Hide()
 	S:HandleButton(_G.SideDressUpModelResetButton)
-	SideDressUpFrame:SetTemplate('Transparent')
+	--SideDressUpFrame:SetTemplate('Transparent')
 
 	-- StackSplit
 	local StackSplitFrame = _G.StackSplitFrame
@@ -270,7 +270,7 @@ function S:BlizzardMiscFrames()
 	StackSplitFrame:CreateBackdrop('Transparent')
 
 	StackSplitFrame.bg1 = CreateFrame('Frame', nil, StackSplitFrame)
-	StackSplitFrame.bg1:SetTemplate('Transparent')
+	--StackSplitFrame.bg1:SetTemplate('Transparent')
 	StackSplitFrame.bg1:Point('TOPLEFT', 10, -15)
 	StackSplitFrame.bg1:Point('BOTTOMRIGHT', -10, 55)
 	StackSplitFrame.bg1:SetFrameLevel(StackSplitFrame.bg1:GetFrameLevel() - 1)
@@ -293,7 +293,7 @@ function S:BlizzardMiscFrames()
 		S:HandleNextPrevButton(btn)
 
 		if btn.SetTemplate then
-			btn:SetTemplate('NoBackdrop')
+			--btn:SetTemplate('NoBackdrop')
 		end
 	end
 
