@@ -85,11 +85,11 @@ function S:Blizzard_GMSurveyUI()
 	for i = 1, 7 do
 		local frame = _G['GMSurveyQuestion'..i]
 		frame:StripTextures()
-		frame:SetTemplate('Transparent')
+		--frame:SetTemplate('Transparent')
 	end
 
 	GMSurveyCommentFrame:StripTextures()
-	GMSurveyCommentFrame:SetTemplate('Transparent')
+	--GMSurveyCommentFrame:SetTemplate('Transparent')
 end
 
 S:AddCallbackForAddon('Blizzard_GMChatUI')
