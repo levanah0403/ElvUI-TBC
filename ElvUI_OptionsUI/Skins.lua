@@ -27,6 +27,7 @@ E.Options.args.skins.args.blizzard.values = {
 	addonManager = L["AddOn Manager"],
 	auctionhouse = L["AUCTIONS"],
 	bags = L["Bags"],
+	battlefield = L["Battlefield"],
 	bgmap = L["BG Map"],
 	bgscore = L["BG Score"],
 	binding = L["KEY_BINDINGS"],
