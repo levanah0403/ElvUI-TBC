@@ -56,7 +56,7 @@ function S:TradeFrame()
 		end
 	end
 
-	for _, Inset in pairs({ _G.TradePlayerItemsInset, _G.TradeRecipientItemsInset, _G.TradePlayerEnchantInset, _G.TradeRecipientEnchantInset }) do
+	for _, Inset in pairs({ _G.TradePlayerItemsInset, _G.TradeRecipientItemsInset, _G.TradePlayerEnchantInset, _G.TradeRecipientEnchantInset, _G.TradeRecipientMoneyInset }) do
 		Inset:StripTextures()
 		Inset:SetTemplate('Transparent')
 	end
