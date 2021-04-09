@@ -86,6 +86,7 @@ function S:CharacterFrame()
 			slot:StyleButton()
 
 			S:HandleIcon(icon)
+			icon:SetInside()
 
 			if cooldown then
 				E:RegisterCooldown(cooldown)
@@ -94,11 +95,13 @@ function S:CharacterFrame()
 	end
 
 	hooksecurefunc('PaperDollItemSlotButton_Update', function(self)
-		local rarity = GetInventoryItemQuality('player', self:GetID())
-		if rarity and rarity > 1 then
-			self:SetBackdropBorderColor(GetItemQualityColor(rarity))
-		else
-			self:SetBackdropBorderColor(unpack(E.media.bordercolor))
+		if self.SetBackdropBorderColor then
+			local rarity = GetInventoryItemQuality('player', self:GetID())
+			if rarity and rarity > 1 then
+				self:SetBackdropBorderColor(GetItemQualityColor(rarity))
+			else
+				self:SetBackdropBorderColor(unpack(E.media.bordercolor))
+			end
 		end
 	end)
 
