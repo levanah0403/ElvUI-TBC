@@ -25,6 +25,11 @@ function S:CharacterFrame()
 
 	S:HandleCloseButton(_G.CharacterFrameCloseButton, CharacterFrame.backdrop)
 
+	S:HandleDropDownBox(_G.PlayerStatFrameRightDropDown, 145)
+	S:HandleDropDownBox(_G.PlayerStatFrameLeftDropDown, 147)
+	_G.PlayerStatFrameRightDropDown:Point('TOP', -2, 24)
+	_G.PlayerStatFrameLeftDropDown:Point('LEFT', -25, 24)
+
 	for i = 1, #CHARACTERFRAME_SUBFRAMES do
 		S:HandleTab(_G['CharacterFrameTab'..i])
 	end
