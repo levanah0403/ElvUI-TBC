@@ -277,7 +277,7 @@ function S:BlizzardOptions()
 
 	for _, Frame in pairs(OptionsFrames) do
 		Frame:StripTextures()
-		Frame:SetTemplate('Transparent')
+		Frame:CreateBackdrop('Transparent')
 	end
 
 	for _, Frame in pairs(OptionsFrameBackdrops) do
@@ -308,30 +308,32 @@ function S:BlizzardOptions()
 		end
 	end
 
-	-- Categories Buttons
-	for i = 1, 10 do
-		local Button = _G["InterfaceOptionsFrameCategoriesButton"..i]
-		S:HandleCategoriesButtons(Button)
-	end
-
-	for i = 1, MAX_ADDONS_DISPLAYED do
-		local Button = _G["InterfaceOptionsFrameAddOnsButton"..i]
-		S:HandleCategoriesButtons(Button)
-	end
-
-	for i = 1, 6 do
-		local Button = _G["VideoOptionsFrameCategoryFrameButton"..i]
-		S:HandleCategoriesButtons(Button)
-	end
-
 	_G.InterfaceOptionsFrameTab1:Point('BOTTOMLEFT', _G.InterfaceOptionsFrameCategories, 'TOPLEFT', 6, 1)
+	_G.InterfaceOptionsFrameTab1:StripTextures()
 	_G.InterfaceOptionsFrameTab2:Point('TOPLEFT', _G.InterfaceOptionsFrameTab1, 'TOPRIGHT', 1, 0)
+	_G.InterfaceOptionsFrameTab2:StripTextures()
 	_G.InterfaceOptionsSocialPanel.EnableTwitter.Logo:SetAtlas('WoWShare-TwitterLogo')
+
+	do -- plus minus buttons in addons category
+		local function skinButtons()
+			for i = 1, #_G.INTERFACEOPTIONS_ADDONCATEGORIES do
+				local button = _G['InterfaceOptionsFrameAddOnsButton'..i..'Toggle']
+				if button and not button.IsSkinned then
+					S:HandleCollapseTexture(button, true)
+					button.IsSkinned = true
+				end
+			end
+		end
+
+		hooksecurefunc('InterfaceOptions_AddCategory', skinButtons)
+		skinButtons()
+	end
 
 	--Create New Raid Profle
 	local newProfileDialog = _G.CompactUnitFrameProfilesNewProfileDialog
 	if newProfileDialog then
-		newProfileDialog:SetTemplate('Transparent')
+		newProfileDialog:StripTextures()
+		newProfileDialog:CreateBackdrop('Transparent')
 
 		S:HandleDropDownBox(_G.CompactUnitFrameProfilesNewProfileDialogBaseProfileSelector)
 		S:HandleButton(_G.CompactUnitFrameProfilesNewProfileDialogCreateButton)
@@ -346,7 +348,9 @@ function S:BlizzardOptions()
 	--Delete Raid Profile
 	local deleteProfileDialog = _G.CompactUnitFrameProfilesDeleteProfileDialog
 	if deleteProfileDialog then
-		deleteProfileDialog:SetTemplate('Transparent')
+		deleteProfileDialog:StripTextures()
+		deleteProfileDialog:CreateBackdrop('Transparent')
+
 		S:HandleButton(_G.CompactUnitFrameProfilesDeleteProfileDialogDeleteButton)
 		S:HandleButton(_G.CompactUnitFrameProfilesDeleteProfileDialogCancelButton)
 	end
@@ -355,7 +359,7 @@ function S:BlizzardOptions()
 	S:HandleButton(_G.AudioOptionsVoicePanel.TestInputDevice.ToggleTest)
 
 	local VUMeter = _G.AudioOptionsVoicePanelTestInputDevice.VUMeter
-	VUMeter:SetBackdrop(nil)
+	VUMeter:SetBackdrop()
 	VUMeter.Status:CreateBackdrop()
 	VUMeter.Status:SetStatusBarTexture(E.media.normTex)
 	E:RegisterStatusBar(VUMeter.Status)
