@@ -13,7 +13,7 @@ function S:Blizzard_TimeManager()
 	local TimeManagerFrame = _G.TimeManagerFrame
 	S:HandleFrame(TimeManagerFrame, true)
 	TimeManagerFrame:Size(185, 240)
-	TimeManagerFrame:Point('TOPRIGHT', -1, -210)
+	TimeManagerFrame:Point('TOPRIGHT', -1, -186)
 
 	select(7, TimeManagerFrame:GetRegions()):Point('TOP', 0, -5)
 
