@@ -210,7 +210,7 @@ function S:Blizzard_AuctionUI()
 
 	-- Progress Frame
 	_G.AuctionProgressFrame:StripTextures()
-	--_G.AuctionProgressFrame:SetTemplate('Transparent')
+	_G.AuctionProgressFrame:SetTemplate('Transparent')
 
 	local AuctionProgressFrameCancelButton = _G.AuctionProgressFrameCancelButton
 	S:HandleButton(AuctionProgressFrameCancelButton)
@@ -228,7 +228,7 @@ function S:Blizzard_AuctionUI()
 			local Name = _G[Frame..'Button'..i..'Name']
 			local Highlight = _G[Frame..'Button'..i..'Highlight']
 
-			--ItemButton:SetTemplate()
+			ItemButton:SetTemplate()
 			ItemButton:StyleButton()
 			ItemButton.IconBorder:SetAlpha(0)
 
@@ -260,11 +260,11 @@ function S:Blizzard_AuctionUI()
 	-- Custom Backdrops
 	for _, Frame in pairs({_G.AuctionFrameBrowse, _G.AuctionFrameAuctions}) do
 		Frame.LeftBackground = CreateFrame('Frame', nil, Frame)
-		--Frame.LeftBackground:SetTemplate('Transparent')
+		Frame.LeftBackground:SetTemplate('Transparent')
 		Frame.LeftBackground:SetFrameLevel(Frame:GetFrameLevel() - 1)
 
 		Frame.RightBackground = CreateFrame('Frame', nil, Frame)
-		--Frame.RightBackground:SetTemplate('Transparent')
+		Frame.RightBackground:SetTemplate('Transparent')
 		Frame.RightBackground:SetFrameLevel(Frame:GetFrameLevel() - 1)
 	end
 
