@@ -1031,18 +1031,13 @@ mod.StyleFilterEventFunctions = { -- a prefunction to the injected ouf watch
 		unit = unit or self.unit
 		self.isTargetingMe = UnitIsUnit(unit..'target', 'player') or nil
 	end,
-	UNIT_ENTERED_VEHICLE = mod.StyleFilterVehicleFunction,
-	UNIT_EXITED_VEHICLE = mod.StyleFilterVehicleFunction,
-	VEHICLE_UPDATE = mod.StyleFilterVehicleFunction
 }
 
 function mod:StyleFilterSetVariables(nameplate)
 	if nameplate == _G.ElvNP_Test then return end
 
 	for event, func in pairs(mod.StyleFilterEventFunctions) do
-		if event ~= 'UNIT_ENTERED_VEHICLE' and event ~= 'UNIT_EXITED_VEHICLE' then -- just need one call to StyleFilterVehicleFunction
-			func(nameplate)
-		end
+		func(nameplate)
 	end
 end
 
@@ -1051,7 +1046,6 @@ function mod:StyleFilterClearVariables(nameplate)
 
 	nameplate.isTarget = nil
 	nameplate.isFocused = nil
-	nameplate.inVehicle = nil
 	nameplate.isTargetingMe = nil
 	nameplate.RaidTargetIndex = nil
 	nameplate.ThreatScale = nil
@@ -1080,13 +1074,10 @@ mod.StyleFilterDefaultEvents = { -- list of events style filter uses to populate
 	QUEST_LOG_UPDATE = true,
 	RAID_TARGET_UPDATE = true,
 	SPELL_UPDATE_COOLDOWN = true,
-	UNIT_ENTERED_VEHICLE = false,
-	UNIT_EXITED_VEHICLE = false,
 	UNIT_FLAGS = false,
 	UNIT_TARGET = false,
 	UNIT_THREAT_LIST_UPDATE = false,
 	UNIT_THREAT_SITUATION_UPDATE = false,
-	VEHICLE_UPDATE = true
 }
 mod.StyleFilterCastEvents = {
 	UNIT_SPELLCAST_START = 1,			-- start
