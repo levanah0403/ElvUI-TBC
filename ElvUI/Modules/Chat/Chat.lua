@@ -2324,6 +2324,7 @@ function CH:HandleChatVoiceIcons()
 		_G.ChatFrameChannelButton.Icon:SetDesaturated(CH.db.desaturateVoiceIcons)
 		_G.ChatFrameChannelButton:ClearAllPoints()
 		_G.ChatFrameChannelButton:Point('RIGHT', _G.GeneralDockManager, 'RIGHT', 2, 0)
+		_G.ChatFrameChannelButton.backdrop:Hide()
 
 		CH:RepositionOverflowButton()
 	else
@@ -2360,6 +2361,12 @@ function CH:CreateChatVoicePanel()
 
 	_G.ChatAlertFrame:ClearAllPoints()
 	_G.ChatAlertFrame:Point('BOTTOM', _G.ChatFrameChannelButton, 'TOP', 1, 3)
+end
+
+function CH:ResetVoicePanelAlpha()
+	if CH.VoicePanel then
+		CH.VoicePanel:SetAlpha(CH.db.mouseoverVoicePanel and CH.db.voicePanelAlpha or 1)
+	end
 end
 
 function CH:BuildCopyChatFrame()
