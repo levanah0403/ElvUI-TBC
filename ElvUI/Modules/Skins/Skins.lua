@@ -626,7 +626,7 @@ function S:HandleDropDownBox(frame, width, pos)
 	end
 
 	button.SetPoint = E.noop
-	S:HandleNextPrevButton(button)
+	S:HandleNextPrevButton(button, 'down')
 
 	if text then
 		text:ClearAllPoints()
