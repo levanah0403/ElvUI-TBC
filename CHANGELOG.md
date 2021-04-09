@@ -1,4 +1,6 @@
-### Version 0.06 [ ETA: 🍨 ]
+### Version 0.07 [ ETA: 🍨 ]
+___
+### Version 0.06 [09-04-2021]
 **• Bag options**  
 **• BagBar fixes**  
 **• DataBars fixes**  
