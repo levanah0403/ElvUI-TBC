@@ -74,7 +74,6 @@ V.skins = {
 		debug = true,
 		dressingroom = true,
 		friends = true,
-		gmChat = true,
 		gossip = true,
 		guild = true,
 		guildcontrol = true,

@@ -37,7 +37,6 @@ E.Options.args.skins.args.blizzard.values = {
 	debug = L["Debug Tools"],
 	dressingroom = L["DRESSUP_FRAME"],
 	friends = L["FRIENDS"],
-	gmChat = L["GM Chat"],
 	gossip = L["Gossip Frame"],
 	guild = L["GUILD"],
 	guildcontrol = L["Guild Control Frame"],

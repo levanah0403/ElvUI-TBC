@@ -14,7 +14,6 @@
 	<Script file='Debug.lua'/>
 	<Script file='DressingRoom.lua'/>
 	<Script file='Friends.lua'/>
-	<Script file='GMChat.lua'/>
 	<Script file='Gossip.lua'/>
 	<Script file='GuildRegistrar.lua'/>
 	<Script file='Help.lua'/>
