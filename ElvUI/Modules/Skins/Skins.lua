@@ -86,7 +86,6 @@ function S:HandleFrame(frame, setBackdrop, template, x1, y1, x2, y2)
 	if setBackdrop then
 		frame:CreateBackdrop(template or 'Transparent')
 	else
-		if not frame.SetBackdrop then _G.Mixin(frame, _G.BackdropTemplateMixin) end
 		frame:SetTemplate(template or 'Transparent')
 	end
 

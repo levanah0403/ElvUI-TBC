@@ -140,6 +140,8 @@ local function SetTemplate(frame, template, glossTex, ignoreUpdates, forcePixelM
 	frame.isUnitFrameElement = isUnitFrameElement
 	frame.isNamePlateElement = isNamePlateElement
 
+	if not frame.SetBackdrop then _G.Mixin(frame, _G.BackdropTemplateMixin) end
+
 	if template == 'NoBackdrop' then
 		frame:SetBackdrop()
 	else
