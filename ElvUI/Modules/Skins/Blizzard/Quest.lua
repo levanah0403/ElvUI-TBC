@@ -155,6 +155,8 @@ function S:BlizzardQuestFrames()
 			quality = select(3, GetItemInfo(link))
 		end
 
+		frame:SetTemplate('NoBackdrop')
+
 		if quality and quality > 1 then
 			local r, g, b = GetItemQualityColor(quality)
 
@@ -422,6 +424,7 @@ function S:BlizzardQuestFrames()
 	_G.QuestLogTimerText:SetTextColor(1, 1, 1)
 
 	S:HandleFrame(_G.QuestFrame, true, nil, 11, -12, -32, 66)
+	S:HandleFrame(_G.QuestLogCount, true)
 	S:HandleFrame(_G.QuestLogFrame, true, nil, 11, -12, -32, 45)
 	S:HandleFrame(_G.QuestLogListScrollFrame, true, nil, -1, 2)
 	S:HandleFrame(_G.QuestLogDetailScrollFrame, true, nil, -1, 2)
