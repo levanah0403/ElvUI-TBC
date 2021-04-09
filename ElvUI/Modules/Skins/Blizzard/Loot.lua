@@ -38,7 +38,7 @@ local function UpdateLoots()
 				local color = ITEM_QUALITY_COLORS[itemRarity]
 				
 				if (color) then
-					--frame.backdrop:SetBackdropBorderColor(color.r, color.g, color.b)
+					frame.backdrop:SetBackdropBorderColor(color.r, color.g, color.b)
 				end
 			end
 
@@ -55,14 +55,14 @@ function S:LootFrame()
 	LootHistoryFrame:StripTextures()
 	S:HandleCloseButton(LootHistoryFrame.CloseButton)
 	LootHistoryFrame:StripTextures()
-	--LootHistoryFrame:SetTemplate('Transparent')
+	LootHistoryFrame:CreateBackdrop('Transparent')
 	LootHistoryFrame.ResizeButton:StripTextures()
 	LootHistoryFrame.ResizeButton.text = LootHistoryFrame.ResizeButton:CreateFontString(nil, 'OVERLAY')
 	LootHistoryFrame.ResizeButton.text:FontTemplate(nil, 16, 'OUTLINE')
 	LootHistoryFrame.ResizeButton.text:SetJustifyH('CENTER')
 	LootHistoryFrame.ResizeButton.text:Point('CENTER', LootHistoryFrame.ResizeButton)
 	LootHistoryFrame.ResizeButton.text:SetText('v v v v')
-	--LootHistoryFrame.ResizeButton:SetTemplate()
+	LootHistoryFrame.ResizeButton:CreateBackdrop('Transparent')
 	LootHistoryFrame.ResizeButton:Width(LootHistoryFrame:GetWidth())
 	LootHistoryFrame.ResizeButton:Height(19)
 	LootHistoryFrame.ResizeButton:ClearAllPoints()

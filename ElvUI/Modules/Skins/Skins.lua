@@ -137,7 +137,7 @@ function S:HandlePortraitFrame(frame, setTemplate)
 	end
 
 	if setTemplate then
-		frame:SetTemplate('Transparent')
+		frame:CreateBackdrop('Transparent')
 	else
 		frame:CreateBackdrop('Transparent', nil, nil, nil, nil, nil, true)
 	end

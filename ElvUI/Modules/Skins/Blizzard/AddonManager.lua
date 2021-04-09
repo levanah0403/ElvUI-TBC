@@ -27,7 +27,7 @@ function S:AddonList()
 
 	_G.AddonListForceLoad:Size(26, 26)
 
-	--S:HandlePortraitFrame(_G.AddonListScrollFrame, true, nil, -14, 0, 0, -1)
+	S:HandlePortraitFrame(_G.AddonListScrollFrame, true, nil, -14, 0, 0, -1)
 
 	for i = 1, maxShown do
 		S:HandleCheckBox(_G["AddonListEntry"..i.."Enabled"], nil, nil, true)
