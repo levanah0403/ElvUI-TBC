@@ -96,7 +96,7 @@ function S:TradeFrame()
 		local tradeItemButton = _G['TradePlayerItem'..id..'ItemButton']
 		local link = GetTradePlayerItemLink(id)
 
-		--tradeItemButton:SetBackdropBorderColor(unpack(E.media.bordercolor))
+		tradeItemButton:SetBackdropBorderColor(unpack(E.media.bordercolor))
 
 		if link then
 			local tradeItemName = _G['TradePlayerItem'..id..'Name']
@@ -114,7 +114,7 @@ function S:TradeFrame()
 		local tradeItemButton = _G['TradeRecipientItem'..id..'ItemButton']
 		local link = GetTradeTargetItemLink(id)
 
-		--tradeItemButton:SetBackdropBorderColor(unpack(E.media.bordercolor))
+		tradeItemButton:SetBackdropBorderColor(unpack(E.media.bordercolor))
 
 		if link then
 			local tradeItemName = _G['TradeRecipientItem'..id..'Name']

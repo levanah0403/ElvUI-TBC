@@ -16,7 +16,7 @@ function S:AddonList()
 	local maxShown = _G.MAX_ADDONS_DISPLAYED
 	local AddonCharacterDropDown = _G.AddonCharacterDropDown
 
-	S:HandlePortraitFrame(AddonList)
+	S:HandleFrame(AddonList, true)
 	S:HandleButton(AddonList.EnableAllButton, true)
 	S:HandleButton(AddonList.DisableAllButton, true)
 	S:HandleButton(AddonList.OkayButton, true)
@@ -27,7 +27,7 @@ function S:AddonList()
 
 	_G.AddonListForceLoad:Size(26, 26)
 
-	S:HandlePortraitFrame(_G.AddonListScrollFrame, true, nil, -14, 0, 0, -1)
+	S:HandleFrame(_G.AddonListScrollFrame, true, nil, -14, 0, 0, -1)
 
 	for i = 1, maxShown do
 		S:HandleCheckBox(_G["AddonListEntry"..i.."Enabled"], nil, nil, true)

@@ -42,6 +42,7 @@ function S:Blizzard_Channels()
 
 	-- Hide the Channel Header Textures
 	hooksecurefunc(_G.ChannelButtonHeaderMixin, "Update", function(s)
+		s:SetTemplate("Transparent")
 		s.NormalTexture:SetTexture()
 	end)
 end

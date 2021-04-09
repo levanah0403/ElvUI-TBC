@@ -13,7 +13,7 @@ function S:Blizzard_TimeManager()
 	local TimeManagerFrame = _G.TimeManagerFrame
 	S:HandleFrame(TimeManagerFrame, true)
 	TimeManagerFrame:Size(185, 240)
-	TimeManagerFrame:Point('TOPRIGHT', -1, -186)
+	TimeManagerFrame:Point('TOPRIGHT', -1, -210)
 
 	select(7, TimeManagerFrame:GetRegions()):Point('TOP', 0, -5)
 
@@ -21,6 +21,7 @@ function S:Blizzard_TimeManager()
 
 	_G.TimeManagerStopwatchFrame:Point('TOPRIGHT', 10, -12)
 
+	_G.TimeManagerStopwatchCheck:SetTemplate('Default')
 	_G.TimeManagerStopwatchCheck:StyleButton(nil, true)
 
 	_G.TimeManagerStopwatchCheck:GetNormalTexture():SetInside()

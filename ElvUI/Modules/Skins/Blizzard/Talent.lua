@@ -34,6 +34,7 @@ function S:Blizzard_TalentUI()
 
 		if talent then
 			talent:StripTextures()
+			talent:SetTemplate('Default')
 			talent:StyleButton()
 
 			icon:SetInside()
