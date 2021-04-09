@@ -58,14 +58,14 @@ function S:TradeFrame()
 
 	for _, Inset in pairs({ _G.TradePlayerItemsInset, _G.TradeRecipientItemsInset, _G.TradePlayerEnchantInset, _G.TradeRecipientEnchantInset }) do
 		Inset:StripTextures()
-		--Inset:SetTemplate('Transparent')
+		Inset:SetTemplate('Transparent')
 	end
 
 	for _, Highlight in pairs({ _G.TradeHighlightPlayer, _G.TradeHighlightRecipient, _G.TradeHighlightPlayerEnchant, _G.TradeHighlightRecipientEnchant }) do
 		Highlight:StripTextures()
 	end
 
-	--[[_G.TradeFrame:HookScript("OnShow", function()
+	_G.TradeFrame:HookScript("OnShow", function()
 		_G.TradePlayerItemsInset:SetBackdropBorderColor(unpack(E.media.bordercolor))
 		_G.TradePlayerEnchantInset:SetBackdropBorderColor(unpack(E.media.bordercolor))
 		_G.TradeRecipientItemsInset:SetBackdropBorderColor(unpack(E.media.bordercolor))
@@ -126,7 +126,7 @@ function S:TradeFrame()
 				tradeItemButton:SetBackdropBorderColor(GetItemQualityColor(quality))
 			end
 		end
-	end)]]
+	end)
 end
 
 S:AddCallback('TradeFrame')

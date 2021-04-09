@@ -158,18 +158,18 @@ function S:BlizzardQuestFrames()
 		if quality and quality > 1 then
 			local r, g, b = GetItemQualityColor(quality)
 
-			--frame:SetBackdropBorderColor(r, g, b)
+			frame:SetBackdropBorderColor(r, g, b)
 
 			if frame.backdrop then
-				--frame.backdrop:SetBackdropBorderColor(r, g, b)
+				frame.backdrop:SetBackdropBorderColor(r, g, b)
 			end
 
 			text:SetTextColor(r, g, b)
 		else
-			--frame:SetBackdropBorderColor(unpack(E.media.bordercolor))
+			frame:SetBackdropBorderColor(unpack(E.media.bordercolor))
 
 			if frame.backdrop then
-				--frame.backdrop:SetBackdropBorderColor(unpack(E.media.bordercolor))
+				frame.backdrop:SetBackdropBorderColor(unpack(E.media.bordercolor))
 			end
 
 			text:SetTextColor(1, 1, 1)
@@ -182,13 +182,13 @@ function S:BlizzardQuestFrames()
 
 		handleItemButton(button)
 
-		--hooksecurefunc(button.IconBorder, 'SetVertexColor', function(_, r, g, b) button.Icon.backdrop:SetBackdropBorderColor(r, g, b) end)
+		hooksecurefunc(button.IconBorder, 'SetVertexColor', function(_, r, g, b) button.Icon.backdrop:SetBackdropBorderColor(r, g, b) end)
 	end)
 
 	hooksecurefunc('QuestInfoItem_OnClick', function(self)
 		if self.type == 'choice' then
-			--self:SetBackdropBorderColor(1, 0.80, 0.10)
-			--self.backdrop:SetBackdropBorderColor(1, 0.80, 0.10)
+			self:SetBackdropBorderColor(1, 0.80, 0.10)
+			self.backdrop:SetBackdropBorderColor(1, 0.80, 0.10)
 			_G[self:GetName()..'Name']:SetTextColor(1, 0.80, 0.10)
 
 			local item, name, link

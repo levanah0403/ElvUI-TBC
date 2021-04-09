@@ -32,13 +32,13 @@ function S:Blizzard_ItemSocketingUI()
 		button_icon:SetInside()
 	end
 
-	--[[hooksecurefunc('ItemSocketingFrame_Update', function()
+	hooksecurefunc('ItemSocketingFrame_Update', function()
 		for i, socket in ipairs(_G.ItemSocketingFrame.Sockets) do
 			local gemColor = GetSocketTypes(i)
 			local color = E.GemTypeInfo[gemColor]
 			socket.backdrop:SetBackdropBorderColor(color.r, color.g, color.b)
 		end
-	end)]]
+	end)
 
 	_G.ItemSocketingFramePortrait:Kill()
 	_G.ItemSocketingSocketButton:ClearAllPoints()

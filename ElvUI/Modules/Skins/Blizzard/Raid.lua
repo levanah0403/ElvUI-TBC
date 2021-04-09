@@ -36,7 +36,7 @@ function S:Blizzard_RaidUI()
 		for j = 1, 5 do
 			local slot = _G['RaidGroup'..i..'Slot'..j]
 			slot:StripTextures()
-			--slot:SetTemplate('Transparent')
+			slot:SetTemplate('Transparent')
 		end
 	end
 
@@ -48,7 +48,7 @@ function S:Blizzard_RaidUI()
 			local count = _G['RaidClassButton'..index..'Count']
 
 			button:StripTextures()
-			--button:SetTemplate('Default')
+			button:SetTemplate('Default')
 			button:Size(22)
 
 			button:ClearAllPoints()
