@@ -1262,6 +1262,8 @@ E.TagInfo = {
 	['power:max:shortvalue'] = { category = 'Power', description = "Shortvalue of the unit's maximum power" },
 	['power:max'] = { category = 'Power', description = "Displays the unit's maximum power" },
 	['power:percent'] = { category = 'Power', description = "Displays the unit's power as a percentage" },
+	--Classpower
+	['cpoints'] = { category = 'Classpower', description = "Displays amount of combo points the player has"},
 	--PvP
 	['arena:number'] = { category = 'PvP', description = "Displays the arena number 1-5" },
 	['arenaspec'] = { category = 'PvP', description = "Displays the area spec of an unit" },
