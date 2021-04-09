@@ -5,7 +5,6 @@ local Misc = E:GetModule('Misc')
 local Bags = E:GetModule('Bags')
 local Skins = E:GetModule('Skins')
 
---Lua functions
 local _G = _G
 local pairs, type, unpack, assert = pairs, type, unpack, assert
 local tremove, tContains, tinsert, wipe = tremove, tContains, tinsert, wipe
@@ -28,7 +27,7 @@ local STATICPOPUP_TEXTURE_ALERTGEAR = STATICPOPUP_TEXTURE_ALERTGEAR
 local YES, NO, OKAY, CANCEL, ACCEPT, DECLINE = YES, NO, OKAY, CANCEL, ACCEPT, DECLINE
 -- GLOBALS: ElvUIBindPopupWindowCheckButton
 
-local DOWNLOAD_URL = 'https://www.tukui.org/classic-addons.php?id=2'
+local DOWNLOAD_URL = 'https://www.tukui.org/welcome.php' -- Switch to TBC link later
 
 E.PopupDialogs = {}
 E.StaticPopup_DisplayedFrames = {}
