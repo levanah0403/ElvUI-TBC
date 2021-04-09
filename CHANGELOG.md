@@ -1,4 +1,7 @@
 ### Version 0.07 [ ETA: 🍨 ]
+**• Chat option fixes**  
+**• Character skin fixes**  
+**• Worldmap skin fixes**  
 ___
 ### Version 0.06 [09-04-2021]
 **• Bag options**  
