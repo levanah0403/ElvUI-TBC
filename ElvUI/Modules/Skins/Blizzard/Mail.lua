@@ -208,6 +208,8 @@ function S:MailFrame()
 			local itemLink = GetInboxItemLink(_G.InboxFrame.openMailID, i)
 			local button = _G['OpenMailAttachmentButton'..i]
 
+			button:SetTemplate('NoBackdrop')
+
 			if itemLink then
 				local quality = select(3, GetItemInfo(itemLink))
 

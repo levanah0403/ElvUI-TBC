@@ -12,13 +12,13 @@ function S:TradeFrame()
 	if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.trade) then return end
 
 	local TradeFrame = _G.TradeFrame
-	S:HandleFrame(TradeFrame, true, nil, -5, 0, -7)
+	S:HandleFrame(TradeFrame, true, nil, -5, 0, 0)
 
 	S:HandleButton(_G.TradeFrameTradeButton, true)
 	S:HandleButton(_G.TradeFrameCancelButton, true)
 
-	S:HandlePointXY(_G.TradeFrameCloseButton, -6, 2)
-	S:HandlePointXY(_G.TradeFrameTradeButton, -91)
+	S:HandlePointXY(_G.TradeFrameCloseButton, -12)
+	S:HandlePointXY(_G.TradeFrameTradeButton, -85)
 	S:HandlePointXY(_G.TradePlayerItem1, 8)
 
 	S:HandleEditBox(_G.TradePlayerInputMoneyFrameGold)
@@ -96,7 +96,8 @@ function S:TradeFrame()
 		local tradeItemButton = _G['TradePlayerItem'..id..'ItemButton']
 		local link = GetTradePlayerItemLink(id)
 
-		--tradeItemButton:SetBackdropBorderColor(unpack(E.media.bordercolor))
+		tradeItemButton:SetTemplate('NoBackdrop')
+		tradeItemButton:SetBackdropBorderColor(unpack(E.media.bordercolor))
 
 		if link then
 			local tradeItemName = _G['TradePlayerItem'..id..'Name']
@@ -114,7 +115,8 @@ function S:TradeFrame()
 		local tradeItemButton = _G['TradeRecipientItem'..id..'ItemButton']
 		local link = GetTradeTargetItemLink(id)
 
-		--tradeItemButton:SetBackdropBorderColor(unpack(E.media.bordercolor))
+		tradeItemButton:SetTemplate('NoBackdrop')
+		tradeItemButton:SetBackdropBorderColor(unpack(E.media.bordercolor))
 
 		if link then
 			local tradeItemName = _G['TradeRecipientItem'..id..'Name']
