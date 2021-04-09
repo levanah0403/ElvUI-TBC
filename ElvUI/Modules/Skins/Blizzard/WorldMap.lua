@@ -24,9 +24,13 @@ function S:WorldMapFrame()
 	_G.WorldMapZoomOutButton:Point('LEFT', _G.WorldMapZoneDropDown, 'RIGHT', 3, 3)
 	_G.WorldMapZoomOutButton:Height(21)
 
-	_G.WorldMapZoneMinimapDropDown:Point('RIGHT', _G.WorldMapContinentDropDown, 'LEFT', -112, 0)
+	_G.WorldMapZoneMinimapDropDown:Point('RIGHT', _G.WorldMapContinentDropDown, 'LEFT', 20, 0)
+	_G.WorldMapZoneMinimapDropDown:Width(205)
+	_G.WorldMapZoneMinimapDropDown:Height(33)
 
 	S:HandleButton(_G.WorldMapZoomOutButton)
+	_G.WorldMapZoomOutButton:Width(100)
+	_G.WorldMapZoomOutButton:Height(22)
 
 	S:HandleCloseButton(_G.WorldMapFrameCloseButton, WorldMapFrame.backdrop)
 	_G.WorldMapFrameCloseButton:SetFrameLevel(_G.WorldMapFrameCloseButton:GetFrameLevel() + 2)
