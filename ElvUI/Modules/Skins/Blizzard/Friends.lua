@@ -369,6 +369,7 @@ function S:FriendsFrame()
 		end
 	end)
 
+	S:HandleFrame(_G.GuildFrameLFGFrame, true)
 	S:HandleCheckBox(_G.GuildFrameLFGButton)
 
 	for i = 1, 4 do
