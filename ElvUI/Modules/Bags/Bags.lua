@@ -797,17 +797,22 @@ function B:ConstructContainerFrame(name, isBank)
 	f:SetScript('OnDragStart', function(frame) if IsShiftKeyDown() then frame:StartMoving() end end)
 	f:SetScript('OnDragStop', function(frame) frame:StopMovingOrSizing() end)
 	f:SetScript('OnClick', function(frame) if IsControlKeyDown() then B.PostBagMove(frame.mover) end end)
-	f:SetScript('OnLeave', GameTooltip_Hide)
-	f:SetScript('OnEnter', function(frame)
+
+	f.closeButton = CreateFrame('Button', name..'CloseButton', f, 'UIPanelCloseButton, BackdropTemplate')
+	f.closeButton:Point('TOPRIGHT', 5, 5)
+
+	f.helpButton = CreateFrame('Button', name..'HelpButton', f, 'BackdropTemplate')
+	f.helpButton:Point('RIGHT', f.closeButton, 'LEFT', 0, 0)
+	f.helpButton:Size(16)
+	B:SetButtonTexture(f.helpButton, E.Media.Textures.Help)
+	f.helpButton:SetScript('OnLeave', GameTooltip_Hide)
+	f.helpButton:SetScript('OnEnter', function(frame)
 		GameTooltip:SetOwner(frame, 'ANCHOR_TOPLEFT', 0, 4)
 		GameTooltip:ClearLines()
 		GameTooltip:AddDoubleLine(L["Hold Shift + Drag:"], L["Temporary Move"], 1, 1, 1)
 		GameTooltip:AddDoubleLine(L["Hold Control + Right Click:"], L["Reset Position"], 1, 1, 1)
 		GameTooltip:Show()
 	end)
-
-	f.closeButton = CreateFrame('Button', name..'CloseButton', f, 'UIPanelCloseButton, BackdropTemplate')
-	f.closeButton:Point('TOPRIGHT', 5, 5)
 
 	Skins:HandleCloseButton(f.closeButton)
 
