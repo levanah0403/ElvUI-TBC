@@ -260,7 +260,6 @@ local blacklistedKeys = {
 			version = true,
 			eyefinity = true,
 			ultrawide = true,
-			disableTutorialButtons = true,
 			showMissingTalentAlert = true,
 			allowDistributor = true
 		},

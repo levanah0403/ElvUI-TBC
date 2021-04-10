@@ -58,15 +58,11 @@ function B:Initialize()
 
 	B:EnhanceColorPicker()
 	B:KillBlizzard()
-	--B:DisableHelpTip()
 	B:DisableNPE()
 	B:AlertMovers()
 	B:PositionCaptureBar()
 	B:PositionDurabilityFrame()
 	B:PositionGMFrames()
-	--B:SkinBlizzTimers()
-	--B:PositionVehicleFrame()
-	--B:Handle_LevelUpDisplay_BossBanner()
 	B:Handle_UIWidgets()
 
 	if not (IsAddOnLoaded('DugisGuideViewerZ') or IsAddOnLoaded('!KalielsTracker')) then

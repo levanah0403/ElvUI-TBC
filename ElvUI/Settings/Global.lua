@@ -22,7 +22,6 @@ G.general = {
 		width = 960,
 		height = 755
 	},
-	disableTutorialButtons = true,
 	showMissingTalentAlert = false,
 	commandBarSetting = 'ENABLED_RESIZEPARENT'
 }

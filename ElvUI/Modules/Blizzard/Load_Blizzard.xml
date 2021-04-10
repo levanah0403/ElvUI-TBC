@@ -6,7 +6,6 @@
 	<Script file='Durability.lua'/>
 	<Script file='GM.lua'/>
 	<Script file='Kill.lua'/>
-	<Script file='LevelUpBossBanner.lua'/>
 	<Script file='QuestWatch.lua'/>
 	<Script file='TimerTracker.lua'/>
 	<Script file='WidgetsUI.lua'/>
