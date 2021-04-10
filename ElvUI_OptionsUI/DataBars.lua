@@ -73,7 +73,6 @@ DataBars.args.experience.args.conditionGroup.set = function(_, key, value) DB.db
 DataBars.args.experience.args.conditionGroup.values = {
 	questCurrentZoneOnly = L["Quests in Current Zone Only"],
 	questCompletedOnly = L["Completed Quests Only"],
-	questTrackedOnly = L["Tracked Quests Only"],
 	hideAtMaxLevel = L["Hide At Max Level"],
 	hideInCombat = L["Hide In Combat"],
 }
