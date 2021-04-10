@@ -1237,19 +1237,6 @@ local UF_RaidDebuffs = {
 	},
 }
 
-local UF_RoleIcon = {
-	enable = true,
-	position = 'BOTTOMRIGHT',
-	attachTo = 'Health',
-	xOffset = -1,
-	yOffset = 1,
-	size = 15,
-	tank = true,
-	healer = true,
-	damager = true,
-	combatHide = false,
-}
-
 local UF_ReadyCheckIcon = {
 	enable = true,
 	size = 12,
@@ -1711,7 +1698,6 @@ P.unitframe = {
 			rdebuffs = CopyTable(UF_RaidDebuffs),
 			readycheckIcon = CopyTable(UF_ReadyCheckIcon),
 			resurrectIcon = CopyTable(UF_Ressurect),
-			roleIcon = CopyTable(UF_RoleIcon),
 			summonIcon = CopyTable(UF_SummonIcon),
 			targetsGroup = CopyTable(UF_SubGroup),
 		},
@@ -1983,7 +1969,6 @@ P.unitframe.units.raid40.numGroups = 8
 P.unitframe.units.raid40.visibility = '[@raid26,noexists] hide;show'
 P.unitframe.units.raid40.rdebuffs.enable = false
 P.unitframe.units.raid40.power.enable = false
-P.unitframe.units.raid40.roleIcon.enable = false
 
 P.unitframe.units.raidpet = CopyTable(P.unitframe.units.raid)
 P.unitframe.units.raidpet.enable = false

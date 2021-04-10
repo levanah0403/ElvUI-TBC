@@ -30,7 +30,6 @@
 	<Script file='RestingIndicator.lua'/>
 	<Script file='ResurrectionIcon.lua'/>
 	<Script file='SummonIndicator.lua'/>
-	<Script file='RoleIcons.lua'/>
 	<Script file='FrameGlow.lua'/>
 	<Script file='Threat.lua'/>
 	<Script file='Trinket.lua'/>
