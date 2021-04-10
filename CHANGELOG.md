@@ -1,7 +1,11 @@
 ### Version 0.08 [ ETA: 🍨 ]
 **• Bags options**  
+**• Bank fixes**  
 **• BlizzUI Improvements options**  
 **• DataBars options**  
+**• LootRoll fixes**  
+**• MasterLoot fixes**  
+**• NamePlate options**  
 **• Tooltip options**  
 ___
 ### Version 0.07 [10-04-2021]
