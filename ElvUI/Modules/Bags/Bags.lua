@@ -768,7 +768,7 @@ end
 function B:ConstructContainerFrame(name, isBank)
 	local strata = E.db.bags.strata or 'HIGH'
 
-	local f = CreateFrame('Button', name, E.UIParent, 'BackdropTemplate')
+	local f = CreateFrame('Button', name, E.UIParent)
 	f:SetTemplate('Transparent')
 	f:SetFrameStrata(strata)
 	B:SetupItemGlow(f)
@@ -798,10 +798,10 @@ function B:ConstructContainerFrame(name, isBank)
 	f:SetScript('OnDragStop', function(frame) frame:StopMovingOrSizing() end)
 	f:SetScript('OnClick', function(frame) if IsControlKeyDown() then B.PostBagMove(frame.mover) end end)
 
-	f.closeButton = CreateFrame('Button', name..'CloseButton', f, 'UIPanelCloseButton, BackdropTemplate')
+	f.closeButton = CreateFrame('Button', name..'CloseButton', f, 'UIPanelCloseButton')
 	f.closeButton:Point('TOPRIGHT', 5, 5)
 
-	f.helpButton = CreateFrame('Button', name..'HelpButton', f, 'BackdropTemplate')
+	f.helpButton = CreateFrame('Button', name..'HelpButton', f)
 	f.helpButton:Point('RIGHT', f.closeButton, 'LEFT', 0, 0)
 	f.helpButton:Size(16)
 	B:SetButtonTexture(f.helpButton, E.Media.Textures.Help)
@@ -820,7 +820,7 @@ function B:ConstructContainerFrame(name, isBank)
 	f.holderFrame:Point('TOP', f, 'TOP', 0, -f.topOffset)
 	f.holderFrame:Point('BOTTOM', f, 'BOTTOM', 0, 8)
 
-	f.ContainerHolder = CreateFrame('Button', name..'ContainerHolder', f, 'BackdropTemplate')
+	f.ContainerHolder = CreateFrame('Button', name..'ContainerHolder', f)
 	f.ContainerHolder:Point('BOTTOMLEFT', f, 'TOPLEFT', 0, 1)
 	f.ContainerHolder:SetTemplate('Transparent')
 	f.ContainerHolder:Hide()
@@ -829,7 +829,7 @@ function B:ConstructContainerFrame(name, isBank)
 		local bagName = isBank and format('ElvUIBankBag%d', bagID-4) or bagID == 0 and 'ElvUIMainBagBackpack' or bagID == -2 and 'ElvUIKeyRing' or format('ElvUIMainBag%dSlot', bagID-1)
 		local inherit = isBank and 'BankItemButtonBagTemplate' or (bagID == 0 or bagID == -2) and 'ItemButtonTemplate, ItemAnimTemplate' or 'BagSlotButtonTemplate'
 
-		f.ContainerHolder[i] = CreateFrame('CheckButton', bagName, f.ContainerHolder, 'BackdropTemplate, '..inherit)
+		f.ContainerHolder[i] = CreateFrame('CheckButton', bagName, f.ContainerHolder, inherit)
 		f.ContainerHolder[i]:SetTemplate(E.db.bags.transparent and 'Transparent', true)
 		f.ContainerHolder[i]:StyleButton()
 		f.ContainerHolder[i]:SetNormalTexture('')
@@ -899,7 +899,7 @@ function B:ConstructContainerFrame(name, isBank)
 			f.ContainerHolder[i]:Point('LEFT', f.ContainerHolder[i - 1], 'RIGHT', E.Border * 2, 0)
 		end
 
-		f.Bags[bagID] = CreateFrame('Frame', f:GetName()..'Bag'..bagID, f.holderFrame, 'BackdropTemplate')
+		f.Bags[bagID] = CreateFrame('Frame', f:GetName()..'Bag'..bagID, f.holderFrame)
 		f.Bags[bagID]:SetID(bagID)
 
 		for slotID = 1, MAX_CONTAINER_ITEMS do
@@ -908,7 +908,7 @@ function B:ConstructContainerFrame(name, isBank)
 	end
 
 	--Sort Button
-	f.sortButton = CreateFrame('Button', name..'SortButton', f, 'BackdropTemplate')
+	f.sortButton = CreateFrame('Button', name..'SortButton', f)
 	f.sortButton:Size(16 + E.Border, 16 + E.Border)
 	f.sortButton:SetTemplate()
 	B:SetButtonTexture(f.sortButton, 'Interface/AddOns/ElvUI/Media/Textures/INV_Pet_Broom')
@@ -922,7 +922,7 @@ function B:ConstructContainerFrame(name, isBank)
 	end
 
 	--Bags Button
-	f.bagsButton = CreateFrame('Button', name..'BagsButton', f, 'BackdropTemplate')
+	f.bagsButton = CreateFrame('Button', name..'BagsButton', f)
 	f.bagsButton:Size(16 + E.Border, 16 + E.Border)
 	f.bagsButton:SetTemplate()
 	B:SetButtonTexture(f.bagsButton, 'Interface/AddOns/ElvUI/Media/Textures/Button-Backpack-Up')
@@ -932,7 +932,7 @@ function B:ConstructContainerFrame(name, isBank)
 	f.bagsButton:SetScript('OnLeave', GameTooltip_Hide)
 
 	--Search
-	f.editBox = CreateFrame('EditBox', name..'EditBox', f, 'BackdropTemplate')
+	f.editBox = CreateFrame('EditBox', name..'EditBox', f)
 	f.editBox:SetFrameLevel(f.editBox:GetFrameLevel() + 2)
 	f.editBox:CreateBackdrop()
 	f.editBox.backdrop:Point('TOPLEFT', f.editBox, 'TOPLEFT', -20, 2)
@@ -973,7 +973,7 @@ function B:ConstructContainerFrame(name, isBank)
 			PlaySound(852) --IG_MAINMENU_OPTION
 		end)
 
-		f.purchaseBagButton = CreateFrame('Button', nil, f.holderFrame, 'BackdropTemplate')
+		f.purchaseBagButton = CreateFrame('Button', nil, f.holderFrame)
 		f.purchaseBagButton:Size(16 + E.Border, 16 + E.Border)
 		f.purchaseBagButton:SetTemplate()
 		f.purchaseBagButton:Point('RIGHT', f.bagsButton, 'LEFT', -5, 0)
@@ -1025,7 +1025,7 @@ function B:ConstructContainerFrame(name, isBank)
 		f.bagsButton:SetScript('OnClick', function() ToggleFrame(f.ContainerHolder) end)
 
 		--Vendor Grays
-		f.vendorGraysButton = CreateFrame('Button', nil, f.holderFrame, 'BackdropTemplate')
+		f.vendorGraysButton = CreateFrame('Button', nil, f.holderFrame)
 		f.vendorGraysButton:Size(16 + E.Border, 16 + E.Border)
 		f.vendorGraysButton:SetTemplate()
 		f.vendorGraysButton:Point('RIGHT', f.bagsButton, 'LEFT', -5, 0)
@@ -1038,7 +1038,7 @@ function B:ConstructContainerFrame(name, isBank)
 		f.vendorGraysButton:SetScript('OnClick', B.VendorGrayCheck)
 
 		-- Keyring
-		f.keyRingButton = CreateFrame('Button', nil, f.holderFrame, 'BackdropTemplate')
+		f.keyRingButton = CreateFrame('Button', nil, f.holderFrame)
 		f.keyRingButton:Size(16 + E.Border, 16 + E.Border)
 		f.keyRingButton:SetTemplate()
 		f.keyRingButton:Point('RIGHT', f.vendorGraysButton, 'LEFT', -5, 0)
@@ -1077,7 +1077,7 @@ function B:ConstructContainerFrame(name, isBank)
 end
 
 function B:ConstructContainerButton(f, slotID, bagID)
-	local slot = CreateFrame('CheckButton', f.Bags[bagID]:GetName()..'Slot'..slotID, f.Bags[bagID], (bagID == -1 or bagID >= 5) and 'BackdropTemplate, BankItemButtonGenericTemplate' or 'BackdropTemplate, ContainerFrameItemButtonTemplate')
+	local slot = CreateFrame('CheckButton', f.Bags[bagID]:GetName()..'Slot'..slotID, f.Bags[bagID], (bagID == -1 or bagID >= 5) and 'BankItemButtonGenericTemplate' or 'ContainerFrameItemButtonTemplate')
 	slot:StyleButton()
 	slot:SetTemplate(E.db.bags.transparent and 'Transparent', true)
 	slot:SetNormalTexture(nil)
@@ -1468,7 +1468,7 @@ function B:VendorGreys_OnUpdate(elapsed)
 end
 
 function B:CreateSellFrame()
-	B.SellFrame = CreateFrame('Frame', 'ElvUIVendorGraysFrame', E.UIParent, 'BackdropTemplate')
+	B.SellFrame = CreateFrame('Frame', 'ElvUIVendorGraysFrame', E.UIParent)
 	B.SellFrame:Size(200,40)
 	B.SellFrame:Point('CENTER', E.UIParent)
 	B.SellFrame:CreateBackdrop('Transparent')
