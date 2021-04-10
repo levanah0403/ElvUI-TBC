@@ -133,11 +133,13 @@ function S:ContainerFrame()
 	-- BankFrame
 	local BankFrame = _G.BankFrame
 	BankFrame:StripTextures(true)
-	S:HandleFrame(BankFrame, true, nil, 11, -12, -32, 93)
+	S:HandleFrame(BankFrame, true, nil, 12, 0, 10, 80)
 
 	S:HandleCloseButton(BankCloseButton, BankFrame.backdrop)
 
 	_G.BankSlotsFrame:StripTextures()
+
+	_G.BankFrameMoneyFrame:Point('RIGHT', 0, 0)
 
 	for i = 1, NUM_BANKGENERIC_SLOTS do
 		local button = _G['BankFrameItem'..i]
@@ -164,14 +166,10 @@ function S:ContainerFrame()
 
 	BankFrame.itemBackdrop = CreateFrame('Frame', 'BankFrameItemBackdrop', BankFrame)
 	BankFrame.itemBackdrop:SetTemplate('Default')
-	BankFrame.itemBackdrop:Point('TOPLEFT', _G.BankFrameItem1, 'TOPLEFT', -6, 6)
-	BankFrame.itemBackdrop:Point('BOTTOMRIGHT', _G.BankFrameItem24, 'BOTTOMRIGHT', 6, -6)
 	BankFrame.itemBackdrop:SetFrameLevel(BankFrame:GetFrameLevel())
 
 	BankFrame.bagBackdrop = CreateFrame('Frame', 'BankFrameBagBackdrop', BankFrame)
 	BankFrame.bagBackdrop:SetTemplate('Default')
-	BankFrame.bagBackdrop:Point('TOPLEFT', _G.BankSlotsFrame.Bag1, 'TOPLEFT', -6, 6)
-	BankFrame.bagBackdrop:Point('BOTTOMRIGHT', _G.BankSlotsFrame.Bag6, 'BOTTOMRIGHT', 6, -6)
 	BankFrame.bagBackdrop:SetFrameLevel(BankFrame:GetFrameLevel())
 
 	S:HandleButton(BankFramePurchaseButton)
