@@ -910,7 +910,6 @@ P.tooltip = {
 	playerTitles = true,
 	guildRanks = true,
 	itemCount = 'BAGS_ONLY',
-	showMount = true,
 	modifierID = 'SHOW',
 	role = true,
 	font = 'PT Sans Narrow',
