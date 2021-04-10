@@ -1015,92 +1015,6 @@ do
 	end
 end
 
-do
-	local function GetQuestData(unit, which, Hex)
-		E.ScanTooltip:SetOwner(_G.UIParent, 'ANCHOR_NONE')
-		E.ScanTooltip:SetUnit(unit)
-		E.ScanTooltip:Show()
-
-		local notMyQuest, activeID
-		for i = 3, E.ScanTooltip:NumLines() do
-			local str = _G['ElvUI_ScanTooltipTextLeft' .. i]
-			local text = str and str:GetText()
-			if not text or text == '' then return end
-
-			if UnitIsPlayer(text) then
-				notMyQuest = text ~= E.myname
-			elseif text and not notMyQuest then
-				local count, percent = NP.QuestIcons.CheckTextForQuest(text)
-
-				-- this line comes from one line up in the tooltip
-				local activeQuest = NP.QuestIcons.activeQuests[text]
-				if activeQuest then activeID = activeQuest end
-
-				if count then
-					if not which then
-						return text
-					elseif which == 'count' then
-						return percent and format('%s%%', count) or count
-					elseif which == 'title' and activeID then
-						local title = C_QuestLog_GetTitleForQuestID(activeID)
-						local level = Hex and C_QuestLog_GetQuestDifficultyLevel(activeID)
-						if level then
-							local colors = GetQuestDifficultyColor(level)
-							title = format('%s%s|r', Hex(colors.r, colors.g, colors.b), title)
-						end
-
-						return title
-					elseif (which == 'info' or which == 'full') and activeID then
-						local title = C_QuestLog_GetTitleForQuestID(activeID)
-						local level = Hex and C_QuestLog_GetQuestDifficultyLevel(activeID)
-						if level then
-							local colors = GetQuestDifficultyColor(level)
-							title = format('%s%s|r', Hex(colors.r, colors.g, colors.b), title)
-						end
-
-						if which == 'full' then
-							return format('%s: %s', title, text)
-						else
-							return format(percent and '%s: %s%%' or '%s: %s', title, count)
-						end
-					end
-				end
-			end
-		end
-	end
-	E.TagFunctions.GetQuestData = GetQuestData
-
-	ElvUF.Tags.Events['quest:text'] = 'QUEST_LOG_UPDATE'
-	ElvUF.Tags.Methods['quest:text'] = function(unit)
-		if UnitIsPlayer(unit) then return end
-		return GetQuestData(unit, nil, Hex)
-	end
-
-	ElvUF.Tags.Events['quest:full'] = 'QUEST_LOG_UPDATE'
-	ElvUF.Tags.Methods['quest:full'] = function(unit)
-		if UnitIsPlayer(unit) then return end
-		return GetQuestData(unit, 'full', Hex)
-	end
-
-	ElvUF.Tags.Events['quest:info'] = 'QUEST_LOG_UPDATE'
-	ElvUF.Tags.Methods['quest:info'] = function(unit)
-		if UnitIsPlayer(unit) then return end
-		return GetQuestData(unit, 'info', Hex)
-	end
-
-	ElvUF.Tags.Events['quest:title'] = 'QUEST_LOG_UPDATE'
-	ElvUF.Tags.Methods['quest:title'] = function(unit)
-		if UnitIsPlayer(unit) then return end
-		return GetQuestData(unit, 'title', Hex)
-	end
-
-	ElvUF.Tags.Events['quest:count'] = 'QUEST_LOG_UPDATE'
-	ElvUF.Tags.Methods['quest:count'] = function(unit)
-		if UnitIsPlayer(unit) then return end
-		return GetQuestData(unit, 'count', Hex)
-	end
-end
-
 local highestVersion = E.version
 ElvUF.Tags.OnUpdateThrottle['ElvUI-Users'] = 20
 ElvUF.Tags.Methods['ElvUI-Users'] = function(unit)
@@ -1271,9 +1185,6 @@ E.TagInfo = {
 	['faction'] = { category = 'PvP', description = "Displays 'Alliance' or 'Horde'" },
 	['pvp'] = { category = 'PvP', description = "Displays 'PvP' if the unit is pvp flagged" },
 	['pvptimer'] = { category = 'PvP', description = "Displays remaining time on pvp-flagged status" },
-	--Quest
-	['quest:info'] = { category = 'Quest', description = "Displays the quest objectives" },
-	['quest:title'] = { category = 'Quest', description = "Displays the quest title" },
 	--Range
 	['distance'] = { category = 'Range', description = "Displays the distance" },
 	['nearbyplayers:10'] = { category = 'Range', description = "Displays all players within 10 yards" },
