@@ -1,4 +1,4 @@
-local E, L, V, P, G = unpack(select(2, ...)) -- Import Functions/Constants, Config, Locales
+local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local RU = E:GetModule('RaidUtility')
 
 local _G = _G

@@ -1,7 +1,7 @@
 ------------------------------------------------------------------------
 -- Collection of functions that can be used in multiple places
 ------------------------------------------------------------------------
-local E, L, V, P, G = unpack(select(2, ...))
+local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 
 local _G = _G
 local wipe, date = wipe, date
