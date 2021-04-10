@@ -1,4 +1,8 @@
 ### Version 0.08 [ ETA: 🍨 ]
+**• Bags options**  
+**• BlizzUI Improvements options**  
+**• DataBars options**  
+**• Tooltip options**  
 ___
 ### Version 0.07 [10-04-2021]
 **• Character skin fixes**  
