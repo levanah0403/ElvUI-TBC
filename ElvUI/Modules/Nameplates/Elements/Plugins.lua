@@ -8,58 +8,6 @@ local CreateFrame = CreateFrame
 
 local targetIndicators = {'Spark', 'TopIndicator', 'LeftIndicator', 'RightIndicator'}
 
-function NP:Construct_QuestIcons(nameplate)
-	local QuestIcons = CreateFrame('Frame', nameplate:GetName() .. 'QuestIcons', nameplate)
-	QuestIcons:Size(20)
-	QuestIcons:Hide()
-
-	for _, object in ipairs(NP.QuestIcons.iconTypes) do
-		local icon = QuestIcons:CreateTexture(nil, 'BORDER', nil, 1)
-		icon.Text = QuestIcons:CreateFontString(nil, 'OVERLAY')
-		icon.Text:FontTemplate()
-		icon:Hide()
-
-		QuestIcons[object] = icon
-	end
-
-	QuestIcons.Item:SetTexCoord(unpack(E.TexCoords))
-	QuestIcons.Chat:SetTexture([[Interface\WorldMap\ChatBubble_64.PNG]])
-	QuestIcons.Chat:SetTexCoord(0, 0.5, 0.5, 1)
-
-	return QuestIcons
-end
-
---[[function NP:Update_QuestIcons(nameplate)
-	local frameType = nameplate.frameType
-	local db = frameType and NP.db.units[frameType].questIcon
-
-	if db and db.enable and (frameType == 'FRIENDLY_NPC' or frameType == 'ENEMY_NPC') then
-		if not nameplate:IsElementEnabled('QuestIcons') then
-			nameplate:EnableElement('QuestIcons')
-		end
-
-		nameplate.QuestIcons:ClearAllPoints()
-		nameplate.QuestIcons:Point(E.InversePoints[db.position], nameplate, db.position, db.xOffset, db.yOffset)
-
-		for _, object in ipairs(NP.QuestIcons.iconTypes) do
-			local icon = nameplate.QuestIcons[object]
-			icon:Size(db.size, db.size)
-			icon:SetAlpha(db.hideIcon and 0 or 1)
-
-			local xoffset = strfind(db.textPosition, 'LEFT') and -2 or 2
-			local yoffset = strfind(db.textPosition, 'BOTTOM') and 2 or -2
-			icon.Text:ClearAllPoints()
-			icon.Text:Point('CENTER', icon, db.textPosition, xoffset, yoffset)
-			icon.Text:FontTemplate(LSM:Fetch('font', db.font), db.fontSize, db.fontOutline)
-			icon.Text:SetJustifyH('CENTER')
-
-			icon.size, icon.position = db.size, db.position
-		end
-	elseif nameplate:IsElementEnabled('QuestIcons') then
-		nameplate:DisableElement('QuestIcons')
-	end
-end]]
-
 function NP:Construct_ClassificationIndicator(nameplate)
 	return nameplate:CreateTexture(nameplate:GetName() .. 'ClassificationIndicator', 'OVERLAY')
 end

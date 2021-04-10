@@ -408,19 +408,6 @@ local NP_EliteIcon = {
 	yOffset = 0,
 }
 
-local NP_QuestIcon = {
-	enable = true,
-	hideIcon = false,
-	position = 'RIGHT',
-	textPosition = 'BOTTOMRIGHT',
-	size = 20,
-	xOffset = 0,
-	yOffset = 0,
-	font = 'PT Sans Narrow',
-	fontOutline = 'OUTLINE',
-	fontSize = 12
-}
-
 --NamePlate
 P.nameplates = {
 	clampToScreen = false,
@@ -658,7 +645,6 @@ P.nameplates = {
 			portrait = CopyTable(NP_Portrait),
 			power = CopyTable(NP_Power),
 			pvpindicator = CopyTable(NP_PvPIcon),
-			questIcon = CopyTable(NP_QuestIcon),
 			raidTargetIndicator = CopyTable(NP_RaidTargetIndicator),
 			title = CopyTable(NP_Title),
 		},
@@ -676,7 +662,6 @@ P.nameplates = {
 			portrait = CopyTable(NP_Portrait),
 			power = CopyTable(NP_Power),
 			pvpindicator = CopyTable(NP_PvPIcon),
-			questIcon = CopyTable(NP_QuestIcon),
 			raidTargetIndicator = CopyTable(NP_RaidTargetIndicator),
 			title = CopyTable(NP_Title),
 		},

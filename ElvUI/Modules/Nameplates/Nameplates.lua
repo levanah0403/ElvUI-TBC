@@ -258,7 +258,6 @@ function NP:StylePlate(nameplate)
 	nameplate.ClassificationIndicator = NP:Construct_ClassificationIndicator(nameplate.RaisedElement)
 	nameplate.Castbar = NP:Construct_Castbar(nameplate)
 	nameplate.Portrait = NP:Construct_Portrait(nameplate.RaisedElement)
-	--nameplate.QuestIcons = NP:Construct_QuestIcons(nameplate.RaisedElement)
 	nameplate.RaidTargetIndicator = NP:Construct_RaidTargetIndicator(nameplate.RaisedElement)
 	nameplate.TargetIndicator = NP:Construct_TargetIndicator(nameplate)
 	nameplate.ThreatIndicator = NP:Construct_ThreatIndicator(nameplate.RaisedElement)
@@ -279,7 +278,6 @@ end
 function NP:UpdatePlate(nameplate, updateBase)
 	NP:Update_RaidTargetIndicator(nameplate)
 	NP:Update_Portrait(nameplate)
-	--NP:Update_QuestIcons(nameplate)
 
 	local db = NP:PlateDB(nameplate)
 	if db.nameOnly or not db.enable then
@@ -318,7 +316,6 @@ function NP:UpdatePlate(nameplate, updateBase)
 end
 
 NP.DisableInNotNameOnly = {
-	'QuestIcons',
 	'Highlight',
 	'Portrait',
 }
@@ -357,9 +354,6 @@ function NP:DisablePlate(nameplate, nameOnly, nameOnlySF)
 
 		nameplate.Portrait:ClearAllPoints()
 		nameplate.Portrait:Point('RIGHT', nameplate.Name, 'LEFT', -6, 0)
-
-		--nameplate.QuestIcons:ClearAllPoints()
-		--nameplate.QuestIcons:Point('LEFT', nameplate.Name, 'RIGHT', 6, 0)
 
 		nameplate.Title:ClearAllPoints()
 		nameplate.Title:Point('TOP', nameplate.Name, 'BOTTOM', 0, -2)
