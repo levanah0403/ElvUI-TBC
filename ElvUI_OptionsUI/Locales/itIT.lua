@@ -306,6 +306,7 @@ L["Core |cff1784d1ElvUI|r options."] = true
 L["Count Font Size"] = true
 L["Count xOffset"] = true
 L["Count yOffset"] = true
+L["Craft"] = true
 L["Create a filter, once created a filter can be set inside the buffs/debuffs section of each unit."] = true
 L["Create Custom Text"] = true
 L["Create Filter"] = true

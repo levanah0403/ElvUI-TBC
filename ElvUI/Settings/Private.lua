@@ -71,6 +71,7 @@ V.skins = {
 		blizzardOptions = true,
 		channels = true,
 		character = true,
+		craft = true,
 		debug = true,
 		dressingroom = true,
 		friends = true,

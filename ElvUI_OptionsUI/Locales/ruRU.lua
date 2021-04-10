@@ -306,6 +306,7 @@ L["Core |cff1784d1ElvUI|r options."] = "Основные опции |cff1784d1El
 L["Count Font Size"] = "Размер шрифта стаков"
 L["Count xOffset"] = "Отступ стаков по X"
 L["Count yOffset"] = "Отступ стаков по Y"
+L["Craft"] = true
 L["Create a filter, once created a filter can be set inside the buffs/debuffs section of each unit."] = "Создает фильтр. После создания он может быть установлен в секции баффов/дебаффов любого юнита."
 L["Create Custom Text"] = "Создать свой текст"
 L["Create Filter"] = "Создать фильтр"

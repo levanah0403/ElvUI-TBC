@@ -306,6 +306,7 @@ L["Core |cff1784d1ElvUI|r options."] = true
 L["Count Font Size"] = "Taille du texte du décompte"
 L["Count xOffset"] = "Décalage X de la pile"
 L["Count yOffset"] = "Décalage Y de la pile"
+L["Craft"] = true
 L["Create a filter, once created a filter can be set inside the buffs/debuffs section of each unit."] = "Créer un filtre, chaque filtre créé peut être configuré dans la section Amélioration / Affaiblissements de chaque unité."
 L["Create Custom Text"] = "Créer un texte personnalisé"
 L["Create Filter"] = "Créer un filtre"

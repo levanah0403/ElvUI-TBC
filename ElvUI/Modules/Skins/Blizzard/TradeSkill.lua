@@ -178,4 +178,3 @@ function S:Blizzard_TradeSkillUI()
 end
 
 S:AddCallbackForAddon('Blizzard_TradeSkillUI')
-

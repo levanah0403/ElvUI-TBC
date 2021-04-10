@@ -306,6 +306,7 @@ L["Core |cff1784d1ElvUI|r options."] = "核心 |cff1784d1ElvUI|r 選項"
 L["Count Font Size"] = "計數字體尺寸"
 L["Count xOffset"] = "層數X軸偏移"
 L["Count yOffset"] = "層數Y軸偏移"
+L["Craft"] = true
 L["Create a filter, once created a filter can be set inside the buffs/debuffs section of each unit."] = "創建一個過濾器, 創建一次即可讓每個單位的 buff/debuff 都能使用."
 L["Create Custom Text"] = "創建自定義文本"
 L["Create Filter"] = "創造過濾器"

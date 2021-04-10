@@ -308,6 +308,7 @@ L["Core |cff1784d1ElvUI|r options."] = "|cff1784d1ElvUI|r Einstellungen"
 L["Count Font Size"] = "Anzahl Schriftgröße"
 L["Count xOffset"] = "Den Versatz auf der X-Achse zählen"
 L["Count yOffset"] = "Den Versatz auf der Y-Achse zählen"
+L["Craft"] = true
 L["Create a filter, once created a filter can be set inside the buffs/debuffs section of each unit."] = "Erstelle einen Filter. Ist dieser Filter einmal erstellt, kann er bei jeder Einheit im Bereich Stärkungszauber/Schwächungszauber ausgewählt werden."
 L["Create Custom Text"] = "Erstelle benutzerdefinierten Text"
 L["Create Filter"] = "Filter erstellen"

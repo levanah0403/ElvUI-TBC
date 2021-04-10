@@ -194,6 +194,7 @@ local BLIZZARD_ADDONS = {
 	'Blizzard_CompactRaidFrames',
 	'Blizzard_Console',
 	'Blizzard_Contribution',
+	'Blizzard_CraftUI',
 	'Blizzard_DeathRecap',
 	'Blizzard_DebugTools',
 	'Blizzard_Deprecated',

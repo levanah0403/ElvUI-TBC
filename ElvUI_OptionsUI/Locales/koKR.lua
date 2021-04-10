@@ -306,6 +306,7 @@ L["Core |cff1784d1ElvUI|r options."] = true
 L["Count Font Size"] = "중첩수 글꼴 크기"
 L["Count xOffset"] = "중첩수 x 좌표"
 L["Count yOffset"] = "중첩수 y 좌표"
+L["Craft"] = true
 L["Create a filter, once created a filter can be set inside the buffs/debuffs section of each unit."] = "각 유닛의 강화/약화효과에 필터를 생성합니다."
 L["Create Custom Text"] = "사용자 지정 문자 생성"
 L["Create Filter"] = "필터 생성"

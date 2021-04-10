@@ -306,6 +306,7 @@ L["Core |cff1784d1ElvUI|r options."] = true
 L["Count Font Size"] = "Tamaño de Fuente del Contador"
 L["Count xOffset"] = true
 L["Count yOffset"] = true
+L["Craft"] = true
 L["Create a filter, once created a filter can be set inside the buffs/debuffs section of each unit."] = "Crea un filtro, una vez creado podrás establecerlo dentro de la sección beneficios/perjuicios de cada unidad."
 L["Create Custom Text"] = true
 L["Create Filter"] = "Crear Filtro"
