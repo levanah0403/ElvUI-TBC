@@ -24,7 +24,6 @@ P.general = {
 	enhancedPvpMessages = true,
 	resurrectSound = false,
 	questRewardMostValueIcon = true,
-	questXPPercent = true,
 	durabilityScale = 1,
 	afk = true,
 	numberPrefixStyle = 'ENGLISH',

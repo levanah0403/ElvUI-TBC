@@ -5,13 +5,10 @@ local TT = E:GetModule('Tooltip')
 
 local _G = _G
 local CreateFrame = CreateFrame
-local GetQuestLogRewardXP = GetQuestLogRewardXP
 local GetRewardXP = GetRewardXP
 local IsAddOnLoaded = IsAddOnLoaded
 local UnitXP = UnitXP
 local UnitXPMax = UnitXPMax
-local C_QuestLog_ShouldShowQuestRewards = C_QuestLog.ShouldShowQuestRewards
-local C_QuestLog_GetSelectedQuest = C_QuestLog.GetSelectedQuest
 
 --This changes the growth direction of the toast frame depending on position of the mover
 local function PostBNToastMove(mover)
@@ -31,28 +28,6 @@ local function PostBNToastMove(mover)
 	_G.BNToastFrame:Point(anchorPoint, mover)
 end
 
-function B:QuestXPPercent()
-	if not E.db.general.questXPPercent then return end
-
-	local unitXP, unitXPMax = UnitXP('player'), UnitXPMax('player')
-	if _G.QuestInfoFrame.questLog then
-		local selectedQuest = C_QuestLog_GetSelectedQuest()
-		if C_QuestLog_ShouldShowQuestRewards(selectedQuest) then
-			local xp = GetQuestLogRewardXP()
-			if xp and xp > 0 then
-				local text = _G.MapQuestInfoRewardsFrame.XPFrame.Name:GetText()
-				if text then _G.MapQuestInfoRewardsFrame.XPFrame.Name:SetFormattedText('%s (|cff4beb2c+%.2f%%|r)', text, (((unitXP + xp) / unitXPMax) - (unitXP / unitXPMax))*100) end
-			end
-		end
-	else
-		local xp = GetRewardXP()
-		if xp and xp > 0 then
-			local text = _G.QuestInfoXPFrame.ValueText:GetText()
-			if text then _G.QuestInfoXPFrame.ValueText:SetFormattedText('%s (|cff4beb2c+%.2f%%|r)', text, (((unitXP + xp) / unitXPMax) - (unitXP / unitXPMax))*100) end
-		end
-	end
-end
-
 function B:Initialize()
 	B.Initialized = true
 
@@ -68,9 +43,6 @@ function B:Initialize()
 	if not (IsAddOnLoaded('DugisGuideViewerZ') or IsAddOnLoaded('!KalielsTracker')) then
 		B:MoveQuestWatchFrame()
 	end
-
-	--Add (+X%) to quest rewards experience text
-	B:SecureHook('QuestInfo_Display', 'QuestXPPercent')
 
 	-- MicroButton Talent Alert
 	local TalentMicroButtonAlert = _G.TalentMicroButtonAlert
