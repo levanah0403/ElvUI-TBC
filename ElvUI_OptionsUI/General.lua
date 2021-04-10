@@ -118,7 +118,6 @@ General.args.blizzUIImprovements.args.lootGroup = ACH:Group(L['Loot'], nil, 1, n
 General.args.blizzUIImprovements.args.lootGroup.inline = true
 General.args.blizzUIImprovements.args.lootGroup.args.loot = ACH:Toggle(L['Loot'], L["Enable/Disable the loot frame."], 1)
 General.args.blizzUIImprovements.args.lootGroup.args.lootRoll = ACH:Toggle(L["Loot Roll"], L["Enable/Disable the loot roll frame."], 2)
-General.args.blizzUIImprovements.args.lootGroup.args.autoRoll = ACH:Toggle(L["Auto Greed/DE"], L["Automatically select greed or disenchant (when available) on green quality items. This will only work if you are the max level."], 3, nil, nil, nil, function() return not E.db.general.autoRoll end, function(_, value) E.db.general.autoRoll = value end, function() return not E.private.general.lootRoll end)
 
 General.args.blizzUIImprovements.args.general = ACH:Group(L["General"], nil, 2)
 General.args.blizzUIImprovements.args.general.inline = true
