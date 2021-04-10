@@ -14,7 +14,6 @@ local modifierValues = { SHOW = L["Show"], HIDE = L["Hide"], SHIFT = L["SHIFT_KE
 E.Options.args.tooltip = ACH:Group(L["Tooltip"], nil, 2, 'tree', function(info) return E.db.tooltip[info[#info]] end, function(info, value) E.db.tooltip[info[#info]] = value; end)
 E.Options.args.tooltip.args.intro = ACH:Description(L["TOOLTIP_DESC"], 1)
 E.Options.args.tooltip.args.enable = ACH:Toggle(L["Enable"], nil, 2, nil, nil, nil, function(info) return E.private.tooltip[info[#info]] end, function(info, value) E.private.tooltip[info[#info]] = value; E:StaticPopup_Show('PRIVATE_RL') end)
-E.Options.args.tooltip.args.role = ACH:Toggle(L["ROLE"], L["Display the unit role in the tooltip."], 3)
 E.Options.args.tooltip.args.targetInfo = ACH:Toggle(L["Target Info"], L["When in a raid group display if anyone in your raid is targeting the current tooltip unit."], 4)
 E.Options.args.tooltip.args.modifierID = ACH:Select(L["Modifier for IDs"], nil, 5, modifierValues)
 E.Options.args.tooltip.args.playerTitles = ACH:Toggle(L["Player Titles"], L["Display player titles."], 6)
