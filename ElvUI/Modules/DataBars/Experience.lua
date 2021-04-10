@@ -3,42 +3,35 @@ local DB = E:GetModule('DataBars')
 local LSM = E.Libs.LSM
 
 local _G = _G
-local error = error
-local type, pairs = type, pairs
 local min, format = min, format
 local CreateFrame = CreateFrame
 local GetXPExhaustion = GetXPExhaustion
 local GetQuestLogRewardXP = GetQuestLogRewardXP
-local IsPlayerAtEffectiveMaxLevel = IsPlayerAtEffectiveMaxLevel
-local C_QuestLog_GetNumQuestLogEntries = C_QuestLog.GetNumQuestLogEntries
-local C_QuestLog_ReadyForTurnIn = C_QuestLog.ReadyForTurnIn
-local C_QuestLog_GetInfo = C_QuestLog.GetInfo
-local C_QuestLog_GetQuestWatchType = C_QuestLog.GetQuestWatchType
 local UnitXP, UnitXPMax = UnitXP, UnitXPMax
 
 local CurrentXP, XPToLevel, RestedXP, PercentRested
 local PercentXP, RemainXP, RemainTotal, RemainBars
 local QuestLogXP = 0
 
-function DB:ExperienceBar_CheckQuests(questID, completedOnly)
-	if not questID then return end
+function DB:ExperienceBar_CheckQuests(zoneOnly, completedOnly)
+	local numEntries, numQuests = GetNumQuestLogEntries()
+	local mapID = C_Map.GetBestMapForUnit("player")
+	local currentZone, zoneName = mapID and C_Map.GetMapInfo(mapID).name
 
-	local isCompleted = C_QuestLog_ReadyForTurnIn(questID)
-	if not completedOnly or isCompleted then
-		QuestLogXP = QuestLogXP + GetQuestLogRewardXP(questID)
+	for i = 1, numEntries do
+		local questLogTitleText, _, _, isHeader, _, isComplete, _, questID = GetQuestLogTitle(i)
+		if (not isHeader) then
+			if (zoneOnly and currentZone == zoneName or not zoneOnly) and (isComplete and completedOnly or not completedOnly) then
+				QuestLogXP = QuestLogXP + GetQuestLogRewardXP(questID)
+			end
+		else
+			zoneName = questLogTitleText
+		end
 	end
 end
 
 function DB:ExperienceBar_ShouldBeVisible()
-	return not IsPlayerAtEffectiveMaxLevel()
-end
-
-local function RestedQuestLayering()
-	if not QuestLogXP or not RestedXP then return end
-	local bar = DB.StatusBars.Experience
-
-	bar.Quest.barTexture:SetDrawLayer('ARTWORK', (QuestLogXP > RestedXP) and 2 or 3)
-	bar.Rested.barTexture:SetDrawLayer('ARTWORK', (QuestLogXP <= RestedXP) and 2 or 3)
+	return E.mylevel ~= MAX_PLAYER_LEVEL_TABLE[GetExpansionLevel()]
 end
 
 function DB:ExperienceBar_Update()
@@ -108,7 +101,6 @@ function DB:ExperienceBar_Update()
 			displayString = format('%s %s : %s', L['Level'], E.mylevel, displayString)
 		end
 
-		RestedQuestLayering()
 		bar.Rested:SetShown(isRested)
 	end
 
@@ -120,32 +112,15 @@ function DB:ExperienceBar_QuestXP()
 	local bar = DB.StatusBars.Experience
 
 	QuestLogXP = 0
-
-	--[[for i = 1, C_QuestLog_GetNumQuestLogEntries() do
-		local info = C_QuestLog_GetInfo(i)
-		if info and not info.isHidden then
-			local currentZoneCheck = (bar.db.questCurrentZoneOnly and info.isOnMap) or not bar.db.questCurrentZoneOnly
-			local trackedQuestCheck = (bar.db.questTrackedOnly and info.questID and C_QuestLog_GetQuestWatchType(info.questID)) or not bar.db.questTrackedOnly
-			if currentZoneCheck and trackedQuestCheck then
-				DB:ExperienceBar_CheckQuests(info.questID, bar.db.questCompletedOnly)
-			end
-		end
-	end]]
+	DB:ExperienceBar_CheckQuests(bar.db.questCurrentZoneOnly, bar.db.questCompletedOnly)
 
 	if QuestLogXP > 0 then
 		bar.Quest:SetMinMaxValues(0, XPToLevel)
 		bar.Quest:SetValue(min(CurrentXP + QuestLogXP, XPToLevel))
 		bar.Quest:SetStatusBarColor(DB.db.colors.quest.r, DB.db.colors.quest.g, DB.db.colors.quest.b, DB.db.colors.quest.a)
-		RestedQuestLayering()
 		bar.Quest:Show()
 	else
 		bar.Quest:Hide()
-	end
-
-	if DB.CustomQuestXPWatchers then
-		for _, func in pairs(DB.CustomQuestXPWatchers) do
-			func(QuestLogXP)
-		end
 	end
 end
 
@@ -159,15 +134,15 @@ function DB:ExperienceBar_OnEnter()
 	_G.GameTooltip:ClearLines()
 	_G.GameTooltip:SetOwner(self, 'ANCHOR_CURSOR')
 
-	_G.GameTooltip:AddDoubleLine(L["Experience"], format('%s %d', L["Level"], E.mylevel))
+	_G.GameTooltip:AddLine(L["Experience"])
 	_G.GameTooltip:AddLine(' ')
 
 	_G.GameTooltip:AddDoubleLine(L["XP:"], format(' %d / %d (%.2f%%)', CurrentXP, XPToLevel, PercentXP), 1, 1, 1)
 	_G.GameTooltip:AddDoubleLine(L["Remaining:"], format(' %s (%.2f%% - %d '..L["Bars"]..')', RemainXP, RemainTotal, RemainBars), 1, 1, 1)
-	_G.GameTooltip:AddDoubleLine(L["Quest Log XP:"], format(' %d (%.2f%%)', QuestLogXP, (QuestLogXP / XPToLevel) * 100), 1, 1, 1)
+	_G.GameTooltip:AddDoubleLine(L["Quest Log XP:"], QuestLogXP, 1, 1, 1)
 
 	if RestedXP and RestedXP > 0 then
-		_G.GameTooltip:AddDoubleLine(L["Rested:"], format('%d (%.2f%%)', RestedXP, PercentRested), 1, 1, 1)
+		_G.GameTooltip:AddDoubleLine(L["Rested:"], format('+%d (%.2f%%)', RestedXP, PercentRested), 1, 1, 1)
 	end
 
 	_G.GameTooltip:Show()
@@ -187,19 +162,25 @@ function DB:ExperienceBar_Toggle()
 
 	if bar.db.enable and not bar:ShouldHide() then
 		DB:RegisterEvent('PLAYER_XP_UPDATE', 'ExperienceBar_Update')
+		DB:RegisterEvent('DISABLE_XP_GAIN', 'ExperienceBar_Update')
+		DB:RegisterEvent('ENABLE_XP_GAIN', 'ExperienceBar_Update')
 		DB:RegisterEvent('UPDATE_EXHAUSTION', 'ExperienceBar_Update')
 		DB:RegisterEvent('QUEST_LOG_UPDATE', 'ExperienceBar_QuestXP')
 		DB:RegisterEvent('ZONE_CHANGED', 'ExperienceBar_QuestXP')
 		DB:RegisterEvent('ZONE_CHANGED_NEW_AREA', 'ExperienceBar_QuestXP')
+		DB:UnregisterEvent('UPDATE_EXPANSION_LEVEL')
+
+		DB:ExperienceBar_Update()
 	else
 		DB:UnregisterEvent('PLAYER_XP_UPDATE')
+		DB:UnregisterEvent('DISABLE_XP_GAIN')
+		DB:UnregisterEvent('ENABLE_XP_GAIN')
 		DB:UnregisterEvent('UPDATE_EXHAUSTION')
 		DB:UnregisterEvent('QUEST_LOG_UPDATE')
 		DB:UnregisterEvent('ZONE_CHANGED')
 		DB:UnregisterEvent('ZONE_CHANGED_NEW_AREA')
+		DB:RegisterEvent('UPDATE_EXPANSION_LEVEL', 'ExperienceBar_Toggle')
 	end
-
-	DB:ExperienceBar_Update()
 end
 
 function DB:ExperienceBar()
@@ -217,7 +198,7 @@ function DB:ExperienceBar()
 	Rested:SetInside()
 	Rested:Hide()
 	Rested.barTexture = Rested:GetStatusBarTexture()
-	Rested.barTexture:SetDrawLayer('ARTWORK', 3)
+	Rested.barTexture:SetDrawLayer('ARTWORK', 2)
 	Experience.Rested = Rested
 
 	local Quest = CreateFrame('StatusBar', 'ElvUI_ExperienceBar_Quest', Experience.holder)
@@ -226,23 +207,10 @@ function DB:ExperienceBar()
 	Quest:SetInside()
 	Quest:Hide()
 	Quest.barTexture = Quest:GetStatusBarTexture()
-	Quest.barTexture:SetDrawLayer('ARTWORK', 2)
+	Quest.barTexture:SetDrawLayer('ARTWORK', 3)
 	Experience.Quest = Quest
 
 	E:CreateMover(Experience.holder, 'ExperienceBarMover', L["Experience Bar"], nil, nil, nil, nil, nil, 'databars,experience')
 
-	DB:RegisterEvent('UPDATE_EXPANSION_LEVEL', 'ExperienceBar_Toggle')
-	DB:RegisterEvent('DISABLE_XP_GAIN', 'ExperienceBar_Toggle')
-	DB:RegisterEvent('ENABLE_XP_GAIN', 'ExperienceBar_Toggle')
 	DB:ExperienceBar_Toggle()
-end
-
-function DB:RegisterCustomQuestXPWatcher(name, func)
-	if not name or not func or type(name) ~= "string" or type(func) ~= "function" then
-		error("Usage: DB:RegisterCustomQuestXPWatcher(name [string], func [function])")
-		return
-	end
-
-	DB.CustomQuestXPWatchers = DB.CustomQuestXPWatchers or {}
-	DB.CustomQuestXPWatchers[name] = func
 end
