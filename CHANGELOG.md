@@ -1,6 +1,10 @@
-### Version 0.07 [ ETA: 🍨 ]
-**• Chat option fixes**  
+### Version 0.08 [ ETA: 🍨 ]
+___
+### Version 0.07 [10-04-2021]
 **• Character skin fixes**  
+**• Chat option fixes**  
+**• NamePlate health update**  
+**• Updated Tags**  
 **• Worldmap skin fixes**  
 ___
 ### Version 0.06 [09-04-2021]
