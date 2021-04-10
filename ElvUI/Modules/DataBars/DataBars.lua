@@ -8,7 +8,6 @@ local pairs, ipairs = pairs, ipairs
 local CreateFrame = CreateFrame
 local GetInstanceInfo = GetInstanceInfo
 local UnitAffectingCombat = UnitAffectingCombat
-local C_PvP_IsWarModeActive = C_PvP.IsWarModeActive
 
 function DB:OnLeave()
 	if self.db.mouseover then
@@ -136,7 +135,7 @@ function DB:SetVisibility(bar)
 		bar.holder:SetShown(bar.showBar)
 	elseif bar.db.enable then
 		local hideBar = (bar == DB.StatusBars.Threat or bar.db.hideInCombat) and UnitAffectingCombat('player')
-		or (bar.db.hideOutsidePvP and not (C_PvP_IsWarModeActive() or select(2, GetInstanceInfo()) == 'pvp'))
+		or (bar.db.hideOutsidePvP and not select(2, GetInstanceInfo()) == 'pvp')
 		or (bar.ShouldHide and bar:ShouldHide())
 
 		bar:SetShown(not hideBar)
