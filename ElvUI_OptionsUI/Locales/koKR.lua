@@ -1326,7 +1326,6 @@ L["Use Alt Key"] = "Alt 키 사용"
 L["Use Atlas Textures if there is one available."] = true
 L["Use Atlas Textures"] = true
 L["Use BattleTag instead of Real ID names in chat. Chat History will always use BattleTag."] = "대화에 실명ID 대신 배틀태그를 사용합니다. 대화 기록에 항상 배틀태그만 사용됩니다."
-L["Use Blizzard Cleanup"] = true
 L["Use Blizzards method of cleaning up bags instead of the ElvUI sorting."] = true
 L["Use class color for the names of players when they are mentioned."] = "사용자의 이름이 언급될 경우 직업 색상으로 표시합니다."
 L["Use Class Color"] = "직업 색상 사용"

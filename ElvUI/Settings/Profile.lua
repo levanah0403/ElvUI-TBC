@@ -179,7 +179,6 @@ P.bags = {
 	disableBagSort = false,
 	disableBankSort = false,
 	showAssignedColor = true,
-	useBlizzardCleanup = false,
 	strata = 'HIGH',
 	qualityColors = true,
 	specialtyColors = true,
