@@ -829,6 +829,8 @@ function B:ConstructContainerFrame(name, isBank)
 		local bagName = isBank and format('ElvUIBankBag%d', bagID-4) or bagID == 0 and 'ElvUIMainBagBackpack' or bagID == -2 and 'ElvUIKeyRing' or format('ElvUIMainBag%dSlot', bagID-1)
 		local inherit = isBank and 'BankItemButtonBagTemplate' or (bagID == 0 or bagID == -2) and 'ItemButtonTemplate, ItemAnimTemplate' or 'BagSlotButtonTemplate'
 
+		f.Bags[bagID] = CreateFrame('Frame', f:GetName()..'Bag'..bagID, f.holderFrame)
+
 		f.ContainerHolder[i] = CreateFrame('CheckButton', bagName, f.ContainerHolder, inherit)
 		f.ContainerHolder[i]:SetTemplate(E.db.bags.transparent and 'Transparent', true)
 		f.ContainerHolder[i]:StyleButton()
@@ -845,6 +847,7 @@ function B:ConstructContainerFrame(name, isBank)
 
 		if isBank then
 			f.ContainerHolder[i]:SetID(bagID - 4)
+			f.Bags[bagID]:SetID(bagID - 4)
 			f.ContainerHolder[i].icon:SetTexture('Interface/AddOns/ElvUI/Media/Textures/Button-Backpack-Up')
 			f.ContainerHolder[i]:SetScript('OnClick', function(holder)
 				local inventoryID = holder:GetInventorySlot()
@@ -891,6 +894,7 @@ function B:ConstructContainerFrame(name, isBank)
 				f.ContainerHolder[i]:HookScript('OnLeave', GameTooltip_Hide)
 				f.ContainerHolder[i].icon:SetTexture('Interface/ICONS/INV_Misc_Key_03')
 			end
+			f.Bags[bagID]:SetID(bagID)
 		end
 
 		if i == 1 then
@@ -898,9 +902,6 @@ function B:ConstructContainerFrame(name, isBank)
 		else
 			f.ContainerHolder[i]:Point('LEFT', f.ContainerHolder[i - 1], 'RIGHT', E.Border * 2, 0)
 		end
-
-		f.Bags[bagID] = CreateFrame('Frame', f:GetName()..'Bag'..bagID, f.holderFrame)
-		f.Bags[bagID]:SetID(bagID)
 
 		for slotID = 1, MAX_CONTAINER_ITEMS do
 			f.Bags[bagID][slotID] = B:ConstructContainerButton(f, slotID, bagID)
