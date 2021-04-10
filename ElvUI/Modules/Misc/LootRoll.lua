@@ -117,7 +117,7 @@ local function CreateRollButton(parent, ntex, ptex, htex, rolltype, tiptext, ...
 end
 
 function M:CreateRollFrame()
-	local frame = CreateFrame('Frame', nil, E.UIParent, 'BackdropTemplare')
+	local frame = CreateFrame('Frame', nil, E.UIParent, 'BackdropTemplate')
 	frame:Size(FRAME_WIDTH, FRAME_HEIGHT)
 	frame:SetTemplate()
 	frame:SetScript('OnEvent', OnEvent)
@@ -259,7 +259,7 @@ function M:START_LOOT_ROLL(_, rollID, time)
 	f.status:SetMinMaxValues(0, time)
 	f.status:SetValue(time)
 
-	f:Point('CENTER', _G.WorldFrame, 'CENTER')
+	f:Point('CENTER', _G.UIParent, 'CENTER')
 	f:Show()
 	_G.AlertFrame:UpdateAnchors()
 
