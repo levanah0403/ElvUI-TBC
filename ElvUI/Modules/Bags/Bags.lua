@@ -830,6 +830,7 @@ function B:ConstructContainerFrame(name, isBank)
 		local inherit = isBank and 'BankItemButtonBagTemplate' or (bagID == 0 or bagID == -2) and 'ItemButtonTemplate, ItemAnimTemplate' or 'BagSlotButtonTemplate'
 
 		f.Bags[bagID] = CreateFrame('Frame', f:GetName()..'Bag'..bagID, f.holderFrame)
+		f.Bags[bagID]:SetID(bagID)
 
 		f.ContainerHolder[i] = CreateFrame('CheckButton', bagName, f.ContainerHolder, inherit)
 		f.ContainerHolder[i]:SetTemplate(E.db.bags.transparent and 'Transparent', true)
@@ -847,7 +848,6 @@ function B:ConstructContainerFrame(name, isBank)
 
 		if isBank then
 			f.ContainerHolder[i]:SetID(bagID - 4)
-			f.Bags[bagID]:SetID(bagID - 4)
 			f.ContainerHolder[i].icon:SetTexture('Interface/AddOns/ElvUI/Media/Textures/Button-Backpack-Up')
 			f.ContainerHolder[i]:SetScript('OnClick', function(holder)
 				local inventoryID = holder:GetInventorySlot()
@@ -894,7 +894,6 @@ function B:ConstructContainerFrame(name, isBank)
 				f.ContainerHolder[i]:HookScript('OnLeave', GameTooltip_Hide)
 				f.ContainerHolder[i].icon:SetTexture('Interface/ICONS/INV_Misc_Key_03')
 			end
-			f.Bags[bagID]:SetID(bagID)
 		end
 
 		if i == 1 then
@@ -1078,7 +1077,7 @@ function B:ConstructContainerFrame(name, isBank)
 end
 
 function B:ConstructContainerButton(f, slotID, bagID)
-	local slot = CreateFrame('CheckButton', f.Bags[bagID]:GetName()..'Slot'..slotID, f.Bags[bagID], (bagID == -1 or bagID >= 5) and 'BankItemButtonGenericTemplate' or 'ContainerFrameItemButtonTemplate')
+	local slot = CreateFrame('CheckButton', f.Bags[bagID]:GetName()..'Slot'..slotID, f.Bags[bagID], bagID == -1 and 'BankItemButtonGenericTemplate' or 'ContainerFrameItemButtonTemplate')
 	slot:StyleButton()
 	slot:SetTemplate(E.db.bags.transparent and 'Transparent', true)
 	slot:SetNormalTexture(nil)
