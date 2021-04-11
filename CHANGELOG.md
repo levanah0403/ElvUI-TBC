@@ -1,4 +1,6 @@
-### Version 0.08 [ ETA: 🍨 ]
+### Version 0.09 [ ETA: 🍨 ]
+___
+### Version 0.08 [11-04-2021]
 **• Bags options**  
 **• Bank fixes**  
 **• BlizzUI Improvements options**  
