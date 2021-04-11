@@ -948,19 +948,12 @@ function AB:DisableBlizzard()
 
 	-- shut down some events for things we dont use
 	AB:SetNoopsi(_G.MainMenuBarArtFrame)
-	--AB:SetNoopsi(_G.MainMenuBarArtFrameBackground)
 	_G.MainMenuBarArtFrame:UnregisterAllEvents()
-	--_G.StatusTrackingBarManager:UnregisterAllEvents()
 	_G.ActionBarButtonEventsFrame:UnregisterAllEvents()
 	_G.ActionBarButtonEventsFrame:RegisterEvent('ACTIONBAR_SLOT_CHANGED') -- these are needed to let the ExtraActionButton show
 	_G.ActionBarButtonEventsFrame:RegisterEvent('ACTIONBAR_UPDATE_COOLDOWN') -- needed for ExtraActionBar cooldown
 	_G.ActionBarActionEventsFrame:UnregisterAllEvents()
 	_G.ActionBarController:UnregisterAllEvents()
-	--_G.ActionBarController:RegisterEvent('UPDATE_EXTRA_ACTIONBAR') -- this is needed to let the ExtraActionBar show
-
-	-- lets only keep ExtraActionButtons in here
-	--hooksecurefunc(_G.ActionBarButtonEventsFrame, 'RegisterFrame', AB.ButtonEventsRegisterFrame)
-	--AB.ButtonEventsRegisterFrame()
 
 	-- this would taint along with the same path as the SetNoopers: ValidateActionBarTransition
 	_G.VerticalMultiBarsContainer:Size(10, 10) -- dummy values so GetTop etc doesnt fail without replacing
@@ -981,16 +974,7 @@ function AB:DisableBlizzard()
 	_G.InterfaceOptionsActionBarsPanelLockActionBars:SetScale(0.0001)
 	_G.InterfaceOptionsActionBarsPanelLockActionBars:SetAlpha(0)
 
-	--AB:IconIntroTracker_Toggle() --Enable/disable functionality to automatically put spells on the actionbar.
 	AB:SecureHook('BlizzardOptionsPanel_OnEvent')
-
-	if _G.PlayerTalentFrame then
-		_G.PlayerTalentFrame:UnregisterEvent('ACTIVE_TALENT_GROUP_CHANGED')
-	else
-		hooksecurefunc('TalentFrame_LoadUI', function()
-			_G.PlayerTalentFrame:UnregisterEvent('ACTIVE_TALENT_GROUP_CHANGED')
-		end)
-	end
 end
 
 function AB:ToggleCountDownNumbers(bar, button, cd)
