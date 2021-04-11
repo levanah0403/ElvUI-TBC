@@ -31,7 +31,6 @@ E.ConfigModeLayouts = {
 	'GENERAL',
 	'SOLO',
 	'PARTY',
-	'ARENA',
 	'RAID',
 	'ACTIONBARS',
 	'WIDGETS'
@@ -42,7 +41,6 @@ E.ConfigModeLocalizedStrings = {
 	GENERAL = _G.GENERAL,
 	SOLO = _G.SOLO,
 	PARTY = _G.PARTY,
-	ARENA = _G.ARENA,
 	RAID = _G.RAID,
 	ACTIONBARS = _G.ACTIONBARS_LABEL,
 	WIDGETS = L["Blizzard Widgets"]

@@ -1052,7 +1052,7 @@ do -- BFA Convert, deprecated..
 				E.db.unitframe.OORAlpha = nil
 			end
 
-			for _, unit in ipairs({'target','targettarget','targettargettarget','focus','focustarget','pet','pettarget','boss','arena','party','raid','raid40','raidpet','tank','assist'}) do
+			for _, unit in ipairs({'target','targettarget','targettargettarget','focus','focustarget','pet','pettarget','party','raid','raid40','raidpet','tank','assist'}) do
 				if E.db.unitframe.units[unit].rangeCheck ~= nil then
 					local enabled = E.db.unitframe.units[unit].rangeCheck
 					E.db.unitframe.units[unit].fader.enable = enabled
@@ -1128,7 +1128,7 @@ do -- BFA Convert, deprecated..
 		end
 
 		--Heal Prediction is now a table instead of a bool
-		for _, unit in ipairs({'player','target','focus','pet','arena','party','raid','raid40','raidpet'}) do
+		for _, unit in ipairs({'player','target','focus','pet','party','raid','raid40','raidpet'}) do
 			if type(E.db.unitframe.units[unit].healPrediction) ~= 'table' then
 				local enabled = E.db.unitframe.units[unit].healPrediction
 				E.db.unitframe.units[unit].healPrediction = {}

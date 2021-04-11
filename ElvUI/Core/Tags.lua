@@ -953,18 +953,6 @@ ElvUF.Tags.Methods['guild:rank'] = function(unit)
 	end
 end
 
-ElvUF.Tags.Events['arena:number'] = 'UNIT_NAME_UPDATE'
-ElvUF.Tags.Methods['arena:number'] = function(unit)
-	local _, instanceType = GetInstanceInfo()
-	if instanceType == 'arena' then
-		for i = 1, 5 do
-			if UnitIsUnit(unit, 'arena'..i) then
-				return i
-			end
-		end
-	end
-end
-
 ElvUF.Tags.Events['class'] = 'UNIT_NAME_UPDATE'
 ElvUF.Tags.Methods['class'] = function(unit)
 	if not UnitIsPlayer(unit) then return end
@@ -1179,8 +1167,6 @@ E.TagInfo = {
 	--Classpower
 	['cpoints'] = { category = 'Classpower', description = "Displays amount of combo points the player has"},
 	--PvP
-	['arena:number'] = { category = 'PvP', description = "Displays the arena number 1-5" },
-	['arenaspec'] = { category = 'PvP', description = "Displays the area spec of an unit" },
 	['faction:icon'] = { category = 'PvP', description = "Displays the 'Alliance' or 'Horde' texture" },
 	['faction'] = { category = 'PvP', description = "Displays 'Alliance' or 'Horde'" },
 	['pvp'] = { category = 'PvP', description = "Displays 'PvP' if the unit is pvp flagged" },

@@ -386,20 +386,6 @@ function E:SetupLayout(layout, noDataReset, noDisplayMsg)
 				E.db.unitframe.units.pet.infoPanel.height = 14
 				E.db.unitframe.units.pet.portrait.camDistanceScale = 2
 				E.db.unitframe.units.pet.width = 270
-			--Boss
-				E.db.unitframe.units.boss.buffs.maxDuration = 300
-				E.db.unitframe.units.boss.buffs.sizeOverride = 27
-				E.db.unitframe.units.boss.buffs.yOffset = 16
-				E.db.unitframe.units.boss.castbar.width = 246
-				E.db.unitframe.units.boss.debuffs.maxDuration = 300
-				E.db.unitframe.units.boss.debuffs.numrows = 1
-				E.db.unitframe.units.boss.debuffs.sizeOverride = 27
-				E.db.unitframe.units.boss.debuffs.yOffset = -16
-				E.db.unitframe.units.boss.height = 60
-				E.db.unitframe.units.boss.infoPanel.height = 17
-				E.db.unitframe.units.boss.portrait.camDistanceScale = 2
-				E.db.unitframe.units.boss.portrait.width = 45
-				E.db.unitframe.units.boss.width = 246
 			--Party
 				E.db.unitframe.units.party.height = 74
 				E.db.unitframe.units.party.power.height = 13

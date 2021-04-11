@@ -32,7 +32,7 @@ local SOUNDKIT_IG_CREATURE_NEUTRAL_SELECT = SOUNDKIT.IG_CREATURE_NEUTRAL_SELECT
 local SOUNDKIT_INTERFACE_SOUND_LOST_TARGET_UNIT = SOUNDKIT.INTERFACE_SOUND_LOST_TARGET_UNIT
 local ALTERNATE_POWER_INDEX = Enum.PowerType.Alternate or 10
 
--- GLOBALS: ElvUF_Parent, Arena_LoadUI
+-- GLOBALS: ElvUF_Parent
 local hiddenParent = CreateFrame('Frame', nil, _G.UIParent)
 hiddenParent:SetAllPoints()
 hiddenParent:Hide()
@@ -323,9 +323,6 @@ function UF:GetAuraAnchorFrame(frame, attachTo)
 		return frame.Health
 	elseif attachTo == 'POWER' and frame.Power then
 		return frame.Power
-	elseif attachTo == 'TRINKET' and (frame.Trinket or frame.PVPSpecIcon) then
-		local _, instanceType = GetInstanceInfo()
-		return (instanceType == 'arena' and frame.Trinket) or frame.PVPSpecIcon
 	else
 		return frame
 	end
@@ -553,31 +550,6 @@ function UF:CreateAndUpdateUFGroup(group, numGroup)
 		frameName = gsub(E:StringTitle(group), 't(arget)', 'T%1')
 		frame.Update = function()
 			UF['Update_'..E:StringTitle(frameName)..'Frames'](self, frame, self.db.units[group])
-		end
-
-		if self.db.units[group].enable then
-			frame:Enable()
-
-			if group == 'arena' then
-				frame:SetAttribute('oUF-enableArenaPrep', true)
-			end
-
-			frame.Update()
-
-			E:EnableMover(frame.mover:GetName())
-		else
-			frame:Disable()
-
-			if group == 'arena' then
-				frame:SetAttribute('oUF-enableArenaPrep', false)
-			end
-
-			-- for some reason the boss/arena 'uncheck disable' doesnt fire this, we need to so putting it here.
-			if group == 'boss' or group == 'arena' then
-				UF:Configure_Fader(frame)
-			end
-
-			E:DisableMover(frame.mover:GetName())
 		end
 
 		if frame.isForced then
@@ -1165,15 +1137,6 @@ function ElvUF:DisableBlizzard(unit)
 		HandleFrame(_G.TargetofFocusFrame)
 	elseif (unit == 'targettarget') and E.private.unitframe.disabledBlizzardFrames.target then
 		HandleFrame(_G.TargetFrameToT)
-	elseif (unit:match('boss%d?$')) and E.private.unitframe.disabledBlizzardFrames.boss then
-		local id = unit:match('boss(%d)')
-		if id then
-			HandleFrame('Boss' .. id .. 'TargetFrame')
-		else
-			for i = 1, _G.MAX_BOSS_FRAMES do
-				HandleFrame(('Boss%dTargetFrame'):format(i))
-			end
-		end
 	elseif (unit:match('party%d?$')) and E.private.unitframe.disabledBlizzardFrames.party then
 		local id = unit:match('party(%d)')
 		if id then
@@ -1184,28 +1147,6 @@ function ElvUF:DisableBlizzard(unit)
 			end
 		end
 		HandleFrame(_G.PartyMemberBackground)
-	elseif (unit:match('arena%d?$')) and E.private.unitframe.disabledBlizzardFrames.arena then
-		local id = unit:match('arena(%d)')
-		if id then
-			HandleFrame('ArenaEnemyFrame' .. id)
-		else
-			for i = 1, _G.MAX_ARENA_ENEMIES do
-				HandleFrame(format('ArenaEnemyFrame%d', i))
-			end
-		end
-
-		if _G.ArenaEnemyFrames then
-			_G.ArenaEnemyFrames:UnregisterAllEvents()
-			_G.ArenaPrepFrames:UnregisterAllEvents()
-			_G.ArenaEnemyFrames:Hide()
-			_G.ArenaPrepFrames:Hide()
-
-			-- reference on oUF and clear the global frame reference, to fix ClearAllPoints taint
-			ElvUF.ArenaEnemyFrames = _G.ArenaEnemyFrames
-			ElvUF.ArenaPrepFrames = _G.ArenaPrepFrames
-			_G.ArenaEnemyFrames = nil
-			_G.ArenaPrepFrames = nil
-		end
 	elseif unit:match('nameplate%d+$') then
 		local frame = C_NamePlate_GetNamePlateForUnit(unit)
 		if frame and frame.UnitFrame then
@@ -1217,13 +1158,6 @@ function ElvUF:DisableBlizzard(unit)
 			HandleFrame(frame.UnitFrame, true)
 		end
 	end
-end
-
-function UF:ADDON_LOADED(_, addon)
-	if addon ~= 'Blizzard_ArenaUI' then return end
-
-	ElvUF:DisableBlizzard('arena')
-	self:UnregisterEvent('ADDON_LOADED')
 end
 
 function UF:UnitFrameThreatIndicator_Initialize(_, unitFrame)
@@ -1270,9 +1204,7 @@ local Blacklist = {
 			maxDuration = true,
 		},
 	},
-	arena = { enable = true, fader = true },
 	assist = { enable = true, fader = true },
-	boss = { enable = true, fader = true },
 	focus = { enable = true, fader = true },
 	focustarget = { enable = true, fader = true },
 	pet = { enable = true, fader = true },
@@ -1475,18 +1407,6 @@ function UF:Initialize()
 	if (not E.private.unitframe.disabledBlizzardFrames.party) and (not E.private.unitframe.disabledBlizzardFrames.raid) then
 		E.RaidUtility.Initialize = E.noop
 	end
-
-	--if E.private.unitframe.disabledBlizzardFrames.arena then
-	--	UF:SecureHook('UnitFrameThreatIndicator_Initialize')
-
-	--	Arena_LoadUI = E.noop -- Blizzard_ArenaUI should not be loaded, called on PLAYER_ENTERING_WORLD if in pvp or arena
-
-	--	if IsAddOnLoaded('Blizzard_ArenaUI') then
-	--		ElvUF:DisableBlizzard('arena')
-	--	else
-	--		UF:RegisterEvent('ADDON_LOADED')
-	--	end
-	--end
 
 	UF:UpdateRangeCheckSpells()
 

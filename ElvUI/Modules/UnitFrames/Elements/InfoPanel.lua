@@ -18,7 +18,7 @@ function UF:Configure_InfoPanel(frame)
 		frame.InfoPanel:Show()
 		frame.InfoPanel:ClearAllPoints()
 
-		if frame.ORIENTATION == 'RIGHT' and not (frame.unitframeType == 'arena') then
+		if frame.ORIENTATION == 'RIGHT' then
 			frame.InfoPanel:Point('BOTTOMRIGHT', frame, 'BOTTOMRIGHT', -UF.BORDER - UF.SPACING, UF.BORDER + UF.SPACING)
 			if frame.USE_POWERBAR and not frame.USE_INSET_POWERBAR and not frame.POWERBAR_DETACHED then
 				frame.InfoPanel:Point('TOPLEFT', frame.Power.backdrop, 'BOTTOMLEFT', UF.BORDER, -(UF.SPACING*3))
