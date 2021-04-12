@@ -41,7 +41,6 @@ function UF:Construct_Raid40Frames()
 	self.HealthPrediction = UF:Construct_HealComm(self)
 	self.Fader = UF:Construct_Fader()
 	self.Cutaway = UF:Construct_Cutaway(self)
-	self.AlternativePower = UF:Construct_AltPowerBar(self)
 	self.ClassBar = 'AlternativePower'
 	self.customTexts = {}
 
@@ -127,7 +126,6 @@ function UF:Update_Raid40Frames(frame, db)
 	UF:Configure_CustomTexts(frame)
 	UF:Configure_Cutaway(frame)
 	UF:Configure_ClassBar(frame)
-	UF:Configure_AltPowerBar(frame)
 	UF:UpdateNameSettings(frame)
 
 	frame:UpdateAllElements('ElvUI_UpdateAllElements')
