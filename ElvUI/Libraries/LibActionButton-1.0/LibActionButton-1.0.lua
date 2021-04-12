@@ -1170,7 +1170,7 @@ function Update(self, fromUpdateConfig)
 
 	UpdateFlyout(self)
 
-	UpdateOverlayGlow(self)
+	--UpdateOverlayGlow(self)
 
 	UpdateNewAction(self)
 
@@ -1419,14 +1419,14 @@ function HideOverlayGlow(self)
 	end
 end
 
-function UpdateOverlayGlow(self)
+--[[function UpdateOverlayGlow(self)
 	local spellId = self.config.handleOverlay and self:GetSpellId()
 	if spellId and IsSpellOverlayed(spellId) then
 		ShowOverlayGlow(self)
 	else
 		HideOverlayGlow(self)
 	end
-end
+end]]
 
 function ClearNewActionHighlight(action, preventIdenticalActionsFromClearing, value)
 	lib.ACTION_HIGHLIGHT_MARKS[action] = value
