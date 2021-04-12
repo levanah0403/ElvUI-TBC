@@ -40,7 +40,9 @@ local type, error, tostring, tonumber, assert, select = type, error, tostring, t
 local setmetatable, wipe, unpack, pairs, next = setmetatable, wipe, unpack, pairs, next
 local str_match, format, tinsert, tremove = string.match, format, tinsert, tremove
 
-local WoWClassic = WOW_PROJECT_ID == WOW_PROJECT_CLASSIC -- select(4, GetBuildInfo()) < 20000
+local Classic = WOW_PROJECT_ID == WOW_PROJECT_CLASSIC
+local Retail = WOW_PROJECT_ID == WOW_PROJECT_MAINLINE
+local TBC = WOW_PROJECT_ID == WOW_PROJECT_BURNING_CRUSADE_CLASSIC
 
 local KeyBound = LibStub("LibKeyBound-1.0", true)
 local CBH = LibStub("CallbackHandler-1.0")
@@ -709,7 +711,7 @@ function InitializeEventHandler()
 	lib.eventFrame:RegisterEvent("SPELL_UPDATE_CHARGES")
 	lib.eventFrame:RegisterEvent("SPELL_UPDATE_ICON")
 
-	if not WoWClassic then
+	if Retail then
 		lib.eventFrame:RegisterEvent("UPDATE_VEHICLE_ACTIONBAR")
 		lib.eventFrame:RegisterEvent("ARCHAEOLOGY_CLOSED")
 		lib.eventFrame:RegisterEvent("UNIT_ENTERED_VEHICLE")
@@ -1209,7 +1211,7 @@ end
 
 function UpdateUsable(self)
 	local isLevelLinkLocked
-	if not WoWClassic and self._state_type == "action" then
+	if Retail and self._state_type == "action" then
 		isLevelLinkLocked = C_LevelLink.IsActionLocked(self._state_action)
 		if not self.icon:IsDesaturated() then
 			self.icon:SetDesaturated(isLevelLinkLocked)
@@ -1636,7 +1638,7 @@ end
 Action.GetLossOfControlCooldown = function(self) return GetActionLossOfControlCooldown(self._state_action) end
 
 -- Classic overrides for item count breakage
-if WoWClassic then
+if Classic or TBC then
 	-- if the library is present, simply use it to override action counts
 	local LibClassicSpellActionCount = LibStub("LibClassicSpellActionCount-1.0", true)
 	if LibClassicSpellActionCount then
@@ -1748,7 +1750,7 @@ Custom.GetSpellId              = function(self) return nil end
 Custom.RunCustom               = function(self, unit, button) return self._state_action.func(self, unit, button) end
 
 --- WoW Classic overrides
-if WoWClassic then
+if Classic then
 	UpdateOverlayGlow = function() end
 end
 
