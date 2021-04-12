@@ -2,13 +2,14 @@ local _, ns = ...
 local oUF = ns.oUF
 if not oUF then return end
 
+local Classic = WOW_PROJECT_ID == WOW_PROJECT_CLASSIC
+local Retail = WOW_PROJECT_ID == WOW_PROJECT_MAINLINE
+local TBC = WOW_PROJECT_ID == WOW_PROJECT_BURNING_CRUSADE_CLASSIC
+
 local UnitAura = UnitAura
 local UnitCanAssist = UnitCanAssist
 local GetSpecialization = GetSpecialization
 local GetActiveSpecGroup = GetActiveSpecGroup
-local Classic = WOW_PROJECT_ID == WOW_PROJECT_CLASSIC
-local Retail = WOW_PROJECT_ID == WOW_PROJECT_MAINLINE
-local TBC = WOW_PROJECT_ID == WOW_PROJECT_BURNING_CRUSADE_CLASSIC
 local DispelList, BlackList = {}, {}
 -- GLOBALS: DebuffTypeColor
 
