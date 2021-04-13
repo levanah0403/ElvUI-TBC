@@ -1,7 +1,10 @@
-### Version 0.10 [ ETA: 🍨 ]
+### Version 0.11 [ ETA: 🍨 ]
+___
+### Version 0.10 [13-04-2021]
 **• Chat fixes**  
 **• Experience DataBar error fixes**  
 **• Macro Frame tweaks**  
+**• Power error fix**  
 ___
 ### Version 0.09 [13-04-2021]
 **• ActionBars enabled**  
