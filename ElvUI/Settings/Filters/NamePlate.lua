@@ -209,20 +209,9 @@ E.StyleFilterDefaults = {
 			dungeon = {
 				normal = false,
 				heroic = false,
-				mythic = false,
-				['mythic+'] = false,
-				timewalking = false
 			},
 			raid = {
-				lfr = false,
 				normal = false,
-				heroic = false,
-				mythic = false,
-				timewalking = false,
-				legacy10normal = false,
-				legacy25normal = false,
-				legacy10heroic = false,
-				legacy25heroic = false
 			}
 		},
 		cooldowns = {
@@ -260,19 +249,11 @@ E.StyleFilterDefaults = {
 		playerCanNotAttack = false,
 		hasTitleNPC = false,
 		noTitleNPC = false,
-		isQuest = false,
-		notQuest = false,
-		questBoss = false,
 		-- combat
 		inCombat = false,
 		outOfCombat = false,
 		inCombatUnit = false,
 		outOfCombatUnit = false,
-		-- vehicle
-		inVehicle = false,
-		outOfVehicle = false,
-		inVehicleUnit = false,
-		outOfVehicleUnit = false
 	},
 	actions = {
 		color = {

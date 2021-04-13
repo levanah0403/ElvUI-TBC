@@ -243,9 +243,6 @@ local function UpdateInstanceDifficulty()
 			values = {
 				normal = GetDifficultyInfo(1),
 				heroic = GetDifficultyInfo(2),
-				mythic = GetDifficultyInfo(23),
-				['mythic+'] = GetDifficultyInfo(8),
-				timewalking = GetDifficultyInfo(24),
 			}
 		}
 	else
@@ -267,15 +264,7 @@ local function UpdateInstanceDifficulty()
 				NP:ConfigureAll()
 			end,
 			values = {
-				lfr = GetDifficultyInfo(17),
 				normal = GetDifficultyInfo(14),
-				heroic = GetDifficultyInfo(15),
-				mythic = GetDifficultyInfo(16),
-				timewalking = GetDifficultyInfo(24),
-				legacy10normal = GetDifficultyInfo(3),
-				legacy25normal = GetDifficultyInfo(4),
-				legacy10heroic = GetDifficultyInfo(5),
-				legacy25heroic = GetDifficultyInfo(6),
 			}
 		}
 	else
@@ -848,35 +837,23 @@ local function UpdateFilterGroup()
 									desc = L["If enabled then the filter will only activate when you are out of combat."],
 									order = 2
 								},
-								inVehicle = {
-									type = 'toggle',
-									name = L["In Vehicle"],
-									desc = L["If enabled then the filter will only activate when you are in a Vehicle."],
-									order = 3
-								},
-								outOfVehicle = {
-									type = 'toggle',
-									name = L["Out of Vehicle"],
-									desc = L["If enabled then the filter will only activate when you are not in a Vehicle."],
-									order = 4
-								},
 								isResting = {
 									type = 'toggle',
 									name = L["Is Resting"],
 									desc = L["If enabled then the filter will only activate when you are resting at an Inn."],
-									order = 5
+									order = 3
 								},
 								playerCanAttack = {
 									type = 'toggle',
 									name = L["Can Attack"],
 									desc = L["If enabled then the filter will only activate when the unit can be attacked by the active player."],
-									order = 6
+									order = 4
 								},
 								playerCanNotAttack = {
 									type = 'toggle',
 									name = L["Can Not Attack"],
 									desc = L["If enabled then the filter will only activate when the unit can not be attacked by the active player."],
-									order = 7
+									order = 5
 								}
 							}
 						},
@@ -898,41 +875,29 @@ local function UpdateFilterGroup()
 									desc = L["If enabled then the filter will only activate when the unit is out of combat."],
 									order = 2
 								},
-								inVehicleUnit = {
-									type = 'toggle',
-									name = L["In Vehicle"],
-									desc = L["If enabled then the filter will only activate when the unit is in a Vehicle."],
-									order = 3
-								},
-								outOfVehicleUnit = {
-									type = 'toggle',
-									name = L["Out of Vehicle"],
-									desc = L["If enabled then the filter will only activate when the unit is not in a Vehicle."],
-									order = 4
-								},
 								inParty = {
 									type = 'toggle',
 									name = L["In Party"],
 									desc = L["If enabled then the filter will only activate when the unit is in your Party."],
-									order = 5
+									order = 3
 								},
 								notInParty = {
 									type = 'toggle',
 									name = L["Not in Party"],
 									desc = L["If enabled then the filter will only activate when the unit is not in your Party."],
-									order = 6
+									order = 4
 								},
 								inRaid = {
 									type = 'toggle',
 									name = L["In Raid"],
 									desc = L["If enabled then the filter will only activate when the unit is in your Raid."],
-									order = 7
+									order = 5
 								},
 								notInRaid = {
 									type = 'toggle',
 									name = L["Not in Raid"],
 									desc = L["If enabled then the filter will only activate when the unit is not in your Raid."],
-									order = 8
+									order = 6
 								},
 								isPet = {
 									type = 'toggle',
@@ -997,7 +962,7 @@ local function UpdateFilterGroup()
 							}
 						},
 						npcGroup = {
-							name = '',
+							name = 'NPC',
 							type = 'group',
 							inline = true,
 							order = 3,
@@ -1014,29 +979,6 @@ local function UpdateFilterGroup()
 								},
 							}
 						},
-						questGroup = {
-							name = '',
-							type = 'group',
-							inline = true,
-							order = 4,
-							args = {
-								isQuest = {
-									type = 'toggle',
-									name = L["Quest Unit"],
-									order = 1
-								},
-								notQuest = {
-									type = 'toggle',
-									name = L["Not Quest Unit"],
-									order = 2
-								},
-								questBoss = {
-									type = 'toggle',
-									name = L["Quest Boss"],
-									order = 3,
-								},
-							}
-						}
 					}
 				},
 				class = {

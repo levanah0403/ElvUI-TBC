@@ -24,7 +24,6 @@ local UnitIsOwnerOrControllerOfUnit = UnitIsOwnerOrControllerOfUnit
 local UnitIsPVP = UnitIsPVP
 local UnitInParty = UnitInParty
 local UnitInRaid = UnitInRaid
-local UnitIsQuestBoss = UnitIsQuestBoss
 local UnitIsTapDenied = UnitIsTapDenied
 local UnitIsUnit = UnitIsUnit
 local UnitLevel = UnitLevel
@@ -646,17 +645,6 @@ function mod:StyleFilterConditionCheck(frame, filter, trigger)
 		if IsResting() then passed = true else return end
 	end
 
-	-- Quest Boss
-	if trigger.questBoss then
-		if UnitIsQuestBoss(frame.unit) then passed = true else return end
-	end
-
-	-- Quest Unit
-	if trigger.isQuest or trigger.notQuest then
-		local quest = E.TagFunctions.GetQuestData(frame.unit)
-		if (trigger.isQuest and quest) or (trigger.notQuest and not quest) then passed = true else return end
-	end
-
 	-- Require Target
 	if trigger.requireTarget then
 		if UnitExists('target') then passed = true else return end
@@ -1014,7 +1002,6 @@ mod.StyleFilterDefaultEvents = { -- list of events style filter uses to populate
 	PLAYER_TARGET_CHANGED = true,
 	PLAYER_UPDATE_RESTING = true,
 	GROUP_ROSTER_UPDATE = true,
-	QUEST_LOG_UPDATE = true,
 	RAID_TARGET_UPDATE = true,
 	SPELL_UPDATE_COOLDOWN = true,
 	UNIT_FLAGS = false,
@@ -1121,10 +1108,6 @@ function mod:StyleFilterConfigure()
 						events.ZONE_CHANGED_INDOORS = 1
 						events.ZONE_CHANGED = 1
 					end
-				end
-
-				if t.isQuest or t.notQuest then
-					events.QUEST_LOG_UPDATE = 1
 				end
 
 				if t.hasTitleNPC or t.noTitleNPC then
