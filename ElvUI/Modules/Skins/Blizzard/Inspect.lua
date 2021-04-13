@@ -74,6 +74,40 @@ function S:Blizzard_InspectUI()
 	S:HandleRotateButton(_G.InspectModelFrameRotateRightButton)
 	_G.InspectModelFrameRotateRightButton:Point('TOPLEFT', _G.InspectModelFrameRotateLeftButton, 'TOPRIGHT', 3, 0)
 
+	-- Talents
+	S:HandleFrame(_G.InspectTalentFrame, true, nil, 11, -12, -32, 76)
+	S:HandleCloseButton(_G.InspectTalentFrameCloseButton, _G.InspectTalentFrame.backdrop)
+
+	_G.InspectTalentFrameCancelButton:Kill()
+
+	for i = 1, 3 do
+		S:HandleTab(_G['InspectTalentFrameTab'..i], true)
+	end
+
+	_G.InspectTalentFrameScrollFrame:StripTextures()
+	_G.InspectTalentFrameScrollFrame:CreateBackdrop('Default')
+
+	S:HandleScrollBar(_G.InspectTalentFrameScrollFrameScrollBar)
+	_G.InspectTalentFrameScrollFrameScrollBar:Point('TOPLEFT', _G.InspectTalentFrameScrollFrame, 'TOPRIGHT', 10, -16)
+
+	for i = 1, _G.MAX_NUM_TALENTS do
+		local talent = _G['InspectTalentFrameTalent'..i]
+		local icon = _G['InspectTalentFrameTalent'..i..'IconTexture']
+		local rank = _G['InspectTalentFrameTalent'..i..'Rank']
+
+		if talent then
+			talent:StripTextures()
+			talent:SetTemplate('Default')
+			talent:StyleButton()
+
+			icon:SetInside()
+			icon:SetTexCoord(unpack(E.TexCoords))
+			icon:SetDrawLayer('ARTWORK')
+
+			rank:SetFont(E.LSM:Fetch('font', E.db['general'].font), 12, 'OUTLINE')
+		end
+	end
+
 	-- Honor Frame
 	--[[local InspectHonorFrame = _G.InspectHonorFrame
 	S:HandleFrame(InspectHonorFrame, true, nil, 18, -105, -39, 83)
