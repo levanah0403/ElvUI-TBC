@@ -582,9 +582,9 @@ function mod:StyleFilterClearChanges(frame, HealthColor, PowerColor, Borders, He
 end
 
 function mod:StyleFilterThreatUpdate(frame, unit)
-	if mod:UnitExists(unit) then
+	if UnitExists(unit) then
 		local isTank, offTank, feedbackUnit = mod.ThreatIndicator_PreUpdate(frame.ThreatIndicator, unit, true)
-		if feedbackUnit and (feedbackUnit ~= unit) and mod:UnitExists(feedbackUnit) then
+		if feedbackUnit and (feedbackUnit ~= unit) and UnitExists(feedbackUnit) then
 			return isTank, offTank, UnitDetailedThreatSituation(feedbackUnit, unit)
 		else
 			return isTank, offTank, UnitDetailedThreatSituation(unit)
