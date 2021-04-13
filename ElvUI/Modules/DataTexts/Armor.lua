@@ -29,12 +29,12 @@ local function OnEnter()
 	DT.tooltip:AddLine(' ')
 
 	local playerLevel = E.mylevel + 3
-    for _  = 1, 4 do
-        local armorReduction = effectiveArmor/((85 * playerLevel) + 400);
-        armorReduction = 100 * (armorReduction/(armorReduction + 1));
-        DT.tooltip:AddDoubleLine(playerLevel,format(chanceString, armorReduction),1,1,1)
-        playerLevel = playerLevel - 1
-    end
+	for _ = 1, 4 do
+		local armorReduction = effectiveArmor/((85 * playerLevel) + 400);
+		armorReduction = 100 * (armorReduction/(armorReduction + 1));
+		DT.tooltip:AddDoubleLine(playerLevel,format(chanceString, armorReduction),1,1,1)
+		playerLevel = playerLevel - 1
+	end
 
 	DT.tooltip:Show()
 end

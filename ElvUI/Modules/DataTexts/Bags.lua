@@ -16,9 +16,9 @@ local GetInventoryItemTexture = GetInventoryItemTexture
 local displayString, lastPanel = ''
 
 local BAG_TYPES = {
-	[0x0001]  = 'Quiver',
-	[0x0002]  = 'Ammo Pouch',
-	[0x0004]  = 'Soul Bag',
+	[0x0001] = 'Quiver',
+	[0x0002] = 'Ammo Pouch',
+	[0x0004] = 'Soul Bag',
 }
 
 local function OnEvent(self)

@@ -764,7 +764,7 @@ function E:StaticPopup_Resize(dialog, which)
 		width = width + (info.editBoxWidth - 260)
 	end
 
-	if ( width > maxWidthSoFar )  then
+	if ( width > maxWidthSoFar ) then
 		dialog:Width(width)
 		dialog.maxWidthSoFar = width
 	end
@@ -848,7 +848,7 @@ function E:StaticPopup_Show(which, text_arg1, text_arg2, data)
 		end
 		for i = index, MAX_STATIC_POPUPS do
 			local frame = _G["ElvUI_StaticPopup"..i]
-			if ( frame and  not frame:IsShown() ) then
+			if ( frame and not frame:IsShown() ) then
 				dialog = frame
 				break
 			end

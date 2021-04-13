@@ -9,7 +9,7 @@ local GetBattlefieldScore = GetBattlefieldScore
 
 local displayString = ''
 local holder = {
-	LEFT = { data = {}, '', _G.HONOR,  _G.KILLING_BLOWS },
+	LEFT = { data = {}, '', _G.HONOR, _G.KILLING_BLOWS },
 	RIGHT = { data = {}, _G.KILLS, _G.DEATHS, '' }
 }
 
