@@ -17,16 +17,6 @@ local hooksecurefunc = hooksecurefunc
 
 local ClickFrames = {}
 
-function B:SetQuestWatchFrameHeight()
-	local top = _G.QuestWatchFrame:GetTop() or 0
-	local screenHeight = GetScreenHeight()
-	local gapFromTop = screenHeight - top
-	local maxHeight = screenHeight - gapFromTop
-	local objectiveFrameHeight = min(maxHeight, E.db.general.objectiveFrameHeight)
-
-	_G.QuestWatchFrame:SetHeight(objectiveFrameHeight)
-end
-
 function B:MoveQuestWatchFrame()
 	local QuestWatchFrameHolder = CreateFrame("Frame", nil, E.UIParent)
 	QuestWatchFrameHolder:Size(130, 22)
@@ -55,7 +45,6 @@ function B:MoveQuestWatchFrame()
 	QuestTimerFrame:ClearAllPoints()
 	QuestTimerFrame:SetAllPoints(QuestTimerFrameHolder)
 
-	B:SetQuestWatchFrameHeight()
 end
 
 function B:OnQuestClick()

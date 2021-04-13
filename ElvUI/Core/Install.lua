@@ -291,7 +291,6 @@ function E:SetupLayout(layout, noDataReset, noDisplayMsg)
 		--General
 			E.db.general.bonusObjectivePosition = 'AUTO'
 			E.db.general.minimap.size = 220
-			E.db.general.objectiveFrameHeight = 400
 			E.db.general.autoTrackReputation = true
 			E.db.general.bonusObjectivePosition = "AUTO"
 		--Movers
