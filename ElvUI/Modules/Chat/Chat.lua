@@ -53,7 +53,6 @@ local C_DateAndTime_GetCurrentCalendarTime = C_DateAndTime.GetCurrentCalendarTim
 --local C_BattleNet_GetFriendAccountInfo = C_BattleNet.GetFriendAccountInfo
 --local C_BattleNet_GetFriendGameAccountInfo = C_BattleNet.GetFriendGameAccountInfo
 --local C_BattleNet_GetFriendNumGameAccounts = C_BattleNet.GetFriendNumGameAccounts
-local C_ChatInfo_GetChannelRuleset = C_ChatInfo.GetChannelRuleset
 local C_Club_GetInfoFromLastCommunityChatLine = C_Club.GetInfoFromLastCommunityChatLine
 local C_SocialGetLastItem = C_Social.GetLastItem
 local C_SocialIsSocialEnabled = C_Social.IsSocialEnabled
@@ -1524,13 +1523,6 @@ function CH:ChatFrame_MessageEventHandler(frame, event, arg1, arg2, arg3, arg4, 
 			chatType == 'OPENING' or chatType == 'TRADESKILLS' or chatType == 'PET_INFO' or chatType == 'TARGETICONS' or chatType == 'BN_WHISPER_PLAYER_OFFLINE') then
 			frame:AddMessage(arg1, info.r, info.g, info.b, info.id, nil, nil, isHistory, historyTime)
 		elseif chatType == 'LOOT' then
-			-- Append [Share] hyperlink if this is a valid social item and you are the looter.
-			if arg12 == E.myguid and C_SocialIsSocialEnabled() then
-				local itemID, creationContext = GetItemInfoFromHyperlink(arg1)
-				if itemID and C_SocialGetLastItem() == itemID then
-					arg1 = arg1 .. ' ' .. _G.Social_GetShareItemLink(creationContext, true)
-				end
-			end
 			frame:AddMessage(arg1, info.r, info.g, info.b, info.id, nil, nil, isHistory, historyTime)
 		elseif strsub(chatType,1,7) == 'COMBAT_' then
 			frame:AddMessage(arg1, info.r, info.g, info.b, info.id, nil, nil, isHistory, historyTime)
@@ -1570,34 +1562,23 @@ function CH:ChatFrame_MessageEventHandler(frame, event, arg1, arg2, arg3, arg4, 
 			if arg1 == 'INVITE' and GetCVarBool('blockChannelInvites') then
 				frame:AddMessage(_G.CHAT_MSG_BLOCK_CHAT_CHANNEL_INVITE, info.r, info.g, info.b, info.id, nil, nil, isHistory, historyTime)
 			end
-		elseif chatType == 'CHANNEL_NOTICE' then
-			local accessID = _G.ChatHistory_GetAccessID(chatGroup, arg8);
-			local typeID = _G.ChatHistory_GetAccessID(infoType, arg8, arg12);
-
-			if arg1 == 'YOU_CHANGED' and C_ChatInfo_GetChannelRuleset(arg8) == ChatChannelRuleset_Mentor then
-				_G.ChatFrame_UpdateDefaultChatTarget(frame)
-				_G.ChatEdit_UpdateNewcomerEditBoxHint(frame.editBox)
+		elseif chatType == "CHANNEL_NOTICE" then
+			local globalstring
+			if arg1 == "TRIAL_RESTRICTED" then
+				globalstring = _G.CHAT_TRIAL_RESTRICTED_NOTICE_TRIAL
 			else
-				if arg1 == 'YOU_LEFT' then
-					_G.ChatEdit_UpdateNewcomerEditBoxHint(frame.editBox, arg8)
-				end
-
-				local globalstring
-				if arg1 == 'TRIAL_RESTRICTED' then
-					globalstring = _G.CHAT_TRIAL_RESTRICTED_NOTICE_TRIAL
-				else
-					globalstring = _G['CHAT_'..arg1..'_NOTICE_BN']
+				globalstring = _G["CHAT_"..arg1.."_NOTICE_BN"]
+				if not globalstring then
+					globalstring = _G["CHAT_"..arg1.."_NOTICE"]
 					if not globalstring then
-						globalstring = _G['CHAT_'..arg1..'_NOTICE']
-						if not globalstring then
-							GMError(('Missing global string for %q'):format('CHAT_'..arg1..'_NOTICE'))
-							return
-						end
+						GMError(("Missing global string for %q"):format("CHAT_"..arg1.."_NOTICE"))
+						return
 					end
 				end
-
-				frame:AddMessage(format(globalstring, arg8, _G.ChatFrame_ResolvePrefixedChannelName(arg4)), info.r, info.g, info.b, info.id, accessID, typeID, isHistory, historyTime)
 			end
+			local accessID = ChatHistory_GetAccessID(Chat_GetChatCategory(chatType), arg8)
+			local typeID = ChatHistory_GetAccessID(infoType, arg8, arg12)
+			frame:AddMessage(format(globalstring, arg8, ChatFrame_ResolvePrefixedChannelName(arg4)), info.r, info.g, info.b, info.id, accessID, typeID, isHistory, historyTime)
 		elseif chatType == 'BN_INLINE_TOAST_ALERT' then
 			local globalstring = _G['BN_INLINE_TOAST_'..arg1]
 			if not globalstring then
@@ -1612,24 +1593,23 @@ function CH:ChatFrame_MessageEventHandler(frame, event, arg1, arg2, arg3, arg4, 
 				message = format(_G.BN_INLINE_TOAST_FRIEND_PENDING, BNGetNumFriendInvites())
 			elseif arg1 == 'FRIEND_REMOVED' or arg1 == 'BATTLETAG_FRIEND_REMOVED' then
 				message = format(globalstring, arg2)
-			elseif arg1 == 'FRIEND_ONLINE' or arg1 == 'FRIEND_OFFLINE' then
-				local accountInfo = C_BattleNet_GetAccountInfoByID(arg13)
-				if not accountInfo then return end
-				local client = accountInfo.gameAccountInfo and accountInfo.gameAccountInfo.clientProgram
-				if client and client ~= '' then
-					local characterName = _G.BNet_GetValidatedCharacterName(accountInfo.gameAccountInfo.characterName, accountInfo.battleTag, client) or ''
-					local characterNameText = _G.BNet_GetClientEmbeddedTexture(client, 14)..characterName
-					local linkDisplayText = ('[%s] (%s)'):format(arg2, characterNameText)
-					local playerLink = GetBNPlayerLink(arg2, linkDisplayText, arg13, arg11, chatGroup, 0)
+			elseif ( arg1 == "FRIEND_ONLINE" or arg1 == "FRIEND_OFFLINE" ) then
+				local _, _, _, _, characterName, _, client = BNGetFriendInfoByID(arg13)
+				if (client and client ~= "") then
+					local _, _, battleTag = BNGetFriendInfoByID(arg13)
+					characterName = BNet_GetValidatedCharacterName(characterName, battleTag, client) or ""
+					local characterNameText = BNet_GetClientEmbeddedTexture(client, 14)..characterName
+					local linkDisplayText = ("[%s] (%s)"):format(arg2, characterNameText)
+					local playerLink = GetBNPlayerLink(arg2, linkDisplayText, arg13, arg11, Chat_GetChatCategory(chatType), 0)
 					message = format(globalstring, playerLink)
 				else
-					local linkDisplayText = ('[%s]'):format(arg2)
-					local playerLink = GetBNPlayerLink(arg2, linkDisplayText, arg13, arg11, chatGroup, 0)
+					local linkDisplayText = ("[%s]"):format(arg2)
+					local playerLink = GetBNPlayerLink(arg2, linkDisplayText, arg13, arg11, Chat_GetChatCategory(chatType), 0)
 					message = format(globalstring, playerLink)
 				end
 			else
-				local linkDisplayText = ('[%s]'):format(arg2)
-				local playerLink = GetBNPlayerLink(arg2, linkDisplayText, arg13, arg11, chatGroup, 0)
+				local linkDisplayText = ("[%s]"):format(arg2)
+				local playerLink = GetBNPlayerLink(arg2, linkDisplayText, arg13, arg11, Chat_GetChatCategory(chatType), 0)
 				message = format(globalstring, playerLink)
 			end
 			frame:AddMessage(message, info.r, info.g, info.b, info.id, nil, nil, isHistory, historyTime)
