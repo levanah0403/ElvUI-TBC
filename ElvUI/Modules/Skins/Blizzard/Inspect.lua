@@ -75,7 +75,7 @@ function S:Blizzard_InspectUI()
 	_G.InspectModelFrameRotateRightButton:Point('TOPLEFT', _G.InspectModelFrameRotateLeftButton, 'TOPRIGHT', 3, 0)
 
 	-- Honor Frame
-	local InspectHonorFrame = _G.InspectHonorFrame
+	--[[local InspectHonorFrame = _G.InspectHonorFrame
 	S:HandleFrame(InspectHonorFrame, true, nil, 18, -105, -39, 83)
 	InspectHonorFrame.backdrop:SetFrameLevel(InspectHonorFrame:GetFrameLevel())
 
@@ -87,7 +87,7 @@ function S:Blizzard_InspectUI()
 
 	S:HandlePointXY(InspectHonorFrameProgressBar, 19, -74)
 
-	E:RegisterStatusBar(InspectHonorFrameProgressBar)
+	E:RegisterStatusBar(InspectHonorFrameProgressBar)]]
 end
 
 S:AddCallbackForAddon('Blizzard_InspectUI')
