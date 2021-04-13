@@ -1390,7 +1390,7 @@ local function GetPFlag(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, ar
 		end
 	end
 
-	return "";
+	return '';
 end
 
 function CH:ChatFrame_MessageEventHandler(frame, event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, isHistory, historyTime, historyName, historyBTag)
@@ -1562,16 +1562,16 @@ function CH:ChatFrame_MessageEventHandler(frame, event, arg1, arg2, arg3, arg4, 
 			if arg1 == 'INVITE' and GetCVarBool('blockChannelInvites') then
 				frame:AddMessage(_G.CHAT_MSG_BLOCK_CHAT_CHANNEL_INVITE, info.r, info.g, info.b, info.id, nil, nil, isHistory, historyTime)
 			end
-		elseif chatType == "CHANNEL_NOTICE" then
+		elseif chatType == 'CHANNEL_NOTICE' then
 			local globalstring
-			if arg1 == "TRIAL_RESTRICTED" then
+			if arg1 == 'TRIAL_RESTRICTED' then
 				globalstring = _G.CHAT_TRIAL_RESTRICTED_NOTICE_TRIAL
 			else
-				globalstring = _G["CHAT_"..arg1.."_NOTICE_BN"]
+				globalstring = _G['CHAT_'..arg1..'_NOTICE_BN']
 				if not globalstring then
-					globalstring = _G["CHAT_"..arg1.."_NOTICE"]
+					globalstring = _G['CHAT_'..arg1..'_NOTICE']
 					if not globalstring then
-						GMError(("Missing global string for %q"):format("CHAT_"..arg1.."_NOTICE"))
+						GMError(('Missing global string for %q'):format('CHAT_'..arg1..'_NOTICE'))
 						return
 					end
 				end
@@ -1593,22 +1593,22 @@ function CH:ChatFrame_MessageEventHandler(frame, event, arg1, arg2, arg3, arg4, 
 				message = format(_G.BN_INLINE_TOAST_FRIEND_PENDING, BNGetNumFriendInvites())
 			elseif arg1 == 'FRIEND_REMOVED' or arg1 == 'BATTLETAG_FRIEND_REMOVED' then
 				message = format(globalstring, arg2)
-			elseif ( arg1 == "FRIEND_ONLINE" or arg1 == "FRIEND_OFFLINE" ) then
+			elseif ( arg1 == 'FRIEND_ONLINE' or arg1 == 'FRIEND_OFFLINE' ) then
 				local _, _, _, _, characterName, _, client = BNGetFriendInfoByID(arg13)
-				if (client and client ~= "") then
+				if (client and client ~= '') then
 					local _, _, battleTag = BNGetFriendInfoByID(arg13)
-					characterName = BNet_GetValidatedCharacterName(characterName, battleTag, client) or ""
+					characterName = BNet_GetValidatedCharacterName(characterName, battleTag, client) or ''
 					local characterNameText = BNet_GetClientEmbeddedTexture(client, 14)..characterName
-					local linkDisplayText = ("[%s] (%s)"):format(arg2, characterNameText)
+					local linkDisplayText = ('[%s] (%s)'):format(arg2, characterNameText)
 					local playerLink = GetBNPlayerLink(arg2, linkDisplayText, arg13, arg11, Chat_GetChatCategory(chatType), 0)
 					message = format(globalstring, playerLink)
 				else
-					local linkDisplayText = ("[%s]"):format(arg2)
+					local linkDisplayText = ('[%s]'):format(arg2)
 					local playerLink = GetBNPlayerLink(arg2, linkDisplayText, arg13, arg11, Chat_GetChatCategory(chatType), 0)
 					message = format(globalstring, playerLink)
 				end
 			else
-				local linkDisplayText = ("[%s]"):format(arg2)
+				local linkDisplayText = ('[%s]'):format(arg2)
 				local playerLink = GetBNPlayerLink(arg2, linkDisplayText, arg13, arg11, Chat_GetChatCategory(chatType), 0)
 				message = format(globalstring, playerLink)
 			end
