@@ -49,6 +49,7 @@ local RemoveNewlines = RemoveNewlines
 local ToggleFrame = ToggleFrame
 local UnitName = UnitName
 
+local C_DateAndTime_GetCurrentCalendarTime = C_DateAndTime.GetCurrentCalendarTime
 local C_Club_GetInfoFromLastCommunityChatLine = C_Club.GetInfoFromLastCommunityChatLine
 local Chat_GetChatCategory = Chat_GetChatCategory
 local ChatHistory_GetAccessID = ChatHistory_GetAccessID
