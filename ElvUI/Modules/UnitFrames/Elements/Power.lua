@@ -241,11 +241,11 @@ function UF:GetDisplayPower()
 	end
 end
 
-local tokens = {[0]='MANA','RAGE','FOCUS','ENERGY',}
+local tokens = {[0]='MANA','RAGE','FOCUS','ENERGY'}
 function UF:PostUpdatePowerColor()
 	local parent = self.origParent or self:GetParent()
 	if parent.isForced and not self.colorClass then
-		local color = ElvUF.colors.power[tokens[random(0,4)]]
+		local color = ElvUF.colors.power[tokens[random(0,3)]]
 		self:SetStatusBarColor(color[1], color[2], color[3])
 
 		if self.BG then
