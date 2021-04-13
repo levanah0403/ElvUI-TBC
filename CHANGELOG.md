@@ -1,4 +1,11 @@
-### Version 0.09 [ ETA: 🍨 ]
+### Version 0.10 [ ETA: 🍨 ]
+___
+### Version 0.09 [13-04-2021]
+**• ActionBars enabled**  
+**• Group UnitFrames enabled**  
+**• Inspect Talents Skin**  
+**• MicroBar fixed**  
+**• ObjectiveTracker fixed**  
 ___
 ### Version 0.08 [11-04-2021]
 **• Bags options**  
