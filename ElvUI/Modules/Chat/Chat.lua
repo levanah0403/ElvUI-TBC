@@ -200,6 +200,7 @@ do --this can save some main file locals
 		["Luckyr-Shazzrah"]			= Clover, -- Rogue
 		["Elvuidevtest-Shazzrah"]	= Clover, -- Warrior
 		["Luckyone-ClassicBetaPvE"] = ElvGreen, -- Beta Test
+		["Luckyone-ClassicBetaPvP"] = ElvGreen, -- Beta Test
 	}
 end
 
