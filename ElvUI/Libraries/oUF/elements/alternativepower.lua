@@ -22,7 +22,7 @@ A default texture will be applied if the widget is a StatusBar and doesn't have 
 The following options are listed by priority. The first check that returns true decides the color of the bar.
 
 .colorThreat       - Use `self.colors.threat[threat]` to color the bar based on the unit's threat status. `threat` is
-                     defined by the first return of [UnitThreatSituation](https://wow.gamepedia.com/API_UnitThreatSituation) (boolean)
+                     defined by the first return of [UnitDetailedThreatSituation](https://wow.gamepedia.com/API_UnitDetailedThreatSituation) (boolean)
 .colorPower        - Use `self.colors.power[token]` to color the bar based on the unit's alternative power type
                      (boolean)
 .colorClass        - Use `self.colors.class[class]` to color the bar based on unit class. `class` is defined by the
@@ -89,8 +89,8 @@ local function UpdateColor(self, event, unit, powerType)
 	local element = self.AlternativePower
 
 	local r, g, b, t
-	if(element.colorThreat and not UnitPlayerControlled(unit) and UnitThreatSituation('player', unit)) then
-		t =  self.colors.threat[UnitThreatSituation('player', unit)]
+	if(element.colorThreat and not UnitPlayerControlled(unit) and UnitDetailedThreatSituation('player', unit)) then
+		t =  self.colors.threat[UnitDetailedThreatSituation('player', unit)]
 	elseif(element.colorPower) then
 		t = self.colors.power[ALTERNATE_POWER_INDEX]
 	elseif(element.colorClass and UnitIsPlayer(unit))

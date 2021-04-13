@@ -55,7 +55,7 @@ local selectionTypes = {
 }
 
 function Private.unitSelectionType(unit, considerHostile)
-	if(considerHostile and UnitThreatSituation('player', unit)) then
+	if(considerHostile and UnitDetailedThreatSituation('player', unit)) then
 		return 0
 	else
 		return selectionTypes[UnitSelectionType(unit, true)]

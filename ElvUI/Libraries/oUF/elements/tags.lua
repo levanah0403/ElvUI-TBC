@@ -367,7 +367,7 @@ local tagStrings = {
 	end]],
 
 	['threat'] = [[function(u)
-		local s = UnitThreatSituation(u)
+		local s = UnitDetailedThreatSituation(u)
 		if(s == 1) then
 			return '++'
 		elseif(s == 2) then
@@ -378,7 +378,7 @@ local tagStrings = {
 	end]],
 
 	['threatcolor'] = [[function(u)
-		return Hex(GetThreatStatusColor(UnitThreatSituation(u)))
+		return Hex(GetThreatStatusColor(UnitDetailedThreatSituation(u)))
 	end]],
 }
 

@@ -15,7 +15,7 @@ A default texture will be applied if the widget is a Texture and doesn't have a 
 ## Options
 
 .feedbackUnit - The unit whose threat situation is being requested. If defined, it'll be passed as the first argument to
-                [UnitThreatSituation](https://wow.gamepedia.com/API_UnitThreatSituation).
+                [UnitDetailedThreatSituation](https://wow.gamepedia.com/API_UnitDetailedThreatSituation).
 
 ## Examples
 
@@ -50,12 +50,12 @@ local function Update(self, event, unit)
 	unit = unit or self.unit
 
 	local status
-	-- BUG: Non-existent '*target' or '*pet' units cause UnitThreatSituation() errors
+	-- BUG: Non-existent '*target' or '*pet' units cause UnitDetailedThreatSituation() errors
 	if(unitExists(unit)) then
 		if(feedbackUnit and feedbackUnit ~= unit and unitExists(feedbackUnit)) then
-			status = UnitThreatSituation(feedbackUnit, unit)
+			status = UnitDetailedThreatSituation(feedbackUnit, unit)
 		else
-			status = UnitThreatSituation(unit)
+			status = UnitDetailedThreatSituation(unit)
 		end
 	end
 
@@ -77,7 +77,7 @@ local function Update(self, event, unit)
 
 	* self   - the ThreatIndicator element
 	* unit   - the unit for which the update has been triggered (string)
-	* status - the unit's threat status (see [UnitThreatSituation](http://wowprogramming.com/docs/api/UnitThreatSituation.html))
+	* status - the unit's threat status (see [UnitDetailedThreatSituation](http://wowprogramming.com/docs/api/UnitDetailedThreatSituation.html))
 	* r      - the red color component based on the unit's threat status (number?)[0-1]
 	* g      - the green color component based on the unit's threat status (number?)[0-1]
 	* b      - the blue color component based on the unit's threat status (number?)[0-1]

@@ -30,7 +30,7 @@ local UnitIsUnit = UnitIsUnit
 local UnitLevel = UnitLevel
 local UnitPower = UnitPower
 local UnitPowerMax = UnitPowerMax
-local UnitThreatSituation = UnitThreatSituation
+local UnitDetailedThreatSituation = UnitDetailedThreatSituation
 
 local C_Timer_NewTimer = C_Timer.NewTimer
 
@@ -610,9 +610,9 @@ function mod:StyleFilterThreatUpdate(frame, unit)
 	if mod:UnitExists(unit) then
 		local isTank, offTank, feedbackUnit = mod.ThreatIndicator_PreUpdate(frame.ThreatIndicator, unit, true)
 		if feedbackUnit and (feedbackUnit ~= unit) and mod:UnitExists(feedbackUnit) then
-			return isTank, offTank, UnitThreatSituation(feedbackUnit, unit)
+			return isTank, offTank, UnitDetailedThreatSituation(feedbackUnit, unit)
 		else
-			return isTank, offTank, UnitThreatSituation(unit)
+			return isTank, offTank, UnitDetailedThreatSituation(unit)
 		end
 	end
 end
