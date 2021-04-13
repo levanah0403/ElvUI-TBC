@@ -1,4 +1,6 @@
 ### Version 0.11 [ ETA: 🍨 ]
+**• Chat DateAndTime error fixes**  
+**• Style Filter options**  
 ___
 ### Version 0.10 [13-04-2021]
 **• Chat fixes**  
