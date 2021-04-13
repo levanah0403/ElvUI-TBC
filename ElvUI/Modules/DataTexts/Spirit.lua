@@ -13,7 +13,7 @@ local function OnEvent(self)
 	lastPanel = self
 end
 
-local function ValueColorUpdate(hex, r, g, b)
+local function ValueColorUpdate(hex)
 	displayNumberString = strjoin("", "%s: ", hex, "%.f|r")
 
 	if lastPanel ~= nil then

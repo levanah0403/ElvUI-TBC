@@ -22,11 +22,8 @@ local ShowInspectCursor = ShowInspectCursor
 
 local C_LootHistoryGetItem = C_LootHistory.GetItem
 local C_LootHistoryGetPlayerInfo = C_LootHistory.GetPlayerInfo
-local GREED = GREED
 local ITEM_QUALITY_COLORS = ITEM_QUALITY_COLORS
-local MAX_PLAYER_LEVEL = MAX_PLAYER_LEVEL
-local NEED = NEED
-local PASS = PASS
+local NEED, PASS, GREED = NEED, PASS, GREED
 
 local pos = 'TOP';
 local cancelled_rolls = {}

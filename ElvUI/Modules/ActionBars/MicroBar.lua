@@ -2,6 +2,8 @@ local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, Private
 local AB = E:GetModule('ActionBars')
 
 local _G = _G
+local wipe = wipe
+local tinsert = tinsert
 local pairs = pairs
 local assert = assert
 local unpack = unpack

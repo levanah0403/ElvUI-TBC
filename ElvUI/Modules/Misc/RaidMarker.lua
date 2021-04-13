@@ -47,7 +47,8 @@ function M:RaidMarkShowIcons()
 end
 
 function RaidMark_HotkeyPressed(keystate)
-	ButtonIsDown = (keystate=='down') and M:RaidMarkCanMark();
+	ButtonIsDown = keystate == 'down' and M:RaidMarkCanMark()
+
 	if ButtonIsDown and M.RaidMarkFrame then
 		M:RaidMarkShowIcons();
 	elseif M.RaidMarkFrame then

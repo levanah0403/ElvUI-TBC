@@ -2,7 +2,6 @@ local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, Private
 local DT = E:GetModule('DataTexts')
 
 local floor, format, strjoin = floor, format, strjoin
---WoW API / Variables
 local GetTime = GetTime
 
 local displayString, lastPanel = ''

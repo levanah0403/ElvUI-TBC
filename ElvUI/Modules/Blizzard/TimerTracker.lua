@@ -1,8 +1,6 @@
 local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
-local B = E:GetModule('Blizzard')
 
-local _G = _G
-local select, unpack, pairs = select, unpack, pairs
+local select, unpack = select, unpack
 local CreateFrame = CreateFrame
 
 local function SkinIt(bar)

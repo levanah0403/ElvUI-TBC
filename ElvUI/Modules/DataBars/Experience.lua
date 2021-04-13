@@ -5,7 +5,10 @@ local LSM = E.Libs.LSM
 local _G = _G
 local min, format = min, format
 local CreateFrame = CreateFrame
+local GetQuestLogTitle = GetQuestLogTitle
 local GetXPExhaustion = GetXPExhaustion
+local GetExpansionLevel = GetExpansionLevel
+local GetNumQuestLogEntries = GetNumQuestLogEntries
 local GetQuestLogRewardXP = GetQuestLogRewardXP
 local UnitXP, UnitXPMax = UnitXP, UnitXPMax
 
@@ -14,14 +17,15 @@ local PercentXP, RemainXP, RemainTotal, RemainBars
 local QuestLogXP = 0
 
 function DB:ExperienceBar_CheckQuests(zoneOnly, completedOnly)
-	local numEntries, numQuests = GetNumQuestLogEntries()
-	local mapID = C_Map.GetBestMapForUnit("player")
-	local currentZone, zoneName = mapID and C_Map.GetMapInfo(mapID).name
+	local numEntries = GetNumQuestLogEntries()
+
+	local currentZone = E.MapInfo.name
+	local zoneName -- huh azil?
 
 	for i = 1, numEntries do
 		local questLogTitleText, _, _, isHeader, _, isComplete, _, questID = GetQuestLogTitle(i)
-		if (not isHeader) then
-			if (zoneOnly and currentZone == zoneName or not zoneOnly) and (isComplete and completedOnly or not completedOnly) then
+		if not isHeader then
+			if ((zoneOnly and zoneName and currentZone == zoneName) or not zoneOnly) and ((isComplete and completedOnly) or not completedOnly) then
 				QuestLogXP = QuestLogXP + GetQuestLogRewardXP(questID)
 			end
 		else
@@ -31,7 +35,7 @@ function DB:ExperienceBar_CheckQuests(zoneOnly, completedOnly)
 end
 
 function DB:ExperienceBar_ShouldBeVisible()
-	return E.mylevel ~= MAX_PLAYER_LEVEL_TABLE[GetExpansionLevel()]
+	return E.mylevel ~= _G.MAX_PLAYER_LEVEL_TABLE[GetExpansionLevel()]
 end
 
 function DB:ExperienceBar_Update()

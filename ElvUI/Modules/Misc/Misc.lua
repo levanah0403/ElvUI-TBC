@@ -31,7 +31,6 @@ local RaidNotice_AddMessage = RaidNotice_AddMessage
 local RepairAllItems = RepairAllItems
 local SendChatMessage = SendChatMessage
 local StaticPopup_Hide = StaticPopup_Hide
-local StaticPopupSpecial_Hide = StaticPopupSpecial_Hide
 local UninviteUnit = UninviteUnit
 local UnitExists = UnitExists
 local UnitGUID = UnitGUID
@@ -45,14 +44,12 @@ local GetNumFactions = GetNumFactions
 local GetFactionInfo = GetFactionInfo
 local SetWatchedFactionIndex = SetWatchedFactionIndex
 local GetCurrentCombatTextEventInfo = GetCurrentCombatTextEventInfo
-
-local GetCurrentCombatTextEventInfo = GetCurrentCombatTextEventInfo
 local CombatLogGetCurrentEventInfo = CombatLogGetCurrentEventInfo
 local LE_GAME_ERR_NOT_ENOUGH_MONEY = LE_GAME_ERR_NOT_ENOUGH_MONEY
 local MAX_PARTY_MEMBERS = MAX_PARTY_MEMBERS
-local UNKNOWN = UNKNOWN
 local BOOST_THANKSFORPLAYING_SMALLER = SOUNDKIT.UI_70_BOOST_THANKSFORPLAYING_SMALLER
 local INTERRUPT_MSG = INTERRUPTED.." %s's [%s]!"
+local UNKNOWN = UNKNOWN
 
 function M:ErrorFrameToggle(event)
 	if not E.db.general.hideErrorFrame then return end
@@ -187,7 +184,7 @@ function M:AutoInvite(event, _, _, _, _, _, _, inviterGUID)
 	if event == "PARTY_INVITE_REQUEST" then
 		if BNGetGameAccountInfoByGUID(inviterGUID) or IsCharacterFriend(inviterGUID) or IsGuildMember(inviterGUID) then
 			AcceptGroup()
-			StaticPopupDialogs["PARTY_INVITE"].inviteAccepted = 1
+			_G.StaticPopupDialogs.PARTY_INVITE.inviteAccepted = 1
 			StaticPopup_Hide("PARTY_INVITE")
 		end
 	end

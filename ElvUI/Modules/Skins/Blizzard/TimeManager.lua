@@ -4,7 +4,6 @@ local S = E:GetModule('Skins')
 local _G = _G
 local unpack = unpack
 local select = select
-
 local hooksecurefunc = hooksecurefunc
 
 function S:Blizzard_TimeManager()

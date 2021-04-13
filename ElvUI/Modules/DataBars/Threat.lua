@@ -1,6 +1,7 @@
 local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local DB = E:GetModule('DataBars')
 
+local unpack = unpack
 local pairs, select, wipe = pairs, select, wipe
 
 local IsInGroup, IsInRaid = IsInGroup, IsInRaid

@@ -2,14 +2,10 @@ local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, Private
 local B = E:GetModule('Blizzard')
 
 local _G = _G
-
-local min = math.min
-
 local CreateFrame = CreateFrame
 local GetNumQuestWatches = GetNumQuestWatches
 local GetQuestIndexForWatch = GetQuestIndexForWatch
 local GetNumQuestLeaderBoards = GetNumQuestLeaderBoards
-local GetScreenHeight = GetScreenHeight
 local ShowUIPanel = ShowUIPanel
 local QuestLog_SetSelection = QuestLog_SetSelection
 local QuestLog_Update = QuestLog_Update

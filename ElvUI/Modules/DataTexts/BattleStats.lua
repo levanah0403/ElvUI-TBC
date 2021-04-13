@@ -2,14 +2,10 @@ local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, Private
 local DT = E:GetModule('DataTexts')
 
 local _G = _G
-local sort = sort
 local ipairs = ipairs
-local strlen = strlen
 local strjoin = strjoin
 local GetNumBattlefieldScores = GetNumBattlefieldScores
-local GetBattlefieldStatData = GetBattlefieldStatData
 local GetBattlefieldScore = GetBattlefieldScore
-local BATTLEGROUND = BATTLEGROUND
 
 local displayString = ''
 local holder = {

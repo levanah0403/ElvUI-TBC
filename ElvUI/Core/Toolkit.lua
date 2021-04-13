@@ -141,7 +141,7 @@ local function SetTemplate(frame, template, glossTex, ignoreUpdates, forcePixelM
 	frame.isNamePlateElement = isNamePlateElement
 
 	if not frame.SetBackdrop then
-		Mixin(frame, BackdropTemplateMixin)
+		_G.Mixin(frame, _G.BackdropTemplateMixin)
 		frame:HookScript('OnSizeChanged', frame.OnBackdropSizeChanged)
 	end
 

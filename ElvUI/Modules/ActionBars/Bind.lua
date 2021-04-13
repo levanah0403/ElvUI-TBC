@@ -6,7 +6,6 @@ local _G = _G
 local tonumber, format = tonumber, format
 local select, pairs, floor = select, pairs, floor
 local CreateFrame = CreateFrame
-local HideUIPanel = HideUIPanel
 local GameTooltip_Hide = GameTooltip_Hide
 local GetBindingKey = GetBindingKey
 local GetCurrentBindingSet = GetCurrentBindingSet

@@ -8,10 +8,9 @@
 ]]
 
 local _G = _G
-local unpack = unpack
+local unpack, select = unpack, select
 local format, gsub, pairs, type = format, gsub, pairs, type
 
-local BAG_ITEM_QUALITY_COLORS = BAG_ITEM_QUALITY_COLORS
 local CreateFrame = CreateFrame
 local InCombatLockdown = InCombatLockdown
 local GetAddOnEnableState = GetAddOnEnableState
@@ -222,7 +221,7 @@ end
 function E:PositionGameMenuButton()
 	for i=1, GameMenuFrame:GetNumRegions() do
 		local region = select(i, GameMenuFrame:GetRegions())
-		if region:IsObjectType('FontString') and region:GetText() == MAINMENU_BUTTON then
+		if region:IsObjectType('FontString') and region:GetText() == _G.MAINMENU_BUTTON then
 			region:SetTextColor(unpack(E.media.rgbvaluecolor))
 			break
 		end

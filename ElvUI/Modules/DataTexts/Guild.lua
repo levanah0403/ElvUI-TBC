@@ -26,7 +26,6 @@ local GuildRoster = GuildRoster
 local InCombatLockdown = InCombatLockdown
 local IsAltKeyDown = IsAltKeyDown
 
-local COMBAT_FACTION_CHANGE = COMBAT_FACTION_CHANGE
 local GUILD = GUILD
 local GUILD_MOTD = GUILD_MOTD
 local REMOTE_CHAT = REMOTE_CHAT

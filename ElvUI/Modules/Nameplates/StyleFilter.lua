@@ -9,11 +9,9 @@ local strmatch, tinsert, tremove, sort, wipe = strmatch, tinsert, tremove, sort,
 
 local GetInstanceInfo = GetInstanceInfo
 local GetRaidTargetIndex = GetRaidTargetIndex
-local GetSpecializationInfo = GetSpecializationInfo
 local GetSpellCharges = GetSpellCharges
 local GetSpellCooldown = GetSpellCooldown
 local GetSpellInfo = GetSpellInfo
-local GetTalentInfo = GetTalentInfo
 local GetTime = GetTime
 local IsResting = IsResting
 local UnitPlayerControlled = UnitPlayerControlled
@@ -33,7 +31,6 @@ local UnitLevel = UnitLevel
 local UnitPower = UnitPower
 local UnitPowerMax = UnitPowerMax
 local UnitThreatSituation = UnitThreatSituation
-local UnitGroupRolesAssigned = UnitGroupRolesAssigned
 
 local C_Timer_NewTimer = C_Timer.NewTimer
 

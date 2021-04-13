@@ -7,22 +7,27 @@ local Search = E.Libs.ItemSearch
 local _G = _G
 local type, ipairs, next, unpack, select, pcall = type, ipairs, next, unpack, select, pcall
 local tinsert, tremove, twipe, tmaxn = tinsert, tremove, wipe, table.maxn
-local floor, ceil, abs = floor, ceil, abs
-local format, sub = format, strsub
+local format, sub, floor = format, strsub, floor
 
 local BankFrameItemButton_Update = BankFrameItemButton_Update
 local BankFrameItemButton_UpdateLocked = BankFrameItemButton_UpdateLocked
 local CloseBag, CloseBackpack, CloseBankFrame = CloseBag, CloseBackpack, CloseBankFrame
 local CooldownFrame_Set = CooldownFrame_Set
 local CreateFrame = CreateFrame
+local CursorHasItem = CursorHasItem
 local DeleteCursorItem = DeleteCursorItem
 local GameTooltip_Hide = GameTooltip_Hide
+local GetBagName = GetBagName
+local GetBindingKey = GetBindingKey
 local GetContainerItemCooldown = GetContainerItemCooldown
 local GetContainerItemID = GetContainerItemID
 local GetContainerItemInfo = GetContainerItemInfo
 local GetContainerItemLink = GetContainerItemLink
 local GetContainerNumFreeSlots = GetContainerNumFreeSlots
 local GetContainerNumSlots = GetContainerNumSlots
+local GetCVarBool = GetCVarBool
+local GetDetailedItemLevelInfo = GetDetailedItemLevelInfo
+local GetItemFamily = GetItemFamily
 local GetItemInfo = GetItemInfo
 local GetItemQualityColor = GetItemQualityColor
 local GetMoney = GetMoney
@@ -32,6 +37,9 @@ local IsBagOpen, IsOptionFrameOpen = IsBagOpen, IsOptionFrameOpen
 local IsShiftKeyDown, IsControlKeyDown = IsShiftKeyDown, IsControlKeyDown
 local PickupContainerItem = PickupContainerItem
 local PlaySound = PlaySound
+local PutItemInBackpack = PutItemInBackpack
+local PutItemInBag = PutItemInBag
+local PutKeyInKeyRing = PutKeyInKeyRing
 local SetInsertItemsLeftToRight = SetInsertItemsLeftToRight
 local SetItemButtonCount = SetItemButtonCount
 local SetItemButtonDesaturated = SetItemButtonDesaturated
@@ -39,9 +47,6 @@ local SetItemButtonTexture = SetItemButtonTexture
 local SetItemButtonTextureVertexColor = SetItemButtonTextureVertexColor
 local ToggleFrame = ToggleFrame
 local UseContainerItem = UseContainerItem
-local PutItemInBackpack = PutItemInBackpack
-local CursorHasItem = CursorHasItem
-local PutKeyInKeyRing = PutKeyInKeyRing
 
 local C_NewItems_IsNewItem = C_NewItems.IsNewItem
 local C_NewItems_RemoveNewItem = C_NewItems.RemoveNewItem
@@ -60,6 +65,8 @@ local NUM_BANKGENERIC_SLOTS = NUM_BANKGENERIC_SLOTS
 local NUM_CONTAINER_FRAMES = NUM_CONTAINER_FRAMES
 local LE_ITEM_CLASS_QUESTITEM = LE_ITEM_CLASS_QUESTITEM
 local SEARCH = SEARCH
+
+-- GLOBALS: ElvUIBankMover, ElvUIBagMover
 
 local GameTooltip = _G.GameTooltip
 
@@ -859,11 +866,13 @@ function B:ConstructContainerFrame(name, isBank)
 				f.ContainerHolder[i]:HookScript('OnEnter', function(s)
 					GameTooltip:SetOwner(s, 'ANCHOR_LEFT', 0, 4);
 					GameTooltip:ClearLines()
-					GameTooltip:SetText(BACKPACK_TOOLTIP, 1.0, 1.0, 1.0);
+					GameTooltip:SetText(_G.BACKPACK_TOOLTIP, 1.0, 1.0, 1.0);
+
 					local keyBinding = GetBindingKey('TOGGLEBACKPACK');
 					if ( keyBinding ) then
-						GameTooltip:AppendText(' '..NORMAL_FONT_COLOR_CODE..'('..keyBinding..')'..FONT_COLOR_CODE_CLOSE)
+						GameTooltip:AppendText(' '.._G.NORMAL_FONT_COLOR_CODE..'('..keyBinding..')'.._G.FONT_COLOR_CODE_CLOSE)
 					end
+
 					GameTooltip:Show()
 				end)
 				f.ContainerHolder[i]:HookScript('OnLeave', GameTooltip_Hide)
@@ -886,9 +895,10 @@ function B:ConstructContainerFrame(name, isBank)
 					end
 				end)
 				f.ContainerHolder[i]:HookScript('OnEnter', function(s)
+					local color =  _G.HIGHLIGHT_FONT_COLOR
 					GameTooltip:SetOwner(s, 'ANCHOR_LEFT', 0, 4);
 					GameTooltip:ClearLines()
-					GameTooltip:SetText(KEYRING, HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b);
+					GameTooltip:SetText(_G.KEYRING, color.r, color.g, color.b);
 					GameTooltip:Show()
 				end)
 				f.ContainerHolder[i]:HookScript('OnLeave', GameTooltip_Hide)

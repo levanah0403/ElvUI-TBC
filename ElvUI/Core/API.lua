@@ -13,17 +13,10 @@ local GetCVar, SetCVar = GetCVar, SetCVar
 local GetCVarBool = GetCVarBool
 local GetFunctionCPUUsage = GetFunctionCPUUsage
 local GetInstanceInfo = GetInstanceInfo
-local GetSpecialization = GetSpecialization
-local GetSpecializationRole = GetSpecializationRole
 local InCombatLockdown = InCombatLockdown
 local IsAddOnLoaded = IsAddOnLoaded
 local RequestBattlefieldScoreData = RequestBattlefieldScoreData
 local UIParentLoadAddOn = UIParentLoadAddOn
-local UnitAttackPower = UnitAttackPower
-local UnitFactionGroup = UnitFactionGroup
-local UnitStat = UnitStat
-local FACTION_HORDE = FACTION_HORDE
-local FACTION_ALLIANCE = FACTION_ALLIANCE
 local ERR_NOT_IN_COMBAT = ERR_NOT_IN_COMBAT
 -- GLOBALS: ElvDB
 

@@ -22,7 +22,7 @@ function S:SkinBattlefield()
 	S:HandleButton(_G.BattlefieldFrameJoinButton)
 	S:HandleButton(_G.BattlefieldFrameGroupJoinButton)
 
-	BattlefieldFrameGroupJoinButton:Point("RIGHT", BattlefieldFrameJoinButton, "LEFT", -2, 0)
+	_G.BattlefieldFrameGroupJoinButton:Point("RIGHT", _G.BattlefieldFrameJoinButton, "LEFT", -2, 0)
 
 	S:HandleCloseButton(_G.BattlefieldFrameCloseButton)
 end

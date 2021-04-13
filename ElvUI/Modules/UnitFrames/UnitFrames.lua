@@ -15,7 +15,6 @@ local CreateFrame = CreateFrame
 local GetInstanceInfo = GetInstanceInfo
 local hooksecurefunc = hooksecurefunc
 local IsReplacingUnit = IsReplacingUnit
-local IsAddOnLoaded = IsAddOnLoaded
 local RegisterStateDriver = RegisterStateDriver
 local UnitExists = UnitExists
 local UnitIsEnemy = UnitIsEnemy

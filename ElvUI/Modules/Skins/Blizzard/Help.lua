@@ -109,8 +109,8 @@ function S:HelpFrame()
 	_G.HelpFrameKnowledgebaseSearchBox:Point('TOPLEFT', _G.HelpFrameMainInset, 'TOPLEFT', 13, -10)
 	_G.HelpFrameKnowledgebaseNavBar:StripTextures()
 
-	S:HandleFrame(BrowserSettingsTooltip, true)
-	S:HandleButton(BrowserSettingsTooltip.CookiesButton)
+	S:HandleFrame(_G.BrowserSettingsTooltip, true)
+	S:HandleButton(_G.BrowserSettingsTooltip.CookiesButton)
 
 	local HelpFrame = _G.HelpFrame
 	S:HandleFrame(HelpFrame, true)

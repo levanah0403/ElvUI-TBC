@@ -3,10 +3,9 @@ local S = E:GetModule('Skins')
 local TT = E:GetModule('Tooltip')
 
 local _G = _G
-local unpack = unpack
-local pairs = pairs
-local GameTooltip = GameTooltip
-local hooksecurefunc = hooksecurefunc
+local ipairs = ipairs
+local GameTooltip = _G.GameTooltip
+local GameTooltipStatusBar = _G.GameTooltipStatusBar
 
 function S:TooltipFrames()
 	if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.tooltip) then return end
@@ -14,8 +13,6 @@ function S:TooltipFrames()
 	S:HandleCloseButton(_G.ItemRefCloseButton)
 
 	-- Skin Blizzard Tooltips
-	local GameTooltip = _G.GameTooltip
-	local GameTooltipStatusBar = _G.GameTooltipStatusBar
 	GameTooltipStatusBar:SetStatusBarTexture(E.media.normTex)
 	E:RegisterStatusBar(GameTooltipStatusBar)
 	GameTooltipStatusBar:CreateBackdrop('Transparent')

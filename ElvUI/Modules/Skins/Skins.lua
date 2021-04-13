@@ -2,13 +2,12 @@ local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, Private
 local S = E:GetModule('Skins')
 
 local _G = _G
-local tinsert, xpcall, next = tinsert, xpcall, next
+local tinsert, xpcall, next, wipe, format = tinsert, xpcall, next, wipe, format
 local unpack, assert, pairs, select, type, strfind = unpack, assert, pairs, select, type, strfind
 
-local CreateFrame = CreateFrame
 local hooksecurefunc = hooksecurefunc
+local InCombatLockdown = InCombatLockdown
 local IsAddOnLoaded = IsAddOnLoaded
-local ITEM_QUALITY_COLORS = ITEM_QUALITY_COLORS
 
 S.allowBypass = {}
 S.addonsToLoad = {}
@@ -1087,7 +1086,7 @@ do
 		end
 
 		if not igroneUpdate and frame:IsShown() then
-			UpdateUIPanelPositions(frame)
+			_G.UpdateUIPanelPositions(frame)
 		end
 	end
 
@@ -1095,7 +1094,7 @@ do
 	local inCombat, panelQueue = nil, {}
 	function S:SetUIPanelWindowInfo(frame, name, value, offset, igroneUpdate)
 		local frameName = frame and frame.GetName and frame:GetName()
-		if not (frameName and UIPanelWindows[frameName]) then return end
+		if not (frameName and _G.UIPanelWindows[frameName]) then return end
 
 		if name == 'width' then
 			value = E:Scale(value or (frame.backdrop and frame.backdrop:GetWidth() or frame:GetWidth())) + (offset or 0) + UI_PANEL_OFFSET

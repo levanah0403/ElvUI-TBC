@@ -8,10 +8,8 @@ local tinsert = tinsert
 local CreateFrame = CreateFrame
 local GetCVarBool = GetCVarBool
 local RegisterStateDriver = RegisterStateDriver
+local CalculateTotalNumberOfFreeBagSlots = CalculateTotalNumberOfFreeBagSlots
 local NUM_BAG_FRAMES = NUM_BAG_FRAMES
-
-local Masque = E.Masque
-local MasqueGroup = Masque and Masque:Group('ElvUI', 'ActionBars')
 
 local function OnEnter()
 	if not E.db.bags.bagBar.mouseover then return; end

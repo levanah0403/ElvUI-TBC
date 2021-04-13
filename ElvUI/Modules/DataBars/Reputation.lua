@@ -3,6 +3,7 @@ local DB = E:GetModule('DataBars')
 
 local _G = _G
 local format = format
+local GetExpansionLevel = GetExpansionLevel
 local GetWatchedFactionInfo = GetWatchedFactionInfo
 local ToggleCharacter = ToggleCharacter
 local REPUTATION = REPUTATION
@@ -108,7 +109,7 @@ function DB:ReputationBar()
 	DB:CreateBarBubbles(Reputation)
 
 	Reputation.ShouldHide = function()
-		return (DB.db.reputation.hideBelowMaxLevel and E.mylevel ~= MAX_PLAYER_LEVEL_TABLE[GetExpansionLevel()]) or not GetWatchedFactionInfo()
+		return (DB.db.reputation.hideBelowMaxLevel and E.mylevel ~= _G.MAX_PLAYER_LEVEL_TABLE[GetExpansionLevel()]) or not GetWatchedFactionInfo()
 	end
 
 	E:CreateMover(Reputation.holder, 'ReputationBarMover', L["Reputation Bar"], nil, nil, nil, nil, nil, 'databars,reputation')

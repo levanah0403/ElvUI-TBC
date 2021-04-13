@@ -2,7 +2,10 @@ local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, Private
 local S = E:GetModule('Skins')
 
 local _G = _G
+local pairs, ipairs = pairs, ipairs
 local unpack, select = unpack, select
+local hooksecurefunc = hooksecurefunc
+
 local GetItemInfo = GetItemInfo
 local GetItemQualityColor = GetItemQualityColor
 local GetTradePlayerItemLink = GetTradePlayerItemLink

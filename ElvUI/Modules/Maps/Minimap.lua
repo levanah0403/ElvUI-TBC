@@ -4,6 +4,7 @@ local LSM = E.Libs.LSM
 
 local _G = _G
 local pairs = pairs
+local unpack = unpack
 local tinsert = tinsert
 local utf8sub = string.utf8sub
 
@@ -22,7 +23,6 @@ local ToggleCharacter = ToggleCharacter
 local ToggleCollectionsJournal = ToggleCollectionsJournal
 local ToggleFrame = ToggleFrame
 local ToggleFriendsFrame = ToggleFriendsFrame
-local ToggleGuildFrame = ToggleGuildFrame
 local ToggleHelpFrame = ToggleHelpFrame
 local ToggleLFDParentFrame = ToggleLFDParentFrame
 local hooksecurefunc = hooksecurefunc

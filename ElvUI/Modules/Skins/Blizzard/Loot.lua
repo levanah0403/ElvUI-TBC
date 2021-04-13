@@ -5,12 +5,14 @@ local LBG = E.Libs.ButtonGlow
 local _G = _G
 local unpack, select = unpack, select
 
-local hooksecurefunc = hooksecurefunc
+local GetItemInfo = GetItemInfo
 local GetLootSlotInfo = GetLootSlotInfo
+local hooksecurefunc = hooksecurefunc
+local IsFishingLoot = IsFishingLoot
 local UnitIsDead = UnitIsDead
 local UnitIsFriend = UnitIsFriend
 local UnitName = UnitName
-local IsFishingLoot = IsFishingLoot
+
 local C_LootHistory_GetNumItems = C_LootHistory.GetNumItems
 local C_LootHistory_GetItem = C_LootHistory.GetItem
 local ITEM_QUALITY_COLORS = ITEM_QUALITY_COLORS
@@ -36,7 +38,6 @@ local function UpdateLoots()
 
 			if (itemRarity) then
 				local color = ITEM_QUALITY_COLORS[itemRarity]
-				
 				if (color) then
 					frame.backdrop:SetBackdropBorderColor(color.r, color.g, color.b)
 				end

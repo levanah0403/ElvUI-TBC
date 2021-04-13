@@ -2,8 +2,7 @@ local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, Private
 local NP = E:GetModule('NamePlates')
 local LSM = E.Libs.LSM
 
-local strfind = strfind
-local ipairs, unpack = ipairs, unpack
+local ipairs = ipairs
 local CreateFrame = CreateFrame
 
 local targetIndicators = {'Spark', 'TopIndicator', 'LeftIndicator', 'RightIndicator'}
