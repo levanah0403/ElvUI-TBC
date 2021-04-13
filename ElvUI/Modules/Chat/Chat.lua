@@ -1553,9 +1553,9 @@ function CH:ChatFrame_MessageEventHandler(frame, event, arg1, arg2, arg3, arg4, 
 					end
 				end
 			end
-			local accessID = ChatHistory_GetAccessID(Chat_GetChatCategory(chatType), arg8)
-			local typeID = ChatHistory_GetAccessID(infoType, arg8, arg12)
-			frame:AddMessage(format(globalstring, arg8, ChatFrame_ResolvePrefixedChannelName(arg4)), info.r, info.g, info.b, info.id, accessID, typeID, isHistory, historyTime)
+			local accessID = _G.ChatHistory_GetAccessID(chatGroup, arg8)
+			local typeID = _G.ChatHistory_GetAccessID(infoType, arg8, arg12)
+			frame:AddMessage(format(globalstring, arg8, _G.ChatFrame_ResolvePrefixedChannelName(arg4)), info.r, info.g, info.b, info.id, accessID, typeID, isHistory, historyTime)
 		elseif chatType == 'BN_INLINE_TOAST_ALERT' then
 			local globalstring = _G['BN_INLINE_TOAST_'..arg1]
 			if not globalstring then
