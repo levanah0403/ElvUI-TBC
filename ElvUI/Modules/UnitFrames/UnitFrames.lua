@@ -1016,7 +1016,6 @@ function UF:LoadUnits()
 			groupFilter, template, headerTemplate = unpack(groupOptions)
 		end
 
-		print(group)
 		UF:CreateAndUpdateHeaderGroup(group, groupFilter, template, headerTemplate)
 	end
 	UF.headerstoload = nil
