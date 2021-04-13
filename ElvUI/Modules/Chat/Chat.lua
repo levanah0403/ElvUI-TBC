@@ -6,13 +6,18 @@ local LSM = E.Libs.LSM
 
 local _G = _G
 local gsub, strfind, gmatch, format, max = gsub, strfind, gmatch, format, max
-local ipairs, sort, wipe, date, time, difftime = ipairs, sort, wipe, date, time, difftime
+local ipairs, sort, wipe, time, difftime = ipairs, sort, wipe, time, difftime
 local pairs, unpack, select, tostring, pcall, next, tonumber, type = pairs, unpack, select, tostring, pcall, next, tonumber, type
 local strlower, strsub, strlen, strupper, strtrim, strmatch = strlower, strsub, strlen, strupper, strtrim, strmatch
 local tinsert, tremove, tconcat = tinsert, tremove, table.concat
 
 local Ambiguate = Ambiguate
 local BetterDate = BetterDate
+local BNGetFriendGameAccountInfo = BNGetFriendGameAccountInfo
+local BNGetFriendInfo = BNGetFriendInfo
+local BNGetFriendInfoByID = BNGetFriendInfoByID
+local BNGetGameAccountInfo = BNGetGameAccountInfo
+local BNGetNumFriendGameAccounts = BNGetNumFriendGameAccounts
 local BNGetNumFriendInvites = BNGetNumFriendInvites
 local BNGetNumFriends = BNGetNumFriends
 local CreateFrame = CreateFrame
@@ -42,24 +47,15 @@ local PlaySoundFile = PlaySoundFile
 local RemoveExtraSpaces = RemoveExtraSpaces
 local RemoveNewlines = RemoveNewlines
 local ToggleFrame = ToggleFrame
-local ToggleQuickJoinPanel = ToggleQuickJoinPanel
 local UnitName = UnitName
 
-local BNGetFriendInfoByID = BNGetFriendInfoByID
-local BNet_GetClientEmbeddedTexture = BNet_GetClientEmbeddedTexture
-local BNet_GetValidatedCharacterName = BNet_GetValidatedCharacterName
-local C_DateAndTime_GetCurrentCalendarTime = C_DateAndTime.GetCurrentCalendarTime
 local C_Club_GetInfoFromLastCommunityChatLine = C_Club.GetInfoFromLastCommunityChatLine
-local C_VoiceChat_GetMemberName = C_VoiceChat.GetMemberName
-local C_VoiceChat_SetPortraitTexture = C_VoiceChat.SetPortraitTextur
-
---local C_BattleNet_GetAccountInfoByID = C_BattleNet.GetAccountInfoByID
---local C_BattleNet_GetFriendAccountInfo = C_BattleNet.GetFriendAccountInfo
---local C_BattleNet_GetFriendGameAccountInfo = C_BattleNet.GetFriendGameAccountInfo
---local C_BattleNet_GetFriendNumGameAccounts = C_BattleNet.GetFriendNumGameAccounts
-
+local Chat_GetChatCategory = Chat_GetChatCategory
+local ChatHistory_GetAccessID = ChatHistory_GetAccessID
+local ChatFrame_ResolvePrefixedChannelName = ChatFrame_ResolvePrefixedChannelName
+local BNet_GetValidatedCharacterName = BNet_GetValidatedCharacterName
+local BNet_GetClientEmbeddedTexture = BNet_GetClientEmbeddedTexture
 local BNET_CLIENT_WOW = BNET_CLIENT_WOW
-local UNKNOWN = UNKNOWN
 -- GLOBALS: ElvCharacterDB
 
 CH.GuidCache = {}
@@ -217,7 +213,6 @@ do --this can save some main file locals
 		["Luckyone-ClassicBetaPvE"] = ElvGreen, -- Beta Test
 		["Luckyone-ClassicBetaPvP"] = ElvGreen, -- Beta Test
 	}
-
 end
 
 function CH:ChatFrame_OnMouseScroll(delta)
@@ -382,7 +377,7 @@ do
 
 		-- recalculate the character count correctly with hyperlinks in it, using gsub so it matches multiple without gmatch
 		charCount = 0
-		gsub(text, '(|c%x-|H.-|h).-|h|r', CH.CountLinkCharacters)
+		gsub(text, '(|cff%x%x%x%x%x%x|H.-|h).-|h|r', CH.CountLinkCharacters)
 		if charCount ~= 0 then len = len - charCount end
 
 		self.characterCount:SetText(len > 0 and (255 - len) or '')
@@ -1143,19 +1138,6 @@ local function HyperLinkedCPL(data)
 	end
 end
 
-local function HyperLinkedSQU(data)
-	if strsub(data, 1, 3) == 'squ' then
-		if not _G.QuickJoinFrame:IsShown() then
-			ToggleQuickJoinPanel()
-		end
-		local guid = strsub(data, 5)
-		if guid and guid ~= '' then
-			_G.QuickJoinFrame:SelectGroup(guid)
-			_G.QuickJoinFrame:ScrollToGroup(guid)
-		end
-	end
-end
-
 local function HyperLinkedURL(data)
 	if strsub(data, 1, 3) == 'url' then
 		local currentLink = strsub(data, 5)
@@ -1169,8 +1151,6 @@ local SetHyperlink = _G.ItemRefTooltip.SetHyperlink
 function _G.ItemRefTooltip:SetHyperlink(data, ...)
 	if strsub(data, 1, 3) == 'cpl' then
 		HyperLinkedCPL(data)
-	elseif strsub(data, 1, 3) == 'squ' then
-		HyperLinkedSQU(data)
 	elseif strsub(data, 1, 3) == 'url' then
 		HyperLinkedURL(data)
 	else
@@ -1573,9 +1553,9 @@ function CH:ChatFrame_MessageEventHandler(frame, event, arg1, arg2, arg3, arg4, 
 					end
 				end
 			end
-			local accessID = _G.ChatHistory_GetAccessID(chatGroup, arg8)
-			local typeID = _G.ChatHistory_GetAccessID(infoType, arg8, arg12)
-			frame:AddMessage(format(globalstring, arg8, _G.ChatFrame_ResolvePrefixedChannelName(arg4)), info.r, info.g, info.b, info.id, accessID, typeID, isHistory, historyTime)
+			local accessID = ChatHistory_GetAccessID(Chat_GetChatCategory(chatType), arg8)
+			local typeID = ChatHistory_GetAccessID(infoType, arg8, arg12)
+			frame:AddMessage(format(globalstring, arg8, ChatFrame_ResolvePrefixedChannelName(arg4)), info.r, info.g, info.b, info.id, accessID, typeID, isHistory, historyTime)
 		elseif chatType == 'BN_INLINE_TOAST_ALERT' then
 			local globalstring = _G['BN_INLINE_TOAST_'..arg1]
 			if not globalstring then
@@ -1852,9 +1832,6 @@ function CH:SetupChat()
 	_G.GeneralDockManagerScrollFrame:Height(22)
 	_G.GeneralDockManagerScrollFrameChild:Height(22)
 
-	_G.GeneralDockManagerOverflowButtonList:SetTemplate('Transparent')
-	Skins:HandleNextPrevButton(_G.GeneralDockManagerOverflowButton, 'down', nil, true)
-
 	CH:PositionChats()
 
 	if not CH.HookSecured then
@@ -1925,7 +1902,7 @@ function CH:CheckKeyword(message, author)
 	local letInCombat = not CH.db.noAlertInCombat or not InCombatLockdown()
 	local letSound = not CH.SoundTimer and (CH.db.keywordSound ~= 'None' and author ~= PLAYER_NAME) and letInCombat
 
-	for hyperLink in gmatch(message, '|c%x-|H.-|h.-|h|r') do
+	for hyperLink in gmatch(message, '|%x+|H.-|h.-|h|r') do
 		protectLinks[hyperLink] = gsub(hyperLink,'%s','|s')
 
 		if letSound then
@@ -2179,7 +2156,7 @@ function CH:SaveChatHistory(event, ...)
 
 	if #tempHistory > 0 and not CH:MessageIsProtected(tempHistory[1]) then
 		tempHistory[50] = event
-		tempHistory[51] = CH:GetChatTime()
+		tempHistory[51] = time()
 
 		local coloredName, battleTag
 		if tempHistory[13] > 0 then coloredName, battleTag = CH:GetBNFriendColor(tempHistory[2], tempHistory[13], true) end
@@ -2224,8 +2201,6 @@ local FindURL_Events = {
 	'CHAT_MSG_RAID',
 	'CHAT_MSG_RAID_LEADER',
 	'CHAT_MSG_RAID_WARNING',
-	'CHAT_MSG_INSTANCE_CHAT',
-	'CHAT_MSG_INSTANCE_CHAT_LEADER',
 	'CHAT_MSG_CHANNEL',
 	'CHAT_MSG_SAY',
 	'CHAT_MSG_YELL',
@@ -2336,12 +2311,6 @@ function CH:DefaultSmileys()
 	CH:AddSmiley('</3', E:TextureString(E.Media.ChatEmojis.BrokenHeart,x))
 end
 
-local channelButtons = {
-	_G.ChatFrameChannelButton,
-	_G.ChatFrameToggleVoiceDeafenButton,
-	_G.ChatFrameToggleVoiceMuteButton
-}
-
 function CH:GetAnchorParents(chat)
 	local Left = (chat == CH.LeftChatWindow and _G.LeftChatPanel)
 	local Right = (chat == CH.RightChatWindow and _G.RightChatPanel)
@@ -2358,101 +2327,69 @@ function CH:ReparentVoiceChatIcon(parent)
 		parent = CH:GetAnchorParents(_G.GeneralDockManager.primary)
 	end
 
-	for _, button in pairs(channelButtons) do
-		button:SetParent(parent)
-	end
+	_G.ChatFrameChannelButton:SetParent(parent)
 end
 
 function CH:RepositionOverflowButton()
-	_G.GeneralDockManagerOverflowButtonList:SetFrameStrata('LOW')
-	_G.GeneralDockManagerOverflowButtonList:SetFrameLevel(5)
 	_G.GeneralDockManagerOverflowButton:ClearAllPoints()
-
-	if CH.db.pinVoiceButtons and not CH.db.hideVoiceButtons then
-		_G.GeneralDockManagerOverflowButton:Point('RIGHT', _G.GeneralDockManager, 'LEFT', -4, 0)
-	else
-		_G.GeneralDockManagerOverflowButton:Point('RIGHT', _G.GeneralDockManager, 'RIGHT', -4, 0)
-	end
+	_G.GeneralDockManagerOverflowButton:Point('RIGHT', _G.ChatFrameChannelButton, 'LEFT', -4, 0)
 end
 
 function CH:UpdateVoiceChatIcons()
-	for _, button in ipairs(channelButtons) do
-		button.Icon:SetDesaturated(CH.db.desaturateVoiceIcons)
-	end
+	_G.ChatFrameChannelButton.Icon:SetDesaturated(CH.db.desaturateVoiceIcons)
 end
 
 function CH:HandleChatVoiceIcons()
 	if CH.db.hideVoiceButtons then
-		for _, button in ipairs(channelButtons) do
-			button:Hide()
-		end
+		_G.ChatFrameChannelButton:Hide()
 	elseif CH.db.pinVoiceButtons then
-		for index, button in ipairs(channelButtons) do
-			Skins:HandleButton(button, nil, nil, true)
-			button.Icon:SetDesaturated(CH.db.desaturateVoiceIcons)
-			button:ClearAllPoints()
+		Skins:HandleButton(_G.ChatFrameChannelButton)
+		_G.ChatFrameChannelButton.Icon:SetDesaturated(CH.db.desaturateVoiceIcons)
+		_G.ChatFrameChannelButton:ClearAllPoints()
+		_G.ChatFrameChannelButton:Point('RIGHT', _G.GeneralDockManager, 'RIGHT', 2, 0)
+		_G.ChatFrameChannelButton.backdrop:Hide()
 
-			if index == 1 then
-				button:Point('RIGHT', _G.GeneralDockManager, 'RIGHT', 2, 0)
-			else
-				button:Point('RIGHT', channelButtons[index-1], 'LEFT')
-			end
-		end
-
+		CH:RepositionOverflowButton()
 	else
 		CH:CreateChatVoicePanel()
 	end
 
-	CH:RepositionOverflowButton()
-end
-
-function CH:EnterVoicePanel()
-	if CH.VoicePanel and CH.db.mouseoverVoicePanel then
-		CH.VoicePanel:SetAlpha(1)
+	if not CH.db.hideVoiceButtons then
+		_G.GeneralDockManagerOverflowButtonList:SetFrameStrata('LOW')
+		_G.GeneralDockManagerOverflowButtonList:SetFrameLevel(5)
 	end
-end
 
-function CH:LeaveVoicePanel()
-	if CH.VoicePanel and CH.db.mouseoverVoicePanel then
-		CH.VoicePanel:SetAlpha(CH.db.voicePanelAlpha)
-	end
-end
-
-function CH:ResetVoicePanelAlpha()
-	if CH.VoicePanel then
-		CH.VoicePanel:SetAlpha(CH.db.mouseoverVoicePanel and CH.db.voicePanelAlpha or 1)
+	if not CH.db.pinVoiceButtons then
+		_G.GeneralDockManagerOverflowButton:ClearAllPoints()
+		_G.GeneralDockManagerOverflowButton:Point('RIGHT', _G.GeneralDockManager, 'RIGHT', -4, 0)
 	end
 end
 
 function CH:CreateChatVoicePanel()
-	local Holder = CreateFrame('Frame', 'ElvUIChatVoicePanel', E.UIParent, 'BackdropTemplate')
+	local Holder = CreateFrame('Frame', 'ChatButtonHolder', E.UIParent)
 	Holder:ClearAllPoints()
 	Holder:Point('BOTTOMLEFT', _G.LeftChatPanel, 'TOPLEFT', 0, 1)
 	Holder:Size(30, 86)
 	Holder:SetTemplate('Transparent', nil, true)
 	Holder:SetBackdropColor(CH.db.panelColor.r, CH.db.panelColor.g, CH.db.panelColor.b, CH.db.panelColor.a)
 	E:CreateMover(Holder, 'SocialMenuMover', _G.BINDING_HEADER_VOICE_CHAT, nil, nil, nil, nil, nil, 'chat')
-	CH.VoicePanel = Holder
 
-	Holder:SetScript('OnEnter', CH.EnterVoicePanel)
-	Holder:SetScript('OnLeave', CH.LeaveVoicePanel)
-	CH.LeaveVoicePanel(Holder)
+	_G.ChatFrameChannelButton:ClearAllPoints()
+	_G.ChatFrameChannelButton:Point('TOP', Holder, 'TOP', 0, -2)
 
-	channelButtons[1]:ClearAllPoints()
-	channelButtons[1]:Point('TOP', Holder, 'TOP', 0, -2)
-
-	for _, button in ipairs(channelButtons) do
-		Skins:HandleButton(button, nil, nil, true)
-		button.Icon:SetParent(button)
-		button.Icon:SetDesaturated(CH.db.desaturateVoiceIcons)
-		button:SetParent(Holder)
-
-		button:HookScript('OnEnter', CH.EnterVoicePanel)
-		button:HookScript('OnLeave', CH.LeaveVoicePanel)
-	end
+	Skins:HandleButton(_G.ChatFrameChannelButton, nil, nil, true)
+	_G.ChatFrameChannelButton.Icon:SetParent(_G.ChatFrameChannelButton)
+	_G.ChatFrameChannelButton.Icon:SetDesaturated(CH.db.desaturateVoiceIcons)
+	_G.ChatFrameChannelButton:SetParent(Holder)
 
 	_G.ChatAlertFrame:ClearAllPoints()
-	_G.ChatAlertFrame:Point('BOTTOM', channelButtons[1], 'TOP', 1, 3)
+	_G.ChatAlertFrame:Point('BOTTOM', _G.ChatFrameChannelButton, 'TOP', 1, 3)
+end
+
+function CH:ResetVoicePanelAlpha()
+	if CH.VoicePanel then
+		CH.VoicePanel:SetAlpha(CH.db.mouseoverVoicePanel and CH.db.voicePanelAlpha or 1)
+	end
 end
 
 function CH:BuildCopyChatFrame()
@@ -2610,89 +2547,6 @@ function CH:FCFTab_UpdateColors(tab, selected)
 	end
 end
 
-function CH:GetAvailableHead()
-	for _, ChatHead in ipairs(CH.ChatHeadFrame) do
-		if not ChatHead:IsShown() then
-			return ChatHead
-		end
-	end
-end
-
-function CH:GetHeadByID(memberID)
-	for _, ChatHead in ipairs(CH.ChatHeadFrame) do
-		if ChatHead.memberID == memberID then
-			return ChatHead
-		end
-	end
-end
-
-function CH:ConfigureHead(memberID, channelID)
-	local frame = CH:GetAvailableHead()
-	if not frame then return end
-
-	frame.memberID = memberID
-	frame.channelID = channelID
-
-	C_VoiceChat_SetPortraitTexture(frame.Portrait.texture, memberID, channelID)
-
-	local memberName = C_VoiceChat_GetMemberName(memberID, channelID)
-	local r, g, b = _G.Voice_GetVoiceChannelNotificationColor(channelID)
-	frame.Name:SetText(memberName or '')
-	frame.Name:SetVertexColor(r, g, b, 1)
-	frame:Show()
-end
-
-function CH:DeconfigureHead(memberID) -- memberID, channelID
-	local frame = CH:GetHeadByID(memberID)
-	if not frame then return end
-
-	frame.memberID = nil
-	frame.channelID = nil
-	frame:Hide()
-end
-
-function CH:VoiceOverlay(event, ...)
-	if event == 'VOICE_CHAT_CHANNEL_MEMBER_SPEAKING_STATE_CHANGED' then
-		local memberID, channelID, isTalking = ...
-
-		if isTalking then
-			CH.TalkingList[memberID] = channelID
-			CH:ConfigureHead(memberID, channelID)
-		else
-			CH.TalkingList[memberID] = nil
-			CH:DeconfigureHead(memberID, channelID)
-		end
-	elseif event == 'VOICE_CHAT_CHANNEL_MEMBER_ENERGY_CHANGED' then
-		local memberID, channelID, volume = ...
-		local frame = CH:GetHeadByID(memberID)
-		if frame and channelID == frame.channelID then
-			frame.StatusBar.anim.progress:SetChange(volume)
-			frame.StatusBar.anim.progress:Play()
-
-			frame.StatusBar:SetStatusBarColor(E:ColorGradient(volume, 1, 0, 0, 1, 1, 0, 0, 1, 0))
-		end
-	--[[elseif event == 'VOICE_CHAT_CHANNEL_TRANSMIT_CHANGED' then
-		local channelID, isTransmitting = ...
-		local localPlayerMemberID = C_VoiceChat.GetLocalPlayerMemberID(channelID)
-		if isTransmitting and not CH.TalkingList[localPlayerMemberID] then
-			CH.TalkingList[localPlayerMemberID] = channelID
-			CH:ConfigureHead(localPlayerMemberID, channelID)
-		end]]
-	end
-end
-
-function CH:SetChatHeadOrientation(position)
-	local point, relativePoint, offset = 'TOP', 'BOTTOM', -E.Border*3
-	if position == 'BOTTOM' then -- This is never used. Maybe was supposed to be an option at one point?
-		point, relativePoint, offset = 'BOTTOM', 'TOP', E.Border*3
-	end
-
-	for i, ChatHead in ipairs(CH.ChatHeadFrame) do
-		ChatHead:ClearAllPoints()
-		ChatHead:Point(point, i == 1 and CH.ChatHeadFrame or CH.ChatHeadFrame[i - 1], relativePoint, 0, offset)
-	end
-end
-
 function CH:GetPlayerInfoByGUID(guid)
 	local data = CH.GuidCache[guid]
 	if not data then
@@ -2792,21 +2646,9 @@ function CH:Initialize()
 	CH:RegisterEvent('UPDATE_CHAT_WINDOWS', 'SetupChat')
 	CH:RegisterEvent('UPDATE_FLOATING_CHAT_WINDOWS', 'SetupChat')
 
-	if E.private.general.voiceOverlay then
-		CH:RegisterEvent('VOICE_CHAT_CHANNEL_MEMBER_SPEAKING_STATE_CHANGED', 'VoiceOverlay')
-		CH:RegisterEvent('VOICE_CHAT_CHANNEL_MEMBER_ENERGY_CHANGED', 'VoiceOverlay')
-		CH:RegisterEvent('VOICE_CHAT_CHANNEL_TRANSMIT_CHANGED', 'VoiceOverlay')
-		CH:RegisterEvent('VOICE_CHAT_COMMUNICATION_MODE_CHANGED', 'VoiceOverlay')
-		CH:RegisterEvent('VOICE_CHAT_CHANNEL_MEMBER_REMOVED', 'VoiceOverlay')
-		CH:RegisterEvent('VOICE_CHAT_CHANNEL_REMOVED', 'VoiceOverlay')
-		CH:RegisterEvent('VOICE_CHAT_CHANNEL_DEACTIVATED', 'VoiceOverlay')
-		_G.VoiceActivityManager:UnregisterAllEvents()
-	end
-
 	if _G.WIM then
 		_G.WIM.RegisterWidgetTrigger('chat_display', 'whisper,chat,w2w,demo', 'OnHyperlinkClick', function(frame) CH.clickedframe = frame end)
 		_G.WIM.RegisterItemRefHandler('url', HyperLinkedURL)
-		_G.WIM.RegisterItemRefHandler('squ', HyperLinkedSQU)
 		_G.WIM.RegisterItemRefHandler('cpl', HyperLinkedCPL)
 	end
 
@@ -2850,51 +2692,6 @@ function CH:Initialize()
 			editbox.backdrop:SetBackdropBorderColor(info.r, info.g, info.b)
 		end
 	end)
-
-	--Chat Heads Frame
-	CH.ChatHeadFrame = CreateFrame('Frame', 'ElvUIChatHeadFrame', E.UIParent)
-	CH.ChatHeadFrame:Point('TOPLEFT', E.UIParent, 'TOPLEFT', 368, -210)
-	CH.ChatHeadFrame:Size(200, 20)
-	E:CreateMover(CH.ChatHeadFrame, 'VOICECHAT', L["Voice Overlay"])
-	CH.maxHeads = 5
-	CH.volumeBarHeight = 3
-
-	local CHAT_HEAD_HEIGHT = 40
-	for i = 1, CH.maxHeads do
-		local chatHead = CreateFrame('Frame', 'ElvUIChatHeadFrame'..i, CH.ChatHeadFrame)
-		chatHead:Width(CH.ChatHeadFrame:GetWidth())
-		chatHead:Height(CHAT_HEAD_HEIGHT)
-
-		chatHead.Portrait = CreateFrame('Frame', nil, chatHead, 'BackdropTemplate')
-		chatHead.Portrait:Width(CHAT_HEAD_HEIGHT - CH.volumeBarHeight)
-		chatHead.Portrait:Height(CHAT_HEAD_HEIGHT - CH.volumeBarHeight - E.Border*2)
-		chatHead.Portrait:Point('TOPLEFT', chatHead, 'TOPLEFT')
-		chatHead.Portrait:SetTemplate()
-		chatHead.Portrait.texture = chatHead.Portrait:CreateTexture(nil, 'OVERLAY')
-		chatHead.Portrait.texture:SetTexCoord(0.15, 0.85, 0.15, 0.85)
-		chatHead.Portrait.texture:SetInside(chatHead.Portrait)
-
-		chatHead.Name = chatHead:CreateFontString(nil, 'OVERLAY')
-		chatHead.Name:FontTemplate(nil, 20)
-		chatHead.Name:Point('LEFT', chatHead.Portrait, 'RIGHT', 2, 0)
-
-		chatHead.StatusBar = CreateFrame('StatusBar', nil, chatHead)
-		chatHead.StatusBar:Point('TOPLEFT', chatHead.Portrait, 'BOTTOMLEFT', E.Border, -E.Spacing*3)
-		chatHead.StatusBar:Width(CHAT_HEAD_HEIGHT - E.Border*2 - CH.volumeBarHeight)
-		chatHead.StatusBar:Height(CH.volumeBarHeight)
-		chatHead.StatusBar:CreateBackdrop()
-		chatHead.StatusBar:SetStatusBarTexture(E.media.normTex)
-		chatHead.StatusBar:SetMinMaxValues(0, 1)
-
-		chatHead.StatusBar.anim = _G.CreateAnimationGroup(chatHead.StatusBar)
-		chatHead.StatusBar.anim.progress = chatHead.StatusBar.anim:CreateAnimation('Progress')
-		chatHead.StatusBar.anim.progress:SetEasing('Out')
-		chatHead.StatusBar.anim.progress:SetDuration(.3)
-
-		chatHead:Hide()
-		CH.ChatHeadFrame[i] = chatHead
-	end
-	CH:SetChatHeadOrientation('TOP')
 end
 
 E:RegisterModule(CH:GetName())
