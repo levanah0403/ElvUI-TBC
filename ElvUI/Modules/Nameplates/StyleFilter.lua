@@ -48,11 +48,6 @@ mod.TriggerConditions = {
 		ENEMY_NPC = 'enemyNPC',
 		PLAYER = 'player'
 	},
-	roles = {
-		TANK = 'tank',
-		HEALER = 'healer',
-		DAMAGER = 'damager'
-	},
 	keys = {
 		Modifier = IsModifierKeyDown,
 		Shift = IsShiftKeyDown,
@@ -74,25 +69,6 @@ mod.TriggerConditions = {
 		[2] = 'goodTransition',
 		[3] = 'bad'
 	},
-	difficulties = {
-		-- dungeons
-		[1] = 'normal',
-		[2] = 'heroic',
-		[8] = 'mythic+',
-		[23] = 'mythic',
-		[24] = 'timewalking',
-		-- raids
-		[7] = 'lfr',
-		[17] = 'lfr',
-		[14] = 'normal',
-		[15] = 'heroic',
-		[16] = 'mythic',
-		[33] = 'timewalking',
-		[3] = 'legacy10normal',
-		[4] = 'legacy25normal',
-		[5] = 'legacy10heroic',
-		[6] = 'legacy25heroic',
-	}
 }
 
 do -- E.CreatureTypes; Do *not* change the value, only the key (['key'] = 'value').
@@ -851,36 +827,6 @@ function mod:StyleFilterConditionCheck(frame, filter, trigger)
 			end
 		end
 	end
-
-	---- Talents
-	--if trigger.talent.enabled then
-	--	local pvpTalent = trigger.talent.type == 'pvp'
-	--	local selected, complete
-
-	--	for i = 1, (pvpTalent and 4) or 7 do
-	--		local Tier = 'tier'..i
-	--		local Talent = trigger.talent[Tier]
-	--		if trigger.talent[Tier..'enabled'] and Talent.column > 0 then
-	--			if pvpTalent then
-	--				-- column is actually the talentID for pvpTalents
-	--				local slotInfo = C_SpecializationInfo_GetPvpTalentSlotInfo(i)
-	--				selected = (slotInfo and slotInfo.selectedTalentID) == Talent.column
-	--			else
-	--				selected = select(4, GetTalentInfo(i, Talent.column, 1))
-	--			end
-
-	--			if (selected and not Talent.missing) or (Talent.missing and not selected) then
-	--				complete = true
-	--				if not trigger.talent.requireAll then
-	--					break -- break when not using requireAll because we matched one
-	--				end
-	--			elseif trigger.talent.requireAll then
-	--				complete = false -- fail because requireAll
-	--				break
-	--	end end end
-
-	--	if complete then passed = true else return end
-	--end
 
 	-- Casting
 	if trigger.casting then
