@@ -1,4 +1,7 @@
 ### Version 0.10 [ ETA: 🍨 ]
+**• Chat fixes**  
+**• Experience DataBar error fixes**  
+**• Macro Frame tweaks**  
 ___
 ### Version 0.09 [13-04-2021]
 **• ActionBars enabled**  
