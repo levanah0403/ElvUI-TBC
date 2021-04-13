@@ -2042,7 +2042,6 @@ local function UpdateFilterGroup()
 									end,
 									set = function(info, value)
 										E.global.nameplate.filters[selectedNameplateFilter].triggers.instanceType.raid = value
-										UpdateInstanceDifficulty()
 										NP:ConfigureAll()
 									end
 								},

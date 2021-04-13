@@ -210,9 +210,6 @@ E.StyleFilterDefaults = {
 				normal = false,
 				heroic = false,
 			},
-			raid = {
-				normal = false,
-			}
 		},
 		cooldowns = {
 			names = {},
