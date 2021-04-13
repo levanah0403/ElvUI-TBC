@@ -25,7 +25,6 @@ local GetCursorPosition = GetCursorPosition
 local GetCVar, GetCVarBool = GetCVar, GetCVarBool
 local GetGuildRosterMOTD = GetGuildRosterMOTD
 local GetInstanceInfo = GetInstanceInfo
-local GetItemInfoFromHyperlink = GetItemInfoFromHyperlink
 local GetMouseFocus = GetMouseFocus
 local GetNumGroupMembers = GetNumGroupMembers
 local GetPlayerCommunityLink = GetPlayerCommunityLink
@@ -39,29 +38,27 @@ local InCombatLockdown = InCombatLockdown
 local IsAltKeyDown = IsAltKeyDown
 local IsInRaid, IsInGroup = IsInRaid, IsInGroup
 local IsShiftKeyDown = IsShiftKeyDown
-local PlaySound = PlaySound
 local PlaySoundFile = PlaySoundFile
 local RemoveExtraSpaces = RemoveExtraSpaces
 local RemoveNewlines = RemoveNewlines
 local ToggleFrame = ToggleFrame
 local ToggleQuickJoinPanel = ToggleQuickJoinPanel
-local UnitExists, UnitIsUnit = UnitExists, UnitIsUnit
 local UnitName = UnitName
 
+local BNGetFriendInfoByID = BNGetFriendInfoByID
+local BNet_GetClientEmbeddedTexture = BNet_GetClientEmbeddedTexture
+local BNet_GetValidatedCharacterName = BNet_GetValidatedCharacterName
 local C_DateAndTime_GetCurrentCalendarTime = C_DateAndTime.GetCurrentCalendarTime
+local C_Club_GetInfoFromLastCommunityChatLine = C_Club.GetInfoFromLastCommunityChatLine
+local C_VoiceChat_GetMemberName = C_VoiceChat.GetMemberName
+local C_VoiceChat_SetPortraitTexture = C_VoiceChat.SetPortraitTextur
+
 --local C_BattleNet_GetAccountInfoByID = C_BattleNet.GetAccountInfoByID
 --local C_BattleNet_GetFriendAccountInfo = C_BattleNet.GetFriendAccountInfo
 --local C_BattleNet_GetFriendGameAccountInfo = C_BattleNet.GetFriendGameAccountInfo
 --local C_BattleNet_GetFriendNumGameAccounts = C_BattleNet.GetFriendNumGameAccounts
-local C_Club_GetInfoFromLastCommunityChatLine = C_Club.GetInfoFromLastCommunityChatLine
-local C_SocialGetLastItem = C_Social.GetLastItem
-local C_SocialIsSocialEnabled = C_Social.IsSocialEnabled
-local C_VoiceChat_GetMemberName = C_VoiceChat.GetMemberName
-local C_VoiceChat_SetPortraitTexture = C_VoiceChat.SetPortraitTexture
-local ChatChannelRuleset_Mentor = Enum.ChatChannelRuleset.Mentor
 
 local BNET_CLIENT_WOW = BNET_CLIENT_WOW
-local LFG_LIST_AND_MORE = LFG_LIST_AND_MORE
 local UNKNOWN = UNKNOWN
 -- GLOBALS: ElvCharacterDB
 
@@ -1246,12 +1243,12 @@ end
 function CH:GetBNFirstToonClassColor(id)
 	if not id then return end
 	for i = 1, BNGetNumFriends() do
-		local accountInfo = C_BattleNet_GetFriendAccountInfo(i)
+		local accountInfo --= C_BattleNet_GetFriendAccountInfo(i)
 		if accountInfo and (accountInfo.gameAccountInfo and accountInfo.gameAccountInfo.isOnline) and accountInfo.bnetAccountID == id then
-			local numGameAccounts = C_BattleNet_GetFriendNumGameAccounts(i)
+			local numGameAccounts --= C_BattleNet_GetFriendNumGameAccounts(i)
 			if numGameAccounts and numGameAccounts > 0 then
 				for y = 1, numGameAccounts do
-					local gameAccountInfo = C_BattleNet_GetFriendGameAccountInfo(i, y)
+					local gameAccountInfo --= C_BattleNet_GetFriendGameAccountInfo(i, y)
 					local className = gameAccountInfo and gameAccountInfo.className
 					if className and className ~= '' and (gameAccountInfo.clientProgram == BNET_CLIENT_WOW) then
 						return className --return the first toon's class
@@ -1264,7 +1261,7 @@ function CH:GetBNFirstToonClassColor(id)
 end
 
 function CH:GetBNFriendColor(name, id, useBTag)
-	local accountInfo = C_BattleNet_GetAccountInfoByID(id)
+	local accountInfo --= C_BattleNet_GetAccountInfoByID(id)
 	if not accountInfo then return name end
 
 	local battleTag, isBattleTagFriend, gameAccountInfo = accountInfo.battleTag, accountInfo.isBattleTagFriend, accountInfo.gameAccountInfo
@@ -1576,9 +1573,9 @@ function CH:ChatFrame_MessageEventHandler(frame, event, arg1, arg2, arg3, arg4, 
 					end
 				end
 			end
-			local accessID = ChatHistory_GetAccessID(Chat_GetChatCategory(chatType), arg8)
-			local typeID = ChatHistory_GetAccessID(infoType, arg8, arg12)
-			frame:AddMessage(format(globalstring, arg8, ChatFrame_ResolvePrefixedChannelName(arg4)), info.r, info.g, info.b, info.id, accessID, typeID, isHistory, historyTime)
+			local accessID = _G.ChatHistory_GetAccessID(chatGroup, arg8)
+			local typeID = _G.ChatHistory_GetAccessID(infoType, arg8, arg12)
+			frame:AddMessage(format(globalstring, arg8, _G.ChatFrame_ResolvePrefixedChannelName(arg4)), info.r, info.g, info.b, info.id, accessID, typeID, isHistory, historyTime)
 		elseif chatType == 'BN_INLINE_TOAST_ALERT' then
 			local globalstring = _G['BN_INLINE_TOAST_'..arg1]
 			if not globalstring then
@@ -1593,23 +1590,21 @@ function CH:ChatFrame_MessageEventHandler(frame, event, arg1, arg2, arg3, arg4, 
 				message = format(_G.BN_INLINE_TOAST_FRIEND_PENDING, BNGetNumFriendInvites())
 			elseif arg1 == 'FRIEND_REMOVED' or arg1 == 'BATTLETAG_FRIEND_REMOVED' then
 				message = format(globalstring, arg2)
-			elseif ( arg1 == 'FRIEND_ONLINE' or arg1 == 'FRIEND_OFFLINE' ) then
-				local _, _, _, _, characterName, _, client = BNGetFriendInfoByID(arg13)
-				if (client and client ~= '') then
-					local _, _, battleTag = BNGetFriendInfoByID(arg13)
-					characterName = BNet_GetValidatedCharacterName(characterName, battleTag, client) or ''
-					local characterNameText = BNet_GetClientEmbeddedTexture(client, 14)..characterName
-					local linkDisplayText = ('[%s] (%s)'):format(arg2, characterNameText)
-					local playerLink = GetBNPlayerLink(arg2, linkDisplayText, arg13, arg11, Chat_GetChatCategory(chatType), 0)
-					message = format(globalstring, playerLink)
+			elseif arg1 == 'FRIEND_ONLINE' or arg1 == 'FRIEND_OFFLINE' then
+				local _, _, battleTag, _, characterName, _, client = BNGetFriendInfoByID(arg13)
+
+				local linkDisplayText
+				if client and client ~= '' then
+					linkDisplayText = format('[%s] (%s%s)', arg2, BNet_GetClientEmbeddedTexture(client, 14), BNet_GetValidatedCharacterName(characterName, battleTag, client) or '')
 				else
-					local linkDisplayText = ('[%s]'):format(arg2)
-					local playerLink = GetBNPlayerLink(arg2, linkDisplayText, arg13, arg11, Chat_GetChatCategory(chatType), 0)
-					message = format(globalstring, playerLink)
+					linkDisplayText = format('[%s]', arg2)
 				end
+
+				local playerLink = GetBNPlayerLink(arg2, linkDisplayText, arg13, arg11, chatGroup, 0)
+				message = format(globalstring, playerLink)
 			else
 				local linkDisplayText = ('[%s]'):format(arg2)
-				local playerLink = GetBNPlayerLink(arg2, linkDisplayText, arg13, arg11, Chat_GetChatCategory(chatType), 0)
+				local playerLink = GetBNPlayerLink(arg2, linkDisplayText, arg13, arg11, chatGroup, 0)
 				message = format(globalstring, playerLink)
 			end
 			frame:AddMessage(message, info.r, info.g, info.b, info.id, nil, nil, isHistory, historyTime)
