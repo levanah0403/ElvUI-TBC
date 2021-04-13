@@ -22,7 +22,7 @@
 	<Script file='PVPClassificationIndicator.lua'/>
 	<Script file='PVPIndicator.lua'/>
 	<Script file='PVPSpecIcon.lua'/>
-	<Script file='RaidDebuffs.lua'/>
+	<!--Script file='RaidDebuffs.lua'/-->
 	<Script file='RaidIcon.lua'/>
 	<Script file='RaidRoleIcons.lua'/>
 	<Script file='Range.lua'/>
