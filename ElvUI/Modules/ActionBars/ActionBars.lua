@@ -1383,12 +1383,6 @@ function AB:Initialize()
 	AB:RegisterEvent('PET_BATTLE_OPENING_DONE', 'RemoveBindings')
 	AB:RegisterEvent('SPELL_UPDATE_COOLDOWN', 'UpdateSpellBookTooltip')
 
-	if _G.KeyBindingFrame then
-		AB:SwapKeybindButton()
-	else
-		AB:RegisterEvent('ADDON_LOADED', 'SwapKeybindButton')
-	end
-
 	AB:ReassignBindings()
 
 	-- We handle actionbar lock for regular bars, but the lock on PetBar needs to be handled by WoW so make some necessary updates
