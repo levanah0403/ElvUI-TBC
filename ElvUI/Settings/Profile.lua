@@ -1108,7 +1108,6 @@ local UF_Fader = {
 	range = true,
 	smooth = 0.33,
 	unittarget = false,
-	vehicle = false,
 }
 
 local UF_Name = {
