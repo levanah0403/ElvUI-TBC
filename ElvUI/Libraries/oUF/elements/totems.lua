@@ -22,27 +22,27 @@ OnEnter and OnLeave script handlers will be set to display a Tooltip if the `Tot
 
 ## Examples
 
-    local Totems = {}
-    for index = 1, 5 do
-        -- Position and size of the totem indicator
-        local Totem = CreateFrame('Button', nil, self)
-        Totem:SetSize(40, 40)
-        Totem:SetPoint('TOPLEFT', self, 'BOTTOMLEFT', index * Totem:GetWidth(), 0)
+	local Totems = {}
+	for index = 1, 5 do
+		-- Position and size of the totem indicator
+		local Totem = CreateFrame('Button', nil, self)
+		Totem:SetSize(40, 40)
+		Totem:SetPoint('TOPLEFT', self, 'BOTTOMLEFT', index * Totem:GetWidth(), 0)
 
-        local Icon = Totem:CreateTexture(nil, 'OVERLAY')
-        Icon:SetAllPoints()
+		local Icon = Totem:CreateTexture(nil, 'OVERLAY')
+		Icon:SetAllPoints()
 
-        local Cooldown = CreateFrame('Cooldown', nil, Totem, 'CooldownFrameTemplate')
-        Cooldown:SetAllPoints()
+		local Cooldown = CreateFrame('Cooldown', nil, Totem, 'CooldownFrameTemplate')
+		Cooldown:SetAllPoints()
 
-        Totem.Icon = Icon
-        Totem.Cooldown = Cooldown
+		Totem.Icon = Icon
+		Totem.Cooldown = Cooldown
 
-        Totems[index] = Totem
-    end
+		Totems[index] = Totem
+	end
 
-    -- Register with oUF
-    self.Totems = Totems
+	-- Register with oUF
+	self.Totems = Totems
 --]]
 
 local _, ns = ...
