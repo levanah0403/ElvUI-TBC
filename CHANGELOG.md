@@ -1,6 +1,10 @@
-### Version 0.11 [ ETA: 🍨 ]
+### Version 0.12 [ ETA: 🍨 ]
+___
+### Version 0.11 [14-04-2021]
 **• Chat DateAndTime error fixes**  
+**• Socket frame skin/error fixes**  
 **• Style Filter options**  
+**• Threat (WIP)**  
 ___
 ### Version 0.10 [13-04-2021]
 **• Chat fixes**  
