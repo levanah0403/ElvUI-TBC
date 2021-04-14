@@ -18,7 +18,7 @@ function S:Blizzard_ItemSocketingUI()
 	_G.ItemSocketingScrollFrame:CreateBackdrop('Transparent')
 	S:HandleScrollBar(_G.ItemSocketingScrollFrameScrollBar, 2)
 
-	for i = 1, _G.MAX_NUM_SOCKETS  do
+	for i = 1, _G.MAX_NUM_SOCKETS do
 		local button = _G[('ItemSocketingSocket%d'):format(i)]
 		local button_bracket = _G[('ItemSocketingSocket%dBracketFrame'):format(i)]
 		local button_bg = _G[('ItemSocketingSocket%dBackground'):format(i)]
@@ -32,13 +32,17 @@ function S:Blizzard_ItemSocketingUI()
 		button_icon:SetInside()
 	end
 
-	--[[hooksecurefunc('ItemSocketingFrame_Update', function()
-		for i, socket in ipairs(_G.ItemSocketing.Sockets) do
+	hooksecurefunc('ItemSocketingFrame_Update', function()
+		local numSockets = GetNumSockets()
+		for i = 1, numSockets do
+			local socket = _G[format('ItemSocketingSocket%d', i)]
 			local gemColor = GetSocketTypes(i)
 			local color = E.GemTypeInfo[gemColor]
 			socket.backdrop:SetBackdropBorderColor(color.r, color.g, color.b)
 		end
-	end)]]
+	end)
+
+	S:HandleCloseButton(_G.ItemSocketingCloseButton)
 
 	_G.ItemSocketingFramePortrait:Kill()
 	_G.ItemSocketingSocketButton:ClearAllPoints()
