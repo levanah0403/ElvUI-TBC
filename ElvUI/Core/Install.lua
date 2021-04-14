@@ -289,10 +289,11 @@ function E:SetupLayout(layout, noDataReset, noDisplayMsg)
 			E.db.databars.threat.width = 472
 			E.db.databars.reputation.enable = true
 		--General
-			E.db.general.bonusObjectivePosition = 'AUTO'
 			E.db.general.minimap.size = 220
 			E.db.general.autoTrackReputation = true
-			E.db.general.bonusObjectivePosition = "AUTO"
+			E.db.general.totems.growthDirection = 'HORIZONTAL'
+			E.db.general.totems.size = 50
+			E.db.general.totems.spacing = 8
 		--Movers
 			for mover, position in pairs(E.LayoutMoverPositions.ALL) do
 				E.db.movers[mover] = position

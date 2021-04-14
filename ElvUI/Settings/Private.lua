@@ -20,6 +20,7 @@ V.general = {
 	replaceCombatFont = true,
 	replaceBlizzFonts = true,
 	unifiedBlizzFonts = false,
+	totemBar = true,
 	minimap = {
 		enable = true,
 		hideCalendar = true,

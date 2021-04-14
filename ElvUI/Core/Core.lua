@@ -49,6 +49,7 @@ local Layout = E:GetModule('Layout')
 local Minimap = E:GetModule('Minimap')
 local NamePlates = E:GetModule('NamePlates')
 local Tooltip = E:GetModule('Tooltip')
+local Totems = E:GetModule('Totems')
 local UnitFrames = E:GetModule('UnitFrames')
 local LSM = E.Libs.LSM
 
@@ -1379,6 +1380,7 @@ function E:UpdateDB()
 	DataTexts.db = E.db.datatexts
 	NamePlates.db = E.db.nameplates
 	Tooltip.db = E.db.tooltip
+	Totems.db = E.db.general.totems
 	UnitFrames.db = E.db.unitframe
 
 	--Not part of staggered update
@@ -1507,6 +1509,8 @@ end
 
 function E:UpdateMisc(skipCallback)
 	AFK:Toggle()
+
+	Totems:PositionAndSize()
 
 	if not skipCallback then
 		E.callbacks:Fire('StaggeredUpdate')

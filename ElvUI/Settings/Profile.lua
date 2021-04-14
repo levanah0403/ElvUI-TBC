@@ -80,6 +80,13 @@ P.general = {
 			}
 		}
 	},
+	totems = {
+		enable = true,
+		growthDirection = 'VERTICAL',
+		sortDirection = 'ASCENDING',
+		size = 40,
+		spacing = 4,
+	},
 	kittys = false
 };
 

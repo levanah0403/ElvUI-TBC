@@ -2,6 +2,7 @@ local E, _, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, Profi
 local C, L = unpack(select(2, ...))
 local Misc = E:GetModule('Misc')
 local Layout = E:GetModule('Layout')
+local Totems = E:GetModule('Totems')
 local Blizzard = E:GetModule('Blizzard')
 local NP = E:GetModule('NamePlates')
 local UF = E:GetModule('UnitFrames')
@@ -68,6 +69,14 @@ General.args.general.args.scaling.args.ScaleSmall.customWidth = 100
 General.args.general.args.scaling.args.ScaleMedium.customWidth = 100
 General.args.general.args.scaling.args.ScaleLarge.customWidth = 100
 General.args.general.args.scaling.args.ScaleAuto.customWidth = 100
+
+General.args.general.args.totems = ACH:Group(L["Class Totems"], nil, 55, nil, function(info) return E.db.general.totems[info[#info]] end, function(info, value) E.db.general.totems[info[#info]] = value Totems:PositionAndSize() end, function() return not E.private.general.totemBar end)
+General.args.general.args.totems.inline = true
+General.args.general.args.totems.args.enable = ACH:Toggle(L["Enable"], nil, 1, nil, nil, nil, function() return E.private.general.totemBar end, function(_, value) E.private.general.totemBar = value; E:StaticPopup_Show('PRIVATE_RL') end, false)
+General.args.general.args.totems.args.size = ACH:Range(L["Button Size"], nil, 2, { min = 24, max = 60, step = 1 })
+General.args.general.args.totems.args.spacing = ACH:Range(L["Button Spacing"], nil, 3, { min = 1, max = 10, step = 1 })
+General.args.general.args.totems.args.sortDirection = ACH:Select(L["Sort Direction"], nil, 4, { ASCENDING = L["Ascending"], DESCENDING = L["Descending"] })
+General.args.general.args.totems.args.growthDirection = ACH:Select(L["Bar Direction"], nil, 5, { VERTICAL = L["Vertical"], HORIZONTAL = L["Horizontal"] })
 
 General.args.media = ACH:Group(L["Media"], nil, 10, nil, function(info) return E.db.general[info[#info]] end, function(info, value) E.db.general[info[#info]] = value end)
 

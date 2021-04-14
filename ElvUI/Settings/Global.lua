@@ -336,6 +336,7 @@ G.profileCopy = {
 		general = true,
 		minimap = true,
 		threat = true,
+		totems = true,
 		itemLevel = true,
 		altPowerBar = true
 	},
