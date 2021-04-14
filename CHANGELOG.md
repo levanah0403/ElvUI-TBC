@@ -1,5 +1,9 @@
 ### Version 0.12 [ ETA: 🍨 ]
+___
+### Version 0.12 [15-04-2021]
 **• Class Totem Bar (+ Right Click to remove)**  
+**• Fader fixes**  
+**• Added back Action Paging defaults**  
 ___
 ### Version 0.11 [14-04-2021]
 **• Chat DateAndTime error fixes**  
