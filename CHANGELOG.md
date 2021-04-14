@@ -1,4 +1,5 @@
 ### Version 0.12 [ ETA: 🍨 ]
+**• Class Totem Bar (+ Right Click to remove)**  
 ___
 ### Version 0.11 [14-04-2021]
 **• Chat DateAndTime error fixes**  
