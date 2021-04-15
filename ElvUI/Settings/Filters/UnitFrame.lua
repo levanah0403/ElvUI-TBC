@@ -363,6 +363,9 @@ G.unitframe.aurafilters.Whitelist = {
 G.unitframe.aurafilters.RaidDebuffs = {
 	type = 'Whitelist',
 	spells = {
+	-------------
+	-- Phase 1 --
+	-------------
 	-- Karazhan
 		-- Attument the Huntsman
 		[29833] = Defaults(2), -- Intangible Presence
@@ -428,6 +431,9 @@ G.unitframe.aurafilters.RaidDebuffs = {
 		[33525] = Defaults(2), -- Ground Slam
 	-- Magtheridon's Lair
 		-- Magtheridon
+	-------------
+	-- Phase 2 --
+	-------------
 	-- Serpentshrine Cavern
 		-- Hydross the Unstable
 		-- The Lurker Below
@@ -440,6 +446,9 @@ G.unitframe.aurafilters.RaidDebuffs = {
 		-- Void Reaver
 		-- High Astromancer Solarian
 		-- Kael'thas Sunstrider
+	-------------
+	-- Phase 3 --
+	-------------
 	-- The Battle for Mount Hyjal
 		-- Rage Winterchill
 		-- Anetheron
@@ -456,6 +465,9 @@ G.unitframe.aurafilters.RaidDebuffs = {
 		-- Mother Shahraz
 		-- Illidari Council
 		-- Illidan Stormrage
+	-------------
+	-- Phase 4 --
+	-------------
 	-- Zul'Aman
 		-- Nalorakk
 		-- Jan'alai
@@ -463,6 +475,9 @@ G.unitframe.aurafilters.RaidDebuffs = {
 		-- Halazzi
 		-- Hexxlord Jin'Zakk
 		-- Zul'jin
+	-------------
+	-- Phase 5 --
+	-------------
 	-- Sunwell Plateau
 		-- Kalecgos
 		-- Sathrovarr
@@ -505,6 +520,9 @@ G.unitframe.aurafilters.DungeonDebuffs = {
 G.unitframe.aurafilters.RaidBuffsElvUI = {
 	type = 'Whitelist',
 	spells = {
+	-------------
+	-- Phase 1 --
+	-------------
 	-- Karazhan
 		-- Attument the Huntsman
 		-- Moroes
@@ -540,6 +558,9 @@ G.unitframe.aurafilters.RaidBuffsElvUI = {
 		[36300] = Defaults(), -- Growth
 	-- Magtheridon's Lair
 		-- Magtheridon
+	-------------
+	-- Phase 2 --
+	-------------
 	-- Serpentshrine Cavern
 		-- Hydross the Unstable
 		-- The Lurker Below
@@ -552,6 +573,9 @@ G.unitframe.aurafilters.RaidBuffsElvUI = {
 		-- Void Reaver
 		-- High Astromancer Solarian
 		-- Kael'thas Sunstrider
+	-------------
+	-- Phase 3 --
+	-------------
 	-- The Battle for Mount Hyjal
 		-- Rage Winterchill
 		-- Anetheron
@@ -568,6 +592,9 @@ G.unitframe.aurafilters.RaidBuffsElvUI = {
 		-- Mother Shahraz
 		-- Illidari Council
 		-- Illidan Stormrage
+	-------------
+	-- Phase 4 --
+	-------------
 	-- Zul'Aman
 		-- Nalorakk
 		-- Jan'alai
@@ -575,6 +602,9 @@ G.unitframe.aurafilters.RaidBuffsElvUI = {
 		-- Halazzi
 		-- Hexxlord Jin'Zakk
 		-- Zul'jin
+	-------------
+	-- Phase 5 --
+	-------------
 	-- Sunwell Plateau
 		-- Kalecgos
 		-- Sathrovarr
