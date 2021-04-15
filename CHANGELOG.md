@@ -1,4 +1,8 @@
-### Version 0.12 [ ETA: 🍨 ]
+### Version 0.13 [ ETA: 🍨 ]
+**• RaidBuffs IDs Karazhan**  
+**• RaidBuffs IDs Gruul's Lair**  
+**• RaidDebuffs IDs Karazhan**  
+**• RaidDebuffs IDs Gruul's Lair**  
 ___
 ### Version 0.12 [15-04-2021]
 **• Class Totem Bar (+ Right Click to remove)**  
