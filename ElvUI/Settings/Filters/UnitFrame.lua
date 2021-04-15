@@ -421,7 +421,18 @@ G.unitframe.aurafilters.RaidDebuffs = {
 		-- Zul'jin
 	-- Gruul's Lair
 		-- High King Maulgar
+		[36032] = Defaults(2), -- Arcane Blast
+		[11726] = Defaults(2), -- Enslave Demon
+		[33129] = Defaults(2), -- Dark Decay
+		[33175] = Defaults(2), -- Arcane Shock
+		[33061] = Defaults(2), -- Blast Wave
+		[33130] = Defaults(2), -- Death Coil
+		[16508] = Defaults(2), -- Intimidating Roar
 		-- Gruul the Dragonkiller
+		[38927] = Defaults(2), -- Fel Ache
+		[36240] = Defaults(2), -- Cave In
+		[33652] = Defaults(2), -- Stoned
+		[33525] = Defaults(2), -- Ground Slam
 	-- Magtheridon's Lair
 		-- Magtheridon
 	-- Serpentshrine Cavern
@@ -529,7 +540,11 @@ G.unitframe.aurafilters.RaidBuffsElvUI = {
 		-- Zul'jin
 	-- Gruul's Lair
 		-- High King Maulgar
+		[33232] = Defaults(), -- Flurry
+		[33238] = Defaults(), -- Whirlwind
+		[33054] = Defaults(), -- Spell Shield
 		-- Gruul the Dragonkiller
+		[36300] = Defaults(), -- Growth
 	-- Magtheridon's Lair
 		-- Magtheridon
 	-- Serpentshrine Cavern
