@@ -412,7 +412,6 @@ G.unitframe.aurafilters.RaidDebuffs = {
 		[30129] = Defaults(2), -- Charred Earth
 		[30127] = Defaults(2), -- Searing Cinders
 		[36922] = Defaults(2), -- Bellowing Roar
-		-- Trash
 	-- Zul'Aman
 		-- Nalorakk
 		-- Jan'alai
@@ -420,14 +419,11 @@ G.unitframe.aurafilters.RaidDebuffs = {
 		-- Halazzi
 		-- Hexxlord Jin'Zakk
 		-- Zul'jin
-		-- Trash
 	-- Gruul's Lair
 		-- High King Maulgar
 		-- Gruul the Dragonkiller
-		-- Trash
 	-- Magtheridon's Lair
 		-- Magtheridon
-		-- Trash
 	-- Serpentshrine Cavern
 		-- Hydross the Unstable
 		-- The Lurker Below
@@ -435,20 +431,17 @@ G.unitframe.aurafilters.RaidDebuffs = {
 		-- Fathom-Lord Karathress
 		-- Morogrim Tidewalker
 		-- Lady Vashj
-		-- Trash
 	-- The Eye
 		-- Al'ar
 		-- Void Reaver
 		-- High Astromancer Solarian
 		-- Kael'thas Sunstrider
-		-- Trash
 	-- The Battle for Mount Hyjal
 		-- Rage Winterchill
 		-- Anetheron
 		-- Kaz'rogal
 		-- Azgalor
 		-- Archimonde
-		-- Trash
 	-- Black Temple
 		-- High Warlord Naj'entus
 		-- Supremus
@@ -459,7 +452,6 @@ G.unitframe.aurafilters.RaidDebuffs = {
 		-- Mother Shahraz
 		-- Illidari Council
 		-- Illidan Stormrage
-		-- Trash
 	-- Sunwell Plateau
 		-- Kalecgos
 		-- Sathrovarr
@@ -469,7 +461,6 @@ G.unitframe.aurafilters.RaidDebuffs = {
 		-- Sacrolash
 		-- M'uru
 		-- Kil'Jaeden
-		-- Trash
 	},
 }
 
@@ -529,7 +520,6 @@ G.unitframe.aurafilters.RaidBuffsElvUI = {
 		[30859] = Defaults(), -- Hellfire
 		-- Nightbane
 		[37098] = Defaults(), -- Rain of Bones
-		-- Trash
 	-- Zul'Aman
 		-- Nalorakk
 		-- Jan'alai
@@ -537,14 +527,11 @@ G.unitframe.aurafilters.RaidBuffsElvUI = {
 		-- Halazzi
 		-- Hexxlord Jin'Zakk
 		-- Zul'jin
-		-- Trash
 	-- Gruul's Lair
 		-- High King Maulgar
 		-- Gruul the Dragonkiller
-		-- Trash
 	-- Magtheridon's Lair
 		-- Magtheridon
-		-- Trash
 	-- Serpentshrine Cavern
 		-- Hydross the Unstable
 		-- The Lurker Below
@@ -552,20 +539,17 @@ G.unitframe.aurafilters.RaidBuffsElvUI = {
 		-- Fathom-Lord Karathress
 		-- Morogrim Tidewalker
 		-- Lady Vashj
-		-- Trash
 	-- The Eye
 		-- Al'ar
 		-- Void Reaver
 		-- High Astromancer Solarian
 		-- Kael'thas Sunstrider
-		-- Trash
 	-- The Battle for Mount Hyjal
 		-- Rage Winterchill
 		-- Anetheron
 		-- Kaz'rogal
 		-- Azgalor
 		-- Archimonde
-		-- Trash
 	-- Black Temple
 		-- High Warlord Naj'entus
 		-- Supremus
@@ -576,7 +560,6 @@ G.unitframe.aurafilters.RaidBuffsElvUI = {
 		-- Mother Shahraz
 		-- Illidari Council
 		-- Illidan Stormrage
-		-- Trash
 	-- Sunwell Plateau
 		-- Kalecgos
 		-- Sathrovarr
@@ -586,7 +569,6 @@ G.unitframe.aurafilters.RaidBuffsElvUI = {
 		-- Sacrolash
 		-- M'uru
 		-- Kil'Jaeden
-		-- Trash
 	},
 }
 
