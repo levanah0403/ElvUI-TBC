@@ -412,13 +412,6 @@ G.unitframe.aurafilters.RaidDebuffs = {
 		[30129] = Defaults(2), -- Charred Earth
 		[30127] = Defaults(2), -- Searing Cinders
 		[36922] = Defaults(2), -- Bellowing Roar
-	-- Zul'Aman
-		-- Nalorakk
-		-- Jan'alai
-		-- Akil'zon
-		-- Halazzi
-		-- Hexxlord Jin'Zakk
-		-- Zul'jin
 	-- Gruul's Lair
 		-- High King Maulgar
 		[36032] = Defaults(2), -- Arcane Blast
@@ -463,6 +456,13 @@ G.unitframe.aurafilters.RaidDebuffs = {
 		-- Mother Shahraz
 		-- Illidari Council
 		-- Illidan Stormrage
+	-- Zul'Aman
+		-- Nalorakk
+		-- Jan'alai
+		-- Akil'zon
+		-- Halazzi
+		-- Hexxlord Jin'Zakk
+		-- Zul'jin
 	-- Sunwell Plateau
 		-- Kalecgos
 		-- Sathrovarr
@@ -531,13 +531,6 @@ G.unitframe.aurafilters.RaidBuffsElvUI = {
 		[30859] = Defaults(), -- Hellfire
 		-- Nightbane
 		[37098] = Defaults(), -- Rain of Bones
-	-- Zul'Aman
-		-- Nalorakk
-		-- Jan'alai
-		-- Akil'zon
-		-- Halazzi
-		-- Hexxlord Jin'Zakk
-		-- Zul'jin
 	-- Gruul's Lair
 		-- High King Maulgar
 		[33232] = Defaults(), -- Flurry
@@ -575,6 +568,13 @@ G.unitframe.aurafilters.RaidBuffsElvUI = {
 		-- Mother Shahraz
 		-- Illidari Council
 		-- Illidan Stormrage
+	-- Zul'Aman
+		-- Nalorakk
+		-- Jan'alai
+		-- Akil'zon
+		-- Halazzi
+		-- Hexxlord Jin'Zakk
+		-- Zul'jin
 	-- Sunwell Plateau
 		-- Kalecgos
 		-- Sathrovarr
