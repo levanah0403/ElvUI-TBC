@@ -365,16 +365,53 @@ G.unitframe.aurafilters.RaidDebuffs = {
 	spells = {
 	-- Karazhan
 		-- Attument the Huntsman
-		-- Midnight
+		[29833] = Defaults(2), -- Intangible Presence
+		[29711] = Defaults(2), -- Knockdown
 		-- Moroes
+		[29425] = Defaults(2), -- Gouge
+		[34694] = Defaults(2), -- Blind
+		[37066] = Defaults(2), -- Garrote
+		-- Opera Hall Event
+		[30822] = Defaults(2), -- Poisoned Thrust
+		[30889] = Defaults(2), -- Powerful Attraction
+		[30890] = Defaults(2), -- Blinding Passion
 		-- Maiden of Virtue
+		[29511] = Defaults(2), -- Repentance
+		[29522] = Defaults(2), -- Holy Fire
+		[29512] = Defaults(2), -- Holy Ground
 		-- The Curator
 		-- Terestian Illhoof
+		[30053] = Defaults(2), -- Amplify Flames
+		[30115] = Defaults(2), -- Sacrifice
 		-- Shade of Aran
+		[29946] = Defaults(2), -- Flame Wreath
+		[29947] = Defaults(2), -- Flame Wreath
+		[29990] = Defaults(2), -- Slow
+		[29991] = Defaults(2), -- Chains of Ice
+		[29954] = Defaults(2), -- Frostbolt
+		[29951] = Defaults(2), -- Blizzard
 		-- Netherspite
+		[38637] = Defaults(2), -- Nether Exhaustion (Red)
+		[38638] = Defaults(2), -- Nether Exhaustion (Green)
+		[38639] = Defaults(2), -- Nether Exhaustion (Blue)
+		[30400] = Defaults(2), -- Nether Beam - Perseverence
+		[30401] = Defaults(2), -- Nether Beam - Serenity
+		[30402] = Defaults(2), -- Nether Beam - Dominance
+		[30421] = Defaults(2), -- Nether Portal - Perseverence
+		[30422] = Defaults(2), -- Nether Portal - Serenity
+		[30423] = Defaults(2), -- Nether Portal - Dominance
+		-- Chess Event
+		[30529] = Defaults(2), -- Recently In Game
 		-- Prince Malchezaar
+		[39095] = Defaults(2), -- Amplify Damage
+		[30898] = Defaults(2), -- Shadow Word: Pain 1
+		[30854] = Defaults(2), -- Shadow Word: Pain 2
 		-- Nightbane
-		-- Tenris Mirkblood
+		[37091] = Defaults(2), -- Rain of Bones
+		[30210] = Defaults(2), -- Smoldering Breath
+		[30129] = Defaults(2), -- Charred Earth
+		[30127] = Defaults(2), -- Searing Cinders
+		[36922] = Defaults(2), -- Bellowing Roar
 		-- Trash
 	-- Zul'Aman
 		-- Nalorakk
@@ -468,16 +505,30 @@ G.unitframe.aurafilters.RaidBuffsElvUI = {
 	spells = {
 	-- Karazhan
 		-- Attument the Huntsman
-		-- Midnight
 		-- Moroes
+		[29448] = Defaults(), -- Vanish
+		[37023] = Defaults(), -- Enrage
+		-- Opera Hall Event
+		[30887] = Defaults(), -- Devotion
+		[30841] = Defaults(), -- Daring
 		-- Maiden of Virtue
+		[32429] = Defaults(), -- Draining Touch
 		-- The Curator
 		-- Terestian Illhoof
+		[29908] = Defaults(), -- Astral Bite
 		-- Shade of Aran
+		[29920] = Defaults(), -- Phasing Invisibility
+		[29921] = Defaults(), -- Phasing Invisibility
 		-- Netherspite
+		[30522] = Defaults(), -- Nether Burn
+		[30487] = Defaults(), -- Nether Portal - Perseverence
+		[30491] = Defaults(), -- Nether Portal - Domination
+		-- Chess Event
+		[37469] = Defaults(), -- Poison Cloud
 		-- Prince Malchezaar
+		[30859] = Defaults(), -- Hellfire
 		-- Nightbane
-		-- Tenris Mirkblood
+		[37098] = Defaults(), -- Rain of Bones
 		-- Trash
 	-- Zul'Aman
 		-- Nalorakk
