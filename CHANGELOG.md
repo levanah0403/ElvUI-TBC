@@ -1,4 +1,6 @@
-### Version 0.13 [ ETA: 🍨 ]
+### Version 0.14 [ ETA: 🍨 ]
+___
+### Version 0.13 [16-04-2021]
 **• RaidBuffs IDs Karazhan**  
 **• RaidBuffs IDs Gruul's Lair**  
 **• RaidBuffs IDs Magtheridon's Lair**  
