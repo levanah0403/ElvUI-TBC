@@ -431,6 +431,9 @@ G.unitframe.aurafilters.RaidDebuffs = {
 		[33525] = Defaults(2), -- Ground Slam
 	-- Magtheridon's Lair
 		-- Magtheridon
+		[44032] = Defaults(2), -- Mind Exhaustion
+		[30530] = Defaults(2), -- Fear
+		[38927] = Defaults(2), -- Fel Ache
 	-------------
 	-- Phase 2 --
 	-------------
@@ -558,6 +561,9 @@ G.unitframe.aurafilters.RaidBuffsElvUI = {
 		[36300] = Defaults(), -- Growth
 	-- Magtheridon's Lair
 		-- Magtheridon
+		[30205] = Defaults(), -- Shadow Cage
+		[30576] = Defaults(), -- Quake
+		[30207] = Defaults(), -- Shadow Grasp
 	-------------
 	-- Phase 2 --
 	-------------
