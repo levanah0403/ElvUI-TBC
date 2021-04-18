@@ -279,7 +279,7 @@ function M:UpdateSettings()
 
 	local MiniMapBattlefieldFrame = _G.MiniMapBattlefieldFrame
 	if MiniMapBattlefieldFrame then
-		local pos = E.db.general.minimap.icons.battlefield.position or "BOTTOMLEFT"
+		local pos = E.db.general.minimap.icons.battlefield.position or 'BOTTOMLEFT'
 		local scale = E.db.general.minimap.icons.battlefield.scale or 1
 		MiniMapBattlefieldFrame:ClearAllPoints()
 		MiniMapBattlefieldFrame:Point(pos, Minimap, pos, E.db.general.minimap.icons.battlefield.xOffset or -2, E.db.general.minimap.icons.battlefield.yOffset or -2)
@@ -304,8 +304,8 @@ function M:UpdateSettings()
 		if E.private.general.minimap.hideTracking then
 			MiniMapTracking:SetParent(E.HiddenFrame)
 		else
-			local pos = E.db.general.minimap.icons.tracking.position or "TOPLEFT"
-			local scale = E.db.general.minimap.icons.tracking.scale or 1
+			local pos = E.db.general.minimap.icons.tracking.position or 'BOTTOMRIGHT'
+			local scale = E.db.general.minimap.icons.tracking.scale or 0.8
 			local x = E.db.general.minimap.icons.tracking.xOffset or 0
 			local y = E.db.general.minimap.icons.tracking.yOffset or 0
 
