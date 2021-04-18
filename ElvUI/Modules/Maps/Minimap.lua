@@ -277,16 +277,6 @@ function M:UpdateSettings()
 		MiniMapMailFrame:SetScale(scale)
 	end
 
-	local QueueStatusMinimapButton = _G.QueueStatusMinimapButton
-	if QueueStatusMinimapButton then
-		local pos = E.db.general.minimap.icons.lfgEye.position or 'BOTTOMRIGHT'
-		local scale = E.db.general.minimap.icons.lfgEye.scale or 1
-		QueueStatusMinimapButton:ClearAllPoints()
-		QueueStatusMinimapButton:Point(pos, Minimap, pos, E.db.general.minimap.icons.lfgEye.xOffset or 3, E.db.general.minimap.icons.lfgEye.yOffset or 0)
-		QueueStatusMinimapButton:SetScale(scale)
-		_G.QueueStatusFrame:SetScale(scale)
-	end
-
 	local MiniMapBattlefieldFrame = _G.MiniMapBattlefieldFrame
 	if MiniMapBattlefieldFrame then
 		local pos = E.db.general.minimap.icons.battlefield.position or "BOTTOMLEFT"
@@ -306,6 +296,36 @@ function M:UpdateSettings()
 
 		if (_G.MiniMapBattlefieldIcon) then
 			_G.MiniMapBattlefieldIcon:SetTexCoord(unpack(E.TexCoords))
+		end
+	end
+
+	local MiniMapTracking = _G.MiniMapTracking
+	if (MiniMapTracking) then
+		if E.private.general.minimap.hideTracking then
+			MiniMapTracking:SetParent(E.HiddenFrame)
+		else
+			local pos = E.db.general.minimap.icons.tracking.position or "TOPLEFT"
+			local scale = E.db.general.minimap.icons.tracking.scale or 1
+			local x = E.db.general.minimap.icons.tracking.xOffset or 0
+			local y = E.db.general.minimap.icons.tracking.yOffset or 0
+
+			MiniMapTracking:ClearAllPoints()
+			MiniMapTracking:Point(pos, Minimap, pos, x, y)
+			MiniMapTracking:SetScale(scale)
+			MiniMapTracking:SetParent(Minimap)
+
+			if (_G.MiniMapTrackingBorder) then
+				print('border-check')
+				_G.MiniMapTrackingBorder:Hide()
+			end
+
+			if (_G.MiniMapTrackingIcon) then
+				print('icon-check')
+				_G.MiniMapTrackingIcon:SetDrawLayer('ARTWORK')
+				_G.MiniMapTrackingIcon:SetTexCoord(unpack(E.TexCoords))
+				_G.MiniMapTrackingIcon:SetInside()
+				_G.MiniMapTrackingIcon:CreateBackdrop()
+			end
 		end
 	end
 
@@ -377,7 +397,6 @@ function M:Initialize()
 		_G.MinimapZoomOut,
 		_G.MinimapNorthTag,
 		_G.MinimapZoneTextButton,
-		_G.MiniMapTracking,
 		_G.MiniMapMailBorder
 	}
 

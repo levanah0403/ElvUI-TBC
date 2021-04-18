@@ -71,6 +71,14 @@ Maps.args.minimap.args.icons.args.calendar.args.scale = ACH:Range(L["Scale"], ni
 Maps.args.minimap.args.icons.args.calendar.args.xOffset = ACH:Range(L["X-Offset"], nil, 5, buttonOffsets, nil, nil, nil, function() return E.private.general.minimap.hideCalendar end)
 Maps.args.minimap.args.icons.args.calendar.args.yOffset = ACH:Range(L["Y-Offset"], nil, 6, buttonOffsets, nil, nil, nil, function() return E.private.general.minimap.hideCalendar end)
 
+E.Options.args.maps.args.minimap.args.icons.args.tracking = ACH:Group(L["Tracking"])
+E.Options.args.maps.args.minimap.args.icons.args.tracking.args.hideTracking = ACH:Toggle(L["Hide"], nil, 1, nil, nil, nil, function() return E.private.general.minimap.hideTracking end, function(_, value) E.private.general.minimap.hideTracking = value; MM:UpdateSettings() end)
+E.Options.args.maps.args.minimap.args.icons.args.tracking.args.spacer = ACH:Spacer(2, "full")
+E.Options.args.maps.args.minimap.args.icons.args.tracking.args.position = ACH:Select(L["Position"], nil, 3, buttonPositions, nil, nil, nil, nil, function() return E.private.general.minimap.hideTracking end)
+E.Options.args.maps.args.minimap.args.icons.args.tracking.args.scale = ACH:Range(L["Scale"], nil, 4, buttonScale, nil, nil, nil, function() return E.private.general.minimap.hideTracking end)
+E.Options.args.maps.args.minimap.args.icons.args.tracking.args.xOffset = ACH:Range(L["X-Offset"], nil, 5, buttonOffsets, nil, nil, nil, function() return E.private.general.minimap.hideTracking end)
+E.Options.args.maps.args.minimap.args.icons.args.tracking.args.yOffset = ACH:Range(L["Y-Offset"], nil, 6, buttonOffsets, nil, nil, nil, function() return E.private.general.minimap.hideTracking end)
+
 Maps.args.minimap.args.icons.args.mail = ACH:Group(L["MAIL_LABEL"], nil, 3)
 Maps.args.minimap.args.icons.args.mail.args.position = ACH:Select(L["Position"], nil, 1, buttonPositions)
 Maps.args.minimap.args.icons.args.mail.args.scale = ACH:Range(L["Scale"], nil, 2, buttonScale)
@@ -86,12 +94,6 @@ do -- mail icons
 		mail[key] = E:TextureString(icon, ':14:14')
 	end
 end
-
-Maps.args.minimap.args.icons.args.lfgEye = ACH:Group(L["LFG Queue"], nil, 4)
-Maps.args.minimap.args.icons.args.lfgEye.args.position = ACH:Select(L["Position"], nil, 1, buttonPositions)
-Maps.args.minimap.args.icons.args.lfgEye.args.scale = ACH:Range(L["Scale"], nil, 2, buttonScale)
-Maps.args.minimap.args.icons.args.lfgEye.args.xOffset = ACH:Range(L["X-Offset"], nil, 3, buttonOffsets)
-Maps.args.minimap.args.icons.args.lfgEye.args.yOffset = ACH:Range(L["Y-Offset"], nil, 4, buttonOffsets)
 
 E.Options.args.maps.args.minimap.args.icons.args.battlefield = ACH:Group(L["Battlefield"])
 E.Options.args.maps.args.minimap.args.icons.args.battlefield.args.position = ACH:Select(L["Position"], nil, 1, buttonPositions)

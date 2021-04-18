@@ -60,11 +60,11 @@ P.general = {
 				xOffset = 3,
 				yOffset = 4,
 			},
-			lfgEye = {
-				scale = 1,
+			tracking = {
+				scale = 0.8,
 				position = 'BOTTOMRIGHT',
-				xOffset = 3,
-				yOffset = 0,
+				xOffset = -2,
+				yOffset = 2,
 			},
 			difficulty = {
 				scale = 1,

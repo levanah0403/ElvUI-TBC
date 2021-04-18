@@ -24,6 +24,7 @@ V.general = {
 	minimap = {
 		enable = true,
 		hideCalendar = true,
+		hideTracking = false,
 	},
 	classColorMentionsSpeech = true,
 	raidUtility = true,
