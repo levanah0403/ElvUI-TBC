@@ -211,6 +211,7 @@ do --this can save some main file locals
 		["Luckyp-Shazzrah"]			= Clover, -- Priest
 		["Luckyr-Shazzrah"]			= Clover, -- Rogue
 		["Elvuidevtest-Shazzrah"]	= Clover, -- Warrior
+		["Luckyone-BadgeofJustice"] = ElvGreen, -- Beta Test
 		["Luckyone-ClassicBetaPvE"] = ElvGreen, -- Beta Test
 		["Luckyone-ClassicBetaPvP"] = ElvGreen, -- Beta Test
 	}
