@@ -1,4 +1,8 @@
-### Version 0.14 [ ETA: 🍨 ]
+### Version 0.15 [ ETA: 🍨 ]
+___
+### Version 0.14 [20-04-2021]
+**• Added MiniMapTracking Icon & Options**  
+**• Fixed Help.lua Error/Skin from latest Beta Build**  
 ___
 ### Version 0.13 [16-04-2021]
 **• RaidBuffs IDs Karazhan**  
