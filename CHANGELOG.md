@@ -1,4 +1,6 @@
 ### Version 0.15 [ ETA: 🍨 ]
+**• ArenaFrame skin (WIP)**  
+**• Tweaked BGScore skin**  
 ___
 ### Version 0.14 [20-04-2021]
 **• Added MiniMapTracking Icon & Options**  
