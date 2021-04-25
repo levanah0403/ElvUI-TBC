@@ -1348,6 +1348,11 @@ local function UpdateCustomTextGroup(unit)
 				subchild:UpdateTags()
 			end
 		end
+	elseif unit == 'boss' or unit == 'arena' then
+		for i = 1, 5 do
+			UF:Configure_CustomTexts(UF[unit..i])
+			UF[unit..i]:UpdateTags()
+		end
 	else
 		UF:Configure_CustomTexts(UF[unit])
 		UF[unit]:UpdateTags()
@@ -2601,6 +2606,10 @@ local function GetOptionsTable_GeneralGroup(updateFunc, groupName, numUnits)
 		config.args.smartAuraPosition = ACH:Select(L["Smart Aura Position"], L["Will show Buffs in the Debuff position when there are no Debuffs active, or vice versa."], 6, smartAuraPositionValues)
 	end
 
+	if groupName ~= 'arena' then
+		config.args.threatStyle = ACH:Select(L["Threat Display Mode"], nil, 7, threatValues)
+	end
+
 	config.args.positionsGroup = ACH:Group(L["Size and Positions"], nil, 100, nil, nil, function(info, value) E.db.unitframe.units[groupName][info[#info]] = value; updateFunc(UF, groupName, numUnits) end)
 	config.args.positionsGroup.inline = true
 	config.args.positionsGroup.args.width = ACH:Range(L["Width"], nil, 1, { min = 50, max = 1000, step = 1 })
@@ -2646,6 +2655,11 @@ local function GetOptionsTable_GeneralGroup(updateFunc, groupName, numUnits)
 	else
 		config.args.positionsGroup.args.width.set = function(info, value) if E.db.unitframe.units[groupName].castbar and E.db.unitframe.units[groupName].castbar.width == E.db.unitframe.units[groupName][info[#info]] then E.db.unitframe.units[groupName].castbar.width = value end E.db.unitframe.units[groupName][info[#info]] = value updateFunc(UF, groupName, numUnits) end
 
+		if groupName == 'boss' or groupName == 'arena' then
+			config.args.positionsGroup.args.spacing = ACH:Range(L["Spacing"], nil, 3, { min = ((E.db.unitframe.thinBorders or E.PixelMode) and -1 or -4), max = 400, step = 1 })
+			config.args.positionsGroup.args.growthDirection = ACH:Select(L["Growth Direction"], nil, 4, { UP = L["Bottom to Top"], DOWN = L["Top to Bottom"], LEFT = L["Right to Left"], RIGHT = L["Left to Right"] })
+		end
+
 		if groupName == 'tank' or groupName == 'assist' then
 			config.args.positionsGroup.args.verticalSpacing = ACH:Range(L["Vertical Spacing"], nil, 3, { min = 0, max = 100, step = 1 })
 		end
@@ -2656,7 +2670,7 @@ local function GetOptionsTable_GeneralGroup(updateFunc, groupName, numUnits)
 		config.args.visibilityGroup.args.visibility.disabled = function() return E.db.unitframe.smartRaidFilter end
 	end
 
-	if (groupName == 'target' or groupName == 'tank' or groupName == 'assist') and not IsAddOnLoaded('Clique') then
+	if (groupName == 'target' or groupName == 'boss' or groupName == 'tank' or groupName == 'arena' or groupName == 'assist') and not IsAddOnLoaded('Clique') then
 		config.args.middleClickFocus = ACH:Toggle(L["Middle Click - Set Focus"], L["Middle clicking the unit frame will cause your focus to match the unit."], 16)
 	end
 
@@ -3931,6 +3945,32 @@ E.Options.args.unitframe = {
 								},
 							},
 						},
+						focus = {
+							order = 3,
+							type = 'toggle',
+							name = L["Focus"],
+							desc = L["Disables the focus and target of focus unitframes."],
+						},
+						boss = {
+							order = 4,
+							type = 'toggle',
+							name = L["Boss"],
+						},
+						arena = {
+							order = 5,
+							type = 'toggle',
+							name = L["Arena"],
+						},
+						party = {
+							order = 6,
+							type = 'toggle',
+							name = L["PARTY"],
+						},
+						raid = {
+							order = 7,
+							type = 'toggle',
+							name = L["Raid"],
+						},
 					},
 				},
 				raidDebuffIndicator = {
@@ -4642,6 +4682,157 @@ E.Options.args.unitframe.args.individualUnits.args.pettarget = {
 		name = GetOptionsTable_Name(UF.CreateAndUpdateUF, 'pettarget'),
 		portrait = GetOptionsTable_Portrait(UF.CreateAndUpdateUF, 'pettarget'),
 		power = GetOptionsTable_Power(true, UF.CreateAndUpdateUF, 'pettarget'),
+	},
+}
+
+--Boss Frames
+E.Options.args.unitframe.args.groupUnits.args.boss = {
+	name = L["Boss"],
+	type = 'group',
+	order = 1000,
+	get = function(info) return E.db.unitframe.units.boss[info[#info]] end,
+	set = function(info, value) E.db.unitframe.units.boss[info[#info]] = value; UF:CreateAndUpdateUFGroup('boss', _G.MAX_BOSS_FRAMES) end,
+	disabled = function() return not E.UnitFrames.Initialized end,
+	args = {
+		enable = {
+			type = 'toggle',
+			order = 1,
+			name = L["Enable"],
+		},
+		displayFrames = {
+			type = 'execute',
+			order = 2,
+			name = L["Display Frames"],
+			desc = L["Force the frames to show, they will act as if they are the player frame."],
+			func = function() UF:ToggleForceShowGroupFrames('boss', _G.MAX_BOSS_FRAMES) end,
+		},
+		resetSettings = {
+			type = 'execute',
+			order = 3,
+			name = L["Restore Defaults"],
+			func = function(info) E:StaticPopup_Show('RESET_UF_UNIT', L["Boss Frames"], nil, {unit='boss', mover='Boss Frames'}) end,
+		},
+		copyFrom = {
+			type = 'select',
+			order = 4,
+			name = L["Copy From"],
+			desc = L["Select a unit to copy settings from."],
+			values = {
+				arena = L["Arena"],
+			},
+			set = function(info, value) UF:MergeUnitSettings(value, 'boss'); E:RefreshGUI(); end,
+			confirm = true,
+		},
+		generalGroup = GetOptionsTable_GeneralGroup(UF.CreateAndUpdateUFGroup, 'boss', _G.MAX_BOSS_FRAMES),
+		buffIndicator = GetOptionsTable_AuraWatch(UF.CreateAndUpdateUFGroup, 'boss', _G.MAX_BOSS_FRAMES),
+		customText = GetOptionsTable_CustomText(UF.CreateAndUpdateUFGroup, 'boss', _G.MAX_BOSS_FRAMES),
+		health = GetOptionsTable_Health(false, UF.CreateAndUpdateUFGroup, 'boss', _G.MAX_BOSS_FRAMES),
+		power = GetOptionsTable_Power(false, UF.CreateAndUpdateUFGroup, 'boss', _G.MAX_BOSS_FRAMES),
+		infoPanel = GetOptionsTable_InformationPanel(UF.CreateAndUpdateUFGroup, 'boss', _G.MAX_BOSS_FRAMES),
+		name = GetOptionsTable_Name(UF.CreateAndUpdateUFGroup, 'boss', _G.MAX_BOSS_FRAMES),
+		portrait = GetOptionsTable_Portrait(UF.CreateAndUpdateUFGroup, 'boss', _G.MAX_BOSS_FRAMES),
+		fader = GetOptionsTable_Fader(UF.CreateAndUpdateUFGroup, 'boss', _G.MAX_BOSS_FRAMES),
+		buffs = GetOptionsTable_Auras('buffs', UF.CreateAndUpdateUFGroup, 'boss', _G.MAX_BOSS_FRAMES),
+		debuffs = GetOptionsTable_Auras('debuffs', UF.CreateAndUpdateUFGroup, 'boss', _G.MAX_BOSS_FRAMES),
+		castbar = GetOptionsTable_Castbar(false, UF.CreateAndUpdateUFGroup, 'boss', _G.MAX_BOSS_FRAMES),
+		raidicon = GetOptionsTable_RaidIcon(UF.CreateAndUpdateUFGroup, 'boss', _G.MAX_BOSS_FRAMES),
+		cutaway = GetOptionsTable_Cutaway(UF.CreateAndUpdateUFGroup, 'boss', _G.MAX_BOSS_FRAMES),
+	},
+}
+
+--Arena Frames
+E.Options.args.unitframe.args.groupUnits.args.arena = {
+	name = L["Arena"],
+	type = 'group',
+	order = 1000,
+	get = function(info) return E.db.unitframe.units.arena[info[#info]] end,
+	set = function(info, value) E.db.unitframe.units.arena[info[#info]] = value; UF:CreateAndUpdateUFGroup('arena', 5) end,
+	disabled = function() return not E.UnitFrames.Initialized end,
+	args = {
+		enable = {
+			type = 'toggle',
+			order = 1,
+			name = L["Enable"],
+		},
+		displayFrames = {
+			type = 'execute',
+			order = 2,
+			name = L["Display Frames"],
+			desc = L["Force the frames to show, they will act as if they are the player frame."],
+			func = function() UF:ToggleForceShowGroupFrames('arena', 5) end,
+		},
+		resetSettings = {
+			type = 'execute',
+			order = 3,
+			name = L["Restore Defaults"],
+			func = function(info) E:StaticPopup_Show('RESET_UF_UNIT', L["Arena Frames"], nil, {unit='arena', mover='Arena Frames'}) end,
+		},
+		copyFrom = {
+			type = 'select',
+			order = 4,
+			name = L["Copy From"],
+			desc = L["Select a unit to copy settings from."],
+			values = {
+				boss = L["Boss"],
+			},
+			set = function(info, value) UF:MergeUnitSettings(value, 'arena'); E:RefreshGUI(); end,
+			confirm = true,
+		},
+		pvpTrinket = {
+			order = 4001,
+			type = 'group',
+			name = L["PVP Trinket"],
+			get = function(info) return E.db.unitframe.units.arena.pvpTrinket[info[#info]] end,
+			set = function(info, value) E.db.unitframe.units.arena.pvpTrinket[info[#info]] = value; UF:CreateAndUpdateUFGroup('arena', 5) end,
+			args = {
+				enable = {
+					type = 'toggle',
+					order = 2,
+					name = L["Enable"],
+				},
+				position = {
+					type = 'select',
+					order = 3,
+					name = L["Position"],
+					values = {
+						LEFT = L["Left"],
+						RIGHT = L["Right"],
+					},
+				},
+				size = {
+					order = 4,
+					type = 'range',
+					name = L["Size"],
+					min = 10, max = 60, step = 1,
+				},
+				xOffset = {
+					order = 5,
+					type = 'range',
+					name = L["X-Offset"],
+					min = -60, max = 60, step = 1,
+				},
+				yOffset = {
+					order = 6,
+					type = 'range',
+					name = L["Y-Offset"],
+					min = -60, max = 60, step = 1,
+				},
+			},
+		},
+		generalGroup = GetOptionsTable_GeneralGroup(UF.CreateAndUpdateUFGroup, 'arena', 5),
+		healPredction = GetOptionsTable_HealPrediction(UF.CreateAndUpdateUFGroup, 'arena', 5),
+		customText = GetOptionsTable_CustomText(UF.CreateAndUpdateUFGroup, 'arena', 5),
+		health = GetOptionsTable_Health(false, UF.CreateAndUpdateUFGroup, 'arena', 5),
+		infoPanel = GetOptionsTable_InformationPanel(UF.CreateAndUpdateUFGroup, 'arena', 5),
+		power = GetOptionsTable_Power(false, UF.CreateAndUpdateUFGroup, 'arena', 5),
+		name = GetOptionsTable_Name(UF.CreateAndUpdateUFGroup, 'arena', 5),
+		portrait = GetOptionsTable_Portrait(UF.CreateAndUpdateUFGroup, 'arena', 5),
+		fader = GetOptionsTable_Fader(UF.CreateAndUpdateUFGroup, 'arena', 5),
+		buffs = GetOptionsTable_Auras('buffs', UF.CreateAndUpdateUFGroup, 'arena', 5),
+		debuffs = GetOptionsTable_Auras('debuffs', UF.CreateAndUpdateUFGroup, 'arena', 5),
+		castbar = GetOptionsTable_Castbar(false, UF.CreateAndUpdateUFGroup, 'arena', 5),
+		cutaway = GetOptionsTable_Cutaway(UF.CreateAndUpdateUFGroup, 'arena', 5),
+		pvpclassificationindicator = GetOptionsTable_PVPClassificationIndicator(UF.CreateAndUpdateUFGroup, 'arena', 5),
 	},
 }
 

@@ -89,7 +89,7 @@ function UF:Update_PartyHeader(header, db)
 	if not parent.positioned then
 		parent:ClearAllPoints()
 		parent:Point('BOTTOMLEFT', E.UIParent, 'BOTTOMLEFT', 4, 248)
-		E:CreateMover(parent, parent:GetName()..'Mover', L["Party Frames"], nil, nil, nil, 'ALL,PARTY', nil, 'unitframe,groupUnits,party,generalGroup')
+		E:CreateMover(parent, parent:GetName()..'Mover', L["Party Frames"], nil, nil, nil, 'ALL,PARTY,ARENA', nil, 'unitframe,groupUnits,party,generalGroup')
 		parent.positioned = true
 	end
 end

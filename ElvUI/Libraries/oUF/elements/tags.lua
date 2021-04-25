@@ -118,6 +118,17 @@ local tagStrings = {
 		end
 	end]],
 
+	['arenaspec'] = [[function(u)
+		local id = u:match('arena(%d)$')
+		if(id) then
+			local specID = GetArenaOpponentSpec(tonumber(id))
+			if(specID and specID > 0) then
+				local _, specName = GetSpecializationInfoByID(specID)
+				return specName
+			end
+		end
+	end]],
+
 	['classification'] = [[function(u)
 		local c = UnitClassification(u)
 		if(c == 'rare') then
@@ -291,6 +302,15 @@ local tagStrings = {
 		local _, class = UnitClass(u)
 		if(class) then
 			return Hex(_COLORS.class[class])
+		else
+			local id = u:match('arena(%d)$')
+			if(id) then
+				local specID = GetArenaOpponentSpec(tonumber(id))
+				if(specID and specID > 0) then
+					_, _, _, _, _, class = GetSpecializationInfoByID(specID)
+					return Hex(_COLORS.class[class])
+				end
+			end
 		end
 	end]],
 
@@ -447,6 +467,7 @@ _ENV._VARS = vars
 -- ElvUI sets UNIT_POWER_UPDATE to UNIT_POWER_FREQUENT in tagEvents
 local tagEvents = {
 	['affix']               = 'UNIT_CLASSIFICATION_CHANGED',
+	['arenaspec']           = 'ARENA_PREP_OPPONENT_SPECIALIZATIONS',
 	['classification']      = 'UNIT_CLASSIFICATION_CHANGED',
 	['cpoints']             = 'UNIT_POWER_FREQUENT PLAYER_TARGET_CHANGED',
 	['curhp']               = 'UNIT_HEALTH UNIT_MAXHEALTH',
@@ -482,6 +503,7 @@ local tagEvents = {
 }
 
 local unitlessEvents = {
+	ARENA_PREP_OPPONENT_SPECIALIZATIONS = true,
 	GROUP_ROSTER_UPDATE = true,
 	NEUTRAL_FACTION_SELECT_RESULT = true,
 	PARTY_LEADER_CHANGED = true,

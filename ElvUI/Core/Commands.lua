@@ -165,6 +165,7 @@ local BLIZZARD_ADDONS = {
 	'Blizzard_AnimaDiversionUI',
 	'Blizzard_ArchaeologyUI',
 	'Blizzard_ArdenwealdGardening',
+	'Blizzard_ArenaUI',
 	'Blizzard_ArtifactUI',
 	'Blizzard_AuctionHouseUI',
 	'Blizzard_AuthChallengeUI',

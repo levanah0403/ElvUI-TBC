@@ -2045,6 +2045,11 @@ local function UpdateFilterGroup()
 										NP:ConfigureAll()
 									end
 								},
+								arena = {
+									type = 'toggle',
+									order = 7,
+									name = L["ARENA"]
+								},
 								pvp = {
 									type = 'toggle',
 									order = 8,

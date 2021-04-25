@@ -692,6 +692,10 @@ function AB:StyleButton(button, noBackdrop, useMasque, ignoreNormal)
 		AB:UpdateHotkeyColor(button)
 	end
 
+	if button.style then -- Boss Button
+		button.style:SetDrawLayer('BACKGROUND', -7)
+	end
+
 	AB:FixKeybindText(button)
 
 	if not button.useMasque then
