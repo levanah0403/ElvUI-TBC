@@ -14,45 +14,6 @@ local LOCALIZED_CLASS_NAMES_MALE = LOCALIZED_CLASS_NAMES_MALE
 
 local ArenaHeader = CreateFrame('Frame', 'ArenaHeader', E.UIParent)
 
-function UF:ToggleArenaPreparationInfo(frame, show, specName, specTexture, specClass)
-	local specIcon = (frame.db and frame.db.pvpSpecIcon) and frame:IsElementEnabled('PVPSpecIcon')
-
-	frame.forceInRange = show -- used to force unitframe range
-
-	local visibility = not show
-	if show then frame.Trinket:Hide() end
-
-	frame.ArenaPrepSpec:SetFormattedText(show and '%s - %s' or '', specName, LOCALIZED_CLASS_NAMES_MALE[specClass])  -- during `PostUpdateArenaPreparation` this means spec class and name exist
-	UF:ToggleVisibility_CustomTexts(frame, visibility)
-
-	frame.Health.value:SetShown(visibility)
-	frame.Power.value:SetShown(visibility)
-	frame.Health.ClipFrame:SetShown(visibility)
-	frame.PvPClassificationIndicator:SetAtlas(nil)
-	frame.Trinket.cd:Clear()
-
-	if specIcon and show then
-		frame.PVPSpecIcon.Icon:SetTexture(specTexture or [[INTERFACE\ICONS\INV_MISC_QUESTIONMARK]])
-		frame.PVPSpecIcon.Icon:SetTexCoord(unpack(E.TexCoords))
-		frame.PVPSpecIcon:Show()
-	end
-end
-
-function UF:PostUpdateArenaFrame(event)
-	if self and event and (event ~= 'ARENA_PREP_OPPONENT_SPECIALIZATIONS' and event ~= 'PLAYER_ENTERING_WORLD') then
-		UF:ToggleArenaPreparationInfo(self)
-	end
-end
-
-function UF:PostUpdateArenaPreparation(_, specID)
-	local _, specName, specTexture, specClass
-	if specID and specID > 0 then
-		_, specName, _, specTexture, _, specClass = GetSpecializationInfoByID(specID)
-	end
-
-	UF:ToggleArenaPreparationInfo(self and self.__owner, specClass and specName, specName, specTexture, specClass)
-end
-
 function UF:Construct_ArenaFrames(frame)
 	frame.RaisedElementParent = CreateFrame('Frame', nil, frame)
 	frame.RaisedElementParent.TextureParent = CreateFrame('Frame', nil, frame.RaisedElementParent)
@@ -88,9 +49,6 @@ function UF:Construct_ArenaFrames(frame)
 		frame.ArenaPrepSpec = frame.Health:CreateFontString(nil, 'OVERLAY')
 		frame.ArenaPrepSpec:Point('CENTER')
 		UF:Configure_FontString(frame.ArenaPrepSpec)
-
-		frame.Health.PostUpdateArenaPreparation = self.PostUpdateArenaPreparation -- used to update arena prep info
-		frame.PostUpdate = self.PostUpdateArenaFrame -- used to hide arena prep info
 	end
 
 	frame.Cutaway = UF:Construct_Cutaway(frame)
