@@ -569,7 +569,7 @@ function UF:CreateAndUpdateUFGroup(group, numGroup)
 			end
 
 			-- for some reason the boss/arena 'uncheck disable' doesnt fire this, we need to so putting it here.
-			if group == 'boss' or group == 'arena' then
+			if group == 'arena' then
 				UF:Configure_Fader(frame)
 			end
 
@@ -1160,15 +1160,6 @@ function ElvUF:DisableBlizzard(unit)
 		HandleFrame(_G.TargetofFocusFrame)
 	elseif (unit == 'targettarget') and E.private.unitframe.disabledBlizzardFrames.target then
 		HandleFrame(_G.TargetFrameToT)
-	elseif (unit:match('boss%d?$')) and E.private.unitframe.disabledBlizzardFrames.boss then
-		local id = unit:match('boss(%d)')
-		if id then
-			HandleFrame('Boss' .. id .. 'TargetFrame')
-		else
-			for i = 1, _G.MAX_BOSS_FRAMES do
-				HandleFrame(('Boss%dTargetFrame'):format(i))
-			end
-		end
 	elseif (unit:match('party%d?$')) and E.private.unitframe.disabledBlizzardFrames.party then
 		local id = unit:match('party(%d)')
 		if id then
@@ -1267,7 +1258,6 @@ local Blacklist = {
 	},
 	arena = { enable = true, fader = true },
 	assist = { enable = true, fader = true },
-	boss = { enable = true, fader = true },
 	focus = { enable = true, fader = true },
 	focustarget = { enable = true, fader = true },
 	pet = { enable = true, fader = true },

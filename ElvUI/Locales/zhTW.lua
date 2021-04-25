@@ -69,7 +69,6 @@ L["Blend Mode"] = "混合模式"
 L["Blend"] = "常規混合"
 L["Blizzard Widgets"] = true
 L["BNet Frame"] = "戰網提示資訊"
-L["Boss Frames"] = "首領框架"
 L["Building(s) Report:"] = "建築報告"
 L["Calendar"] = "行事曆"
 L["Calling Quest(s) available."] = true

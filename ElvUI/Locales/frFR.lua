@@ -69,7 +69,6 @@ L["Blend Mode"] = "Mode de fusion"
 L["Blend"] = "Mélange"
 L["Blizzard Widgets"] = true
 L["BNet Frame"] = "Cadre BNet"
-L["Boss Frames"] = "Cadre du Boss"
 L["Building(s) Report:"] = "Rapport des bâtiments :"
 L["Calendar"] = "Calendrier"
 L["Calling Quest(s) available."] = true

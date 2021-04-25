@@ -69,7 +69,6 @@ L["Blend Mode"] = "Тип смешивания" --Check back later
 L["Blend"] = "Смешивание" --Check back later
 L["Blizzard Widgets"] = "Виджеты Blizzard"
 L["BNet Frame"] = "Оповещения BNet"
-L["Boss Frames"] = "Боссы"
 L["Building(s) Report:"] = "Отчет зданий:"
 L["Calendar"] = "Календарь"
 L["Calling Quest(s) available."] = "Доступны призывы."

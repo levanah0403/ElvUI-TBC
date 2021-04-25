@@ -29,7 +29,6 @@ local UnitName = UnitName
 local UnitReaction = UnitReaction
 local UnitWidgetSet = UnitWidgetSet
 local UnitThreatSituation = UnitThreatSituation
-local ShowBossFrameWhenUninteractable = ShowBossFrameWhenUninteractable
 local C_NamePlate_SetNamePlateEnemyClickThrough = C_NamePlate.SetNamePlateEnemyClickThrough
 local C_NamePlate_SetNamePlateEnemySize = C_NamePlate.SetNamePlateEnemySize
 local C_NamePlate_SetNamePlateFriendlyClickThrough = C_NamePlate.SetNamePlateFriendlyClickThrough

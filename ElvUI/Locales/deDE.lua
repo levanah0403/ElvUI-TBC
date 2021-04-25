@@ -70,7 +70,6 @@ L["Blend Mode"] = "Überblendungs-Modus"
 L["Blend"] = "Überblenden"
 L["Blizzard Widgets"] = "Blizzard Widgets"
 L["BNet Frame"] = "BNet-Fenster"
-L["Boss Frames"] = "Boss Fenster"
 L["Building(s) Report:"] = "Gebäude Bericht:"
 L["Calendar"] = "Kalender"
 L["Calling Quest(s) available."] = true

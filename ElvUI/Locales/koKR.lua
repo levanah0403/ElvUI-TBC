@@ -69,7 +69,6 @@ L["Blend Mode"] = true
 L["Blend"] = true
 L["Blizzard Widgets"] = true
 L["BNet Frame"] = "배틀넷 알림"
-L["Boss Frames"] = "보스 프레임"
 L["Building(s) Report:"] = "건축 보고서"
 L["Calendar"] = "달력"
 L["Calling Quest(s) available."] = true

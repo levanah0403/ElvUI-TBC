@@ -379,7 +379,6 @@ G.profileCopy = {
 			focustarget = true,
 			pet = true,
 			pettarget = true,
-			boss = true,
 			arena = true,
 			party = true,
 			raid = true,
