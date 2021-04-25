@@ -21,7 +21,6 @@
 	<Script file='PVPIcon.lua'/>
 	<Script file='PVPClassificationIndicator.lua'/>
 	<Script file='PVPIndicator.lua'/>
-	<Script file='PVPSpecIcon.lua'/>
 	<!--Script file='RaidDebuffs.lua'/-->
 	<Script file='RaidIcon.lua'/>
 	<Script file='RaidRoleIcons.lua'/>
@@ -32,5 +31,4 @@
 	<Script file='SummonIndicator.lua'/>
 	<Script file='FrameGlow.lua'/>
 	<Script file='Threat.lua'/>
-	<Script file='Trinket.lua'/>
 </Ui>

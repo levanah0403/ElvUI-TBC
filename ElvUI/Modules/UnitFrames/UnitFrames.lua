@@ -322,9 +322,6 @@ function UF:GetAuraAnchorFrame(frame, attachTo)
 		return frame.Health
 	elseif attachTo == 'POWER' and frame.Power then
 		return frame.Power
-	elseif attachTo == 'TRINKET' and (frame.Trinket or frame.PVPSpecIcon) then
-		local _, instanceType = GetInstanceInfo()
-		return (instanceType == 'arena' and frame.Trinket) or frame.PVPSpecIcon
 	else
 		return frame
 	end

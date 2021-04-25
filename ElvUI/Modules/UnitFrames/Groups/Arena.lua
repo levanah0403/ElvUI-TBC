@@ -36,8 +36,7 @@ function UF:Construct_ArenaFrames(frame)
 		frame.MouseGlow = UF:Construct_MouseGlow(frame)
 		frame.TargetGlow = UF:Construct_TargetGlow(frame)
 		frame.FocusGlow = UF:Construct_FocusGlow(frame)
-		frame.Trinket = UF:Construct_Trinket(frame)
-		frame.PVPSpecIcon = UF:Construct_PVPSpecIcon(frame)
+
 		frame.PvPClassificationIndicator = UF:Construct_PvPClassificationIndicator(frame) -- Cart / Flag / Orb / Assassin Bounty
 		frame.Fader = UF:Construct_Fader()
 		frame:SetAttribute('type2', 'focus')
@@ -80,7 +79,6 @@ function UF:Update_ArenaFrames(frame, db)
 		frame.USE_INFO_PANEL = not frame.USE_MINI_POWERBAR and not frame.USE_POWERBAR_OFFSET and db.infoPanel.enable
 		frame.INFO_PANEL_HEIGHT = frame.USE_INFO_PANEL and db.infoPanel.height or 0
 		frame.BOTTOM_OFFSET = UF:GetHealthBottomOffset(frame)
-		frame.PVPINFO_WIDTH = db.pvpSpecIcon and frame.UNIT_HEIGHT or 0
 	end
 
 	if not IsAddOnLoaded('Clique') then
@@ -104,7 +102,6 @@ function UF:Update_ArenaFrames(frame, db)
 	UF:EnableDisable_Auras(frame)
 	UF:Configure_AllAuras(frame)
 	UF:Configure_Castbar(frame)
-	UF:Configure_PVPSpecIcon(frame)
 	UF:Configure_Trinket(frame)
 	UF:Configure_Fader(frame)
 	UF:Configure_HealComm(frame)

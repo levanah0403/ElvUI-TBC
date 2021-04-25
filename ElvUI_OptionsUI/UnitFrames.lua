@@ -4762,47 +4762,6 @@ E.Options.args.unitframe.args.groupUnits.args.arena = {
 			set = function(info, value) UF:MergeUnitSettings(value, 'arena'); E:RefreshGUI(); end,
 			confirm = true,
 		},
-		pvpTrinket = {
-			order = 4001,
-			type = 'group',
-			name = L["PVP Trinket"],
-			get = function(info) return E.db.unitframe.units.arena.pvpTrinket[info[#info]] end,
-			set = function(info, value) E.db.unitframe.units.arena.pvpTrinket[info[#info]] = value; UF:CreateAndUpdateUFGroup('arena', 5) end,
-			args = {
-				enable = {
-					type = 'toggle',
-					order = 2,
-					name = L["Enable"],
-				},
-				position = {
-					type = 'select',
-					order = 3,
-					name = L["Position"],
-					values = {
-						LEFT = L["Left"],
-						RIGHT = L["Right"],
-					},
-				},
-				size = {
-					order = 4,
-					type = 'range',
-					name = L["Size"],
-					min = 10, max = 60, step = 1,
-				},
-				xOffset = {
-					order = 5,
-					type = 'range',
-					name = L["X-Offset"],
-					min = -60, max = 60, step = 1,
-				},
-				yOffset = {
-					order = 6,
-					type = 'range',
-					name = L["Y-Offset"],
-					min = -60, max = 60, step = 1,
-				},
-			},
-		},
 		generalGroup = GetOptionsTable_GeneralGroup(UF.CreateAndUpdateUFGroup, 'arena', 5),
 		healPredction = GetOptionsTable_HealPrediction(UF.CreateAndUpdateUFGroup, 'arena', 5),
 		customText = GetOptionsTable_CustomText(UF.CreateAndUpdateUFGroup, 'arena', 5),
