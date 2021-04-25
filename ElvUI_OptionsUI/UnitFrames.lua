@@ -3943,33 +3943,17 @@ E.Options.args.unitframe = {
 									type = 'toggle',
 									name = L["Raid"],
 								},
+								boss = {
+									order = 8,
+									type = 'toggle',
+									name = L["Boss"],
+								},
+								arena = {
+									order = 9,
+									type = 'toggle',
+									name = L["Arena"],
+								},
 							},
-						},
-						focus = {
-							order = 3,
-							type = 'toggle',
-							name = L["Focus"],
-							desc = L["Disables the focus and target of focus unitframes."],
-						},
-						boss = {
-							order = 4,
-							type = 'toggle',
-							name = L["Boss"],
-						},
-						arena = {
-							order = 5,
-							type = 'toggle',
-							name = L["Arena"],
-						},
-						party = {
-							order = 6,
-							type = 'toggle',
-							name = L["PARTY"],
-						},
-						raid = {
-							order = 7,
-							type = 'toggle',
-							name = L["Raid"],
 						},
 					},
 				},
