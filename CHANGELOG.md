@@ -1,5 +1,6 @@
 ### Version 0.15 [ ETA: 🍨 ]
-**• ArenaFrame skin (WIP)**  
+**• Arena Frames (WIP)**  
+**• Arena skin (WIP)**  
 **• Tweaked BGScore skin**  
 ___
 ### Version 0.14 [20-04-2021]
