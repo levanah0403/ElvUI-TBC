@@ -2,10 +2,9 @@ local E, L, V, P, G = unpack(select(2, ...)) --Import: Engine, Locales, PrivateD
 local UF = E:GetModule('UnitFrames');
 
 local rad = rad
-local unpack = unpack
-local select = select
 local UnitClass = UnitClass
 local CreateFrame = CreateFrame
+local unpack, select = unpack, select
 local CLASS_ICON_TCOORDS = CLASS_ICON_TCOORDS
 local classIcon = [[Interface\WorldStateFrame\Icons-Classes]]
 

@@ -10,7 +10,6 @@ function B:Initialize()
 
 	B:EnhanceColorPicker()
 	B:KillBlizzard()
-	B:DisableNPE()
 	B:AlertMovers()
 	B:PositionCaptureBar()
 	B:PositionDurabilityFrame()

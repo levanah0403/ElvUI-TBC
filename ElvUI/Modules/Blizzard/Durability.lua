@@ -4,7 +4,7 @@ local B = E:GetModule('Blizzard')
 local _G = _G
 local hooksecurefunc = hooksecurefunc
 local CreateFrame = CreateFrame
-	local DurabilityFrame = _G.DurabilityFrame
+local DurabilityFrame = _G.DurabilityFrame
 
 local function SetPosition(frame, _, parent)
 	if parent ~= _G.DurabilityFrameHolder then

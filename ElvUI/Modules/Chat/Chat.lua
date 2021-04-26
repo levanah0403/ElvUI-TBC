@@ -13,11 +13,8 @@ local tinsert, tremove, tconcat = tinsert, tremove, table.concat
 
 local Ambiguate = Ambiguate
 local BetterDate = BetterDate
-local BNGetFriendGameAccountInfo = BNGetFriendGameAccountInfo
 local BNGetFriendInfo = BNGetFriendInfo
 local BNGetFriendInfoByID = BNGetFriendInfoByID
-local BNGetGameAccountInfo = BNGetGameAccountInfo
-local BNGetNumFriendGameAccounts = BNGetNumFriendGameAccounts
 local BNGetNumFriendInvites = BNGetNumFriendInvites
 local BNGetNumFriends = BNGetNumFriends
 local CreateFrame = CreateFrame

@@ -2,6 +2,7 @@ local E, L, V, P, G = unpack(select(2, ...)) --Import: Engine, Locales, PrivateD
 local UF = E:GetModule('UnitFrames');
 
 local CreateFrame = CreateFrame
+
 function UF.HealthClipFrame_HealComm(frame)
 	if frame.HealthPrediction then
 		UF:SetAlpha_HealComm(frame.HealthPrediction, 1)

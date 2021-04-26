@@ -2,8 +2,7 @@ local E, L, V, P, G = unpack(select(2, ...)) --Import: Engine, Locales, PrivateD
 local S = E:GetModule('Skins')
 
 local _G = _G
-local select = select
-local unpack = unpack
+local unpack, select = unpack, select
 local ipairs = ipairs
 
 local GetInventoryItemID = GetInventoryItemID
