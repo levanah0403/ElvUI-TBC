@@ -1,4 +1,5 @@
 ### Version 0.16 [ ETA: 🍨 ]
+**• Added RaidDebuff Indicators**  
 ___
 ### Version 0.15 [25-04-2021]
 **• Arena Frames (WIP)**  
