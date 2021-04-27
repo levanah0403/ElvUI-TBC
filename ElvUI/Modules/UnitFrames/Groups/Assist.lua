@@ -34,7 +34,7 @@ function UF:Construct_AssistFrames()
 		self.Buffs = UF:Construct_Buffs(self)
 		self.Debuffs = UF:Construct_Debuffs(self)
 		self.AuraWatch = UF:Construct_AuraWatch(self)
-		--self.RaidDebuffs = UF:Construct_RaidDebuffs(self)
+		self.RaidDebuffs = UF:Construct_RaidDebuffs(self)
 		self.AuraHighlight = UF:Construct_AuraHighlight(self)
 
 		self.unitframeType = 'assist'
@@ -139,7 +139,7 @@ function UF:Update_AssistFrames(frame, db)
 
 		UF:EnableDisable_Auras(frame)
 		UF:Configure_AllAuras(frame)
-		--UF:Configure_RaidDebuffs(frame)
+		UF:Configure_RaidDebuffs(frame)
 		UF:Configure_AuraHighlight(frame)
 		UF:Configure_AuraWatch(frame)
 	end
