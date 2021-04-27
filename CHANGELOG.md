@@ -1,5 +1,8 @@
-### Version 0.16 [ ETA: 🍨 ]
+### Version 0.17 [ ETA: 🍨 ]
+___
+### Version 0.16 [27-04-2021]
 **• Added RaidDebuff Indicators**  
+**• NamePlates NonTarget Alpha fix (rerun CVars step)**  
 ___
 ### Version 0.15 [25-04-2021]
 **• Arena Frames (WIP)**  
