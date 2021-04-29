@@ -15,6 +15,7 @@
 	<Script file='Craft.lua'/>
 	<Script file='Debug.lua'/>
 	<Script file='DressingRoom.lua'/>
+	<Script file='EventTrace.lua'/>
 	<Script file='Friends.lua'/>
 	<Script file='Gossip.lua'/>
 	<Script file='GuildRegistrar.lua'/>

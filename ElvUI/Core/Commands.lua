@@ -199,6 +199,7 @@ local BLIZZARD_ADDONS = {
 	'Blizzard_DebugTools',
 	'Blizzard_Deprecated',
 	'Blizzard_EncounterJournal',
+	'Blizzard_EventTrace',
 	'Blizzard_FlightMap',
 	'Blizzard_FrameEffects',
 	'Blizzard_GMChatUI',

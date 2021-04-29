@@ -38,6 +38,7 @@ E.Options.args.skins.args.blizzard.values = {
 	craft = L["Craft"],
 	debug = L["Debug Tools"],
 	dressingroom = L["DRESSUP_FRAME"],
+	eventLog = L["Event Log"],
 	friends = L["FRIENDS"],
 	gossip = L["Gossip Frame"],
 	guild = L["GUILD"],

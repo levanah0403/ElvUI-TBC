@@ -77,6 +77,7 @@ V.skins = {
 		craft = true,
 		debug = true,
 		dressingroom = true,
+		eventLog = true,
 		friends = true,
 		gossip = true,
 		guild = true,
