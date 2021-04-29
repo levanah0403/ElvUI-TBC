@@ -287,9 +287,7 @@ function S:CharacterFrame()
 	_G.SkillDetailStatusBarUnlearnButton:SetHitRectInsets(0, 0, 0, 0)
 
 	-- Honor/Arena/PvP Tab
-
 	local PVPFrame = _G.PVPFrame
-
 	PVPFrame:StripTextures(true)
 
 	for i = 1, MAX_ARENA_TEAMS do
