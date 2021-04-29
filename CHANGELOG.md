@@ -1,4 +1,7 @@
-### Version 0.17 [ ETA: 🍨 ]
+### Version 0.18 [ ETA: 🍨 ]
+___
+### Version 0.17 [30-04-2021]
+**• Fixed multiple Skins & Errors**  
 ___
 ### Version 0.16 [27-04-2021]
 **• Added RaidDebuff Indicators**  
