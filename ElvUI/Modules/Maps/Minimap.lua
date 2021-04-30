@@ -317,12 +317,10 @@ function M:UpdateSettings()
 			MiniMapTracking:SetParent(Minimap)
 
 			if (_G.MiniMapTrackingBorder) then
-				print('border-check')
 				_G.MiniMapTrackingBorder:Hide()
 			end
 
 			if (_G.MiniMapTrackingIcon) then
-				print('icon-check')
 				_G.MiniMapTrackingIcon:SetDrawLayer('ARTWORK')
 				_G.MiniMapTrackingIcon:SetTexCoord(unpack(E.TexCoords))
 				_G.MiniMapTrackingIcon:SetInside()
