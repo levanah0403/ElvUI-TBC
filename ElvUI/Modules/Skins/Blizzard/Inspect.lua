@@ -108,20 +108,44 @@ function S:Blizzard_InspectUI()
 		end
 	end
 
-	-- Honor Frame
-	--[[local InspectHonorFrame = _G.InspectHonorFrame
-	S:HandleFrame(InspectHonorFrame, true, nil, 18, -105, -39, 83)
-	InspectHonorFrame.backdrop:SetFrameLevel(InspectHonorFrame:GetFrameLevel())
+	-- Honor/Arena/PvP Tab
+	local InspectPVPFrame = _G.InspectPVPFrame
+	InspectPVPFrame:StripTextures(true)
 
-	_G.InspectHonorFrameProgressButton:CreateBackdrop('Transparent')
+	for i = 1, MAX_ARENA_TEAMS do
+		local inspectpvpTeam = _G['InspectPVPTeam'..i]
 
-	local InspectHonorFrameProgressBar = _G.InspectHonorFrameProgressBar
-	InspectHonorFrameProgressBar:Width(325)
-	InspectHonorFrameProgressBar:SetStatusBarTexture(E.media.normTex)
+		inspectpvpTeam:StripTextures()
+		inspectpvpTeam:CreateBackdrop('Default')
+		inspectpvpTeam.backdrop:Point('TOPLEFT', 9, -4)
+		inspectpvpTeam.backdrop:Point('BOTTOMRIGHT', -24, 3)
 
-	S:HandlePointXY(InspectHonorFrameProgressBar, 19, -74)
+		inspectpvpTeam:HookScript('OnEnter', S.SetModifiedBackdrop)
+		inspectpvpTeam:HookScript('OnLeave', S.SetOriginalBackdrop)
 
-	E:RegisterStatusBar(InspectHonorFrameProgressBar)]]
+		_G['InspectPVPTeam'..i..'Highlight']:Kill()
+	end
+
+	local PVPTeamDetails = _G.PVPTeamDetails
+	PVPTeamDetails:StripTextures()
+	PVPTeamDetails:SetTemplate('Transparent')
+	PVPTeamDetails:Point('TOPLEFT', InspectPVPFrame, 'TOPRIGHT', -30, -12)
+
+	for i = 1, 5 do
+		local header = _G['PVPTeamDetailsFrameColumnHeader'..i]
+		header:StripTextures()
+		header:StyleButton()
+	end
+
+	for i = 1, 10 do
+		local button = _G['PVPTeamDetailsButton'..i]
+		button:Width(335)
+		S:HandleButtonHighlight(button)
+	end
+
+	S:HandleButton(_G.PVPTeamDetailsAddTeamMember)
+	S:HandleNextPrevButton(_G.PVPTeamDetailsToggleButton)
+	S:HandleCloseButton(_G.PVPTeamDetailsCloseButton)
 end
 
 S:AddCallbackForAddon('Blizzard_InspectUI')
