@@ -1,4 +1,8 @@
 ### Version 0.18 [ ETA: 🍨 ]
+**• Added PvP Trinket option for Arena**  
+**• Fixed Inspect Skin**  
+**• Removed Chat Debug prints**  
+**• Updated LibElvUIPlugin**  
 ___
 ### Version 0.17 [30-04-2021]
 **• Fixed multiple Skins & Errors**  
