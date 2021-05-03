@@ -1595,6 +1595,13 @@ P.unitframe = {
 			disableMouseoverGlow = false,
 			disableTargetGlow = false,
 			disableFocusGlow = false,
+			pvpTrinket = {
+				enable = true,
+				position = 'RIGHT',
+				size = 46,
+				xOffset = 1,
+				yOffset = 0,
+			},
 			buffs = CopyTable(UF_Auras),
 			castbar = CopyTable(UF_Castbar),
 			cutaway = CopyTable(UF_Cutaway),
