@@ -30,6 +30,8 @@ function UF:SetFrameLevel_HealComm(obj, level)
 end
 
 function UF:Construct_HealComm(frame)
+	if frame then return end
+
 	local health = frame.Health
 	local parent = health.ClipFrame
 
@@ -87,6 +89,8 @@ function UF:SetSize_HealComm(frame)
 end
 
 function UF:Configure_HealComm(frame)
+	if frame then return end
+
 	local db = frame.db.healPrediction
 	if db and db.enable then
 
