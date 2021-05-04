@@ -8,7 +8,6 @@ assert(ElvUF, 'ElvUI was unable to locate oUF.')
 local _G = _G
 local unpack = unpack
 local CreateFrame = CreateFrame
-local IsAddOnLoaded = IsAddOnLoaded
 
 local ArenaHeader = CreateFrame('Frame', 'ArenaHeader', E.UIParent)
 
@@ -79,7 +78,7 @@ function UF:Update_ArenaFrames(frame, db)
 		frame.BOTTOM_OFFSET = UF:GetHealthBottomOffset(frame)
 	end
 
-	if not IsAddOnLoaded('Clique') then
+	if not E:IsAddOnEnabled('Clique') then
 		if db.middleClickFocus then
 			frame:SetAttribute('type3', 'focus')
 		elseif frame:GetAttribute('type3') == 'focus' then

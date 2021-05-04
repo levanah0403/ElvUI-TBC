@@ -6,7 +6,6 @@ local pairs = pairs
 local unpack = unpack
 
 local hooksecurefunc = hooksecurefunc
-local IsAddOnLoaded = IsAddOnLoaded
 local CreateFrame = CreateFrame
 
 local function SkinNavBarButtons(self)
@@ -49,7 +48,7 @@ function S:BlizzardMiscFrames()
 
 	S:HandleButton(_G.StaticPopup1ExtraButton)
 
-	if not IsAddOnLoaded('ConsolePortUI_Menu') then
+	if not E:IsAddOnEnabled('ConsolePortUI_Menu') then
 		-- reskin all esc/menu buttons
 		for _, Button in pairs({_G.GameMenuFrame:GetChildren()}) do
 			if Button.IsObjectType and Button:IsObjectType("Button") then
@@ -64,7 +63,7 @@ function S:BlizzardMiscFrames()
 		_G.GameMenuFrameHeader:Point('TOP', _G.GameMenuFrame, 0, 7)
 	end
 
-	if IsAddOnLoaded('OptionHouse') then
+	if E:IsAddOnEnabled('OptionHouse') then
 		S:HandleButton(_G.GameMenuButtonOptionHouse)
 	end
 
