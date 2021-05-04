@@ -2,9 +2,6 @@
 local E = unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local L = E.Libs.ACL:NewLocale("ElvUI", "deDE")
 
-local COLOR1 = '|cFF1784d1'
-local COLOR2 = '|cfd9b9b9b'
-
 L["BoP"] = true
 L["BoE"] = true
 L["BoU"] = true
@@ -50,6 +47,7 @@ L["Auras"] = "Auren"
 L["Auto Scale"] = "Auto-Skalierung"
 L["AVD: "] = "AVD: "
 L["Avoidance Breakdown"] = "Vermeidung Aufgliederung"
+L["Azerite Bar"] = "Azerit Leiste"
 L["Bag Mover (Grow Down)"] = "Taschen Anker (Nach unten wachsen)"
 L["Bag Mover (Grow Up)"] = "Taschen Anker (Nach oben wachsen)"
 L["Bag Mover"] = "Taschen Anker"
@@ -70,6 +68,8 @@ L["Blend Mode"] = "Überblendungs-Modus"
 L["Blend"] = "Überblenden"
 L["Blizzard Widgets"] = "Blizzard Widgets"
 L["BNet Frame"] = "BNet-Fenster"
+L["Boss Button"] = "Boss Button"
+L["Boss Frames"] = "Boss Fenster"
 L["Building(s) Report:"] = "Gebäude Bericht:"
 L["Calendar"] = "Kalender"
 L["Calling Quest(s) available."] = true
@@ -84,6 +84,7 @@ L["Choose a theme layout you wish to use for your initial setup."] = "Wähle ein
 L["Class Totems"] = "Klassen Totems"
 L["Classbar"] = "Klassenleiste"
 L["Classic"] = "Klassisch"
+L["Clean Boss Button"] = "Geskinnte Boss Taste"
 L["Combat"] = "Kampf"
 L["Combat/Arena Time"] = "Kampf/Arena Zeit"
 L["Config Mode:"] = "Konfigurationsmodus:"
@@ -126,7 +127,6 @@ L["ElvUI Status"] = true --No need to translate
 L["Empty Slot"] = "Leerer Platz"
 L["Enable"] = "Eingeschaltet"
 L["Error resetting UnitFrame."] = "Fehler beim Zurücksetzen des Einheitenfesters."
-L["Event Log"] = true
 L["Experience Bar"] = "Erfahrungsleiste"
 L["Experience"] = "Erfahrung"
 L["Feet"] = "Füße"
@@ -139,6 +139,7 @@ L["FocusTarget Frame"] = "Fokus-Ziel Fenster"
 L["Friends List"] = "Freundesliste"
 L["From time to time you should compare your ElvUI version against the most recent version on our website or the Tukui client."] = "Von Zeit zu Zeit solltest du deine gegenwärtige ElvUI Version mit der auf unsere Homepage oder im Tukui Clienten vergleichen."
 L["G"] = "G"
+L["Garrison"] = "Garnison"
 L["Ghost"] = "Geist"
 L["GM Ticket Frame"] = "GM-Ticket-Fenster"
 L["Gold"] = true --No need to translate
@@ -152,11 +153,11 @@ L["Hold Shift + Drag:"] = "Halte Shift + Ziehen:"
 L["Hold Shift + Right Click:"] = "Halte Umschalt + Rechts Klick:"
 L["Home Latency:"] = "Standort Latenz"
 L["Home Protocol:"] = "Standort Protokol"
-
+L["Honor Bar"] = "Ehreleiste"
 L["Honor Remaining:"] = "Ehre verbleibend:"
 L["Honor XP:"] = "Ehre XP:"
 L["Horde: "] = true --No need to translate
-L["Hover your mouse over any |cFF1784d1action|r, |cFF1784d1micro|r, |cFF1784d1macro|r, or |cFF1784d1spellbook|r button to bind it. This also works for items in your |cFF1784d1bag|r. Press the |cfd9b9b9bESC|r key to |cfd9b9b9bclear|r the current bindings."] = true
+L["BINDINGS_HELP"] = ("Hover your mouse over any *action|r, *micro|r, *macro|r, or *spellbook|r button to bind it. This also works for items in your *bag|r. Press the ^ESC|r key to ^clear|r the current bindings."):gsub('*', E.InfoColor):gsub('%^', E.InfoColor2)
 L["HP"] = "HP"
 L["HPS"] = "HPS"
 L["I Swear"] = "Ich schwöre"
@@ -201,8 +202,8 @@ L["Legs"] = "Beine"
 L["Level Up Display / Boss Banner"] = "Level Up Anzeige / Boss Banner"
 L["List of installations in queue:"] = "Liste der Installationen in der Warteschlange:"
 L["Lock"] = "Sperren"
-L["LOGIN_MSG_HELP"] = ("Please use */ehelp|r for a list of available *ElvUI|r commands."):gsub('*', COLOR1)
-L["LOGIN_MSG"] = ("Willkommen zu *ElvUI TBC|r Version *%s|r, Tippe */ec|r um das Konfigurationsmenü aufzurufen. Für technische Hilfe, besuche das Supportforum unter https://www.tukui.org oder trete unserem Discord bei: https://discord.gg/xFWcfgE"):gsub('*', COLOR1)
+L["LOGIN_MSG_HELP"] = ("Please use */ehelp|r for a list of available *ElvUI|r commands."):gsub('*', E.InfoColor)
+L["LOGIN_MSG"] = ("Willkommen zu *ElvUI TBC|r Version *%s|r, Tippe */ec|r um das Konfigurationsmenü aufzurufen. Für technische Hilfe, besuche das Supportforum unter https://www.tukui.org oder trete unserem Discord bei: https://discord.gg/xFWcfgE"):gsub('*', E.InfoColor)
 L["Loot / Alert Frames"] = "Beute-/Alarmfenster"
 L["Loot Frame"] = "Beute-Fenster"
 L["Lord! It's a miracle! The download up and vanished like a fart in the wind! Try Again!"] = "Herr! Es ist ein Wunder! Der Download verschwand wie ein Furz im Wind! Versuche es nochmal!"
@@ -221,6 +222,7 @@ L["Modulating Blend"] = "Modulierende Überblendung"
 L["Mov. Speed:"] = _G.STAT_MOVEMENT_SPEED
 L["MT Frames"] = "MT-Fenster"
 L["Naval Mission(s) Report:"] = "Marine Missionsbericht:"
+L["Nazjatar Follower XP"] = "Nazjatar Begleiter EP"
 L["Need help? Join our Discord: https://discord.gg/xFWcfgE"] = "Brauchst du Hilfe? Tritt unseren Discord bei: https://discord.gg/xFWcfgE"
 L["No bindings set."] = "Keine Belegungen gesetzt."
 L["No gray items to delete."] = "Es sind keine grauen Gegenstände zum Löschen vorhanden."
@@ -374,6 +376,7 @@ L["You must purchase a bank slot first!"] = "Du musst erst ein Bankfach kaufen!"
 L["Your items have been repaired for: "] = "Deine Gegenstände wurden repariert für: "
 L["Your items have been repaired using guild bank funds for: "] = "Deine Gegenstände wurden repariert. Die Gildenbank kostete das: "
 L["Your profile was successfully recieved by the player."] = "Dein Profil wurde erfolgreich von dem Spieler empfangen."
+L["Zone Ability"] = "Zonen Fähigkeit"
 
 ----------------------------------
 L["DESC_MOVERCONFIG"] = [=[Ankerpunkte entriegelt. Bewege die Ankerpunkte und klicke 'sperren', wenn du fertig bist.
@@ -397,4 +400,4 @@ L["EHELP_COMMANDS"] = ([=[Hier ist eine liste aller wichtigen *ElvUI|r Kommandos
  */luaerror|r ^on|r oder ^off|r  -  Deaktiviert alle AddOns außer ElvUI.
   PS: */luaerror|r ^off|r aktiviert wieder alle AddOns,
   die durch */luaerror|r ^on|r während der Sitzung deaktiviert wurden.
-]=]):gsub('*', COLOR1):gsub('%^', COLOR2)
+]=]):gsub('*', E.InfoColor):gsub('%^', E.InfoColor2)

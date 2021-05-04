@@ -2,9 +2,6 @@
 local E = unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local L = E.Libs.ACL:NewLocale("ElvUI", "zhCN")
 
-local COLOR1 = '|cFF1784d1'
-local COLOR2 = '|cfd9b9b9b'
-
 L["BoP"] = true
 L["BoE"] = true
 L["BoU"] = true
@@ -49,6 +46,7 @@ L["Auras"] = "光环"
 L["Auto Scale"] = "自动缩放"
 L["AVD: "] = "免伤: "
 L["Avoidance Breakdown"] = "免伤统计"
+L["Azerite Bar"] = "艾泽里特能量条"
 L["Bag Mover (Grow Down)"] = "背包框架(向下)"
 L["Bag Mover (Grow Up)"] = "背包框架(向上)"
 L["Bag Mover"] = "背包框架"
@@ -69,6 +67,8 @@ L["Blend Mode"] = "混合模式"
 L["Blend"] = "混合"
 L["Blizzard Widgets"] = true
 L["BNet Frame"] = "战网提示信息"
+L["Boss Button"] = "特殊技能键"
+L["Boss Frames"] = "首领框架"
 L["Building(s) Report:"] = "建筑报告:"
 L["Calendar"] = "日历"
 L["Calling Quest(s) available."] = true
@@ -80,9 +80,10 @@ L["Chat Set"] = "聊天设定"
 L["Chat"] = "聊天框"
 L["Chest"] = "胸"
 L["Choose a theme layout you wish to use for your initial setup."] = "为你的个人设置选择一个你喜欢的皮肤主题."
-L["Class Totems"] = true
+L["Class Totems"] = "职业图腾"
 L["Classbar"] = "职业特有条"
 L["Classic"] = "经典"
+L["Clean Boss Button"] = "简洁额外按键"
 L["Combat"] = "战斗"
 L["Combat/Arena Time"] = "战斗时间"
 L["Config Mode:"] = "设置模式:"
@@ -124,7 +125,6 @@ L["ElvUI Status"] = true
 L["Empty Slot"] = "空拾取位"
 L["Enable"] = "启用"
 L["Error resetting UnitFrame."] = "重置单位框架出现错误."
-L["Event Log"] = true
 L["Experience Bar"] = "经验条"
 L["Experience"] = "经验/声望条"
 L["Feet"] = "脚"
@@ -137,6 +137,7 @@ L["FocusTarget"] = "焦点目标的目标框架"
 L["Friends List"] = "好友列表"
 L["From time to time you should compare your ElvUI version against the most recent version on our website or the Tukui client."] = true
 L["G"] = "公会"
+L["Garrison"] = "要塞"
 L["Ghost"] = "鬼魂"
 L["GM Ticket Frame"] = "GM对话框"
 L["Gold"] = "金"
@@ -150,11 +151,11 @@ L["Hold Shift + Drag:"] = "按住 Shift 并拖动:"
 L["Hold Shift + Right Click:"] = "按住Shift + 右键点击"
 L["Home Latency:"] = "本机延迟:"
 L["Home Protocol:"] = "本地协议:"
-
+L["Honor Bar"] = "荣誉条"
 L["Honor Remaining:"] = "荣誉值剩余:"
 L["Honor XP:"] = "荣誉值:"
 L["Horde: "] = true
-L["Hover your mouse over any |cFF1784d1action|r, |cFF1784d1micro|r, |cFF1784d1macro|r, or |cFF1784d1spellbook|r button to bind it. This also works for items in your |cFF1784d1bag|r. Press the |cfd9b9b9bESC|r key to |cfd9b9b9bclear|r the current bindings."] = true
+L["BINDINGS_HELP"] = ("Hover your mouse over any *action|r, *micro|r, *macro|r, or *spellbook|r button to bind it. This also works for items in your *bag|r. Press the ^ESC|r key to ^clear|r the current bindings."):gsub('*', E.InfoColor):gsub('%^', E.InfoColor2)
 L["HP"] = "生命值"
 L["HPS"] = "治疗输出"
 L["I Swear"] = "我承诺"
@@ -199,8 +200,8 @@ L["Legs"] = "腿"
 L["Level Up Display / Boss Banner"] = "升级提示/Boss拾取"
 L["List of installations in queue:"] = "即将安装的列表:"
 L["Lock"] = "锁定"
-L["LOGIN_MSG_HELP"] = ("Please use */ehelp|r for a list of available *ElvUI|r commands."):gsub('*', COLOR1)
-L["LOGIN_MSG"] = ("Welcome to *ElvUI TBC|r version *%s|r, type */ec|r to access the in-game configuration menu. If you are in need of technical support you can visit us at https://www.tukui.org or join our Discord: https://discord.gg/xFWcfgE"):gsub('*', COLOR1)
+L["LOGIN_MSG_HELP"] = ("Please use */ehelp|r for a list of available *ElvUI|r commands."):gsub('*', E.InfoColor)
+L["LOGIN_MSG"] = ("Welcome to *ElvUI TBC|r version *%s|r, type */ec|r to access the in-game configuration menu. If you are in need of technical support you can visit us at https://www.tukui.org or join our Discord: https://discord.gg/xFWcfgE"):gsub('*', E.InfoColor)
 L["Loot / Alert Frames"] = "拾取/提醒框"
 L["Loot Frame"] = "拾取框架"
 L["Lord! It's a miracle! The download up and vanished like a fart in the wind! Try Again!"] = "天啊! 太奇葩了! 下载消失了! 就像在风中放了一个屁... 再试一次吧!"
@@ -219,6 +220,7 @@ L["Modulating Blend"] = "忽略Alpha通道"
 L["Mov. Speed:"] = _G.STAT_MOVEMENT_SPEED
 L["MT Frames"] = "主坦克框"
 L["Naval Mission(s) Report:"] = "海军任务报告:"
+L["Nazjatar Follower XP"] = "纳沙塔尔随从经验"
 L["Need help? Join our Discord: https://discord.gg/xFWcfgE"] = true
 L["No bindings set."] = "无绑定设定"
 L["No gray items to delete."] = "没有要删除的灰色物品"
@@ -282,7 +284,7 @@ L["Save"] = "储存"
 L["Saved Dungeon(s)"] = "已有进度的地下城"
 L["Saved Raid(s)"] = "已有进度的副本"
 L["says"] = "说"
-L["Select the type of aura system you want to use with ElvUI's unitframes. Set to Aura Bar & Icons to use both aura bars and icons, set to icons only to only see icons."] = "选择你想使用的光环系统类型. 选择光环条及图标将会同时显示光环条及图标，选择图标将只会显示图标."
+L["Select the type of aura system you want to use with ElvUI's unitframes. Set to Aura Bars to use both aura bars and icons, set to Icons Only to only see icons."] = "选择你想使用的光环系统类型. 选择光环条及图标将会同时显示光环条及图标，选择图标将只会显示图标."
 L["Server: "] = "服务器: "
 L["Session:"] = "本次登陆:"
 L["Setup Chat"] = "设定聊天框"
@@ -369,6 +371,7 @@ L["You must purchase a bank slot first!"] = "你必需购买一个银行背包�
 L["Your items have been repaired for: "] = "装备已修复: "
 L["Your items have been repaired using guild bank funds for: "] = "物品已使用公会银行资金修复: "
 L["Your profile was successfully recieved by the player."] = "你的配置文件已被其他玩家成功接收."
+L["Zone Ability"] = "区域技能"
 
 ----------------------------------
 L["DESC_MOVERCONFIG"] = [=[解除框架移动锁定. 现在可以移动它们, 移好后请点击「锁定」.
@@ -392,4 +395,4 @@ L["EHELP_COMMANDS"] = ([=[Here is a list of all important *ElvUI|r commands:
  */luaerror|r ^on|r or ^off|r  -  Disable all AddOns except ElvUI.
   NOTE: */luaerror|r ^off|r will re-enable the addons disabled from
   using */luaerror|r ^on|r within that session.
-]=]):gsub('*', COLOR1):gsub('%^', COLOR2)
+]=]):gsub('*', E.InfoColor):gsub('%^', E.InfoColor2)
