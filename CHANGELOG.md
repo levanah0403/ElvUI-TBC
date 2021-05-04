@@ -1,4 +1,6 @@
-### Version 0.18 [ ETA: 🍨 ]
+### Version 0.19 [ ETA: 🍨 ]
+___
+### Version 0.18 [04-05-2021]
 **• Added PvP Trinket option for Arena**  
 **• Fixed Inspect Skin**  
 **• Removed Chat Debug prints**  
