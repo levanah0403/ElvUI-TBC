@@ -104,35 +104,7 @@ local function Update(self, event, unit)
 		element.otherBar:SetValue(otherIncomingHeal)
 		element.otherBar:Show()
 	end
---[[
-	if(element.absorbBar) then
-		element.absorbBar:SetMinMaxValues(0, maxHealth)
-		element.absorbBar:SetValue(absorb)
-		element.absorbBar:Show()
-	end
 
-	if(element.healAbsorbBar) then
-		element.healAbsorbBar:SetMinMaxValues(0, maxHealth)
-		element.healAbsorbBar:SetValue(healAbsorb)
-		element.healAbsorbBar:Show()
-	end
-
-	if(element.overAbsorb) then
-		if(hasOverAbsorb) then
-			element.overAbsorb:Show()
-		else
-			element.overAbsorb:Hide()
-		end
-	end
-
-	if(element.overHealAbsorb) then
-		if(hasOverHealAbsorb) then
-			element.overHealAbsorb:Show()
-		else
-			element.overHealAbsorb:Hide()
-		end
-	end
-]]
 	--[[ Callback: HealthPrediction:PostUpdate(unit, myIncomingHeal, otherIncomingHeal, absorb, healAbsorb, hasOverAbsorb, hasOverHealAbsorb)
 	Called after the element has been updated.
 
@@ -170,6 +142,7 @@ local function Enable(self)
 		element.healType = element.healType or HealComm.ALL_HEALS
 
 		self:RegisterEvent('UNIT_HEALTH_FREQUENT', Path)
+		self:RegisterEvent('UNIT_HEALTH', Path)
 		self:RegisterEvent('UNIT_MAXHEALTH', Path)
 
 		local function HealCommUpdate(...)
