@@ -12,22 +12,16 @@ end
 function UF:SetAlpha_HealComm(obj, alpha)
 	obj.myBar:SetAlpha(alpha)
 	obj.otherBar:SetAlpha(alpha)
-	--obj.absorbBar:SetAlpha(alpha)
-	--obj.healAbsorbBar:SetAlpha(alpha)
 end
 
 function UF:SetTexture_HealComm(obj, texture)
 	obj.myBar:SetStatusBarTexture(texture)
 	obj.otherBar:SetStatusBarTexture(texture)
-	--obj.absorbBar:SetStatusBarTexture(texture)
-	--obj.healAbsorbBar:SetStatusBarTexture(texture)
 end
 
 function UF:SetFrameLevel_HealComm(obj, level)
 	obj.myBar:SetFrameLevel(level)
 	obj.otherBar:SetFrameLevel(level)
-	--obj.absorbBar:SetFrameLevel(level)
-	--obj.healAbsorbBar:SetFrameLevel(level)
 end
 
 function UF:Construct_HealComm(frame)
