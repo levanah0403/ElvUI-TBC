@@ -128,7 +128,7 @@ do
 	end
 end
 
-ElvUF.Tags.Events['healthcolor'] = 'UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED'
+ElvUF.Tags.Events['healthcolor'] = 'UNIT_HEALTH_FREQUENT UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED'
 ElvUF.Tags.Methods['healthcolor'] = function(unit)
 	if UnitIsDeadOrGhost(unit) or not UnitIsConnected(unit) then
 		return Hex(0.84, 0.75, 0.65)
@@ -189,7 +189,7 @@ do
 	E.TagFunctions.NameHealthColor = NameHealthColor
 
 	-- the third arg here is added from the user as like [name:health{ff00ff:00ff00}] or [name:health{class:00ff00}]
-	ElvUF.Tags.Events['name:health'] = 'UNIT_NAME_UPDATE UNIT_FACTION UNIT_HEALTH UNIT_MAXHEALTH'
+	ElvUF.Tags.Events['name:health'] = 'UNIT_NAME_UPDATE UNIT_FACTION UNIT_HEALTH_FREQUENT UNIT_MAXHEALTH'
 	ElvUF.Tags.Methods['name:health'] = function(unit, _, args)
 		local name = UnitName(unit)
 		if not name then return '' end
@@ -204,7 +204,7 @@ do
 	end
 end
 
-ElvUF.Tags.Events['health:deficit-percent:nostatus'] = 'UNIT_HEALTH UNIT_MAXHEALTH'
+ElvUF.Tags.Events['health:deficit-percent:nostatus'] = 'UNIT_HEALTH_FREQUENT UNIT_MAXHEALTH'
 ElvUF.Tags.Methods['health:deficit-percent:nostatus'] = function(unit)
 	local min, max = UnitHealth(unit), UnitHealthMax(unit)
 	local deficit = (min / max) - 1
@@ -215,7 +215,7 @@ end
 
 for textFormat in pairs(E.GetFormattedTextStyles) do
 	local tagTextFormat = strlower(gsub(textFormat, '_', '-'))
-	ElvUF.Tags.Events[format('health:%s', tagTextFormat)] = 'UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED'
+	ElvUF.Tags.Events[format('health:%s', tagTextFormat)] = 'UNIT_HEALTH_FREQUENT UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED'
 	ElvUF.Tags.Methods[format('health:%s', tagTextFormat)] = function(unit)
 		local status = UnitIsDead(unit) and L["Dead"] or UnitIsGhost(unit) and L["Ghost"] or not UnitIsConnected(unit) and L["Offline"]
 		if status then
@@ -225,7 +225,7 @@ for textFormat in pairs(E.GetFormattedTextStyles) do
 		end
 	end
 
-	ElvUF.Tags.Events[format('health:%s-nostatus', tagTextFormat)] = 'UNIT_HEALTH UNIT_MAXHEALTH'
+	ElvUF.Tags.Events[format('health:%s-nostatus', tagTextFormat)] = 'UNIT_HEALTH_FREQUENT UNIT_MAXHEALTH'
 	ElvUF.Tags.Methods[format('health:%s-nostatus', tagTextFormat)] = function(unit)
 		return E:GetFormattedText(textFormat, UnitHealth(unit), UnitHealthMax(unit))
 	end
@@ -259,7 +259,7 @@ for textFormat in pairs(E.GetFormattedTextStyles) do
 	end
 
 	if tagTextFormat ~= 'percent' then
-		ElvUF.Tags.Events[format('health:%s:shortvalue', tagTextFormat)] = 'UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED'
+		ElvUF.Tags.Events[format('health:%s:shortvalue', tagTextFormat)] = 'UNIT_HEALTH_FREQUENT UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED'
 		ElvUF.Tags.Methods[format('health:%s:shortvalue', tagTextFormat)] = function(unit)
 			local status = not UnitIsFeignDeath(unit) and UnitIsDead(unit) and L["Dead"] or UnitIsGhost(unit) and L["Ghost"] or not UnitIsConnected(unit) and L["Offline"]
 			if (status) then
@@ -270,7 +270,7 @@ for textFormat in pairs(E.GetFormattedTextStyles) do
 			end
 		end
 
-		ElvUF.Tags.Events[format('health:%s-nostatus:shortvalue', tagTextFormat)] = 'UNIT_HEALTH UNIT_MAXHEALTH'
+		ElvUF.Tags.Events[format('health:%s-nostatus:shortvalue', tagTextFormat)] = 'UNIT_HEALTH_FREQUENT UNIT_MAXHEALTH'
 		ElvUF.Tags.Methods[format('health:%s-nostatus:shortvalue', tagTextFormat)] = function(unit)
 			local min, max = UnitHealth(unit), UnitHealthMax(unit)
 			return E:GetFormattedText(textFormat, min, max, nil, true)
@@ -304,7 +304,7 @@ for textFormat in pairs(E.GetFormattedTextStyles) do
 end
 
 for textFormat, length in pairs({ veryshort = 5, short = 10, medium = 15, long = 20 }) do
-	ElvUF.Tags.Events[format('health:deficit-percent:name-%s', textFormat)] = 'UNIT_HEALTH UNIT_MAXHEALTH UNIT_NAME_UPDATE'
+	ElvUF.Tags.Events[format('health:deficit-percent:name-%s', textFormat)] = 'UNIT_HEALTH_FREQUENT UNIT_MAXHEALTH UNIT_NAME_UPDATE'
 	ElvUF.Tags.Methods[format('health:deficit-percent:name-%s', textFormat)] = function(unit)
 		local cur, max = UnitHealth(unit), UnitHealthMax(unit)
 		local deficit = max - cur
@@ -336,7 +336,7 @@ for textFormat, length in pairs({ veryshort = 5, short = 10, medium = 15, long =
 		end
 	end
 
-	ElvUF.Tags.Events[format('name:%s:status', textFormat)] = 'UNIT_NAME_UPDATE UNIT_CONNECTION PLAYER_FLAGS_CHANGED UNIT_HEALTH INSTANCE_ENCOUNTER_ENGAGE_UNIT'
+	ElvUF.Tags.Events[format('name:%s:status', textFormat)] = 'UNIT_NAME_UPDATE UNIT_CONNECTION PLAYER_FLAGS_CHANGED UNIT_HEALTH_FREQUENT INSTANCE_ENCOUNTER_ENGAGE_UNIT'
 	ElvUF.Tags.Methods[format('name:%s:status', textFormat)] = function(unit)
 		local status = UnitIsDead(unit) and L["Dead"] or UnitIsGhost(unit) and L["Ghost"] or not UnitIsConnected(unit) and L["Offline"]
 		local name = UnitName(unit)
@@ -385,7 +385,7 @@ ElvUF.Tags.Methods['health:max:shortvalue'] = function(unit)
 	return E:GetFormattedText('CURRENT', max, max, nil, true)
 end
 
-ElvUF.Tags.Events['health:percent-with-absorbs'] = 'UNIT_HEALTH UNIT_MAXHEALTH UNIT_ABSORB_AMOUNT_CHANGED UNIT_CONNECTION PLAYER_FLAGS_CHANGED'
+ElvUF.Tags.Events['health:percent-with-absorbs'] = 'UNIT_HEALTH_FREQUENT UNIT_MAXHEALTH UNIT_ABSORB_AMOUNT_CHANGED UNIT_CONNECTION PLAYER_FLAGS_CHANGED'
 ElvUF.Tags.Methods['health:percent-with-absorbs'] = function(unit)
 	local status = UnitIsDead(unit) and L["Dead"] or UnitIsGhost(unit) and L["Ghost"] or not UnitIsConnected(unit) and L["Offline"]
 
@@ -402,7 +402,7 @@ ElvUF.Tags.Methods['health:percent-with-absorbs'] = function(unit)
 	return E:GetFormattedText('PERCENT', healthTotalIncludingAbsorbs, UnitHealthMax(unit))
 end
 
-ElvUF.Tags.Events['health:deficit-percent:name'] = 'UNIT_HEALTH UNIT_MAXHEALTH UNIT_NAME_UPDATE'
+ElvUF.Tags.Events['health:deficit-percent:name'] = 'UNIT_HEALTH_FREQUENT UNIT_MAXHEALTH UNIT_NAME_UPDATE'
 ElvUF.Tags.Methods['health:deficit-percent:name'] = function(unit)
 	local currentHealth = UnitHealth(unit)
 	local deficit = UnitHealthMax(unit) - currentHealth

@@ -130,7 +130,6 @@ local function Enable(self)
 		element.healType = element.healType or HealComm.ALL_HEALS
 
 		self:RegisterEvent('UNIT_HEALTH_FREQUENT', Path)
-		self:RegisterEvent('UNIT_HEALTH', Path)
 		self:RegisterEvent('UNIT_MAXHEALTH', Path)
 
 		local function HealCommUpdate(...)
@@ -197,7 +196,6 @@ local function Disable(self)
 		HealComm.UnregisterCallback(element, 'HealComm_GUIDDisappeared')
 
 		self:UnregisterEvent('UNIT_MAXHEALTH', Path)
-		self:UnregisterEvent('UNIT_HEALTH', Path)
 		self:UnregisterEvent('UNIT_HEALTH_FREQUENT', Path)
 	end
 end

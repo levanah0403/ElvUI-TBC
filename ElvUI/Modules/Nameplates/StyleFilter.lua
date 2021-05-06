@@ -989,7 +989,7 @@ mod.StyleFilterDefaultEvents = { -- list of events style filter uses to populate
 	-- existing:
 	UNIT_AURA = false,
 	UNIT_DISPLAYPOWER = false,
-	UNIT_HEALTH = false,
+	UNIT_HEALTH_FREQUENT = false,
 	UNIT_MAXHEALTH = false,
 	UNIT_NAME_UPDATE = false,
 	UNIT_PET = false,
@@ -1073,7 +1073,7 @@ function mod:StyleFilterConfigure()
 				end
 
 				if t.healthThreshold then
-					events.UNIT_HEALTH = 1
+					events.UNIT_HEALTH_FREQUENT = 1
 					events.UNIT_MAXHEALTH = 1
 				end
 
