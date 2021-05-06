@@ -53,9 +53,9 @@ local function Update(self, event, unit)
 	-- BUG: Non-existent '*target' or '*pet' units cause UnitDetailedThreatSituation() errors
 	if(unitExists(unit)) then
 		if(feedbackUnit and feedbackUnit ~= unit and unitExists(feedbackUnit)) then
-			status = UnitDetailedThreatSituation(feedbackUnit, unit)
+			status = UnitThreatSituation(feedbackUnit, unit)
 		else
-			status = UnitDetailedThreatSituation(unit)
+			status = UnitThreatSituation(unit)
 		end
 	end
 
