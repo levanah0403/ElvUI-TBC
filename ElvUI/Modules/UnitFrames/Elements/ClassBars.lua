@@ -274,7 +274,7 @@ local function ToggleResourceBar(bars)
 
 	-- keep this after the configure_healtbar, we need the one updated before we match the healpred size to -1
 	if frame.HealthPrediction then
-		UF:SetSize_HealComm(frame)
+		UF:Configure_HealComm(frame)
 	end
 end
 UF.ToggleResourceBar = ToggleResourceBar --Make available to combobar
