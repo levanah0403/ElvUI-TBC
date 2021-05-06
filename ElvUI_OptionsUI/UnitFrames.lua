@@ -1728,6 +1728,19 @@ local function GetOptionsTable_HealPrediction(updateFunc, groupName, numGroup, s
 				name = L["Height"],
 				min = -1, max = 500, step = 1,
 			},
+			healType = {
+				order = 2,
+				type = "select",
+				name = L["Type"],
+				values = {
+					ALL_HEALS = 'All Heals',
+					CHANNEL_HEALS = 'Channel Heals',
+					DIRECT_HEALS = 'Direct Heals',
+					HOT_HEALS = 'HoTs',
+					OVERTIME_HEALS = 'HoTs & Channel',
+					CASTED_HEALS = 'Direct & Channel Heals',
+				},
+			},
 			colorsButton = {
 				order = 3,
 				type = 'execute',

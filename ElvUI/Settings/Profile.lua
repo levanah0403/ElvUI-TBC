@@ -1082,6 +1082,7 @@ local UF_Health = {
 
 local UF_HealthPrediction = {
 	enable = false,
+	healType = 'ALL_HEALS',
 	absorbStyle = 'OVERFLOW',
 	anchorPoint = 'BOTTOM',
 	height = -1
