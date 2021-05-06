@@ -33,7 +33,7 @@ The following options are listed by priority. The first check that returns true 
 .colorDisconnected - Use `self.colors.disconnected` to color the bar if the unit is offline (boolean)
 .colorTapping      - Use `self.colors.tapping` to color the bar if the unit isn't tapped by the player (boolean)
 .colorThreat       - Use `self.colors.threat[threat]` to color the bar based on the unit's threat status. `threat` is
-					 defined by the first return of [UnitDetailedThreatSituation](https://wow.gamepedia.com/API_UnitDetailedThreatSituation) (boolean)
+					 defined by the first return of [UnitThreatSituation](https://wow.gamepedia.com/API_UnitThreatSituation) (boolean)
 .colorPower        - Use `self.colors.power[token]` to color the bar based on the unit's power type. This method will
 					 fall-back to `:GetAlternativeColor()` if it can't find a color matching the token. If this function
 					 isn't defined, then it will attempt to color based upon the alternative power colors returned by
@@ -127,8 +127,8 @@ local function UpdateColor(self, event, unit)
 		t = self.colors.disconnected
 	elseif(element.colorTapping and not UnitPlayerControlled(unit) and UnitIsTapDenied(unit)) then
 		t = self.colors.tapped
-	elseif(element.colorThreat and not UnitPlayerControlled(unit) and UnitDetailedThreatSituation('player', unit)) then
-		t = self.colors.threat[UnitDetailedThreatSituation('player', unit)]
+	elseif(element.colorThreat and not UnitPlayerControlled(unit) and UnitThreatSituation('player', unit)) then
+		t = self.colors.threat[UnitThreatSituation('player', unit)]
 	elseif(element.colorPower) then
 		if(element.displayType ~= ALTERNATE_POWER_INDEX) then
 			t = self.colors.power[pToken]

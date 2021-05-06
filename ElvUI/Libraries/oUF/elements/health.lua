@@ -27,7 +27,7 @@ The following options are listed by priority. The first check that returns true 
 .colorHappiness    - Use `self.colors.happiness[happiness]` to color the bar.
 .colorTapping      - Use `self.colors.tapping` to color the bar if the unit isn't tapped by the player (boolean)
 .colorThreat       - Use `self.colors.threat[threat]` to color the bar based on the unit's threat status. `threat` is
-                     defined by the first return of [UnitDetailedThreatSituation](https://wow.gamepedia.com/API_UnitDetailedThreatSituation) (boolean)
+                     defined by the first return of [UnitThreatSituation](https://wow.gamepedia.com/API_UnitThreatSituation) (boolean)
 .colorClass        - Use `self.colors.class[class]` to color the bar based on unit class. `class` is defined by the
                      second return of [UnitClass](http://wowprogramming.com/docs/api/UnitClass.html) (boolean)
 .colorClassNPC     - Use `self.colors.class[class]` to color the bar if the unit is a NPC (boolean)
@@ -91,8 +91,8 @@ local function UpdateColor(self, event, unit)
 		t = self.colors.tapped
 	elseif(element.colorHappiness and UnitIsUnit(unit, "pet") and GetPetHappiness()) then
 		t = self.colors.happiness[GetPetHappiness()]
-	elseif(element.colorThreat and not UnitPlayerControlled(unit) and UnitDetailedThreatSituation('player', unit)) then
-		t =  self.colors.threat[UnitDetailedThreatSituation('player', unit)]
+	elseif(element.colorThreat and not UnitPlayerControlled(unit) and UnitThreatSituation('player', unit)) then
+		t = self.colors.threat[UnitThreatSituation('player', unit)]
 	elseif(element.colorClass and UnitIsPlayer(unit))
 		or (element.colorClassNPC and not UnitIsPlayer(unit))
 		or ((element.colorClassPet or element.colorPetByUnitClass) and UnitPlayerControlled(unit) and not UnitIsPlayer(unit)) then
