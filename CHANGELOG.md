@@ -1,7 +1,7 @@
 ### Version 0.19 [ ETA: 🍨 ]
 **• Fixed Count on ActionBars**  
 **• Fixed Heal Prediction**  
-**• Threat tweaks (WIP)**  
+**• Fixed Threat**  
 ___
 ### Version 0.18 [04-05-2021]
 **• Added PvP Trinket option for Arena**  
