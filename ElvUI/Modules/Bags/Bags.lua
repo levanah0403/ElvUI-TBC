@@ -1545,11 +1545,16 @@ B.QuestKeys = {
 }
 
 function B:UpdateBagColors(table, indice, r, g, b)
-	B[table][B.BagIndice[indice]] = { r, g, b }
-end
+	local colorTable
+	if table == 'items' then
+		colorTable = B.QuestColors[B.QuestKeys[indice]]
+	else
+		if table == 'profession' then table = 'ProfessionColors' end
+		if table == 'assignment' then table = 'AssignmentColors' end
+		colorTable = B[table][B.BagIndice[indice]]
+	end
 
-function B:UpdateQuestColors(table, indice, r, g, b)
-	B[table][B.QuestKeys[indice]] = { r, g, b }
+	colorTable[1], colorTable[2], colorTable[3] = r, g, b
 end
 
 function B:Initialize()
