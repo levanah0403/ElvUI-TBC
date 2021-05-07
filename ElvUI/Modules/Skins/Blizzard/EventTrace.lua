@@ -16,20 +16,6 @@ local function ReskinScrollArrow(self, direction)
 	local tex = self:CreateTexture(nil, 'ARTWORK')
 	tex:SetAllPoints()
 	tex:CreateBackdrop('Transparent')
-	--S:SetupArrow(tex, direction)
-
-	--self:HookScript('OnEnter', Texture_OnEnter)
-	--self:HookScript('OnLeave', Texture_OnLeave)
-end
-
-local function ReskinEventTraceScrollBar(scrollBar)
-	scrollBar:StripTextures()
-	ReskinScrollArrow(scrollBar.Back, 'up')
-	ReskinScrollArrow(scrollBar.Forward, 'down')
-
-	local thumb = scrollBar:GetThumb()
-	thumb:StripTextures()
-	thumb:CreateBackdrop('Transparent')
 end
 
 local function reskinScrollChild(self)
@@ -60,7 +46,6 @@ end
 
 local function ReskinEventTraceFrame(frame)
 	ReskinEventTraceScrollBox(frame.ScrollBox)
-	ReskinEventTraceScrollBar(frame.ScrollBar)
 end
 
 function S:Blizzard_EventTrace()
