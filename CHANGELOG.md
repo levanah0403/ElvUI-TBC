@@ -1,4 +1,7 @@
-### Version 0.19 [ ETA: 🍨 ]
+### Version 0.20 [ ETA: 🍨 ]
+___
+### Version 0.19 [07-05-2021]
+**• Fixed a Bag error**  
 **• Fixed Count on ActionBars**  
 **• Fixed Heal Prediction**  
 **• Fixed Threat**  
