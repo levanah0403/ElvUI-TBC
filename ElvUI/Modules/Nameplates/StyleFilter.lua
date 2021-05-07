@@ -968,7 +968,9 @@ function mod:StyleFilterSetVariables(nameplate)
 	if nameplate == _G.ElvNP_Test then return end
 
 	for event, func in pairs(mod.StyleFilterEventFunctions) do
-		func(nameplate)
+		if event ~= 'UNIT_ENTERED_VEHICLE' and event ~= 'UNIT_EXITED_VEHICLE' then -- just need one call to StyleFilterVehicleFunction
+			func(nameplate)
+		end
 	end
 end
 
