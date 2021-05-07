@@ -27,8 +27,10 @@ function S:CharacterFrame()
 
 	S:HandleDropDownBox(_G.PlayerStatFrameRightDropDown, 145)
 	S:HandleDropDownBox(_G.PlayerStatFrameLeftDropDown, 147)
+	S:HandleDropDownBox(_G.PlayerTitleDropDown, 200)
 	_G.PlayerStatFrameRightDropDown:Point('TOP', -2, 24)
 	_G.PlayerStatFrameLeftDropDown:Point('LEFT', -25, 24)
+	_G.PlayerTitleDropDown:Point('TOP', -7, -51)
 
 	for i = 1, #CHARACTERFRAME_SUBFRAMES do
 		S:HandleTab(_G['CharacterFrameTab'..i])
