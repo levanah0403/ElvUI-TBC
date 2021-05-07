@@ -18,7 +18,6 @@ local SetCVar = SetCVar
 local UnitClass = UnitClass
 local UnitClassification = UnitClassification
 local UnitCreatureType = UnitCreatureType
-local UnitExists = UnitExists
 local UnitFactionGroup = UnitFactionGroup
 local UnitGUID = UnitGUID
 local UnitIsEnemy = UnitIsEnemy
@@ -38,23 +37,6 @@ local C_NamePlate_SetNamePlateFriendlySize = C_NamePlate.SetNamePlateFriendlySiz
 local C_NamePlate_SetNamePlateSelfClickThrough = C_NamePlate.SetNamePlateSelfClickThrough
 local C_NamePlate_SetNamePlateSelfSize = C_NamePlate.SetNamePlateSelfSize
 local hooksecurefunc = hooksecurefunc
-
-do  -- credit: oUF/private.lua
-	local selectionTypes = {[0]=0,[1]=1,[2]=2,[3]=3,[4]=4,[5]=5,[6]=6,[7]=7,[8]=8,[9]=9,[13]=13}
-	-- 10 and 11 are unavailable to players, 12 is inconsistent due to bugs and its reliance on cvars
-
-	function NP:UnitExists(unit)
-		return unit and UnitExists(unit) or ShowBossFrameWhenUninteractable(unit)
-	end
-
-	function NP:UnitSelectionType(unit, considerHostile)
-		if considerHostile and UnitThreatSituation('player', unit) then
-			return 0
-		else
-			return selectionTypes[UnitSelectionType(unit, true)]
-		end
-	end
-end
 
 local Blacklist = {
 	PLAYER = {
