@@ -34,8 +34,6 @@ local UnitClassification = UnitClassification
 local UnitDetailedThreatSituation = UnitDetailedThreatSituation
 local UnitExists = UnitExists
 local UnitFactionGroup = UnitFactionGroup
-local UnitGetIncomingHeals = UnitGetIncomingHeals
-local UnitGetTotalAbsorbs = UnitGetTotalAbsorbs
 local UnitGUID = UnitGUID
 local UnitHealth = UnitHealth
 local UnitHealthMax = UnitHealthMax
@@ -385,23 +383,6 @@ ElvUF.Tags.Methods['health:max:shortvalue'] = function(unit)
 	return E:GetFormattedText('CURRENT', max, max, nil, true)
 end
 
-ElvUF.Tags.Events['health:percent-with-absorbs'] = 'UNIT_HEALTH_FREQUENT UNIT_MAXHEALTH UNIT_ABSORB_AMOUNT_CHANGED UNIT_CONNECTION PLAYER_FLAGS_CHANGED'
-ElvUF.Tags.Methods['health:percent-with-absorbs'] = function(unit)
-	local status = UnitIsDead(unit) and L["Dead"] or UnitIsGhost(unit) and L["Ghost"] or not UnitIsConnected(unit) and L["Offline"]
-
-	if status then
-		return status
-	end
-
-	local absorb = UnitGetTotalAbsorbs(unit) or 0
-	if absorb == 0 then
-		return E:GetFormattedText('PERCENT', UnitHealth(unit), UnitHealthMax(unit))
-	end
-
-	local healthTotalIncludingAbsorbs = UnitHealth(unit) + absorb
-	return E:GetFormattedText('PERCENT', healthTotalIncludingAbsorbs, UnitHealthMax(unit))
-end
-
 ElvUF.Tags.Events['health:deficit-percent:name'] = 'UNIT_HEALTH_FREQUENT UNIT_MAXHEALTH UNIT_NAME_UPDATE'
 ElvUF.Tags.Methods['health:deficit-percent:name'] = function(unit)
 	local currentHealth = UnitHealth(unit)
@@ -667,40 +648,6 @@ ElvUF.Tags.Events['manacolor'] = 'UNIT_POWER_FREQUENT UNIT_DISPLAYPOWER'
 ElvUF.Tags.Methods['manacolor'] = function()
 	local r, g, b = unpack(ElvUF.colors.power.MANA)
 	return Hex(r, g, b)
-end
-
-ElvUF.Tags.Events['absorbs'] = 'UNIT_ABSORB_AMOUNT_CHANGED'
-ElvUF.Tags.Methods['absorbs'] = function(unit)
-	local absorb = UnitGetTotalAbsorbs(unit) or 0
-	if absorb ~= 0 then
-		return E:ShortValue(absorb)
-	end
-end
-
-ElvUF.Tags.Events['incomingheals:personal'] = 'UNIT_HEAL_PREDICTION'
-ElvUF.Tags.Methods['incomingheals:personal'] = function(unit)
-	local heal = UnitGetIncomingHeals(unit, 'player') or 0
-	if heal ~= 0 then
-		return E:ShortValue(heal)
-	end
-end
-
-ElvUF.Tags.Events['incomingheals:others'] = 'UNIT_HEAL_PREDICTION'
-ElvUF.Tags.Methods['incomingheals:others'] = function(unit)
-	local personal = UnitGetIncomingHeals(unit, 'player') or 0
-	local heal = UnitGetIncomingHeals(unit) or 0
-	local others = heal - personal
-	if others ~= 0 then
-		return E:ShortValue(others)
-	end
-end
-
-ElvUF.Tags.Events['incomingheals'] = 'UNIT_HEAL_PREDICTION'
-ElvUF.Tags.Methods['incomingheals'] = function(unit)
-	local heal = UnitGetIncomingHeals(unit) or 0
-	if heal ~= 0 then
-		return E:ShortValue(heal)
-	end
 end
 
 local GroupUnits = {}
@@ -1050,7 +997,6 @@ E.TagInfo = {
 	['guild:translit'] = { category = 'Guild', description = "Displays the guild name with transliteration for cyrillic letters" },
 	['guild'] = { category = 'Guild', description = "Displays the guild name" },
 	--Health
-	['absorbs'] = { category = 'Health', description = 'Displays the amount of absorbs' },
 	['curhp'] = { category = 'Health', description = "Displays the current HP without decimals" },
 	['deficit:name'] = { category = 'Health', description = "Displays the health as a deficit and the name at full health" },
 	['health:current-max-nostatus:shortvalue'] = { category = 'Health', description = "Shortvalue of the unit's current and max health, without status" },
@@ -1082,11 +1028,7 @@ E.TagInfo = {
 	['health:max:shortvalue'] = { category = 'Health', description = "Shortvalue of the unit's maximum health" },
 	['health:max'] = { category = 'Health', description = "Displays the maximum health of the unit" },
 	['health:percent-nostatus'] = { category = 'Health', description = "Displays the unit's current health as a percentage, without status" },
-	['health:percent-with-absorbs'] = { category = 'Health', description = "Displays the unit's current health as a percentage with absorb values" },
 	['health:percent'] = { category = 'Health', description = "Displays the current health of the unit as a percentage" },
-	['incomingheals:others'] = { category = 'Health', description = "Displays only incoming heals from other units" },
-	['incomingheals:personal'] = { category = 'Health', description = "Displays only personal incoming heals" },
-	['incomingheals'] = { category = 'Health', description = "Displays all incoming heals" },
 	['maxhp'] = { category = 'Health', description = "Displays max HP without decimals" },
 	['missinghp'] = { category = 'Health', description = "Displays the missing health of the unit in whole numbers, when not at full health" },
 	['perhp'] = { category = 'Health', description = "Displays percentage HP without decimals or the % sign. You can display the percent sign by adjusting the tag to [perhp<%]." },
