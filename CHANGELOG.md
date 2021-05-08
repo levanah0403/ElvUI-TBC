@@ -1,4 +1,11 @@
-### Version 0.20 [ ETA: 🍨 ]
+### Version 0.21 [ ETA: 🍨 ]
+___
+### Version 0.20 [08-05-2021]
+**• Added Arena Queue NPC Skin**  
+**• Added Communities Skin**  
+**• Added EnergyManaRegen to profile export**  
+**• Added Player Title Dropdown Skin**  
+**• Fixed EventTrace Skin error**  
 ___
 ### Version 0.19 [07-05-2021]
 **• Fixed a Bag error**  
