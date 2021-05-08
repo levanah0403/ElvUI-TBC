@@ -5,7 +5,6 @@ local _G = _G
 local ipairs, pairs, select, unpack = ipairs, pairs, select, unpack
 
 local C_CreatureInfo_GetClassInfo = C_CreatureInfo.GetClassInfo
-local C_GuildInfo_GetGuildNewsInfo = C_GuildInfo.GetGuildNewsInfo
 local CLASS_ICON_TCOORDS = CLASS_ICON_TCOORDS
 local BATTLENET_FONT_COLOR = BATTLENET_FONT_COLOR
 local FRIENDS_BNET_BACKGROUND_COLOR = FRIENDS_BNET_BACKGROUND_COLOR
@@ -14,9 +13,6 @@ local GetClassInfo = GetClassInfo
 local GREEN_FONT_COLOR = GREEN_FONT_COLOR
 local CreateFrame = CreateFrame
 local hooksecurefunc = hooksecurefunc
-local GetGuildRewardInfo = GetGuildRewardInfo
-local GetItemQualityColor = GetItemQualityColor
-local GetItemInfo = GetItemInfo
 local Enum = Enum
 
 local function UpdateNames(self)
@@ -321,6 +317,7 @@ function S:Blizzard_Communities()
 	S:HandleScrollBar(TicketManager.InviteManager.ListScrollFrame.scrollBar)
 	S:HandleButton(TicketManager.MaximizeButton)
 
+	-- Bottom Tabs
 	S:HandleTab(_G.CommunitiesFrameTab1)
 	S:HandleTab(_G.CommunitiesFrameTab2)
 	S:HandleTab(_G.CommunitiesFrameTab3)
