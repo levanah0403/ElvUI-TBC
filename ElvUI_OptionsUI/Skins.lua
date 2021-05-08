@@ -35,6 +35,7 @@ E.Options.args.skins.args.blizzard.values = {
 	blizzardOptions = L["INTERFACE_OPTIONS"],
 	channels = L["CHANNELS"],
 	character = L["Character Frame"],
+	communities = L["COMMUNITIES"],
 	craft = L["Craft"],
 	debug = L["Debug Tools"],
 	dressingroom = L["DRESSUP_FRAME"],
