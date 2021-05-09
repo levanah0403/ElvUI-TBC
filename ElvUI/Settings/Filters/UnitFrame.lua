@@ -888,6 +888,7 @@ G.unitframe.ChannelTicks = {
 	[11693] = 10, -- Health Funnel(Rank 5)
 	[11694] = 10, -- Health Funnel(Rank 6)
 	[11695] = 10, -- Health Funnel(Rank 7)
+	[27259] = 10, -- Health Funnel(Rank 8)
 	[689] = 5, -- Drain Life(Rank 1)
 	[699] = 5, -- Drain Life(Rank 2)
 	[709] = 5, -- Drain Life(Rank 3)
