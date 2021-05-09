@@ -397,6 +397,7 @@ function M:Initialize()
 		_G.MinimapZoomOut,
 		_G.MinimapNorthTag,
 		_G.MinimapZoneTextButton,
+		_G.MinimapToggleButton,
 		_G.MiniMapMailBorder
 	}
 
