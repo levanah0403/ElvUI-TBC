@@ -1,4 +1,12 @@
-### Version 0.21 [ ETA: 🍨 ]
+### Version 0.22 [ ETA: 🍨 ]
+___
+### Version 0.21 [10-05-2021]
+**• Added range tags**  
+**• Fixed Display Frames not showing Auras**  
+**• Fixed Show Auras button**  
+**• Updated Debuff Filters**  
+**• Updated LibHealComm**  
+**• Updated Range Check / Fader**  
 ___
 ### Version 0.20 [08-05-2021]
 **• Added Arena Queue NPC Skin**  
