@@ -475,7 +475,7 @@ local tagEvents = {
 	['dead']                = 'UNIT_HEALTH_FREQUENT',
 	['deficit:name']        = 'UNIT_HEALTH_FREQUENT UNIT_MAXHEALTH UNIT_NAME_UPDATE',
 	['difficulty']          = 'UNIT_FACTION',
-	['faction']             = 'NEUTRAL_FACTION_SELECT_RESULT',
+	['faction']             = 'UNIT_FACTION',
 	['group']               = 'GROUP_ROSTER_UPDATE',
 	['leader']              = 'PARTY_LEADER_CHANGED',
 	['leaderlong']          = 'PARTY_LEADER_CHANGED',
@@ -503,7 +503,6 @@ local tagEvents = {
 
 local unitlessEvents = {
 	GROUP_ROSTER_UPDATE = true,
-	NEUTRAL_FACTION_SELECT_RESULT = true,
 	PARTY_LEADER_CHANGED = true,
 	PLAYER_LEVEL_UP = true,
 	PLAYER_TALENT_UPDATE = true,
