@@ -676,71 +676,6 @@ f:SetScript('OnEvent', function()
 	end
 end)
 
-ElvUF.Tags.OnUpdateThrottle['nearbyplayers:8'] = 0.25
-ElvUF.Tags.Methods['nearbyplayers:8'] = function(unit)
-	local unitsInRange, distance = 0
-	if UnitIsConnected(unit) then
-		for groupUnit in pairs(GroupUnits) do
-			if not UnitIsUnit(unit, groupUnit) and UnitIsConnected(groupUnit) then
-				distance = E:GetDistance(unit, groupUnit)
-				if distance and distance <= 8 then
-					unitsInRange = unitsInRange + 1
-				end
-			end
-		end
-	end
-
-	return unitsInRange
-end
-
-ElvUF.Tags.OnUpdateThrottle['nearbyplayers:10'] = 0.25
-ElvUF.Tags.Methods['nearbyplayers:10'] = function(unit)
-	local unitsInRange, distance = 0
-	if UnitIsConnected(unit) then
-		for groupUnit in pairs(GroupUnits) do
-			if not UnitIsUnit(unit, groupUnit) and UnitIsConnected(groupUnit) then
-				distance = E:GetDistance(unit, groupUnit)
-				if distance and distance <= 10 then
-					unitsInRange = unitsInRange + 1
-				end
-			end
-		end
-	end
-
-	return unitsInRange
-end
-
-ElvUF.Tags.OnUpdateThrottle['nearbyplayers:30'] = 0.25
-ElvUF.Tags.Methods['nearbyplayers:30'] = function(unit)
-	local unitsInRange, distance = 0
-	if UnitIsConnected(unit) then
-		for groupUnit in pairs(GroupUnits) do
-			if not UnitIsUnit(unit, groupUnit) and UnitIsConnected(groupUnit) then
-				distance = E:GetDistance(unit, groupUnit)
-				if distance and distance <= 30 then
-					unitsInRange = unitsInRange + 1
-				end
-			end
-		end
-	end
-
-	return unitsInRange
-end
-
-ElvUF.Tags.OnUpdateThrottle['distance'] = 0.1
-ElvUF.Tags.Methods['distance'] = function(unit)
-	local distance
-	if UnitIsConnected(unit) and not UnitIsUnit(unit, 'player') then
-		distance = E:GetDistance('player', unit)
-
-		if distance then
-			distance = format('%.1f', distance)
-		end
-	end
-
-	return distance
-end
-
 local speedText = _G.SPEED
 local baseSpeed = _G.BASE_MOVEMENT_SPEED
 ElvUF.Tags.OnUpdateThrottle['speed:percent'] = 0.1
@@ -1116,11 +1051,6 @@ E.TagInfo = {
 	['faction'] = { category = 'PvP', description = "Displays 'Alliance' or 'Horde'" },
 	['pvp'] = { category = 'PvP', description = "Displays 'PvP' if the unit is pvp flagged" },
 	['pvptimer'] = { category = 'PvP', description = "Displays remaining time on pvp-flagged status" },
-	--Range
-	['distance'] = { category = 'Range', description = "Displays the distance" },
-	['nearbyplayers:10'] = { category = 'Range', description = "Displays all players within 10 yards" },
-	['nearbyplayers:30'] = { category = 'Range', description = "Displays all players within 30 yards" },
-	['nearbyplayers:8'] = { category = 'Range', description = "Displays all players within 8 yards" },
 	--Realm
 	['realm:dash:translit'] = { category = 'Realm', description = "Displays the server name with transliteration for cyrillic letters and a dash in front" },
 	['realm:dash'] = { category = 'Realm', description = "Displays the server name with a dash in front (e.g. -Realm)" },
