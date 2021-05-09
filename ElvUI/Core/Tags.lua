@@ -227,8 +227,8 @@ for _, vars in ipairs({'',':min',':max'}) do
 				if maxRange then
 					return format('%d', maxRange)
 				end
-			elseif minRange and maxRange then
-				return format('%d - %d', minRange, maxRange)
+			elseif minRange or maxRange then
+				return format('%s - %s', minRange or '??', maxRange or '??')
 			end
 		end
 	end
