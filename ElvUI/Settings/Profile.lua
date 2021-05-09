@@ -895,6 +895,7 @@ P.tooltip = {
 	cursorAnchorX = 0,
 	cursorAnchorY = 0,
 	alwaysShowRealm = false,
+	itemQualityBorderColor = false,
 	targetInfo = true,
 	playerTitles = true,
 	guildRanks = true,
