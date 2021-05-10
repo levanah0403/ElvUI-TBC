@@ -4,7 +4,7 @@
 local E, L, V, P, G = unpack(select(2, ...)) --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 
 local _G = _G
-local wipe, date = wipe, date
+local wipe, date, max = wipe, date, max
 local format, select, type, ipairs, pairs = format, select, type, ipairs, pairs
 local strmatch, strfind, tonumber, tostring = strmatch, strfind, tonumber, tostring
 local strlen, CreateFrame = strlen, CreateFrame
@@ -13,11 +13,19 @@ local GetCVar, SetCVar = GetCVar, SetCVar
 local GetCVarBool = GetCVarBool
 local GetFunctionCPUUsage = GetFunctionCPUUsage
 local GetInstanceInfo = GetInstanceInfo
+local GetNumGroupMembers = GetNumGroupMembers
 local InCombatLockdown = InCombatLockdown
 local IsAddOnLoaded = IsAddOnLoaded
+local IsInRaid = IsInRaid
 local RequestBattlefieldScoreData = RequestBattlefieldScoreData
 local UIParentLoadAddOn = UIParentLoadAddOn
+local UnitInParty = UnitInParty
+local UnitInRaid = UnitInRaid
+local UnitIsUnit = UnitIsUnit
 local ERR_NOT_IN_COMBAT = ERR_NOT_IN_COMBAT
+local FACTION_ALLIANCE = FACTION_ALLIANCE
+local FACTION_HORDE = FACTION_HORDE
+local PLAYER_FACTION_GROUP = PLAYER_FACTION_GROUP
 -- GLOBALS: ElvDB
 
 function E:ClassColor(class, usePriestColor)
@@ -43,9 +51,9 @@ function E:InverseClassColor(class, usePriestColor, forceCap)
 	local color = E:CopyTable({}, E:ClassColor(class, usePriestColor))
 	local capColor = color == E.PriestColors or forceCap
 
-	color.r = capColor and math.max(1-color.r,0.35) or (1-color.r)
-	color.g = capColor and math.max(1-color.g,0.35) or (1-color.g)
-	color.b = capColor and math.max(1-color.b,0.35) or (1-color.b)
+	color.r = capColor and max(1-color.r,0.35) or (1-color.r)
+	color.g = capColor and max(1-color.g,0.35) or (1-color.g)
+	color.b = capColor and max(1-color.b,0.35) or (1-color.b)
 	color.colorStr = E:RGBToHex(color.r, color.g, color.b, 'ff')
 
 	return color
@@ -346,6 +354,24 @@ function E:PLAYER_REGEN_DISABLED()
 
 	if err then
 		self:Print(ERR_NOT_IN_COMBAT)
+	end
+end
+
+function E:GetGroupUnit(unit)
+	if UnitIsUnit(unit, 'player') then return end
+	if strfind(unit, 'party') or strfind(unit, 'raid') then
+		return unit
+	end
+
+	-- returns the unit as raid# or party# when grouped
+	if UnitInParty(unit) or UnitInRaid(unit) then
+		local isInRaid = IsInRaid()
+		for i = 1, GetNumGroupMembers() do
+			local groupUnit = (isInRaid and 'raid' or 'party')..i
+			if UnitIsUnit(unit, groupUnit) then
+				return groupUnit
+			end
+		end
 	end
 end
 
