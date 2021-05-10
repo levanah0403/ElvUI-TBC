@@ -144,7 +144,7 @@ local TESTERS = {
 	'Catok',
 	'Caedis',
 	'|cff00c0faBenik|r',
-	'|T136012:15:15:0:0:64:64:5:59:5:59|t |cff006fdcRubgrsch|r |T656558:15:15:0:0:64:64:5:59:5:59|t',
+	'|T136012:15:15:0:0:64:64:5:59:5:59|t |cff006fdcRubgrsch|r',
 	'|TInterface/AddOns/ElvUI/Media/ChatLogos/Gem:15:15:-1:2:64:64:6:60:8:60|t AcidWeb',
 	'|T135167:15:15:0:0:64:64:5:59:5:59|t Loon - For being right',
 	'|T134297:15:15:0:0:64:64:5:59:5:59|t |cffFF7D0ABladesdruid|r - AKA SUPERBEAR',
