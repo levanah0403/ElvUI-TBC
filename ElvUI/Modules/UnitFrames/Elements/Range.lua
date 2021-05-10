@@ -1,37 +1,16 @@
 local E, L, V, P, G = unpack(select(2, ...)) --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
-local UF = E:GetModule('UnitFrames');
+local UF = E:GetModule('UnitFrames')
 local RangeCheck = E.Libs.RangeCheck
 
 local UnitCanAttack = UnitCanAttack
-local UnitInParty = UnitInParty
-local UnitInRaid = UnitInRaid
 local UnitInRange = UnitInRange
 local UnitIsConnected = UnitIsConnected
 local UnitIsPlayer = UnitIsPlayer
 local UnitIsUnit = UnitIsUnit
 
-local function getUnit(unit)
-	if not unit:find('party') or not unit:find('raid') then
-		for i=1, 4 do
-			if UnitIsUnit(unit, 'party'..i) then
-				return 'party'..i
-			end
-		end
+local function friendlyIsInRange(realUnit)
+	local unit = E:GetGroupUnit(realUnit) or realUnit
 
-		for i=1, 40 do
-			if UnitIsUnit(unit, 'raid'..i) then
-				return 'raid'..i
-			end
-		end
-	else
-		return unit
-	end
-end
-
-local function friendlyIsInRange(unit)
-	if not UnitIsUnit(unit, 'player') and (UnitInParty(unit) or UnitInRaid(unit)) then
-		unit = getUnit(unit) -- swap the unit with `raid#` or `party#` when its NOT `player`, UnitIsUnit is true, and its not using `raid#` or `party#` already
-	end
 
 	local inRange, checkedRange = UnitInRange(unit)
 	if checkedRange and not inRange then
