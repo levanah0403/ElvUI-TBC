@@ -863,6 +863,8 @@ P.unitframe.filters = {
 -- List of spells to display ticks
 G.unitframe.ChannelTicks = {
 	-- First Aid
+	[27031]  = 8, -- Heavy Netherweave Bandage
+	[27030]  = 8, -- Netherweave Bandage
 	[23567]  = 8, -- Warsong Gulch Runecloth Bandage
 	[23696]  = 8, -- Alterac Heavy Runecloth Bandage
 	[24414]  = 8, -- Arathi Basin Runecloth Bandage
