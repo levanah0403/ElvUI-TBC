@@ -132,10 +132,13 @@ G.unitframe.aurafilters.CCDebuffs = {
 		[1715]   = Defaults(2), -- Hamstring(Rank 1)
 		[7372]   = Defaults(2), -- Hamstring(Rank 2)
 		[7373]   = Defaults(2), -- Hamstring(Rank 3)
+		[25212]  = Defaults(2), -- Hamstring(Rank 4)
 		[12809]  = Defaults(2), -- Concussion Blow
 		[20252]  = Defaults(2), -- Intercept(Rank 1)
 		[20616]  = Defaults(2), -- Intercept(Rank 2)
 		[20617]  = Defaults(2), -- Intercept(Rank 3)
+		[25272]  = Defaults(2), -- Intercept(Rank 4)
+		[25275]  = Defaults(2), -- Intercept(Rank 5)
 	-- Racial
 		[20549]  = Defaults(2), -- War Stomp
 	-- Sunder Armor, Faerie Fire, Faerie Fire(Feral)
@@ -172,6 +175,8 @@ G.unitframe.aurafilters.TurtleBuffs = {
 		[1022]  = Defaults(2), -- Blessing of Protection(Rank 1)
 		[5599]  = Defaults(2), -- Blessing of Protection(Rank 2)
 		[10278] = Defaults(2), -- Blessing of Protection(Rank 3)
+	-- Warrior
+		[20230] = Defaults(2), -- Retaliation
 	-- Consumables
 		[3169]  = Defaults(2), -- Limited Invulnerability Potion
 		[6615]  = Defaults(2), -- Free Action Potion
@@ -187,7 +192,6 @@ G.unitframe.aurafilters.TurtleBuffs = {
 	-- Rogue
 	-- Shaman
 	-- Warlock
-	-- Warrior
 	},
 }
 
@@ -803,6 +807,8 @@ G.unitframe.aurawatch = {
 		[11550]   = UF:AuraWatch_AddSpell(11550, 'TOPLEFT', {0.2, 0.2, 1}, true), -- Battle Shout(Rank 5)
 		[11551]   = UF:AuraWatch_AddSpell(11551, 'TOPLEFT', {0.2, 0.2, 1}, true), -- Battle Shout(Rank 6)
 		[25289]   = UF:AuraWatch_AddSpell(25289, 'TOPLEFT', {0.2, 0.2, 1}, true), -- Battle Shout(Rank 7)
+		[2048]    = UF:AuraWatch_AddSpell(2048, 'TOPLEFT', {0.2, 0.2, 1}, true), -- Battle Shout(Rank 8)
+		[469]     = UF:AuraWatch_AddSpell(469, 'TOPRIGHT', {0.4, 0.2, 0.8}, true), -- Commanding Shout
 	},
 	MAGE = {
 		[1459]    = UF:AuraWatch_AddSpell(1459, 'TOPLEFT', {0.89, 0.09, 0.05}, true), -- Arcane Intellect(Rank 1)
