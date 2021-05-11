@@ -1,7 +1,11 @@
 ### Version 0.22 [ ETA: 🍨 ]
+**• Updated LibRangeCheck**  
+**• Updated MiniMapTracking Icon**  
+**• Updated Range Tags**  
+**• Updated ThreatBar**  
 ___
 ### Version 0.21 [10-05-2021]
-**• Added range tags**  
+**• Added Range Tags**  
 **• Fixed Display Frames not showing Auras**  
 **• Fixed Show Auras button**  
 **• Updated Debuff Filters**  
