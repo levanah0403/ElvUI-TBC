@@ -320,11 +320,14 @@ function M:UpdateSettings()
 				_G.MiniMapTrackingBorder:Hide()
 			end
 
+			if (_G.MiniMapTrackingBackground) then
+				_G.MiniMapTrackingBackground:Hide()
+			end
+
 			if (_G.MiniMapTrackingIcon) then
 				_G.MiniMapTrackingIcon:SetDrawLayer('ARTWORK')
 				_G.MiniMapTrackingIcon:SetTexCoord(unpack(E.TexCoords))
 				_G.MiniMapTrackingIcon:SetInside()
-				_G.MiniMapTrackingIcon:CreateBackdrop()
 			end
 		end
 	end
