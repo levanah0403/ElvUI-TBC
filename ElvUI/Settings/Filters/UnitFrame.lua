@@ -112,6 +112,7 @@ G.unitframe.aurafilters.CCDebuffs = {
 		[8629]   = Defaults(2), -- Gouge(Rank 3)
 		[11285]  = Defaults(2), -- Gouge(Rank 4)
 		[11286]  = Defaults(2), -- Gouge(Rank 5)
+		[38764]  = Defaults(2), -- Gouge(Rank 6)
 		[5530]   = Defaults(2), -- Mace Stun Effect
 	-- Shaman
 		[2484]   = Defaults(1), -- Earthbind Totem
