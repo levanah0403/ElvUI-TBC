@@ -234,6 +234,7 @@ G.unitframe.aurafilters.PlayerBuffs = {
 		[13159] = Defaults(), -- Aspect of the Pack
 		[20043] = Defaults(), -- Aspect of the Wild(Rank 1)
 		[20190] = Defaults(), -- Aspect of the Wild(Rank 2)
+		[27045] = Defaults(), -- Aspect of the Wild(Rank 3)
 		[3045]  = Defaults(), -- Rapid Fire
 		[19263] = Defaults(), -- Deterrence
 		[13165] = Defaults(), -- Aspect of the Hawk(Rank 1)
@@ -243,6 +244,7 @@ G.unitframe.aurafilters.PlayerBuffs = {
 		[14321] = Defaults(), -- Aspect of the Hawk(Rank 5)
 		[14322] = Defaults(), -- Aspect of the Hawk(Rank 6)
 		[25296] = Defaults(), -- Aspect of the Hawk(Rank 7)
+		[27044] = Defaults(), -- Aspect of the Hawk(Rank 8)
 	-- Mage
 		[11958] = Defaults(), -- Ice Block A
 		[27619] = Defaults(), -- Ice Block B
@@ -887,9 +889,11 @@ G.unitframe.aurawatch = {
 		[19506]   = UF:AuraWatch_AddSpell(19506, 'TOPLEFT', {0.89, 0.09, 0.05}), -- Trueshot Aura (Rank 1)
 		[20905]   = UF:AuraWatch_AddSpell(20905, 'TOPLEFT', {0.89, 0.09, 0.05}), -- Trueshot Aura (Rank 2)
 		[20906]   = UF:AuraWatch_AddSpell(20906, 'TOPLEFT', {0.89, 0.09, 0.05}), -- Trueshot Aura (Rank 3)
+		[27066]   = UF:AuraWatch_AddSpell(27066, 'TOPLEFT', {0.89, 0.09, 0.05}), -- Trueshot Aura (Rank 4)
 		[13159]   = UF:AuraWatch_AddSpell(13159, 'BOTTOMLEFT', {0.00, 0.00, 0.85}), -- Aspect of the Pack
 		[20043]   = UF:AuraWatch_AddSpell(20043, 'BOTTOMLEFT', {0.33, 0.93, 0.79}), -- Aspect of the Wild (Rank 1)
 		[20190]   = UF:AuraWatch_AddSpell(20190, 'BOTTOMLEFT', {0.33, 0.93, 0.79}), -- Aspect of the Wild (Rank 2)
+		[27045]   = UF:AuraWatch_AddSpell(27045, 'BOTTOMLEFT', {0.33, 0.93, 0.79}), -- Aspect of the Wild (Rank 3)
 	},
 	WARLOCK = {
 		[5597]    = UF:AuraWatch_AddSpell(5597, 'TOPLEFT', {0.89, 0.09, 0.05}, true), -- Unending Breath
@@ -1016,6 +1020,7 @@ G.unitframe.ChannelTicks = {
 	[1510]   = 6, -- Volley(Rank 1)
 	[14294]  = 6, -- Volley(Rank 2)
 	[14295]  = 6, -- Volley(Rank 3)
+	[27022]  = 6, -- Volley(Rank 4)
 	[136]    = 5, -- Mend Pet(Rank 1)
 	[3111]   = 5, -- Mend Pet(Rank 2)
 	[3661]   = 5, -- Mend Pet(Rank 3)
@@ -1023,6 +1028,7 @@ G.unitframe.ChannelTicks = {
 	[13542]  = 5, -- Mend Pet(Rank 5)
 	[13543]  = 5, -- Mend Pet(Rank 6)
 	[13544]  = 5, -- Mend Pet(Rank 7)
+	[27046]  = 5, -- Mend Pet(Rank 8)
 }
 
 -- Spells Effected By Talents
