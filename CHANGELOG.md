@@ -1,4 +1,11 @@
-### Version 0.22 [ ETA: 🍨 ]
+### Version 0.23 [ ETA: 🍨 ]
+___
+### Version 0.22 [12-05-2021]
+**• Added option for upcoming NamePlate range increase**  
+**• Updated AuraWatch for all Classes**  
+**• Updated Castbar ChannelTicks**  
+**• Updated LibHealComm**  
+**• Updated LibQuestXP**  
 **• Updated LibRangeCheck**  
 **• Updated MiniMapTracking Icon**  
 **• Updated Range Tags**  
