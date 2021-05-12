@@ -80,7 +80,6 @@ end
 function NP:CVarReset()
 	NP:SetCVar('nameplateMinAlpha', 1)
 	NP:SetCVar('nameplateMaxAlpha', 1)
-	NP:SetCVar('nameplateMaxDistance', NP.db.loadDistance)
 	NP:SetCVar('nameplateClassResourceTopInset', GetCVarDefault('nameplateClassResourceTopInset'))
 	NP:SetCVar('nameplateGlobalScale', 1)
 	NP:SetCVar('NamePlateHorizontalScale', 1)
@@ -118,6 +117,8 @@ function NP:SetCVars()
 	end
 
 	NP:SetCVar('nameplateMotion', NP.db.motionType == 'STACKED' and 1 or 0)
+
+	NP:SetCVar('nameplateMaxDistance', NP.db.loadDistance)
 
 	NP:SetCVar('NameplatePersonalShowAlways', NP.db.units.PLAYER.visibility.showAlways and 1 or 0)
 	NP:SetCVar('NameplatePersonalShowInCombat', NP.db.units.PLAYER.visibility.showInCombat and 1 or 0)
