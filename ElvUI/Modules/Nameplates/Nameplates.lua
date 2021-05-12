@@ -80,6 +80,7 @@ end
 function NP:CVarReset()
 	NP:SetCVar('nameplateMinAlpha', 1)
 	NP:SetCVar('nameplateMaxAlpha', 1)
+	NP:SetCVar('nameplateMaxDistance', NP.db.loadDistance)
 	NP:SetCVar('nameplateClassResourceTopInset', GetCVarDefault('nameplateClassResourceTopInset'))
 	NP:SetCVar('nameplateGlobalScale', 1)
 	NP:SetCVar('NamePlateHorizontalScale', 1)

@@ -4959,6 +4959,13 @@ E.Options.args.nameplate = {
 							name = L["StatusBar Texture"],
 							values = _G.AceGUIWidgetLSMlists.statusbar
 						},
+						loadDistance = {
+							order = 6,
+							type = 'range',
+							name = L["Load Distance"],
+							desc = L["Only load nameplates for units within this range."],
+							min = 0, max = 41, step = 1,
+						},
 						overlapV = {
 							order = 7,
 							type = 'range',
