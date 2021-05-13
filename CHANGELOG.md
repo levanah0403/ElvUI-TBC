@@ -1,4 +1,6 @@
-### Version 0.23 [ ETA: 🍨 ]
+### Version 0.24 [ ETA: 🍨 ]
+___
+### Version 0.23 [14-05-2021]
 **• Added Druid Lifebloom to AuraWatch**  
 **• Default NamePlate Range 20 -> 41 (Blizzard Max)**  
 **• Tweaked Avoidance DataText (Credits: Jeff Blanda)**  
