@@ -1,4 +1,5 @@
 ### Version 0.23 [ ETA: 🍨 ]
+**• Default NamePlate Range 20 -> 41 (Blizzard Max)**  
 ___
 ### Version 0.22 [12-05-2021]
 **• Added option for upcoming NamePlate range increase**  
