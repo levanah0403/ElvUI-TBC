@@ -766,6 +766,7 @@ G.unitframe.aurawatch = {
 		[9858]    = UF:AuraWatch_AddSpell(9858, 'BOTTOMRIGHT', {0.33, 0.73, 0.75}), -- Regrowth(Rank 9)
 		[26980]   = UF:AuraWatch_AddSpell(26980, 'BOTTOMRIGHT', {0.33, 0.73, 0.75}), -- Regrowth(Rank 10)
 		[29166]   = UF:AuraWatch_AddSpell(29166, 'CENTER', {0.49, 0.60, 0.55}, true), -- Innervate
+		[33763]   = UF:AuraWatch_AddSpell(33763, 'BOTTOM', {0.33, 0.37, 0.47}), -- Lifebloom
 	},
 	PALADIN = {
 		[1044]    = UF:AuraWatch_AddSpell(1044, 'CENTER', {0.89, 0.45, 0}), -- Blessing of Freedom

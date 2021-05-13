@@ -1,4 +1,5 @@
 ### Version 0.23 [ ETA: 🍨 ]
+**• Added Druid Lifebloom to AuraWatch**  
 **• Default NamePlate Range 20 -> 41 (Blizzard Max)**  
 **• Tweaked Avoidance DataText (Credits: Jeff Blanda)**  
 **• Updated LibRangeCheck (Fixes Rogue issue aswell)**  
