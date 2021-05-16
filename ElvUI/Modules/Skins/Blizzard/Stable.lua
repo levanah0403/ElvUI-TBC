@@ -31,7 +31,7 @@ function S:PetStableFrame()
 	PetStablePetInfo:GetRegions():SetTexCoord(0.04, 0.15, 0.06, 0.30)
 	PetStablePetInfo:SetFrameLevel(_G.PetModelFrame:GetFrameLevel() + 2)
 	PetStablePetInfo:CreateBackdrop('Default')
-	PetStablePetInfo:Size(24)
+	PetStablePetInfo:Size(22)
 
 	hooksecurefunc('PetStable_Update', function()
 		local hasPetUI, isHunterPet = HasPetUI()
