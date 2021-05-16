@@ -546,7 +546,7 @@ end
 function TT:RepositionBNET(frame, _, anchor)
 	if anchor ~= _G.BNETMover then
 		frame:ClearAllPoints()
-		frame:Point(_G.BNETMover.anchorPoint or 'TOPLEFT', _G.BNETMover, _G.BNETMover.anchorPoint or 'TOPLEFT');
+		frame:Point(_G.BNETMover.anchorPoint or 'TOPLEFT', _G.BNETMover, _G.BNETMover.anchorPoint or 'TOPLEFT')
 	end
 end
 
@@ -590,8 +590,8 @@ end
 
 --This changes the growth direction of the toast frame depending on position of the mover
 local function PostBNToastMove(mover)
-	local x, y = mover:GetCenter();
-	local screenHeight = E.UIParent:GetTop();
+	local x, y = mover:GetCenter()
+	local screenHeight = E.UIParent:GetTop()
 	local screenWidth = E.UIParent:GetRight()
 
 	local anchorPoint

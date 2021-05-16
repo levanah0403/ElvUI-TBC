@@ -10,7 +10,7 @@ function UF:Construct_AuraWatch(frame)
 	auras:SetInside(frame.Health)
 	auras.presentAlpha = 1
 	auras.missingAlpha = 0
-	auras.strictMatching = true;
+	auras.strictMatching = true
 	auras.PostCreateIcon = UF.BuffIndicator_PostCreateIcon
 	auras.PostUpdateIcon = UF.BuffIndicator_PostUpdateIcon
 
@@ -57,7 +57,7 @@ function UF:BuffIndicator_PostCreateIcon(button)
 
 	button.overlay:Hide()
 
-	button.icon.border = button:CreateTexture(nil, 'BACKGROUND');
+	button.icon.border = button:CreateTexture(nil, 'BACKGROUND')
 	button.icon.border:SetOutside(button.icon, 1, 1)
 	button.icon.border:SetTexture(E.media.blankTex)
 	button.icon.border:SetVertexColor(0, 0, 0)

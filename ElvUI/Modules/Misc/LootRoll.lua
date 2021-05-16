@@ -25,7 +25,7 @@ local C_LootHistoryGetPlayerInfo = C_LootHistory.GetPlayerInfo
 local ITEM_QUALITY_COLORS = ITEM_QUALITY_COLORS
 local NEED, PASS, GREED = NEED, PASS, GREED
 
-local pos = 'TOP';
+local pos = 'TOP'
 local cancelled_rolls = {}
 local cachedRolls = {}
 local completedRolls = {}

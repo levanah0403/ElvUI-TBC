@@ -12,12 +12,12 @@ local CalculateTotalNumberOfFreeBagSlots = CalculateTotalNumberOfFreeBagSlots
 local NUM_BAG_FRAMES = NUM_BAG_FRAMES
 
 local function OnEnter()
-	if not E.db.bags.bagBar.mouseover then return; end
+	if not E.db.bags.bagBar.mouseover then return end
 	E:UIFrameFadeIn(B.BagBar, 0.2, B.BagBar:GetAlpha(), 1)
 end
 
 local function OnLeave()
-	if not E.db.bags.bagBar.mouseover then return; end
+	if not E.db.bags.bagBar.mouseover then return end
 	E:UIFrameFadeOut(B.BagBar, 0.2, B.BagBar:GetAlpha(), 0)
 end
 

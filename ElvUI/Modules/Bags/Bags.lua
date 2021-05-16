@@ -723,8 +723,8 @@ function B:VendorGrays(delete)
 		end
 	end
 
-	if (not B.SellFrame.Info.itemList) then return; end
-	if (tmaxn(B.SellFrame.Info.itemList) < 1) then return; end
+	if (not B.SellFrame.Info.itemList) then return end
+	if (tmaxn(B.SellFrame.Info.itemList) < 1) then return end
 	--Resetting stuff
 	B.SellFrame.Info.delete = delete or false
 	B.SellFrame.Info.ProgressTimer = 0
@@ -1459,7 +1459,7 @@ end
 
 function B:VendorGreys_OnUpdate(elapsed)
 	B.SellFrame.Info.ProgressTimer = B.SellFrame.Info.ProgressTimer - elapsed
-	if (B.SellFrame.Info.ProgressTimer > 0) then return; end
+	if (B.SellFrame.Info.ProgressTimer > 0) then return end
 	B.SellFrame.Info.ProgressTimer = B.SellFrame.Info.SellInterval
 
 	local goldGained, lastItem = B:ProgressQuickVendor()
@@ -1522,7 +1522,7 @@ function B:CreateSellFrame()
 end
 
 function B:UpdateSellFrameSettings()
-	if not B.SellFrame or not B.SellFrame.Info then return; end
+	if not B.SellFrame or not B.SellFrame.Info then return end
 
 	B.SellFrame.Info.SellInterval = E.db.bags.vendorGrays.interval
 	B.SellFrame:SetAlpha(E.db.bags.vendorGrays.progressBar and 1 or 0)

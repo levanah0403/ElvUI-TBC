@@ -11,7 +11,7 @@ local function Defaults(priorityOverride)
 	}
 end
 
-G.unitframe.aurafilters = {};
+G.unitframe.aurafilters = {}
 
 -- These are debuffs that are some form of CC
 G.unitframe.aurafilters.CCDebuffs = {
@@ -1080,4 +1080,4 @@ G.unitframe.specialFilters = {
 	blockNoDuration = true,
 	blockDispellable = true,
 	blockNotDispellable = true,
-};
+}
