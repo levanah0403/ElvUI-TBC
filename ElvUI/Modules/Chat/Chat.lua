@@ -192,24 +192,19 @@ do --this can save some main file locals
 
 	specialChatIcons = {
 		-- Simpy
-		["Simpy-Atiesh"]		= itsSimpy, -- Warlock
-		["Simpy-Myzrael"]		= itsSimpy, -- Warlock
-		["Cutepally-Myzrael"]	= itsSimpy, -- Paladin
-		["Imsocheesy-Myzrael"]	= itsSimpy, -- [Horde] Priest
-		["Imsospicy-Myzrael"]	= itsSimpy, -- [Horde] Mage
+		["Simpy-Atiesh"]        = itsSimpy, -- Warlock
+		["Simpy-Myzrael"]       = itsSimpy, -- Warlock
+		["Cutepally-Myzrael"]   = itsSimpy, -- Paladin
+		["Imsocheesy-Myzrael"]  = itsSimpy, -- [Horde] Priest
+		["Imsospicy-Myzrael"]   = itsSimpy, -- [Horde] Mage
 		-- Blazeflack
-		["Freezly-MirageRaceway"]	= ElvBlue, -- Mage
-		["Blazii-MirageRaceway"]	= ElvBlue, -- Priest
+		["Freezly-MirageRaceway"]  = ElvBlue, -- Mage
+		["Blazii-MirageRaceway"]   = ElvBlue, -- Priest
 		-- Luckyone
-		["Luckyone-Shazzrah"]		= Clover, -- Hunter
-		["Luckyfear-Shazzrah"]		= Clover, -- Warlock
-		["Luckydruid-Shazzrah"]		= Clover, -- Druid
-		["Luckyp-Shazzrah"]			= Clover, -- Priest
-		["Luckyr-Shazzrah"]			= Clover, -- Rogue
-		["Elvuidevtest-Shazzrah"]	= Clover, -- Warrior
-		["Luckyone-BadgeofJustice"] = ElvGreen, -- Beta Test
-		["Luckyone-ClassicBetaPvE"] = ElvGreen, -- Beta Test
-		["Luckyone-ClassicBetaPvP"] = ElvGreen, -- Beta Test
+		["Luckyone-Shazzrah"]    = ElvGreen, -- Hunter
+		["Luckydruid-Shazzrah"]  = ElvGreen, -- Druid
+		["Luckyfear-Shazzrah"]   = ElvGreen, -- Warlock
+		["Luckyp-Shazzrah"]      = ElvGreen, -- Priest
 	}
 end
 
