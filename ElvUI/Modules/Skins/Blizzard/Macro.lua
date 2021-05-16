@@ -12,7 +12,7 @@ function S:Blizzard_MacroUI()
 
 	local MacroFrame = _G.MacroFrame
 	S:HandlePortraitFrame(MacroFrame)
-	MacroFrame:Width(360)
+	MacroFrame:Width(340)
 
 	_G.MacroFrameTextBackground:StripTextures()
 	_G.MacroFrameTextBackground:SetTemplate('Transparent')
