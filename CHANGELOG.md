@@ -1,4 +1,5 @@
-### Version 0.24 [ ETA: 🍨 ]
+### Version 1.00 [17-05-2021]
+**• Skin tweaks: Stable, Macro**  
 ___
 ### Version 0.23 [14-05-2021]
 **• Added Druid Lifebloom to AuraWatch**  
