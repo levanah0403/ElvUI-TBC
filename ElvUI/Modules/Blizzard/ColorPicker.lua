@@ -156,11 +156,21 @@ function B:EnhanceColorPicker()
 	--Skin the default frame, move default buttons into place
 	_G.ColorPickerFrame:SetClampedToScreen(true)
 	_G.ColorPickerFrame:CreateBackdrop('Transparent')
-	--_G.ColorPickerFrame.Border:Hide()
 
-	--_G.ColorPickerFrame.Header:StripTextures()
-	--_G.ColorPickerFrame.Header:ClearAllPoints()
-	--_G.ColorPickerFrame.Header:Point('TOP', _G.ColorPickerFrame, 0, 0)
+	_G.ColorPickerFrameHeader:StripTextures()
+	_G.ColorPickerFrameHeader:ClearAllPoints()
+	_G.ColorPickerFrameHeader:Point('TOP', _G.ColorPickerFrame, 0, 0)
+
+	_G.ColorPickerFrame.Center:Hide()
+	_G.ColorPickerFrame.TopEdge:Hide()
+	_G.ColorPickerFrame.LeftEdge:Hide()
+	_G.ColorPickerFrame.RightEdge:Hide()
+	_G.ColorPickerFrame.BottomEdge:Hide()
+
+	_G.ColorPickerFrame.TopLeftCorner:Hide()
+	_G.ColorPickerFrame.TopRightCorner:Hide()
+	_G.ColorPickerFrame.BottomLeftCorner:Hide()
+	_G.ColorPickerFrame.BottomRightCorner:Hide()
 
 	_G.ColorPickerCancelButton:ClearAllPoints()
 	_G.ColorPickerOkayButton:ClearAllPoints()
@@ -241,7 +251,7 @@ function B:EnhanceColorPicker()
 		colorBuffer.a = (_G.ColorPickerFrame.hasOpacity and _G.OpacitySliderFrame:GetValue()) or nil
 	end)
 
-	--class color button
+	-- class color button
 	b = CreateFrame('Button', 'ColorPPClass', _G.ColorPickerFrame, 'UIPanelButtonTemplate, BackdropTemplate')
 	b:SetText(CLASS)
 	S:HandleButton(b)
