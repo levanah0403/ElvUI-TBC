@@ -1,4 +1,4 @@
-local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local E, L, V, P, G = unpack(select(2, ...)) --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 
 local pairs = pairs
 local IsFalling = IsFalling
@@ -149,9 +149,9 @@ function E:GetZoneText(mapID)
 
 	local continent, zoneName = ZoneIDToContinentName[mapID]
 	if continent and continent == 'Outland' then
-		if E.MapInfo.name == localizedMapNames.Nagrand or E.MapInfo.name == 'Nagrand'  then
+		if E.MapInfo.name == localizedMapNames.Nagrand or E.MapInfo.name == 'Nagrand' then
 			zoneName = localizedMapNames.Nagrand..' ('..localizedMapNames.Outland..')'
-		elseif E.MapInfo.name == localizedMapNames['Shadowmoon Valley'] or E.MapInfo.name == 'Shadowmoon Valley'  then
+		elseif E.MapInfo.name == localizedMapNames['Shadowmoon Valley'] or E.MapInfo.name == 'Shadowmoon Valley' then
 			zoneName = localizedMapNames['Shadowmoon Valley']..' ('..localizedMapNames.Outland..')'
 		end
 	end

@@ -24,6 +24,7 @@ A default texture will be applied if the widget is a StatusBar and doesn't have 
 The following options are listed by priority. The first check that returns true decides the color of the bar.
 
 .colorDisconnected - Use `self.colors.disconnected` to color the bar if the unit is offline (boolean)
+.colorHappiness    - Use `self.colors.happiness[happiness]` to color the bar.
 .colorTapping      - Use `self.colors.tapping` to color the bar if the unit isn't tapped by the player (boolean)
 .colorThreat       - Use `self.colors.threat[threat]` to color the bar based on the unit's threat status. `threat` is
                      defined by the first return of [UnitThreatSituation](https://wow.gamepedia.com/API_UnitThreatSituation) (boolean)
@@ -78,9 +79,6 @@ The following options are listed by priority. The first check that returns true 
 
 local _, ns = ...
 local oUF = ns.oUF
-local Private = oUF.Private
-
-local unitSelectionType = Private.unitSelectionType
 
 local function UpdateColor(self, event, unit)
 	if(not unit or self.unit ~= unit) then return end
@@ -91,16 +89,16 @@ local function UpdateColor(self, event, unit)
 		t = self.colors.disconnected
 	elseif(element.colorTapping and not UnitPlayerControlled(unit) and UnitIsTapDenied(unit)) then
 		t = self.colors.tapped
+	elseif(element.colorHappiness and UnitIsUnit(unit, "pet") and GetPetHappiness()) then
+		t = self.colors.happiness[GetPetHappiness()]
 	elseif(element.colorThreat and not UnitPlayerControlled(unit) and UnitThreatSituation('player', unit)) then
-		t =  self.colors.threat[UnitThreatSituation('player', unit)]
+		t = self.colors.threat[UnitThreatSituation('player', unit)]
 	elseif(element.colorClass and UnitIsPlayer(unit))
 		or (element.colorClassNPC and not UnitIsPlayer(unit))
 		or ((element.colorClassPet or element.colorPetByUnitClass) and UnitPlayerControlled(unit) and not UnitIsPlayer(unit)) then
 		if element.colorPetByUnitClass then unit = unit == 'pet' and 'player' or gsub(unit, 'pet', '') end
 		local _, class = UnitClass(unit)
 		t = self.colors.class[class]
-	elseif(element.colorSelection and unitSelectionType(unit, element.considerSelectionInCombatHostile)) then
-		t = self.colors.selection[unitSelectionType(unit, element.considerSelectionInCombatHostile)]
 	elseif(element.colorReaction and UnitReaction(unit, 'player')) then
 		t = self.colors.reaction[UnitReaction(unit, 'player')]
 	elseif(element.colorSmooth) then
@@ -304,11 +302,11 @@ local function SetHealthUpdateMethod(self, state, force)
 
 		if state then
 			self.Health:SetScript('OnUpdate', onUpdateHealth)
-			self:UnregisterEvent('UNIT_HEALTH', Path)
+			self:UnregisterEvent('UNIT_HEALTH_FREQUENT', Path)
 			self:UnregisterEvent('UNIT_MAXHEALTH', Path)
 		else
 			self.Health:SetScript('OnUpdate', nil)
-			self:RegisterEvent('UNIT_HEALTH', Path)
+			self:RegisterEvent('UNIT_HEALTH_FREQUENT', Path)
 			self:RegisterEvent('UNIT_MAXHEALTH', Path)
 		end
 	end
@@ -365,8 +363,8 @@ local function Disable(self)
 		element:Hide()
 
 		element:SetScript('OnUpdate', nil) -- ElvUI changed
-		self:UnregisterEvent('UNIT_HEALTH', Path)
 		self:UnregisterEvent('UNIT_MAXHEALTH', Path)
+		self:UnregisterEvent('UNIT_HEALTH_FREQUENT', Path)
 		self:UnregisterEvent('UNIT_CONNECTION', ColorPath)
 		self:UnregisterEvent('UNIT_FACTION', ColorPath)
 		self:UnregisterEvent('UNIT_FLAGS', ColorPath)

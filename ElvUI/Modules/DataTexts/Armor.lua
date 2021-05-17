@@ -1,17 +1,15 @@
-local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local E, L, V, P, G = unpack(select(2, ...)) --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local DT = E:GetModule('DataTexts')
 
 local select = select
 local format = format
 local strjoin = strjoin
-local UnitLevel = UnitLevel
 local UnitArmor = UnitArmor
-local PaperDollFrame_GetArmorReduction = PaperDollFrame_GetArmorReduction
+
+local chanceString = "%.2f%%"
+local displayString, lastPanel, effectiveArmor, _ = ''
 local STAT_CATEGORY_ATTRIBUTES = STAT_CATEGORY_ATTRIBUTES
 local ARMOR = ARMOR
-
-local chanceString = '%.2f%%'
-local displayString, lastPanel, effectiveArmor = ''
 
 local function OnEvent(self)
 	effectiveArmor = select(2, UnitArmor('player'))
@@ -30,16 +28,12 @@ local function OnEnter()
 	DT.tooltip:AddLine(L["Mitigation By Level: "])
 	DT.tooltip:AddLine(' ')
 
-	local playerlvl = E.mylevel + 3
+	local playerLevel = E.mylevel + 3
 	for _ = 1, 4 do
-		local armorReduction = PaperDollFrame_GetArmorReduction(effectiveArmor, playerlvl)
-		DT.tooltip:AddDoubleLine(playerlvl,format(chanceString, armorReduction),1,1,1)
-		playerlvl = playerlvl - 1
-	end
-	local lv = UnitLevel('target')
-	if lv and lv > 0 and (lv > playerlvl + 3 or lv < playerlvl) then
-		local armorReduction = PaperDollFrame_GetArmorReduction(effectiveArmor, lv)
-		DT.tooltip:AddDoubleLine(lv, format(chanceString, armorReduction),1,1,1)
+		local armorReduction = effectiveArmor/((85 * playerLevel) + 400);
+		armorReduction = 100 * (armorReduction/(armorReduction + 1));
+		DT.tooltip:AddDoubleLine(playerLevel,format(chanceString, armorReduction),1,1,1)
+		playerLevel = playerLevel - 1
 	end
 
 	DT.tooltip:Show()
@@ -48,8 +42,10 @@ end
 local function ValueColorUpdate(hex)
 	displayString = strjoin('', E.global.datatexts.settings.Armor.NoLabel and '' or '%s', hex, '%d|r')
 
-	if lastPanel then OnEvent(lastPanel) end
+	if lastPanel ~= nil then
+		OnEvent(lastPanel)
+	end
 end
 E.valueColorUpdateFuncs[ValueColorUpdate] = true
 
-DT:RegisterDatatext('Armor', STAT_CATEGORY_ATTRIBUTES, {'UNIT_STATS', 'UNIT_RESISTANCES', 'ACTIVE_TALENT_GROUP_CHANGED', 'PLAYER_TALENT_UPDATE'}, OnEvent, nil, nil, OnEnter, nil, ARMOR, nil, ValueColorUpdate)
+DT:RegisterDatatext('Armor', STAT_CATEGORY_ATTRIBUTES, {'UNIT_STATS', 'UNIT_RESISTANCES'}, OnEvent, nil, nil, OnEnter, nil, ARMOR, nil, ValueColorUpdate)

@@ -1,95 +1,139 @@
-local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local E, L, V, P, G = unpack(select(2, ...)) --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local S = E:GetModule('Skins')
 
 local _G = _G
-local unpack = unpack
-local CreateFrame = CreateFrame
+local pairs, ipairs = pairs, ipairs
+local unpack, select = unpack, select
+local hooksecurefunc = hooksecurefunc
+
+local GetItemInfo = GetItemInfo
+local GetItemQualityColor = GetItemQualityColor
+local GetTradePlayerItemLink = GetTradePlayerItemLink
+local GetTradeTargetItemLink = GetTradeTargetItemLink
 
 function S:TradeFrame()
 	if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.trade) then return end
 
 	local TradeFrame = _G.TradeFrame
-	S:HandlePortraitFrame(TradeFrame)
-
-	TradeFrame.RecipientOverlay.portrait:SetAlpha(0)
-	TradeFrame.RecipientOverlay.portraitFrame:SetAlpha(0)
+	S:HandleFrame(TradeFrame, true, nil, -5, 0, 0)
 
 	S:HandleButton(_G.TradeFrameTradeButton, true)
 	S:HandleButton(_G.TradeFrameCancelButton, true)
 
+	S:HandlePointXY(_G.TradeFrameCloseButton, -5)
+	S:HandlePointXY(_G.TradeFrameTradeButton, -85)
+	S:HandlePointXY(_G.TradeFrameTradeButton, -85, 2)
+	S:HandlePointXY(_G.TradeFrameCancelButton, 3)
+	S:HandlePointXY(_G.TradePlayerItem1, 8)
+
 	S:HandleEditBox(_G.TradePlayerInputMoneyFrameGold)
 	S:HandleEditBox(_G.TradePlayerInputMoneyFrameSilver)
 	S:HandleEditBox(_G.TradePlayerInputMoneyFrameCopper)
-	_G.TradeRecipientItemsInset:Kill()
-	_G.TradePlayerItemsInset:Kill()
-	_G.TradePlayerInputMoneyInset:Kill()
-	_G.TradePlayerEnchantInset:Kill()
-	_G.TradeRecipientEnchantInset:Kill()
-	_G.TradeRecipientMoneyInset:Kill()
-	_G.TradeRecipientMoneyBg:Kill()
 
-	for i = 1, _G.MAX_TRADE_ITEMS do
-		local player = _G['TradePlayerItem'..i]
-		local recipient = _G['TradeRecipientItem'..i]
-		local player_button = _G['TradePlayerItem'..i..'ItemButton']
-		local recipient_button = _G['TradeRecipientItem'..i..'ItemButton']
-		local player_button_icon = _G['TradePlayerItem'..i..'ItemButtonIconTexture']
-		local recipient_button_icon = _G['TradeRecipientItem'..i..'ItemButtonIconTexture']
+	_G.TradePlayerInputMoneyInset:StripTextures()
 
-		if player_button and recipient_button then
-			player:StripTextures()
-			recipient:StripTextures()
-			player_button:StripTextures()
-			recipient_button:StripTextures()
+	local tradeFrames = {
+		'TradeFramePlayerPortrait',
+		'TradeFrameRecipientPortrait',
+		'TradePlayerInputMoneyInset',
+		'TradeRecipientPortraitFrame',
+		'TradeRecipientMoneyBg'
+	}
 
-			player_button_icon:SetInside(player_button)
-			player_button_icon:SetTexCoord(unpack(E.TexCoords))
-			player_button:CreateBackdrop(nil, true)
-			player_button:StyleButton()
-			player_button.IconBorder:Kill()
-			player_button.bg = CreateFrame('Frame', nil, player_button, 'BackdropTemplate')
-			player_button.bg:SetTemplate()
-			player_button.bg:Point('TOPLEFT', player_button, 'TOPRIGHT', 4, 0)
-			player_button.bg:Point('BOTTOMRIGHT', _G['TradePlayerItem'..i..'NameFrame'], 'BOTTOMRIGHT', 0, 14)
-			player_button.bg:SetFrameLevel(player_button:GetFrameLevel() - 3)
-			player_button:SetFrameLevel(player_button:GetFrameLevel() - 1)
+	for _, frame in ipairs(tradeFrames) do
+		_G[frame]:Kill()
+	end
 
-			recipient_button_icon:SetInside(recipient_button)
-			recipient_button_icon:SetTexCoord(unpack(E.TexCoords))
-			recipient_button:CreateBackdrop(nil, true)
-			recipient_button:StyleButton()
-			recipient_button.IconBorder:Kill()
-			recipient_button.bg = CreateFrame('Frame', nil, recipient_button, 'BackdropTemplate')
-			recipient_button.bg:SetTemplate()
-			recipient_button.bg:Point('TOPLEFT', recipient_button, 'TOPRIGHT', 4, 0)
-			recipient_button.bg:Point('BOTTOMRIGHT', _G['TradeRecipientItem'..i..'NameFrame'], 'BOTTOMRIGHT', 0, 14)
-			recipient_button.bg:SetFrameLevel(recipient_button:GetFrameLevel() - 3)
-			recipient_button:SetFrameLevel(recipient_button:GetFrameLevel() - 1)
+	for _, Frame in pairs({"TradePlayerItem", "TradeRecipientItem"}) do
+		for i = 1, 7 do
+			local ItemBackground = _G[Frame..i]
+			local ItemButton = _G[Frame..i.."ItemButton"]
 
-			S:HandleIconBorder(player_button.IconBorder)
-			S:HandleIconBorder(recipient_button.IconBorder)
+			ItemBackground:StripTextures()
+			S:HandleItemButton(ItemButton)
+			ItemButton:StyleButton()
+
+			S:HandleIcon(ItemButton.icon, true)
+
+			ItemButton.backdrop:SetBackdropColor(0, 0, 0, 0)
+			ItemButton.backdrop:SetPoint("TOPLEFT", ItemButton, "TOPRIGHT", 4, 0)
+			ItemButton.backdrop:SetPoint("BOTTOMRIGHT", _G[Frame..i.."NameFrame"], "BOTTOMRIGHT", -1, 14)
 		end
 	end
 
-	_G.TradeHighlightPlayerTop:SetColorTexture(0, 1, 0, 0.2)
-	_G.TradeHighlightPlayerBottom:SetColorTexture(0, 1, 0, 0.2)
-	_G.TradeHighlightPlayerMiddle:SetColorTexture(0, 1, 0, 0.2)
-	_G.TradeHighlightPlayer:SetFrameStrata('HIGH')
+	for _, Inset in pairs({ _G.TradePlayerItemsInset, _G.TradeRecipientItemsInset, _G.TradePlayerEnchantInset, _G.TradeRecipientEnchantInset, _G.TradeRecipientMoneyInset }) do
+		Inset:StripTextures()
+		Inset:SetTemplate('Transparent')
+	end
 
-	_G.TradeHighlightPlayerEnchantTop:SetColorTexture(0, 1, 0, 0.2)
-	_G.TradeHighlightPlayerEnchantBottom:SetColorTexture(0, 1, 0, 0.2)
-	_G.TradeHighlightPlayerEnchantMiddle:SetColorTexture(0, 1, 0, 0.2)
-	_G.TradeHighlightPlayerEnchant:SetFrameStrata('HIGH')
+	for _, Highlight in pairs({ _G.TradeHighlightPlayer, _G.TradeHighlightRecipient, _G.TradeHighlightPlayerEnchant, _G.TradeHighlightRecipientEnchant }) do
+		Highlight:StripTextures()
+	end
 
-	_G.TradeHighlightRecipientTop:SetColorTexture(0, 1, 0, 0.2)
-	_G.TradeHighlightRecipientBottom:SetColorTexture(0, 1, 0, 0.2)
-	_G.TradeHighlightRecipientMiddle:SetColorTexture(0, 1, 0, 0.2)
-	_G.TradeHighlightRecipient:SetFrameStrata('HIGH')
+	_G.TradeFrame:HookScript("OnShow", function()
+		_G.TradePlayerItemsInset:SetBackdropBorderColor(unpack(E.media.bordercolor))
+		_G.TradePlayerEnchantInset:SetBackdropBorderColor(unpack(E.media.bordercolor))
+		_G.TradeRecipientItemsInset:SetBackdropBorderColor(unpack(E.media.bordercolor))
+		_G.TradeRecipientEnchantInset:SetBackdropBorderColor(unpack(E.media.bordercolor))
+		_G.TradeRecipientMoneyInset:SetBackdropBorderColor(unpack(E.media.bordercolor))
+	end)
 
-	_G.TradeHighlightRecipientEnchantTop:SetColorTexture(0, 1, 0, 0.2)
-	_G.TradeHighlightRecipientEnchantBottom:SetColorTexture(0, 1, 0, 0.2)
-	_G.TradeHighlightRecipientEnchantMiddle:SetColorTexture(0, 1, 0, 0.2)
-	_G.TradeHighlightRecipientEnchant:SetFrameStrata('HIGH')
+	hooksecurefunc('TradeFrame_SetAcceptState', function(playerState, targetState)
+		if ( playerState == 1 ) then
+			_G.TradePlayerItemsInset:SetBackdropBorderColor(0, 1, 0)
+			_G.TradePlayerEnchantInset:SetBackdropBorderColor(0, 1, 0)
+		else
+			_G.TradePlayerItemsInset:SetBackdropBorderColor(unpack(E.media.bordercolor))
+			_G.TradePlayerEnchantInset:SetBackdropBorderColor(unpack(E.media.bordercolor))
+		end
+		if ( targetState == 1 ) then
+			_G.TradeRecipientItemsInset:SetBackdropBorderColor(0, 1, 0)
+			_G.TradeRecipientEnchantInset:SetBackdropBorderColor(0, 1, 0)
+			_G.TradeRecipientMoneyInset:SetBackdropBorderColor(0, 1, 0)
+		else
+			_G.TradeRecipientItemsInset:SetBackdropBorderColor(unpack(E.media.bordercolor))
+			_G.TradeRecipientEnchantInset:SetBackdropBorderColor(unpack(E.media.bordercolor))
+			_G.TradeRecipientMoneyInset:SetBackdropBorderColor(unpack(E.media.bordercolor))
+		end
+	end)
+
+	hooksecurefunc('TradeFrame_UpdatePlayerItem', function(id)
+		local tradeItemButton = _G['TradePlayerItem'..id..'ItemButton']
+		local link = GetTradePlayerItemLink(id)
+
+		tradeItemButton:SetTemplate('NoBackdrop')
+		tradeItemButton:SetBackdropBorderColor(unpack(E.media.bordercolor))
+
+		if link then
+			local tradeItemName = _G['TradePlayerItem'..id..'Name']
+			local quality = select(3, GetItemInfo(link))
+
+			tradeItemName:SetTextColor(GetItemQualityColor(quality))
+
+			if quality and quality > 1 then
+				tradeItemButton:SetBackdropBorderColor(GetItemQualityColor(quality))
+			end
+		end
+	end)
+
+	hooksecurefunc('TradeFrame_UpdateTargetItem', function(id)
+		local tradeItemButton = _G['TradeRecipientItem'..id..'ItemButton']
+		local link = GetTradeTargetItemLink(id)
+
+		tradeItemButton:SetTemplate('NoBackdrop')
+		tradeItemButton:SetBackdropBorderColor(unpack(E.media.bordercolor))
+
+		if link then
+			local tradeItemName = _G['TradeRecipientItem'..id..'Name']
+			local quality = select(3, GetItemInfo(link))
+
+			tradeItemName:SetTextColor(GetItemQualityColor(quality))
+
+			if quality and quality > 1 then
+				tradeItemButton:SetBackdropBorderColor(GetItemQualityColor(quality))
+			end
+		end
+	end)
 end
 
 S:AddCallback('TradeFrame')

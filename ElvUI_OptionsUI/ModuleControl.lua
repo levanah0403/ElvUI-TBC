@@ -1,4 +1,4 @@
-local E, _, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local E, _, V, P, G = unpack(ElvUI) --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local C, L = unpack(select(2, ...))
 local UF = E:GetModule('UnitFrames')
 local MC = E:GetModule('ModuleCopy')
@@ -33,7 +33,6 @@ local function CreateActionbarsConfig()
 	config.args.barPet.name = L["Pet Bar"]
 	config.args.stanceBar.name = L["Stance Bar"]
 	config.args.microbar.name = L["Micro Bar"]
-	config.args.extraActionButton.name = L["Boss Button"]
 	config.args.vehicleExitButton.name = L["Vehicle Exit"]
 
 	return config
@@ -91,11 +90,11 @@ local function CreateDatatbarsConfig()
 
 	MC:AddConfigOptions(P.databars, config)
 
+	config.args.colors.name = L["Colors"]
 	config.args.experience.name = L["Experience"]
+	config.args.petExperience.name = L["Pet Experience"]
 	config.args.reputation.name = L["Reputation"]
-	config.args.honor.name = L["Honor"]
 	config.args.threat.name = L["Threat"]
-	config.args.azerite.name = L["Azerite"]
 
 	return config
 end
@@ -114,10 +113,8 @@ local function CreateGeneralConfig()
 
 	MC:AddConfigOptions(P.general, config)
 
-	config.args.altPowerBar.name = L["Alternative Power"]
 	config.args.minimap.name = L["MINIMAP_LABEL"]
 	config.args.totems.name = L["Class Totems"]
-	config.args.itemLevel.name = L["Item Level"]
 
 	return config
 end
@@ -202,7 +199,6 @@ local function CreateUnitframesConfig()
 	config.args.units.args.focustarget.name = L["FocusTarget"]
 	config.args.units.args.pet.name = L["PET"]
 	config.args.units.args.pettarget.name = L["PetTarget"]
-	config.args.units.args.boss.name = L["Boss"]
 	config.args.units.args.arena.name = L["Arena"]
 	config.args.units.args.party.name = L["PARTY"]
 	config.args.units.args.raid.name = L["Raid"]

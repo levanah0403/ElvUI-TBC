@@ -1,80 +1,57 @@
-local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local E, L, V, P, G = unpack(select(2, ...)) --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local S = E:GetModule('Skins')
 local TT = E:GetModule('Tooltip')
 
 local _G = _G
-local pairs = pairs
-local unpack = unpack
-
-function S:StyleTooltips()
-	if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.tooltip) then return end
-
-	for _, tt in pairs({
-		_G.ItemRefTooltip,
-		_G.ItemRefShoppingTooltip1,
-		_G.ItemRefShoppingTooltip2,
-		_G.FriendsTooltip,
-		_G.WarCampaignTooltip,
-		_G.EmbeddedItemTooltip,
-		_G.ReputationParagonTooltip,
-		_G.GameTooltip,
-		_G.ShoppingTooltip1,
-		_G.ShoppingTooltip2,
-		_G.QuickKeybindTooltip,
-		_G.QuestScrollFrame.StoryTooltip,
-		_G.QuestScrollFrame.CampaignTooltip,
-		-- ours
-		_G.ElvUIConfigTooltip,
-		_G.ElvUISpellBookTooltip
-	}) do
-		TT:SetStyle(tt)
-	end
-end
+local ipairs = ipairs
+local GameTooltip = _G.GameTooltip
+local GameTooltipStatusBar = _G.GameTooltipStatusBar
 
 function S:TooltipFrames()
 	if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.tooltip) then return end
 
-	S:StyleTooltips()
-	S:HandleCloseButton(_G.ItemRefTooltip.CloseButton)
+	S:HandleCloseButton(_G.ItemRefCloseButton)
 
 	-- Skin Blizzard Tooltips
-	local ItemTooltip = _G.GameTooltip.ItemTooltip
-	ItemTooltip:CreateBackdrop('Default')
-	ItemTooltip.backdrop:SetOutside(ItemTooltip.Icon)
-	ItemTooltip.Count:ClearAllPoints()
-	ItemTooltip.Count:Point('BOTTOMRIGHT', ItemTooltip.Icon, 'BOTTOMRIGHT', 1, 0)
-	ItemTooltip.Icon:SetTexCoord(unpack(E.TexCoords))
-	S:HandleIconBorder(ItemTooltip.IconBorder)
+	GameTooltipStatusBar:SetStatusBarTexture(E.media.normTex)
+	E:RegisterStatusBar(GameTooltipStatusBar)
+	GameTooltipStatusBar:CreateBackdrop('Transparent')
+	GameTooltipStatusBar:ClearAllPoints()
+	GameTooltipStatusBar:Point('TOPLEFT', GameTooltip, 'BOTTOMLEFT', E.Border, -(E.Spacing * 3))
+	GameTooltipStatusBar:Point('TOPRIGHT', GameTooltip, 'BOTTOMRIGHT', -E.Border, -(E.Spacing * 3))
 
-	-- StoryTooltip
-	local StoryTooltip = _G.QuestScrollFrame.StoryTooltip
-	StoryTooltip:SetFrameLevel(4)
+	local tooltips = {
+		_G.ItemRefTooltip,
+		_G.ItemRefShoppingTooltip1,
+		_G.ItemRefShoppingTooltip2,
+		_G.AutoCompleteBox,
+		_G.FriendsTooltip,
+		_G.ShoppingTooltip1,
+		_G.ShoppingTooltip2,
+		_G.EmbeddedItemTooltip,
+		_G.WorldMapTooltip,
+		_G.ElvUIConfigTooltip,
+		-- already have locals
+		GameTooltip,
+		_G.ElvUISpellBookTooltip
+	}
 
-	-- EmbeddedItemTooltip (also Paragon Reputation)
-	local embedded = _G.EmbeddedItemTooltip
-	embedded:SetTemplate('Transparent')
-
-	if embedded.ItemTooltip.Icon then
-		S:HandleIcon(embedded.ItemTooltip.Icon, true)
+	for _, tt in ipairs(tooltips) do
+		TT:SecureHookScript(tt, 'OnShow', 'SetStyle')
 	end
 
-	embedded:HookScript('OnShow', function(tt)
-		tt:SetTemplate('Transparent')
-	end)
+	-- EmbeddedItemTooltip
+	local reward = _G.EmbeddedItemTooltip.ItemTooltip
+	local icon = reward.Icon
+	if reward and reward.backdrop then
+		reward.backdrop:Point('TOPLEFT', icon, 'TOPLEFT', -2, 2)
+		reward.backdrop:Point('BOTTOMRIGHT', icon, 'BOTTOMRIGHT', 2, -2)
+	end
 
-	-- Skin GameTooltip Status Bar
-	_G.GameTooltipStatusBar:SetStatusBarTexture(E.media.normTex)
-	_G.GameTooltipStatusBar:CreateBackdrop('Transparent')
-	_G.GameTooltipStatusBar:ClearAllPoints()
-	_G.GameTooltipStatusBar:Point('TOPLEFT', _G.GameTooltip, 'BOTTOMLEFT', E.Border, -(E.Spacing * 3))
-	_G.GameTooltipStatusBar:Point('TOPRIGHT', _G.GameTooltip, 'BOTTOMRIGHT', -E.Border, -(E.Spacing * 3))
-	E:RegisterStatusBar(_G.GameTooltipStatusBar)
-
-	-- Tooltip Styling
 	TT:SecureHook('GameTooltip_ShowStatusBar') -- Skin Status Bars
 	TT:SecureHook('GameTooltip_ShowProgressBar') -- Skin Progress Bars
 	TT:SecureHook('GameTooltip_AddQuestRewardsToTooltip') -- Color Progress Bars
-	TT:SecureHook('SharedTooltip_SetBackdropStyle', 'SetStyle') -- This also deals with other tooltip borders like AzeriteEssence Tooltip
+	TT:SecureHook('GameTooltip_UpdateStyle', 'SetStyle') -- GameTooltip_SetBackdropStyle
 end
 
 S:AddCallback('TooltipFrames')

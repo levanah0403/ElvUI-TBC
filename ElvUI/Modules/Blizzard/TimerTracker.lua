@@ -1,8 +1,6 @@
-local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
-local B = E:GetModule('Blizzard')
+local E, L, V, P, G = unpack(select(2, ...)) --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 
-local _G = _G
-local select, unpack, pairs = select, unpack, pairs
+local select, unpack = select, unpack
 local CreateFrame = CreateFrame
 
 local function SkinIt(bar)
@@ -29,18 +27,4 @@ local function SkinIt(bar)
 		bar.backdrop:SetOutside()
 		E:RegisterStatusBar(bar)
 	end
-end
-
-function B:START_TIMER()
-	for _, b in pairs(_G.TimerTracker.timerList) do
-		if b.bar and not b.bar.skinned then
-			SkinIt(b.bar)
-			b.bar.skinned = true
-		end
-	end
-end
-
-function B:SkinBlizzTimers()
-	B:RegisterEvent('START_TIMER')
-	B:START_TIMER()
 end

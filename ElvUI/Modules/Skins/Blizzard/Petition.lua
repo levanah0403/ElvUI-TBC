@@ -1,4 +1,4 @@
-local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local E, L, V, P, G = unpack(select(2, ...)) --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local S = E:GetModule('Skins')
 
 local _G = _G
@@ -7,9 +7,7 @@ function S:PetitionFrame()
 	if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.petition) then return end
 
 	local PetitionFrame = _G.PetitionFrame
-	PetitionFrame:StripTextures(true)
-	PetitionFrame:CreateBackdrop('Transparent')
-	_G.PetitionFrameInset:Kill()
+	S:HandleFrame(PetitionFrame, true, nil, 12, -17, -28, 65)
 
 	S:HandleButton(_G.PetitionFrameSignButton)
 	S:HandleButton(_G.PetitionFrameRequestButton)

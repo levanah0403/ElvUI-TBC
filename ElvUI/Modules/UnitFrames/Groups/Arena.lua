@@ -1,4 +1,4 @@
-local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local E, L, V, P, G = unpack(select(2, ...)) --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local UF = E:GetModule('UnitFrames')
 
 local _, ns = ...
@@ -8,50 +8,8 @@ assert(ElvUF, 'ElvUI was unable to locate oUF.')
 local _G = _G
 local unpack = unpack
 local CreateFrame = CreateFrame
-local IsAddOnLoaded = IsAddOnLoaded
-local GetSpecializationInfoByID = GetSpecializationInfoByID
-local LOCALIZED_CLASS_NAMES_MALE = LOCALIZED_CLASS_NAMES_MALE
 
 local ArenaHeader = CreateFrame('Frame', 'ArenaHeader', E.UIParent)
-
-function UF:ToggleArenaPreparationInfo(frame, show, specName, specTexture, specClass)
-	local specIcon = (frame.db and frame.db.pvpSpecIcon) and frame:IsElementEnabled('PVPSpecIcon')
-
-	frame.forceInRange = show -- used to force unitframe range
-
-	local visibility = not show
-	if show then frame.Trinket:Hide() end
-
-	frame.ArenaPrepSpec:SetFormattedText(show and '%s - %s' or '', specName, LOCALIZED_CLASS_NAMES_MALE[specClass])  -- during `PostUpdateArenaPreparation` this means spec class and name exist
-	UF:ToggleVisibility_CustomTexts(frame, visibility)
-
-	frame.Health.value:SetShown(visibility)
-	frame.Power.value:SetShown(visibility)
-	frame.Health.ClipFrame:SetShown(visibility)
-	frame.PvPClassificationIndicator:SetAtlas(nil)
-	frame.Trinket.cd:Clear()
-
-	if specIcon and show then
-		frame.PVPSpecIcon.Icon:SetTexture(specTexture or [[INTERFACE\ICONS\INV_MISC_QUESTIONMARK]])
-		frame.PVPSpecIcon.Icon:SetTexCoord(unpack(E.TexCoords))
-		frame.PVPSpecIcon:Show()
-	end
-end
-
-function UF:PostUpdateArenaFrame(event)
-	if self and event and (event ~= 'ARENA_PREP_OPPONENT_SPECIALIZATIONS' and event ~= 'PLAYER_ENTERING_WORLD') then
-		UF:ToggleArenaPreparationInfo(self)
-	end
-end
-
-function UF:PostUpdateArenaPreparation(_, specID)
-	local _, specName, specTexture, specClass
-	if specID and specID > 0 then
-		_, specName, _, specTexture, _, specClass = GetSpecializationInfoByID(specID)
-	end
-
-	UF:ToggleArenaPreparationInfo(self and self.__owner, specClass and specName, specName, specTexture, specClass)
-end
 
 function UF:Construct_ArenaFrames(frame)
 	frame.RaisedElementParent = CreateFrame('Frame', nil, frame)
@@ -75,8 +33,7 @@ function UF:Construct_ArenaFrames(frame)
 		frame.MouseGlow = UF:Construct_MouseGlow(frame)
 		frame.TargetGlow = UF:Construct_TargetGlow(frame)
 		frame.FocusGlow = UF:Construct_FocusGlow(frame)
-		frame.Trinket = UF:Construct_Trinket(frame)
-		frame.PVPSpecIcon = UF:Construct_PVPSpecIcon(frame)
+
 		frame.PvPClassificationIndicator = UF:Construct_PvPClassificationIndicator(frame) -- Cart / Flag / Orb / Assassin Bounty
 		frame.Fader = UF:Construct_Fader()
 		frame:SetAttribute('type2', 'focus')
@@ -88,9 +45,6 @@ function UF:Construct_ArenaFrames(frame)
 		frame.ArenaPrepSpec = frame.Health:CreateFontString(nil, 'OVERLAY')
 		frame.ArenaPrepSpec:Point('CENTER')
 		UF:Configure_FontString(frame.ArenaPrepSpec)
-
-		frame.Health.PostUpdateArenaPreparation = self.PostUpdateArenaPreparation -- used to update arena prep info
-		frame.PostUpdate = self.PostUpdateArenaFrame -- used to hide arena prep info
 	end
 
 	frame.Cutaway = UF:Construct_Cutaway(frame)
@@ -122,10 +76,9 @@ function UF:Update_ArenaFrames(frame, db)
 		frame.USE_INFO_PANEL = not frame.USE_MINI_POWERBAR and not frame.USE_POWERBAR_OFFSET and db.infoPanel.enable
 		frame.INFO_PANEL_HEIGHT = frame.USE_INFO_PANEL and db.infoPanel.height or 0
 		frame.BOTTOM_OFFSET = UF:GetHealthBottomOffset(frame)
-		frame.PVPINFO_WIDTH = db.pvpSpecIcon and frame.UNIT_HEIGHT or 0
 	end
 
-	if not IsAddOnLoaded('Clique') then
+	if not E:IsAddOnEnabled('Clique') then
 		if db.middleClickFocus then
 			frame:SetAttribute('type3', 'focus')
 		elseif frame:GetAttribute('type3') == 'focus' then
@@ -146,8 +99,6 @@ function UF:Update_ArenaFrames(frame, db)
 	UF:EnableDisable_Auras(frame)
 	UF:Configure_AllAuras(frame)
 	UF:Configure_Castbar(frame)
-	UF:Configure_PVPSpecIcon(frame)
-	UF:Configure_Trinket(frame)
 	UF:Configure_Fader(frame)
 	UF:Configure_HealComm(frame)
 	UF:Configure_Cutaway(frame)

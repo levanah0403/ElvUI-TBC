@@ -15,7 +15,6 @@ local UnitAffectingCombat = UnitAffectingCombat
 local UnitCastingInfo = UnitCastingInfo
 local UnitChannelInfo = UnitChannelInfo
 local UnitExists = UnitExists
-local UnitHasVehicleUI = UnitHasVehicleUI
 local UnitHealth = UnitHealth
 local UnitHealthMax = UnitHealthMax
 local UnitPower = UnitPower
@@ -88,7 +87,6 @@ local function Update(self, _, unit)
 		(element.Focus and UnitExists('focus')) or
 		(element.Health and UnitHealth(unit) < UnitHealthMax(unit)) or
 		(element.Power and (PowerTypesFull[powerType] and UnitPower(unit) < UnitPowerMax(unit))) or
-		(element.Vehicle and UnitHasVehicleUI(unit)) or
 		(element.Hover and GetMouseFocus() == (self.__faderobject or self))
 	then
 		ToggleAlpha(self, element, element.MaxAlpha)
@@ -224,10 +222,10 @@ local options = {
 	},
 	Health = {
 		enable = function(self)
-			self:RegisterEvent('UNIT_HEALTH', Update)
+			self:RegisterEvent('UNIT_HEALTH_FREQUENT', Update)
 			self:RegisterEvent('UNIT_MAXHEALTH', Update)
 		end,
-		events = {'UNIT_HEALTH','UNIT_MAXHEALTH'}
+		events = {'UNIT_HEALTH_FREQUENT','UNIT_MAXHEALTH'}
 	},
 	Power = {
 		enable = function(self)

@@ -116,10 +116,13 @@ local DEVELOPERS = {
 	'Omega1970',
 	'Hydrazine',
 	'Blazeflack',
+	'Crum',
 	'|cff0070DEAzilroka|r',
 	'|cff9482c9Darth Predator|r',
 	'|T134297:15:15:0:0:64:64:5:59:5:59|t |cffff7d0aMerathilis|r',
-	'|TInterface/AddOns/ElvUI/Media/ChatLogos/FoxWarlock:15:15:0:0:64:64:5:59:5:59|t |cffff2020NihilisticPandemonium|r',
+	'|TInterface/AddOns/ElvUI/Media/ChatLogos/Clover:15:15:0:0:64:64:5:59:5:59|t |cff4beb2cLuckyone|r',
+	'|TInterface/AddOns/ElvUI/Media/ChatLogos/FoxWarlock:15:15:0:0:64:64:5:59:5:59|t |cffff2020Nihilistzsche|r',
+	'|TInterface/AddOns/ElvUI/Media/ChatLogos/Beer:15:15:0:0:64:64:5:59:5:59|t |cfff48cbaRepooc|r',
 	E:TextGradient('Simpy but my name needs to be longer.', 1,.42,.78, 1,.56,.68, .66,.99,.98, .77,.52,1, 1,.48,.81, .98,.95,.68)
 }
 
@@ -130,7 +133,6 @@ local TESTERS = {
 	'Tirain',
 	'Phima',
 	'Veiled',
-	'Repooc',
 	'Alex',
 	'Nidra',
 	'Kurhyus',
@@ -142,9 +144,8 @@ local TESTERS = {
 	'Catok',
 	'Caedis',
 	'|cff00c0faBenik|r',
-	'|T136012:15:15:0:0:64:64:5:59:5:59|t |cff006fdcRubgrsch|r |T656558:15:15:0:0:64:64:5:59:5:59|t',
-	'|TInterface/AddOns/ElvUI/Media/ChatLogos/Clover:15:15:0:0:64:64:5:59:5:59|t Luckyone',
-	'AcidWeb |TInterface/AddOns/ElvUI/Media/ChatLogos/Gem:15:15:-1:2:64:64:6:60:8:60|t',
+	'|T136012:15:15:0:0:64:64:5:59:5:59|t |cff006fdcRubgrsch|r',
+	'|TInterface/AddOns/ElvUI/Media/ChatLogos/Gem:15:15:-1:2:64:64:6:60:8:60|t AcidWeb',
 	'|T135167:15:15:0:0:64:64:5:59:5:59|t Loon - For being right',
 	'|T134297:15:15:0:0:64:64:5:59:5:59|t |cffFF7D0ABladesdruid|r - AKA SUPERBEAR',
 }
@@ -176,15 +177,15 @@ E.Options.args.info.args.spacer = ACH:Spacer(2)
 
 E.Options.args.info.args.support = ACH:Group(L["Support & Download"], nil, 3)
 E.Options.args.info.args.support.inline = true
-E.Options.args.info.args.support.args.homepage = ACH:Execute(L["Support Forum"], nil, 1, function() E:StaticPopup_Show('ELVUI_EDITBOX', nil, nil, 'https://www.tukui.org/forum/viewforum.php?f=4') end)
+E.Options.args.info.args.support.args.homepage = ACH:Execute(L["Support Forum"], nil, 1, function() E:StaticPopup_Show('ELVUI_EDITBOX', nil, nil, 'https://www.tukui.org/forum') end)
 E.Options.args.info.args.support.args.homepage.customWidth = 140
-E.Options.args.info.args.support.args.git = ACH:Execute(L["Ticket Tracker"], nil, 2, function() E:StaticPopup_Show('ELVUI_EDITBOX', nil, nil, 'https://git.tukui.org/elvui/elvui/issues') end)
+E.Options.args.info.args.support.args.git = ACH:Execute(L["Ticket Tracker"], nil, 2, function() E:StaticPopup_Show('ELVUI_EDITBOX', nil, nil, 'https://git.tukui.org/elvui/elvui-tbc/-/issues') end)
 E.Options.args.info.args.support.args.git.customWidth = 140
 E.Options.args.info.args.support.args.discord = ACH:Execute(L["Discord"], nil, 3, function() E:StaticPopup_Show('ELVUI_EDITBOX', nil, nil, 'https://discordapp.com/invite/xFWcfgE') end)
 E.Options.args.info.args.support.args.discord.customWidth = 140
-E.Options.args.info.args.support.args.changelog = ACH:Execute(L["Changelog"], nil, 4, function() E:StaticPopup_Show('ELVUI_EDITBOX', nil, nil, 'https://www.tukui.org/download.php?ui=elvui#changelog') end)
+E.Options.args.info.args.support.args.changelog = ACH:Execute(L["Changelog"], nil, 4, function() E:StaticPopup_Show('ELVUI_EDITBOX', nil, nil, 'https://www.tukui.org/classic-tbc-addons.php?id=2&changelog') end)
 E.Options.args.info.args.support.args.changelog.customWidth = 140
-E.Options.args.info.args.support.args.development = ACH:Execute(L["Development Version"], L["Link to the latest development version."], 5, function() E:StaticPopup_Show('ELVUI_EDITBOX', nil, nil, 'https://git.tukui.org/elvui/elvui/-/archive/development/elvui-development.zip') end)
+E.Options.args.info.args.support.args.development = ACH:Execute(L["Development Version"], L["Link to the latest development version."], 5, function() E:StaticPopup_Show('ELVUI_EDITBOX', nil, nil, 'https://git.tukui.org/elvui/elvui-tbc/-/archive/development/elvui-tbc-development.zip') end)
 E.Options.args.info.args.support.args.development.customWidth = 140
 
 E.Options.args.info.args.credits = ACH:Group(L["Credits"], nil, 4)
@@ -423,7 +424,6 @@ E.Options.args.profiles.args.private.name = L["Private"]
 E.Options.args.profiles.args.private.order = 2
 
 E.Libs.AceConfig:RegisterOptionsTable('ElvProfiles', E.Options.args.profiles.args.profile)
-E.Libs.DualSpec:EnhanceOptions(E.Options.args.profiles.args.profile, E.data)
 
 E.Libs.AceConfig:RegisterOptionsTable('ElvPrivates', E.Options.args.profiles.args.private)
 

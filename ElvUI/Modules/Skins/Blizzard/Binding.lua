@@ -1,4 +1,4 @@
-local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local E, L, V, P, G = unpack(select(2, ...)) --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local S = E:GetModule('Skins')
 
 local _G = _G
@@ -13,7 +13,6 @@ function S:Blizzard_BindingUI()
 		'unbindButton',
 		'okayButton',
 		'cancelButton',
-		'quickKeybindButton'
 	}
 
 	local KeyBindingFrame = _G.KeyBindingFrame
@@ -21,20 +20,18 @@ function S:Blizzard_BindingUI()
 		S:HandleButton(KeyBindingFrame[v])
 	end
 
+	S:HandleFrame(KeyBindingFrame, true)
+	S:HandleFrame(_G.KeyBindingFrameCategoryList, true)
+	S:HandleFrame(KeyBindingFrame.bindingsContainer, true)
+
+	KeyBindingFrame.header:StripTextures()
+	KeyBindingFrame.header:ClearAllPoints()
+	KeyBindingFrame.header:Point('TOP', KeyBindingFrame, 'TOP', 0, -4)
+
 	_G.KeyBindingFrameScrollFrame:StripTextures()
 	S:HandleScrollBar(_G.KeyBindingFrameScrollFrameScrollBar)
 
 	S:HandleCheckBox(KeyBindingFrame.characterSpecificButton)
-	KeyBindingFrame.Header:StripTextures()
-	KeyBindingFrame.Header:ClearAllPoints()
-	KeyBindingFrame.Header:Point('TOP', KeyBindingFrame, 'TOP', 0, -4)
-	KeyBindingFrame:StripTextures()
-	KeyBindingFrame:CreateBackdrop('Transparent')
-
-	_G.KeyBindingFrameCategoryList:StripTextures()
-	_G.KeyBindingFrameCategoryList:SetTemplate('Transparent')
-	KeyBindingFrame.bindingsContainer:StripTextures()
-	KeyBindingFrame.bindingsContainer:SetTemplate('Transparent')
 
 	for i = 1, _G.KEY_BINDINGS_DISPLAYED, 1 do
 		local button1 = _G['KeyBindingFrameKeyBinding'..i..'Key1Button']
@@ -46,8 +43,8 @@ function S:Blizzard_BindingUI()
 		if not button.IsSkinned then
 			local selected = button.selectedHighlight
 			selected:SetTexture(E.media.normTex)
-			selected:Point('TOPLEFT', 1, -1)
-			selected:Point('BOTTOMRIGHT', -1, 1)
+			selected:Point('TOPLEFT', E.mult, -E.mult)
+			selected:Point('BOTTOMRIGHT', -E.mult, E.mult)
 			selected:SetColorTexture(1, 1, 1, .25)
 			S:HandleButton(button)
 
@@ -55,23 +52,9 @@ function S:Blizzard_BindingUI()
 		end
 	end)
 
-	-- QuickKeybind
-	local Quickie = _G.QuickKeybindFrame
-	Quickie:StripTextures()
-	Quickie.Header:StripTextures()
-	Quickie:CreateBackdrop('Transparent')
-
-	local quickies = {
-		'okayButton',
-		'defaultsButton',
-		'cancelButton'
-	}
-
-	for _, v in pairs(quickies) do
-		S:HandleButton(Quickie[v])
-	end
-
-	S:HandleCheckBox(Quickie.characterSpecificButton)
+	KeyBindingFrame.okayButton:Point('BOTTOMLEFT', KeyBindingFrame.unbindButton, 'BOTTOMRIGHT', 3, 0)
+	KeyBindingFrame.cancelButton:Point('BOTTOMLEFT', KeyBindingFrame.okayButton, 'BOTTOMRIGHT', 3, 0)
+	KeyBindingFrame.unbindButton:Point('BOTTOMRIGHT', KeyBindingFrame, 'BOTTOMRIGHT', -211, 16)
 end
 
 S:AddCallbackForAddon('Blizzard_BindingUI')

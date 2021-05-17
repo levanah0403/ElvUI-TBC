@@ -1,4 +1,4 @@
-local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local E, L, V, P, G = unpack(select(2, ...)) --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 
 local min, max, format = min, max, format
 
@@ -18,9 +18,9 @@ function E:IsEyefinity(width, height)
 		if width >= 4800 and width < 5760 and height == 900 then return 1600 end --UXGA & HD+
 
 		--Low resolution screen
-		if width >= 4320 and width < 4800 then return 1440 end	--WSXGA
-		if width >= 4080 and width < 4320 then return 1360 end	--WXGA
-		if width >= 3840 and width < 4080 then return 1224 end	--SXGA & SXGA (UVGA) & WXGA & HDTV
+		if width >= 4320 and width < 4800 then return 1440 end --WSXGA
+		if width >= 4080 and width < 4320 then return 1360 end --WXGA
+		if width >= 3840 and width < 4080 then return 1224 end --SXGA & SXGA (UVGA) & WXGA & HDTV
 	end
 end
 

@@ -1,9 +1,10 @@
-local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local E, L, V, P, G = unpack(select(2, ...)) --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local M = E:GetModule('Minimap')
 local LSM = E.Libs.LSM
 
 local _G = _G
 local pairs = pairs
+local unpack = unpack
 local tinsert = tinsert
 local utf8sub = string.utf8sub
 
@@ -11,7 +12,6 @@ local CloseAllWindows = CloseAllWindows
 local CloseMenus = CloseMenus
 local PlaySound = PlaySound
 local CreateFrame = CreateFrame
-local GarrisonLandingPageMinimapButton_OnClick = GarrisonLandingPageMinimapButton_OnClick
 local GetMinimapZoneText = GetMinimapZoneText
 local GetZonePVPInfo = GetZonePVPInfo
 local InCombatLockdown = InCombatLockdown
@@ -19,12 +19,10 @@ local IsAddOnLoaded = IsAddOnLoaded
 local IsShiftKeyDown = IsShiftKeyDown
 local MainMenuMicroButton_SetNormal = MainMenuMicroButton_SetNormal
 local ShowUIPanel, HideUIPanel = ShowUIPanel, HideUIPanel
-local ToggleAchievementFrame = ToggleAchievementFrame
 local ToggleCharacter = ToggleCharacter
 local ToggleCollectionsJournal = ToggleCollectionsJournal
 local ToggleFrame = ToggleFrame
 local ToggleFriendsFrame = ToggleFriendsFrame
-local ToggleGuildFrame = ToggleGuildFrame
 local ToggleHelpFrame = ToggleHelpFrame
 local ToggleLFDParentFrame = ToggleLFDParentFrame
 local hooksecurefunc = hooksecurefunc
@@ -74,16 +72,10 @@ local menuList = {
 	func = _G.ToggleChannelFrame},
 	{text = _G.TIMEMANAGER_TITLE,
 	func = function() ToggleFrame(_G.TimeManagerFrame) end},
-	{text = _G.ACHIEVEMENT_BUTTON,
-	func = ToggleAchievementFrame},
 	{text = _G.SOCIAL_BUTTON,
 	func = ToggleFriendsFrame},
 	{text = L["Calendar"],
 	func = function() _G.GameTimeFrame:Click() end},
-	{text = _G.GARRISON_TYPE_8_0_LANDING_PAGE_TITLE,
-	func = function() GarrisonLandingPageMinimapButton_OnClick(_G.GarrisonLandingPageMinimapButton) end},
-	{text = _G.ACHIEVEMENTS_GUILD_TAB,
-	func = ToggleGuildFrame},
 	{text = _G.LFG_TITLE,
 	func = ToggleLFDParentFrame},
 	{text = _G.ENCOUNTER_JOURNAL,
@@ -119,23 +111,6 @@ local menuList = {
 
 tinsert(menuList, {text = _G.BLIZZARD_STORE, func = function() _G.StoreMicroButton:Click() end})
 tinsert(menuList, {text = _G.HELP_BUTTON, func = ToggleHelpFrame})
-
-function M:HandleGarrisonButton()
-	local button = _G.GarrisonLandingPageMinimapButton
-	if button then
-		local db = E.db.general.minimap.icons.classHall
-		local scale, pos = db.scale or 1, db.position or 'BOTTOMLEFT'
-		button:ClearAllPoints()
-		button:Point(pos, Minimap, pos, db.xOffset or 0, db.yOffset or 0)
-		button:SetScale(scale)
-
-		local box = _G.GarrisonLandingPageTutorialBox
-		if box then
-			box:SetScale(1/scale)
-			box:SetClampedToScreen(true)
-		end
-	end
-end
 
 function M:GetLocTextColor()
 	local pvpType = GetZonePVPInfo()
@@ -239,7 +214,7 @@ do
 	local isResetting
 	local function ResetZoom()
 		Minimap:SetZoom(0)
-		_G.MinimapZoomIn:Enable(); --Reset enabled state of buttons
+		_G.MinimapZoomIn:Enable() --Reset enabled state of buttons
 		_G.MinimapZoomOut:Disable()
 		isResetting = false
 	end
@@ -279,8 +254,6 @@ function M:UpdateSettings()
 		Minimap.location:Show()
 	end
 
-	M.HandleGarrisonButton()
-
 	_G.MiniMapMailIcon:SetTexture(E.Media.MailIcons[E.db.general.minimap.icons.mail.texture] or E.Media.MailIcons.Mai3)
 
 	local GameTimeFrame = _G.GameTimeFrame
@@ -306,14 +279,57 @@ function M:UpdateSettings()
 		MiniMapMailFrame:SetScale(scale)
 	end
 
-	local QueueStatusMinimapButton = _G.QueueStatusMinimapButton
-	if QueueStatusMinimapButton then
-		local pos = E.db.general.minimap.icons.lfgEye.position or 'BOTTOMRIGHT'
-		local scale = E.db.general.minimap.icons.lfgEye.scale or 1
-		QueueStatusMinimapButton:ClearAllPoints()
-		QueueStatusMinimapButton:Point(pos, Minimap, pos, E.db.general.minimap.icons.lfgEye.xOffset or 3, E.db.general.minimap.icons.lfgEye.yOffset or 0)
-		QueueStatusMinimapButton:SetScale(scale)
-		_G.QueueStatusFrame:SetScale(scale)
+	local MiniMapBattlefieldFrame = _G.MiniMapBattlefieldFrame
+	if MiniMapBattlefieldFrame then
+		local pos = E.db.general.minimap.icons.battlefield.position or 'BOTTOMLEFT'
+		local scale = E.db.general.minimap.icons.battlefield.scale or 1
+		MiniMapBattlefieldFrame:ClearAllPoints()
+		MiniMapBattlefieldFrame:Point(pos, Minimap, pos, E.db.general.minimap.icons.battlefield.xOffset or -2, E.db.general.minimap.icons.battlefield.yOffset or -2)
+		MiniMapBattlefieldFrame:SetScale(scale)
+		MiniMapBattlefieldFrame:SetParent(Minimap)
+
+		if (_G.BattlegroundShine) then
+			_G.BattlegroundShine:Hide()
+		end
+
+		if (_G.MiniMapBattlefieldBorder) then
+			_G.MiniMapBattlefieldBorder:Hide()
+		end
+
+		if (_G.MiniMapBattlefieldIcon) then
+			_G.MiniMapBattlefieldIcon:SetTexCoord(unpack(E.TexCoords))
+		end
+	end
+
+	local MiniMapTracking = _G.MiniMapTracking
+	if (MiniMapTracking) then
+		if E.private.general.minimap.hideTracking then
+			MiniMapTracking:SetParent(E.HiddenFrame)
+		else
+			local pos = E.db.general.minimap.icons.tracking.position or 'BOTTOMRIGHT'
+			local scale = E.db.general.minimap.icons.tracking.scale or 0.8
+			local x = E.db.general.minimap.icons.tracking.xOffset or 0
+			local y = E.db.general.minimap.icons.tracking.yOffset or 0
+
+			MiniMapTracking:ClearAllPoints()
+			MiniMapTracking:Point(pos, Minimap, pos, x, y)
+			MiniMapTracking:SetScale(scale)
+			MiniMapTracking:SetParent(Minimap)
+
+			if (_G.MiniMapTrackingBorder) then
+				_G.MiniMapTrackingBorder:Hide()
+			end
+
+			if (_G.MiniMapTrackingBackground) then
+				_G.MiniMapTrackingBackground:Hide()
+			end
+
+			if (_G.MiniMapTrackingIcon) then
+				_G.MiniMapTrackingIcon:SetDrawLayer('ARTWORK')
+				_G.MiniMapTrackingIcon:SetTexCoord(unpack(E.TexCoords))
+				_G.MiniMapTrackingIcon:SetInside()
+			end
+		end
 	end
 
 	local MiniMapInstanceDifficulty = _G.MiniMapInstanceDifficulty
@@ -329,15 +345,6 @@ function M:UpdateSettings()
 		GuildInstanceDifficulty:ClearAllPoints()
 		GuildInstanceDifficulty:Point(pos, Minimap, pos, x, y)
 		GuildInstanceDifficulty:SetScale(scale)
-	end
-
-	local MiniMapChallengeMode = _G.MiniMapChallengeMode
-	if MiniMapChallengeMode then
-		local pos = E.db.general.minimap.icons.challengeMode.position or 'TOPLEFT'
-		local scale = E.db.general.minimap.icons.challengeMode.scale or 1
-		MiniMapChallengeMode:ClearAllPoints()
-		MiniMapChallengeMode:Point(pos, Minimap, pos, E.db.general.minimap.icons.challengeMode.xOffset or 8, E.db.general.minimap.icons.challengeMode.yOffset or -8)
-		MiniMapChallengeMode:SetScale(scale)
 	end
 end
 
@@ -393,7 +400,7 @@ function M:Initialize()
 		_G.MinimapZoomOut,
 		_G.MinimapNorthTag,
 		_G.MinimapZoneTextButton,
-		_G.MiniMapTracking,
+		_G.MinimapToggleButton,
 		_G.MiniMapMailBorder
 	}
 
@@ -401,26 +408,7 @@ function M:Initialize()
 		frame:Kill()
 	end
 
-	-- Every GarrisonLandingPageMinimapButton_UpdateIcon() call reanchor the button
-	hooksecurefunc('GarrisonLandingPageMinimapButton_UpdateIcon', M.HandleGarrisonButton)
-
-	--Hide the BlopRing on Minimap
-	Minimap:SetArchBlobRingAlpha(0)
-	Minimap:SetArchBlobRingScalar(0)
-	Minimap:SetQuestBlobRingAlpha(0)
-	Minimap:SetQuestBlobRingScalar(0)
-
-	if E.private.general.minimap.hideClassHallReport then
-		_G.GarrisonLandingPageMinimapButton:Kill()
-		_G.GarrisonLandingPageMinimapButton.IsShown = function() return true end
-	end
-
-	_G.QueueStatusMinimapButtonBorder:Hide()
-	_G.QueueStatusFrame:SetClampedToScreen(true)
 	_G.MiniMapWorldMapButton:Hide()
-	_G.MiniMapInstanceDifficulty:SetParent(Minimap)
-	_G.GuildInstanceDifficulty:SetParent(Minimap)
-	_G.MiniMapChallengeMode:SetParent(Minimap)
 
 	if _G.TimeManagerClockButton then _G.TimeManagerClockButton:Kill() end
 	if _G.FeedbackUIButton then _G.FeedbackUIButton:Kill() end

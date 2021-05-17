@@ -1,4 +1,4 @@
-local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local E, L, V, P, G = unpack(select(2, ...)) --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local B = E:GetModule('Blizzard')
 
 local _G = _G
@@ -130,12 +130,8 @@ function B:Handle_UIWidgets()
 	belowMiniMapcontainer:ClearAllPoints()
 	belowMiniMapcontainer:Point('CENTER', belowMiniMapHolder)
 
-	powerBarContainer:ClearAllPoints()
-	powerBarContainer:Point('CENTER', powerWidgetHolder)
-
 	hooksecurefunc(topCenterContainer, 'SetPoint', TopCenterPosition)
 	hooksecurefunc(belowMiniMapcontainer, 'SetPoint', BelowMinimapPosition)
-	hooksecurefunc(powerBarContainer, 'SetPoint', PowerWidgetPosition)
 
 	-- Credits ShestakUI
 	hooksecurefunc(_G.UIWidgetTemplateStatusBarMixin, 'Setup', B.UIWidgetTemplateStatusBar)

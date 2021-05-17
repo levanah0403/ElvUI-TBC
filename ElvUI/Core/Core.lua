@@ -1,6 +1,6 @@
 local ElvUI = select(2, ...)
 ElvUI[2] = ElvUI[1].Libs.ACL:GetLocale('ElvUI', ElvUI[1]:GetLocale()) -- Locale doesn't exist yet, make it exist.
-local E, L, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local E, L, V, P, G = unpack(ElvUI) --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 
 local _G = _G
 local tonumber, pairs, ipairs, error, unpack, select, tostring = tonumber, pairs, ipairs, error, unpack, select, tostring
@@ -14,7 +14,6 @@ local GetCVar = GetCVar
 local GetSpellInfo = GetSpellInfo
 local GetCVarBool = GetCVarBool
 local GetNumGroupMembers = GetNumGroupMembers
-local GetSpecialization = GetSpecialization
 local hooksecurefunc = hooksecurefunc
 local InCombatLockdown = InCombatLockdown
 local GetAddOnEnableState = GetAddOnEnableState
@@ -26,14 +25,18 @@ local IsInRaid = IsInRaid
 local SetCVar = SetCVar
 local ReloadUI = ReloadUI
 local UnitGUID = UnitGUID
+local GetBindingKey = GetBindingKey
+local SetBinding = SetBinding
+local SaveBindings = SaveBindings
+local GetCurrentBindingSet = GetCurrentBindingSet
 
 local ERR_NOT_IN_COMBAT = ERR_NOT_IN_COMBAT
 local LE_PARTY_CATEGORY_HOME = LE_PARTY_CATEGORY_HOME
 local LE_PARTY_CATEGORY_INSTANCE = LE_PARTY_CATEGORY_INSTANCE
 local C_ChatInfo_SendAddonMessage = C_ChatInfo.SendAddonMessage
--- GLOBALS: ElvUIPlayerBuffs, ElvUIPlayerDebuffs
+-- GLOBALS: ElvCharacterDB, ElvUIPlayerBuffs, ElvUIPlayerDebuffs
 
---Modules
+-- Modules
 local ActionBars = E:GetModule('ActionBars')
 local AFK = E:GetModule('AFK')
 local Auras = E:GetModule('Auras')
@@ -50,9 +53,9 @@ local Totems = E:GetModule('Totems')
 local UnitFrames = E:GetModule('UnitFrames')
 local LSM = E.Libs.LSM
 
---Constants
+-- Constants
 E.noop = function() end
-E.title = format('|cff1784d1%s |r', 'ElvUI')
+E.title = format('%s%s|r', E.InfoColor, 'ElvUI')
 E.version = tonumber(GetAddOnMetadata('ElvUI', 'Version'))
 E.myfaction, E.myLocalizedFaction = UnitFactionGroup('player')
 E.mylevel = UnitLevel('player')
@@ -61,11 +64,12 @@ E.myLocalizedRace, E.myrace = UnitRace('player')
 E.myname = UnitName('player')
 E.myrealm = GetRealmName()
 E.mynameRealm = format('%s - %s', E.myname, E.myrealm) -- contains spaces/dashes in realm (for profile keys)
-E.myspec = GetSpecialization()
 E.wowpatch, E.wowbuild = GetBuildInfo()
 E.wowbuild = tonumber(E.wowbuild)
 E.isMacClient = IsMacClient()
 E.IsRetail = WOW_PROJECT_ID == WOW_PROJECT_MAINLINE
+E.IsClassic = WOW_PROJECT_ID == WOW_PROJECT_CLASSIC
+E.IsTBC = WOW_PROJECT_ID == WOW_PROJECT_BURNING_CRUSADE_CLASSIC
 E.screenwidth, E.screenheight = GetPhysicalScreenSize()
 E.resolution = format('%dx%d', E.screenwidth, E.screenheight)
 E.NewSign = [[|TInterface\OptionsFrame\UI-OptionsFrame-NewFeatureIcon:14:14|t]] -- not used by ElvUI yet, but plugins like BenikUI and MerathilisUI use it.
@@ -77,7 +81,7 @@ E.UserList = {}
 E.oUF.Tags.Vars.E = E
 E.oUF.Tags.Vars.L = L
 
---Tables
+-- Tables
 E.media = {}
 E.frames = {}
 E.unitFrameElements = {}
@@ -89,7 +93,6 @@ E.RegisteredInitialModules = {}
 E.valueColorUpdateFuncs = {}
 E.TexCoords = {0, 1, 0, 1}
 E.FrameLocks = {}
-E.VehicleLocks = {}
 E.CreditsList = {}
 E.LockedCVars = {}
 E.IgnoredCVars = {}
@@ -112,10 +115,7 @@ E.ClassRole = {
 	MAGE		= 'Caster',
 	PRIEST		= 'Caster',
 	WARLOCK		= 'Caster',
-	DEMONHUNTER	= {'Melee',  'Tank'},
 	WARRIOR		= {'Melee',  'Melee',  'Tank'},
-	DEATHKNIGHT	= {'Tank',   'Melee',  'Melee'},
-	MONK		= {'Tank',   'Caster', 'Melee'},
 	PALADIN		= {'Caster', 'Tank',   'Melee'},
 	SHAMAN		= {'Caster', 'Melee',  'Caster'},
 	DRUID		= {'Caster', 'Melee',  'Tank',  'Caster'},
@@ -126,16 +126,15 @@ E.DispelClasses = {
 	SHAMAN	= { Magic = false, Curse = true },
 	PALADIN	= { Poison = true, Magic = false,  Disease = true },
 	DRUID	= { Magic = false, Curse = true,   Poison = true,  Disease = false },
-	MONK	= { Magic = false, Disease = true, Poison = true },
 	MAGE	= { Curse = true }
 }
 
 E.BadDispels = {
-	[34914]		= 'Vampiric Touch',		-- horrifies
-	[233490]	= 'Unstable Affliction'	-- silences
+	[34914]		= 'Vampiric Touch',		-- Horrifies
+	[233490]	= 'Unstable Affliction' -- Silences
 }
 
---Workaround for people wanting to use white and it reverting to their class color.
+-- Workaround for people wanting to use white and it reverting to their class color.
 E.PriestColors = { r = 0.99, g = 0.99, b = 0.99, colorStr = 'fffcfcfc' }
 
 -- Socket Type info from 8.2
@@ -152,7 +151,7 @@ E.GemTypeInfo = {
 	PunchcardBlue	= { r = 0.47, g = 0.67, b = 1.00 },
 }
 
---This frame everything in ElvUI should be anchored to for Eyefinity support.
+-- This frame everything in ElvUI should be anchored to for Eyefinity support.
 E.UIParent = CreateFrame('Frame', 'ElvUIParent', _G.UIParent)
 E.UIParent:SetFrameLevel(_G.UIParent:GetFrameLevel())
 E.UIParent:SetSize(_G.UIParent:GetSize())
@@ -207,7 +206,7 @@ function E:GrabColorPickerValues(r, g, b)
 	return r, g, b
 end
 
---Basically check if another class border is being used on a class that doesn't match. And then return true if a match is found.
+-- Basically check if another class border is being used on a class that doesn't match. And then return true if a match is found.
 function E:CheckClassColor(r, g, b)
 	r, g, b = E:GrabColorPickerValues(r, g, b)
 
@@ -271,18 +270,18 @@ function E:GetColorTable(data)
 end
 
 function E:UpdateMedia()
-	if not E.db.general or not E.private.general then return end --Prevent rare nil value errors
+	if not E.db.general or not E.private.general then return end -- Prevent rare nil value errors
 
-	--Fonts
+	-- Fonts
 	E.media.normFont = LSM:Fetch('font', E.db.general.font)
 	E.media.combatFont = LSM:Fetch('font', E.private.general.dmgfont)
 
-	--Textures
+	-- Textures
 	E.media.blankTex = LSM:Fetch('background', 'ElvUI Blank')
 	E.media.normTex = LSM:Fetch('statusbar', E.private.general.normTex)
 	E.media.glossTex = LSM:Fetch('statusbar', E.private.general.glossTex)
 
-	--Border Color
+	-- Border Color
 	local border = E.db.general.bordercolor
 	if E:CheckClassColor(border.r, border.g, border.b) then
 		local classColor = E:ClassColor(E.myclass, true)
@@ -293,7 +292,7 @@ function E:UpdateMedia()
 
 	E.media.bordercolor = {border.r, border.g, border.b}
 
-	--UnitFrame Border Color
+	-- UnitFrame Border Color
 	border = E.db.unitframe.colors.borderColor
 	if E:CheckClassColor(border.r, border.g, border.b) then
 		local classColor = E:ClassColor(E.myclass, true)
@@ -303,13 +302,13 @@ function E:UpdateMedia()
 	end
 	E.media.unitframeBorderColor = {border.r, border.g, border.b}
 
-	--Backdrop Color
+	-- Backdrop Color
 	E.media.backdropcolor = E:SetColorTable(E.media.backdropcolor, E.db.general.backdropcolor)
 
-	--Backdrop Fade Color
+	-- Backdrop Fade Color
 	E.media.backdropfadecolor = E:SetColorTable(E.media.backdropfadecolor, E.db.general.backdropfadecolor)
 
-	--Value Color
+	-- Value Color
 	local value = E.db.general.valuecolor
 	if E:CheckClassColor(value.r, value.g, value.b) then
 		value = E:ClassColor(E.myclass, true)
@@ -318,7 +317,7 @@ function E:UpdateMedia()
 		E.db.general.valuecolor.b = value.b
 	end
 
-	--Chat Tab Selector Color
+	-- Chat Tab Selector Color
 	local selectorColor = E.db.chat.tabSelectorColor
 	if E:CheckClassColor(selectorColor.r, selectorColor.g, selectorColor.b) then
 		selectorColor = E:ClassColor(E.myclass, true)
@@ -356,9 +355,9 @@ function E:GeneralMedia_ApplyToAll()
 	E.db.nameplates.font = font
 	--E.db.nameplate.fontSize = fontSize --Dont use this because nameplate font it somewhat smaller than the rest of the font sizes
 	--E.db.nameplate.buffs.font = font
-	--E.db.nameplate.buffs.fontSize = fontSize  --Dont use this because nameplate font it somewhat smaller than the rest of the font sizes
+	--E.db.nameplate.buffs.fontSize = fontSize --Dont use this because nameplate font it somewhat smaller than the rest of the font sizes
 	--E.db.nameplate.debuffs.font = font
-	--E.db.nameplate.debuffs.fontSize = fontSize   --Dont use this because nameplate font it somewhat smaller than the rest of the font sizes
+	--E.db.nameplate.debuffs.fontSize = fontSize --Dont use this because nameplate font it somewhat smaller than the rest of the font sizes
 	E.db.actionbar.font = font
 	--E.db.actionbar.fontSize = fontSize	--This may not look good if a big font size is chosen
 	E.db.auras.buffs.countFont = font
@@ -680,7 +679,7 @@ function E:RemoveTableDuplicates(cleanTable, checkTable, generatedKeys)
 		E:Print('Bad argument #1 to \'RemoveTableDuplicates\' (table expected)')
 		return
 	end
-	if type(checkTable) ~=  'table' then
+	if type(checkTable) ~= 'table' then
 		E:Print('Bad argument #2 to \'RemoveTableDuplicates\' (table expected)')
 		return
 	end
@@ -900,7 +899,7 @@ do	--Split string by multi-character delimiter (the strsplit / string.split func
 		assert(type (delim) == 'string' and strlen(delim) > 0, 'bad delimiter')
 
 		local start = 1
-		wipe(splitTable)  -- results table
+		wipe(splitTable) -- results table
 
 		-- find each instance of a string followed by the delimiter
 		while true do
@@ -1055,7 +1054,7 @@ do -- BFA Convert, deprecated..
 				E.db.unitframe.OORAlpha = nil
 			end
 
-			for _, unit in ipairs({'target','targettarget','targettargettarget','focus','focustarget','pet','pettarget','boss','arena','party','raid','raid40','raidpet','tank','assist'}) do
+			for _, unit in ipairs({'target','targettarget','targettargettarget','focus','focustarget','pet','pettarget','arena','party','raid','raid40','raidpet','tank','assist'}) do
 				if E.db.unitframe.units[unit].rangeCheck ~= nil then
 					local enabled = E.db.unitframe.units[unit].rangeCheck
 					E.db.unitframe.units[unit].fader.enable = enabled
@@ -1070,10 +1069,10 @@ do -- BFA Convert, deprecated..
 			end
 		end
 
-		--Remove stale font settings from Cooldown system for top auras
+		--[[Remove stale font settings from Cooldown system for top auras
 		if E.db.auras.cooldown.fonts then
 			E.db.auras.cooldown.fonts = nil
-		end
+		end]]
 
 		--Convert Nameplate Aura Duration to new Cooldown system
 		if E.db.nameplates.durationFont then
@@ -1282,10 +1281,6 @@ do -- BFA Convert, deprecated..
 end
 
 function E:DBConvertSL()
-	if E.private.skins.cleanBossButton ~= nil then
-		E.db.actionbar.extraActionButton.clean = E.private.skins.cleanBossButton
-		E.private.skins.cleanBossButton = nil
-	end
 
 	if E.global.unitframe.DebuffHighlightColors then
 		E:CopyTable(E.global.unitframe.AuraHighlightColors, E.global.unitframe.DebuffHighlightColors)
@@ -1385,8 +1380,8 @@ function E:UpdateDB()
 	DataTexts.db = E.db.datatexts
 	NamePlates.db = E.db.nameplates
 	Tooltip.db = E.db.tooltip
-	UnitFrames.db = E.db.unitframe
 	Totems.db = E.db.general.totems
+	UnitFrames.db = E.db.unitframe
 
 	--Not part of staggered update
 end
@@ -1435,7 +1430,6 @@ function E:UpdateActionBars(skipCallback)
 	ActionBars:UpdateButtonSettings()
 	ActionBars:UpdateMicroPositionDimensions()
 	ActionBars:UpdatePetCooldownSettings()
-	ActionBars:UpdateExtraButtons()
 
 	if not skipCallback then
 		E.callbacks:Fire('StaggeredUpdate')
@@ -1477,9 +1471,8 @@ function E:UpdateChat(skipCallback)
 end
 
 function E:UpdateDataBars(skipCallback)
-	DataBars:AzeriteBar_Toggle()
 	DataBars:ExperienceBar_Toggle()
-	DataBars:HonorBar_Toggle()
+	DataBars:PetExperienceBar_Toggle()
 	DataBars:ReputationBar_Toggle()
 	DataBars:ThreatBar_Toggle()
 	DataBars:UpdateAll()
@@ -1516,7 +1509,6 @@ end
 
 function E:UpdateMisc(skipCallback)
 	AFK:Toggle()
-	Blizzard:SetObjectiveFrameHeight()
 
 	Totems:PositionAndSize()
 
@@ -1666,7 +1658,7 @@ do
 		return funcs ~= nil, funcs
 	end
 
-	--- Registers specified event and adds specified func to be called for the specified object.
+	-- Registers specified event and adds specified func to be called for the specified object.
 	-- Unless all parameters are supplied it will not register.
 	-- If the specified object has already been registered for the specified event
 	-- then it will just add the specified func to a table of functions that should be called.
@@ -1696,7 +1688,7 @@ do
 		end
 	end
 
-	--- Unregisters specified function for the specified object on the specified event.
+	-- Unregisters specified function for the specified object on the specified event.
 	-- Unless all parameters are supplied it will not unregister.
 	-- @param event The event you want to unregister an object from.
 	-- @param object The object you want to unregister a func from.
@@ -1826,6 +1818,27 @@ function E:DBConversions()
 	end
 
 	-- development converts, always call
+
+	E:ConvertActionBarKeybinds()
+end
+
+function E:ConvertActionBarKeybinds()
+	if not ElvCharacterDB.ConvertKeybindings then
+		for oldKeybind, newKeybind in pairs({ ELVUIBAR6BUTTON = 'ELVUIBAR2BUTTON', EXTRABAR7BUTTON = 'ELVUIBAR7BUTTON', EXTRABAR8BUTTON = 'ELVUIBAR8BUTTON', EXTRABAR9BUTTON = 'ELVUIBAR9BUTTON', EXTRABAR10BUTTON = 'ELVUIBAR10BUTTON' }) do
+			for i = 1, 12 do
+				local keys = { GetBindingKey(format('%s%d', oldKeybind, i)) }
+				if next(keys) then
+					for _, key in pairs(keys) do
+						SetBinding(key, format('%s%d', newKeybind, i))
+					end
+				end
+			end
+		end
+
+		SaveBindings(GetCurrentBindingSet())
+
+		ElvCharacterDB.ConvertKeybindings = true
+	end
 end
 
 function E:RefreshModulesDB()
@@ -1883,7 +1896,6 @@ function E:Initialize()
 	E.private = E.charSettings.profile
 	E.global = E.data.global
 	E.db = E.data.profile
-	E.Libs.DualSpec:EnhanceDatabase(E.data, 'ElvUI')
 
 	-- default the non thing pixel border color to 191919, otherwise its 000000
 	if not E.PixelMode then P.general.bordercolor = { r = 0.1, g = 0.1, b = 0.1 } end

@@ -1,82 +1,99 @@
-local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local E, L, V, P, G = unpack(select(2, ...)) --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local S = E:GetModule('Skins')
 
 local _G = _G
-local pairs, unpack = pairs, unpack
+local unpack = unpack
+local strfind = strfind
+local hooksecurefunc = hooksecurefunc
 
 function S:Blizzard_TrainerUI()
 	if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.trainer) then return end
 
-	--Class Trainer Frame
-	local StripAllTextures = {
-		_G.ClassTrainerScrollFrameScrollChild,
-		_G.ClassTrainerFrameSkillStepButton,
-		_G.ClassTrainerFrameBottomInset,
-	}
-
-	local buttons = {
-		_G.ClassTrainerTrainButton,
-	}
-
-	local KillTextures = {
-		_G.ClassTrainerFramePortrait,
-		_G.ClassTrainerScrollFrameScrollBarBG,
-		_G.ClassTrainerScrollFrameScrollBarTop,
-		_G.ClassTrainerScrollFrameScrollBarBottom,
-		_G.ClassTrainerScrollFrameScrollBarMiddle,
-	}
-
-	for _, object in pairs(StripAllTextures) do
-		object:StripTextures()
-	end
-
-	for _, texture in pairs(KillTextures) do
-		texture:Kill()
-	end
-
-	for i = 1, #buttons do
-		buttons[i]:StripTextures()
-		S:HandleButton(buttons[i])
-	end
-
 	local ClassTrainerFrame = _G.ClassTrainerFrame
-	S:HandlePortraitFrame(ClassTrainerFrame)
+	S:HandleFrame(ClassTrainerFrame, true, nil, 11, -12, -32, 76)
 
-	for i= 1, #ClassTrainerFrame.scrollFrame.buttons do
-		local button = _G['ClassTrainerScrollFrameButton'..i]
-		button:StripTextures()
-		button:StyleButton()
-		button.icon:SetTexCoord(unpack(E.TexCoords))
-		button:CreateBackdrop()
-		button.backdrop:SetOutside(button.icon)
-		button.icon:SetParent(button.backdrop)
-		button.selectedTex:SetColorTexture(1, 1, 1, 0.3)
-		button.selectedTex:SetInside()
+	_G.ClassTrainerExpandButtonFrame:StripTextures()
+
+	S:HandleDropDownBox(_G.ClassTrainerFrameFilterDropDown)
+	_G.ClassTrainerFrameFilterDropDown:Point('TOPRIGHT', -40, -64)
+
+	_G.ClassTrainerListScrollFrame:StripTextures()
+	S:HandleScrollBar(_G.ClassTrainerListScrollFrameScrollBar)
+
+	_G.ClassTrainerDetailScrollFrame:StripTextures()
+	S:HandleScrollBar(_G.ClassTrainerDetailScrollFrameScrollBar)
+
+	_G.ClassTrainerSkillIcon:StripTextures()
+
+	_G.ClassTrainerCancelButton:Kill()
+
+	_G.ClassTrainerMoneyFrame:ClearAllPoints()
+	_G.ClassTrainerMoneyFrame:Point('BOTTOMLEFT', _G.ClassTrainerFrame, 'BOTTOMLEFT', 18, 82)
+
+	S:HandleButton(_G.ClassTrainerTrainButton)
+	_G.ClassTrainerTrainButton:Point('BOTTOMRIGHT', -36, 80)
+
+	S:HandleCloseButton(_G.ClassTrainerFrameCloseButton, ClassTrainerFrame.backdrop)
+
+	hooksecurefunc('ClassTrainer_SetSelection', function()
+		local skillIcon = _G.ClassTrainerSkillIcon:GetNormalTexture()
+		if skillIcon then
+			skillIcon:SetInside()
+			skillIcon:SetTexCoord(unpack(E.TexCoords))
+
+			_G.ClassTrainerSkillIcon:SetTemplate('Default')
+		end
+	end)
+
+	for i = 1, _G.CLASS_TRAINER_SKILLS_DISPLAYED do
+		local button = _G['ClassTrainerSkill'..i]
+		local highlight = _G['ClassTrainerSkill'..i..'Highlight']
+
+		button:SetNormalTexture(E.Media.Textures.PlusButton)
+		button.SetNormalTexture = E.noop
+
+		button:GetNormalTexture():Size(16)
+		button:GetNormalTexture():Point('LEFT', 5, 0)
+
+		highlight:SetTexture('')
+		highlight.SetTexture = E.noop
+
+		hooksecurefunc(button, 'SetNormalTexture', function(self, texture)
+			local tex = self:GetNormalTexture()
+
+			if strfind(texture, 'MinusButton') then
+				tex:SetTexture(E.Media.Textures.MinusButton)
+			elseif strfind(texture, 'PlusButton') then
+				tex:SetTexture(E.Media.Textures.PlusButton)
+			else
+				tex:SetTexture()
+			end
+		end)
 	end
 
-	S:HandleScrollBar(_G.ClassTrainerScrollFrameScrollBar, 5)
-	S:HandleDropDownBox(_G.ClassTrainerFrameFilterDropDown, 155)
+	_G.ClassTrainerCollapseAllButton:SetNormalTexture(E.Media.Textures.PlusButton)
+	_G.ClassTrainerCollapseAllButton.SetNormalTexture = E.noop
+	_G.ClassTrainerCollapseAllButton:GetNormalTexture():SetPoint('LEFT', 3, 2)
+	_G.ClassTrainerCollapseAllButton:GetNormalTexture():Size(15)
 
-	ClassTrainerFrame:Height(ClassTrainerFrame:GetHeight() + 5)
-	ClassTrainerFrame:CreateBackdrop('Transparent')
-	ClassTrainerFrame.backdrop:Point('TOPLEFT', ClassTrainerFrame, 'TOPLEFT')
-	ClassTrainerFrame.backdrop:Point('BOTTOMRIGHT', ClassTrainerFrame, 'BOTTOMRIGHT')
+	_G.ClassTrainerCollapseAllButton:SetHighlightTexture('')
+	_G.ClassTrainerCollapseAllButton.SetHighlightTexture = E.noop
 
-	local ClassTrainerFrameSkillStepButton = _G.ClassTrainerFrameSkillStepButton
-	ClassTrainerFrameSkillStepButton.icon:SetTexCoord(unpack(E.TexCoords))
-	ClassTrainerFrameSkillStepButton:CreateBackdrop()
-	ClassTrainerFrameSkillStepButton.backdrop:SetOutside(ClassTrainerFrameSkillStepButton.icon)
-	ClassTrainerFrameSkillStepButton.icon:SetParent(ClassTrainerFrameSkillStepButton.backdrop)
-	_G.ClassTrainerFrameSkillStepButtonHighlight:SetColorTexture(1,1,1,0.3)
-	ClassTrainerFrameSkillStepButton.selectedTex:SetColorTexture(1,1,1,0.3)
+	_G.ClassTrainerCollapseAllButton:SetDisabledTexture(E.Media.Textures.PlusButton)
+	_G.ClassTrainerCollapseAllButton.SetDisabledTexture = E.noop
+	_G.ClassTrainerCollapseAllButton:GetDisabledTexture():SetPoint('LEFT', 3, 2)
+	_G.ClassTrainerCollapseAllButton:GetDisabledTexture():Size(15)
+	_G.ClassTrainerCollapseAllButton:GetDisabledTexture():SetDesaturated(true)
 
-	local ClassTrainerStatusBar = _G.ClassTrainerStatusBar
-	ClassTrainerStatusBar:StripTextures()
-	ClassTrainerStatusBar:SetStatusBarTexture(E.media.normTex)
-	ClassTrainerStatusBar:CreateBackdrop()
-	ClassTrainerStatusBar.rankText:ClearAllPoints()
-	ClassTrainerStatusBar.rankText:Point('CENTER', ClassTrainerStatusBar, 'CENTER')
-	E:RegisterStatusBar(ClassTrainerStatusBar)
+	hooksecurefunc(_G.ClassTrainerCollapseAllButton, 'SetNormalTexture', function(self, texture)
+		local tex = self:GetNormalTexture()
+
+		if strfind(texture, 'MinusButton') then
+			tex:SetTexture(E.Media.Textures.MinusButton)
+		else
+			tex:SetTexture(E.Media.Textures.PlusButton)
+		end
+	end)
 end
 
 S:AddCallbackForAddon('Blizzard_TrainerUI')

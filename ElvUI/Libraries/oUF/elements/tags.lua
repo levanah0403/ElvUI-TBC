@@ -118,15 +118,6 @@ local tagStrings = {
 		end
 	end]],
 
-	['arcanecharges'] = [[function()
-		if(GetSpecialization() == SPEC_MAGE_ARCANE) then
-			local num = UnitPower('player', Enum.PowerType.ArcaneCharges)
-			if(num > 0) then
-				return num
-			end
-		end
-	end]],
-
 	['arenaspec'] = [[function(u)
 		local id = u:match('arena(%d)$')
 		if(id) then
@@ -134,15 +125,6 @@ local tagStrings = {
 			if(specID and specID > 0) then
 				local _, specName = GetSpecializationInfoByID(specID)
 				return specName
-			end
-		end
-	end]],
-
-	['chi'] = [[function()
-		if(GetSpecialization() == SPEC_MONK_WINDWALKER) then
-			local num = UnitPower('player', Enum.PowerType.Chi)
-			if(num > 0) then
-				return num
 			end
 		end
 	end]],
@@ -197,7 +179,7 @@ local tagStrings = {
 
 	['difficulty'] = [[function(u)
 		if UnitCanAttack('player', u) then
-			local l = UnitEffectiveLevel(u)
+			local l = UnitLevel(u)
 			return Hex(GetCreatureDifficultyColor((l > 0) and l or 999))
 		end
 	end]],
@@ -216,15 +198,6 @@ local tagStrings = {
 		end
 	end]],
 
-	['holypower'] = [[function()
-		if(GetSpecialization() == SPEC_PALADIN_RETRIBUTION) then
-			local num = UnitPower('player', Enum.PowerType.HolyPower)
-			if(num > 0) then
-				return num
-			end
-		end
-	end]],
-
 	['leader'] = [[function(u)
 		if(UnitIsGroupLeader(u)) then
 			return 'L'
@@ -238,10 +211,7 @@ local tagStrings = {
 	end]],
 
 	['level'] = [[function(u)
-		local l = UnitEffectiveLevel(u)
-		if(UnitIsWildBattlePet(u) or UnitIsBattlePetCompanion(u)) then
-			l = UnitBattlePetLevel(u)
-		end
+		local l = UnitLevel(u)
 
 		if(l > 0) then
 			return l
@@ -357,19 +327,6 @@ local tagStrings = {
 		end
 	end]],
 
-	['runes'] = [[function()
-		local amount = 0
-
-		for i = 1, 6 do
-			local _, _, ready = GetRuneCooldown(i)
-			if(ready) then
-				amount = amount + 1
-			end
-		end
-
-		return amount
-	end]],
-
 	['sex'] = [[function(u)
 		local s = UnitSex(u)
 		if(s == 2) then
@@ -414,13 +371,6 @@ local tagStrings = {
 			else
 				return level
 			end
-		end
-	end]],
-
-	['soulshards'] = [[function()
-		local num = UnitPower('player', Enum.PowerType.SoulShards)
-		if(num > 0) then
-			return num
 		end
 	end]],
 
@@ -517,56 +467,47 @@ _ENV._VARS = vars
 -- ElvUI sets UNIT_POWER_UPDATE to UNIT_POWER_FREQUENT in tagEvents
 local tagEvents = {
 	['affix']               = 'UNIT_CLASSIFICATION_CHANGED',
-	['arcanecharges']       = 'UNIT_POWER_FREQUENT PLAYER_TALENT_UPDATE',
-	['arenaspec']           = 'ARENA_PREP_OPPONENT_SPECIALIZATIONS',
-	['chi']                 = 'UNIT_POWER_FREQUENT PLAYER_TALENT_UPDATE',
 	['classification']      = 'UNIT_CLASSIFICATION_CHANGED',
 	['cpoints']             = 'UNIT_POWER_FREQUENT PLAYER_TARGET_CHANGED',
-	['curhp']               = 'UNIT_HEALTH UNIT_MAXHEALTH',
+	['curhp']               = 'UNIT_HEALTH_FREQUENT UNIT_MAXHEALTH',
 	['curmana']             = 'UNIT_POWER_FREQUENT UNIT_MAXPOWER',
 	['curpp']               = 'UNIT_POWER_FREQUENT UNIT_MAXPOWER',
-	['dead']                = 'UNIT_HEALTH',
-	['deficit:name']        = 'UNIT_HEALTH UNIT_MAXHEALTH UNIT_NAME_UPDATE',
+	['dead']                = 'UNIT_HEALTH_FREQUENT',
+	['deficit:name']        = 'UNIT_HEALTH_FREQUENT UNIT_MAXHEALTH UNIT_NAME_UPDATE',
 	['difficulty']          = 'UNIT_FACTION',
-	['faction']             = 'NEUTRAL_FACTION_SELECT_RESULT',
+	['faction']             = 'UNIT_FACTION',
 	['group']               = 'GROUP_ROSTER_UPDATE',
-	['holypower']           = 'UNIT_POWER_FREQUENT PLAYER_TALENT_UPDATE',
 	['leader']              = 'PARTY_LEADER_CHANGED',
 	['leaderlong']          = 'PARTY_LEADER_CHANGED',
 	['level']               = 'UNIT_LEVEL PLAYER_LEVEL_UP',
 	['maxhp']               = 'UNIT_MAXHEALTH',
 	['maxmana']             = 'UNIT_POWER_FREQUENT UNIT_MAXPOWER',
 	['maxpp']               = 'UNIT_MAXPOWER',
-	['missinghp']           = 'UNIT_HEALTH UNIT_MAXHEALTH',
+	['missinghp']           = 'UNIT_HEALTH_FREQUENT UNIT_MAXHEALTH',
 	['missingpp']           = 'UNIT_MAXPOWER UNIT_POWER_FREQUENT',
 	['name']                = 'UNIT_NAME_UPDATE',
-	['offline']             = 'UNIT_HEALTH UNIT_CONNECTION',
-	['perhp']               = 'UNIT_HEALTH UNIT_MAXHEALTH',
+	['offline']             = 'UNIT_HEALTH_FREQUENT UNIT_CONNECTION',
+	['perhp']               = 'UNIT_HEALTH_FREQUENT UNIT_MAXHEALTH',
 	['perpp']               = 'UNIT_MAXPOWER UNIT_POWER_FREQUENT',
 	['plus']                = 'UNIT_CLASSIFICATION_CHANGED',
 	['powercolor']          = 'UNIT_DISPLAYPOWER',
 	['pvp']                 = 'UNIT_FACTION',
 	['rare']                = 'UNIT_CLASSIFICATION_CHANGED',
 	['resting']             = 'PLAYER_UPDATE_RESTING',
-	['runes']               = 'RUNE_POWER_UPDATE',
 	['shortclassification'] = 'UNIT_CLASSIFICATION_CHANGED',
 	['smartlevel']          = 'UNIT_LEVEL PLAYER_LEVEL_UP UNIT_CLASSIFICATION_CHANGED',
-	['soulshards']          = 'UNIT_POWER_FREQUENT',
-	['status']              = 'UNIT_HEALTH PLAYER_UPDATE_RESTING UNIT_CONNECTION',
+	['status']              = 'UNIT_HEALTH_FREQUENT PLAYER_UPDATE_RESTING UNIT_CONNECTION',
 	['threat']              = 'UNIT_THREAT_SITUATION_UPDATE',
 	['threatcolor']         = 'UNIT_THREAT_SITUATION_UPDATE',
 }
 
 local unitlessEvents = {
-	ARENA_PREP_OPPONENT_SPECIALIZATIONS = true,
 	GROUP_ROSTER_UPDATE = true,
-	NEUTRAL_FACTION_SELECT_RESULT = true,
 	PARTY_LEADER_CHANGED = true,
 	PLAYER_LEVEL_UP = true,
 	PLAYER_TALENT_UPDATE = true,
 	PLAYER_TARGET_CHANGED = true,
 	PLAYER_UPDATE_RESTING = true,
-	RUNE_POWER_UPDATE = true,
 }
 
 local events = {}

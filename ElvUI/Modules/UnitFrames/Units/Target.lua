@@ -1,4 +1,4 @@
-local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local E, L, V, P, G = unpack(select(2, ...)) --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local UF = E:GetModule('UnitFrames')
 
 local _, ns = ...
@@ -7,7 +7,6 @@ assert(ElvUF, 'ElvUI was unable to locate oUF.')
 
 local _G = _G
 local tinsert = tinsert
-local IsAddOnLoaded = IsAddOnLoaded
 
 function UF:Construct_TargetFrame(frame)
 	frame.Health = UF:Construct_HealthBar(frame, true, true, 'RIGHT')
@@ -31,7 +30,6 @@ function UF:Construct_TargetFrame(frame)
 	frame.TargetGlow = UF:Construct_TargetGlow(frame)
 	frame.FocusGlow = UF:Construct_FocusGlow(frame)
 	frame.AuraBars = UF:Construct_AuraBarHeader(frame)
-	frame.PhaseIndicator = UF:Construct_PhaseIcon(frame)
 	frame.ResurrectIndicator = UF:Construct_ResurrectionIcon(frame)
 	frame.RaidRoleFramesAnchor = UF:Construct_RaidRoleFrames(frame)
 	frame.PvPIndicator = UF:Construct_PvPIcon(frame)
@@ -82,7 +80,7 @@ function UF:Update_TargetFrame(frame, db)
 	frame:Size(frame.UNIT_WIDTH, frame.UNIT_HEIGHT)
 	_G[frame:GetName()..'Mover']:Size(frame:GetSize())
 
-	if not IsAddOnLoaded('Clique') then
+	if not E:IsAddOnEnabled('Clique') then
 		if db.middleClickFocus then
 			frame:SetAttribute('type3', 'focus')
 		elseif frame:GetAttribute('type3') == 'focus' then
@@ -107,7 +105,6 @@ function UF:Update_TargetFrame(frame, db)
 	UF:Configure_HealComm(frame)
 	UF:Configure_RaidIcon(frame)
 	UF:Configure_AuraBars(frame)
-	UF:Configure_PhaseIcon(frame)
 	UF:Configure_PVPIcon(frame)
 	UF:Configure_Cutaway(frame)
 	UF:Configure_CustomTexts(frame)

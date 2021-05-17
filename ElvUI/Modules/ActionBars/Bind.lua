@@ -1,4 +1,4 @@
-local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local E, L, V, P, G = unpack(select(2, ...)) --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local AB = E:GetModule('ActionBars')
 local Skins = E:GetModule('Skins')
 
@@ -6,7 +6,6 @@ local _G = _G
 local tonumber, format = tonumber, format
 local select, pairs, floor = select, pairs, floor
 local CreateFrame = CreateFrame
-local HideUIPanel = HideUIPanel
 local GameTooltip_Hide = GameTooltip_Hide
 local GetBindingKey = GetBindingKey
 local GetCurrentBindingSet = GetCurrentBindingSet
@@ -205,9 +204,7 @@ function AB:BindUpdate(button, spellmacro)
 		elseif button.action then
 			local action = tonumber(button.action)
 			local modact = 1+(action-1)%12
-			if bind.name == 'ExtraActionButton1' then
-				button.bindstring = 'EXTRAACTIONBUTTON1'
-			elseif action < 25 or action > 72 then
+			if action < 25 or action > 72 then
 				button.bindstring = 'ACTIONBUTTON'..modact
 			elseif action < 73 and action > 60 then
 				button.bindstring = 'MULTIACTIONBAR1BUTTON'..modact
@@ -243,30 +240,6 @@ function AB:ChangeBindingProfile()
 		LoadBindings(1)
 		SaveBindings(1)
 	end
-end
-
-local function keybindButtonClick()
-	if InCombatLockdown() then return end
-
-	AB:ActivateBindMode()
-
-	HideUIPanel(_G.KeyBindingFrame)
-	HideUIPanel(_G.GameMenuFrame)
-end
-
-function AB:SwapKeybindButton(event, addon)
-	if event and addon ~= 'Blizzard_BindingUI' then return end
-
-	local parent = _G.KeyBindingFrame
-	parent.quickKeybindButton:Hide()
-
-	local frame = CreateFrame('Button', 'ElvUI_KeybindButton', parent, 'OptionsButtonTemplate, BackdropTemplate')
-	frame:Width(150)
-	frame:Point('TOPLEFT', parent.quickKeybindButton)
-	frame:SetScript('OnClick', keybindButtonClick)
-	frame:SetText('ElvUI Keybind')
-
-	Skins:HandleButton(frame)
 end
 
 function AB:LoadKeyBinder()
@@ -332,7 +305,7 @@ function AB:LoadKeyBinder()
 	Popup.desc:SetJustifyH('LEFT')
 	Popup.desc:Point('TOPLEFT', 18, -32)
 	Popup.desc:Point('BOTTOMRIGHT', -18, 48)
-	Popup.desc:SetText(L["Hover your mouse over any |cFF1784d1action|r, |cFF1784d1micro|r, |cFF1784d1macro|r, or |cFF1784d1spellbook|r button to bind it. This also works for items in your |cFF1784d1bag|r. Press the |cfd9b9b9bESC|r key to |cfd9b9b9bclear|r the current bindings."])
+	Popup.desc:SetText(L["BINDINGS_HELP"])
 
 	Popup.save = CreateFrame('Button', Popup:GetName()..'SaveButton', Popup, 'OptionsButtonTemplate, BackdropTemplate')
 	Popup.save:SetText(L["Save"])

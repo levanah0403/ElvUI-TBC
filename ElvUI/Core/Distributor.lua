@@ -1,4 +1,4 @@
-local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local E, L, V, P, G = unpack(select(2, ...)) --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local D = E:GetModule('Distributor')
 local NP = E:GetModule('NamePlates')
 local LibCompress = E.Libs.Compress
@@ -260,7 +260,6 @@ local blacklistedKeys = {
 			version = true,
 			eyefinity = true,
 			ultrawide = true,
-			disableTutorialButtons = true,
 			showMissingTalentAlert = true,
 			allowDistributor = true
 		},
@@ -268,7 +267,12 @@ local blacklistedKeys = {
 			classColorMentionExcludedNames = true
 		},
 		datatexts = {
-			newPanelInfo = true
+			newPanelInfo = true,
+			settings = {
+				Currencies = {
+					tooltipData = true
+				}
+			}
 		},
 		nameplate = {
 			effectiveHealth = true,
@@ -287,8 +291,7 @@ local blacklistedKeys = {
 			effectiveAura = true,
 			effectiveHealthSpeed = true,
 			effectivePowerSpeed = true,
-			effectiveAuraSpeed = true,
-			spellRangeCheck = true
+			effectiveAuraSpeed = true
 		}
 	},
 }
@@ -316,7 +319,6 @@ D.GeneratedKeys = {
 	global = {
 		datatexts = {
 			customPanels = true,
-			customCurrencies = true
 		},
 		unitframe = {
 			aurafilters = true,

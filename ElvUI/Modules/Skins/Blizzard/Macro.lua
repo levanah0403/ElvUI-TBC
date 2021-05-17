@@ -1,4 +1,4 @@
-local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local E, L, V, P, G = unpack(select(2, ...)) --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local S = E:GetModule('Skins')
 
 local _G = _G
@@ -12,7 +12,7 @@ function S:Blizzard_MacroUI()
 
 	local MacroFrame = _G.MacroFrame
 	S:HandlePortraitFrame(MacroFrame)
-	MacroFrame:Width(360)
+	MacroFrame:Width(334)
 
 	_G.MacroFrameTextBackground:StripTextures()
 	_G.MacroFrameTextBackground:SetTemplate('Transparent')
@@ -45,7 +45,7 @@ function S:Blizzard_MacroUI()
 		local tab = _G[format('MacroFrameTab%s', i)]
 		tab:Height(22)
 	end
-	_G.MacroFrameTab1:Point('TOPLEFT', MacroFrame, 'TOPLEFT', 85, -39)
+	_G.MacroFrameTab1:Point('TOPLEFT', MacroFrame, 'TOPLEFT', 40, -40)
 	_G.MacroFrameTab2:Point('LEFT', _G.MacroFrameTab1, 'RIGHT', 4, 0)
 
 	--Reposition edit button

@@ -111,10 +111,6 @@ function E:MassGuildKick(msg)
 		local name, _, rankIndex, level, _, _, note, officerNote, connected, _, classFileName = GetGuildRosterInfo(i)
 		local minLevelx = minLevel
 
-		if classFileName == 'DEATHKNIGHT' then
-			minLevelx = minLevelx + 55
-		end
-
 		if not connected then
 			local years, months, days = GetGuildRosterLastOnline(i)
 			if days ~= nil and ((years > 0 or months > 0 or days >= minDays) and rankIndex >= minRankIndex)
@@ -164,7 +160,6 @@ end
 
 local BLIZZARD_ADDONS = {
 	'Blizzard_APIDocumentation',
-	'Blizzard_AchievementUI',
 	'Blizzard_AdventureMap',
 	'Blizzard_AlliedRacesUI',
 	'Blizzard_AnimaDiversionUI',
@@ -199,28 +194,21 @@ local BLIZZARD_ADDONS = {
 	'Blizzard_CompactRaidFrames',
 	'Blizzard_Console',
 	'Blizzard_Contribution',
-	'Blizzard_CovenantCallings',
-	'Blizzard_CovenantPreviewUI',
-	'Blizzard_CovenantRenown',
-	'Blizzard_CovenantSanctum',
-	'Blizzard_CovenantToasts',
+	'Blizzard_CraftUI',
 	'Blizzard_DeathRecap',
 	'Blizzard_DebugTools',
 	'Blizzard_Deprecated',
 	'Blizzard_EncounterJournal',
+	'Blizzard_EventTrace',
 	'Blizzard_FlightMap',
 	'Blizzard_FrameEffects',
 	'Blizzard_GMChatUI',
-	'Blizzard_GarrisonTemplates',
-	'Blizzard_GarrisonUI',
 	'Blizzard_GuildBankUI',
 	'Blizzard_GuildControlUI',
 	'Blizzard_GuildRecruitmentUI',
 	'Blizzard_GuildUI',
 	'Blizzard_HybridMinimap',
 	'Blizzard_InspectUI',
-	'Blizzard_IslandsPartyPoseUI',
-	'Blizzard_IslandsQueueUI',
 	'Blizzard_ItemInteractionUI',
 	'Blizzard_ItemSocketingUI',
 	'Blizzard_ItemUpgradeUI',
@@ -237,7 +225,6 @@ local BLIZZARD_ADDONS = {
 	'Blizzard_NewPlayerExperienceGuide',
 	'Blizzard_ObjectiveTracker',
 	'Blizzard_ObliterumUI',
-	'Blizzard_OrderHallUI',
 	'Blizzard_PTRFeedback',
 	'Blizzard_PTRFeedbackGlue',
 	'Blizzard_PVPMatch',
@@ -256,16 +243,13 @@ local BLIZZARD_ADDONS = {
 	'Blizzard_StoreUI',
 	'Blizzard_SubscriptionInterstitialUI',
 	'Blizzard_TalentUI',
-	'Blizzard_TalkingHeadUI',
 	'Blizzard_TimeManager',
 	'Blizzard_TokenUI',
-	'Blizzard_TorghastLevelPicker',
 	'Blizzard_TradeSkillUI',
 	'Blizzard_TrainerUI',
 	'Blizzard_Tutorial',
 	'Blizzard_TutorialTemplates',
 	'Blizzard_UIWidgets',
-	'Blizzard_VoidStorageUI',
 	'Blizzard_WarfrontsPartyPoseUI',
 	'Blizzard_WeeklyRewards',
 	'Blizzard_WorldMap',

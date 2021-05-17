@@ -1,9 +1,6 @@
 -- French localization file for frFR.
-local E = unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local E = unpack(select(2, ...)) --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local L = E.Libs.ACL:NewLocale("ElvUI", "frFR")
-
-local COLOR1 = '|cFF1784d1'
-local COLOR2 = '|cfd9b9b9b'
 
 L["BoP"] = true
 L["BoE"] = true
@@ -158,7 +155,7 @@ L["Honor Bar"] = "Barre d'honneur"
 L["Honor Remaining:"] = "Honneur restant :"
 L["Honor XP:"] = "Niveau d'honneur :"
 L["Horde: "] = true
-L["Hover your mouse over any |cFF1784d1action|r, |cFF1784d1micro|r, |cFF1784d1macro|r, or |cFF1784d1spellbook|r button to bind it. This also works for items in your |cFF1784d1bag|r. Press the |cfd9b9b9bESC|r key to |cfd9b9b9bclear|r the current bindings."] = true
+L["BINDINGS_HELP"] = ("Hover your mouse over any *action|r, *micro|r, *macro|r, or *spellbook|r button to bind it. This also works for items in your *bag|r. Press the ^ESC|r key to ^clear|r the current bindings."):gsub('*', E.InfoColor):gsub('%^', E.InfoColor2)
 L["HP"] = "PV"
 L["HPS"] = "HPS"
 L["I Swear"] = "Je le jure"
@@ -203,8 +200,8 @@ L["Legs"] = "Jambes"
 L["Level Up Display / Boss Banner"] = "Affichage du gain de niveau / de la bannière du boss"
 L["List of installations in queue:"] = "Liste des installations en file d'attente"
 L["Lock"] = "Verrouiller"
-L["LOGIN_MSG_HELP"] = ("Please use */ehelp|r for a list of available *ElvUI|r commands."):gsub('*', COLOR1)
-L["LOGIN_MSG"] = ("Welcome to *ElvUI|r version *%s|r, type */ec|r to access the in-game configuration menu. If you are in need of technical support you can visit us at https://www.tukui.org or join our Discord: https://discord.gg/xFWcfgE"):gsub('*', COLOR1)
+L["LOGIN_MSG_HELP"] = ("Please use */ehelp|r for a list of available *ElvUI|r commands."):gsub('*', E.InfoColor)
+L["LOGIN_MSG"] = ("Welcome to *ElvUI TBC|r version *%s|r, type */ec|r to access the in-game configuration menu. If you are in need of technical support you can visit us at https://www.tukui.org or join our Discord: https://discord.gg/xFWcfgE"):gsub('*', E.InfoColor)
 L["Loot / Alert Frames"] = "Cadres de butin / Alerte"
 L["Loot Frame"] = "Cadre de butin"
 L["Lord! It's a miracle! The download up and vanished like a fart in the wind! Try Again!"] = "Seigneur ! C'est un miracle ! Le téléchargement s'est envolé et a disparu comme un pet dans le vent ! Essayez encore !"
@@ -287,7 +284,7 @@ L["Save"] = "Sauvegarder"
 L["Saved Dungeon(s)"] = "Donjon(s) sauvegardé(s)"
 L["Saved Raid(s)"] = "Raid(s) sauvegardé(s)"
 L["says"] = "dit"
-L["Select the type of aura system you want to use with ElvUI's unitframes. Set to Aura Bar & Icons to use both aura bars and icons, set to icons only to only see icons."] = true
+L["Select the type of aura system you want to use with ElvUI's unitframes. Set to Aura Bars to use both aura bars and icons, set to Icons Only to only see icons."] = true
 L["Server: "] = "Serveur : "
 L["Session:"] = "Session :"
 L["Setup Chat"] = "Configurer le chat"
@@ -349,7 +346,7 @@ L["Vendor Grays"] = "Vendre les objets gris"
 L["Vendoring Grays"] = true
 L["Voice Overlay"] = "Voix en superposition"
 L["Waist"] = "Ceinture"
-L["Welcome to ElvUI version %.2f!"] = "Bienvenue sur la version %.2f d'ElvUI!"
+L["Welcome to ElvUI TBC version %.2f!"] = "Bienvenue sur la version %.2f d'ElvUI TBC!"
 L["whispers"] = "chuchote"
 L["World Latency:"] = true
 L["World Protocol:"] = true
@@ -398,4 +395,4 @@ L["EHELP_COMMANDS"] = ([=[Here is a list of all important *ElvUI|r commands:
  */luaerror|r ^on|r or ^off|r  -  Disable all AddOns except ElvUI.
   NOTE: */luaerror|r ^off|r will re-enable the addons disabled from
   using */luaerror|r ^on|r within that session.
-]=]):gsub('*', COLOR1):gsub('%^', COLOR2)
+]=]):gsub('*', E.InfoColor):gsub('%^', E.InfoColor2)

@@ -1,4 +1,4 @@
-local E, _, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local E, _, V, P, G = unpack(ElvUI) --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local C, L = unpack(select(2, ...))
 local ACH = E.Libs.ACH
 
@@ -12,11 +12,11 @@ E.Options.args.tagGroup.args.WikiLink = ACH:Input(L["Wiki:"], nil, 2, nil, nil, 
 E.Options.args.tagGroup.args.WikiLink.customWidth = 290
 E.Options.args.tagGroup.args.ColorWheel = ACH:Execute(L["Color Picker"], nil, 3, function() _G.ColorPickerFrame:Show() _G.ColorPickerFrame:SetFrameStrata('FULLSCREEN_DIALOG') _G.ColorPickerFrame:SetClampedToScreen(true) _G.ColorPickerFrame:Raise() end)
 E.Options.args.tagGroup.args.ColorWheel.customWidth = 120
-E.Options.args.tagGroup.args.description = ACH:Description('This is for information. This will not change the tags in the UI.', 4, 'large')
+E.Options.args.tagGroup.args.description = ACH:Description('|cffFF0000This is for information. This will not change the tags in the UI.|r', 4, 'large')
 E.Options.args.tagGroup.args.spacer = ACH:Spacer(5)
 
 E.Options.args.tagGroup.args.Colors = ACH:Group(L["Colors"])
-E.Options.args.tagGroup.args.Colors.args.customTagColorInfo  = ACH:Input('Custom color your Text: replace the XXXXXX with a Hex color code', nil, 1, nil, 'full', function() return '||cffXXXXXX [tags] or text here ||r' end)
+E.Options.args.tagGroup.args.Colors.args.customTagColorInfo = ACH:Input('Custom color your Text: replace the XXXXXX with a Hex color code', nil, 1, nil, 'full', function() return '||cffXXXXXX [tags] or text here ||r' end)
 E.Options.args.tagGroup.args.Names = ACH:Group(L["Names"])
 E.Options.args.tagGroup.args.Names.args.nameHealthInfo1 = ACH:Input('|cFF666666[1/5]|r White name text, missing hp red', nil, 1, nil, 'full', function() return '[name:health]' end)
 E.Options.args.tagGroup.args.Names.args.nameHealthInfo2 = ACH:Input('|cFF666666[2/5]|r Class color name text, missing hp red', nil, 2, nil, 'full', function() return '[name:health{class}]' end)

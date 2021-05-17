@@ -1,11 +1,10 @@
-local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local E, L, V, P, G = unpack(select(2, ...)) --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local S = E:GetModule('Skins')
 
 local _G = _G
 local ipairs, pairs, select, unpack = ipairs, pairs, select, unpack
 
 local C_CreatureInfo_GetClassInfo = C_CreatureInfo.GetClassInfo
-local C_GuildInfo_GetGuildNewsInfo = C_GuildInfo.GetGuildNewsInfo
 local CLASS_ICON_TCOORDS = CLASS_ICON_TCOORDS
 local BATTLENET_FONT_COLOR = BATTLENET_FONT_COLOR
 local FRIENDS_BNET_BACKGROUND_COLOR = FRIENDS_BNET_BACKGROUND_COLOR
@@ -14,9 +13,6 @@ local GetClassInfo = GetClassInfo
 local GREEN_FONT_COLOR = GREEN_FONT_COLOR
 local CreateFrame = CreateFrame
 local hooksecurefunc = hooksecurefunc
-local GetGuildRewardInfo = GetGuildRewardInfo
-local GetItemQualityColor = GetItemQualityColor
-local GetItemInfo = GetItemInfo
 local Enum = Enum
 
 local function UpdateNames(self)
@@ -99,7 +95,6 @@ function S:Blizzard_Communities()
 
 	local CommunitiesFrame = _G.CommunitiesFrame
 	CommunitiesFrame:StripTextures()
-	CommunitiesFrame.NineSlice:Hide()
 	_G.CommunitiesFrameInset.Bg:Hide()
 	CommunitiesFrame.CommunitiesList.InsetFrame:StripTextures()
 
@@ -127,10 +122,6 @@ function S:Blizzard_Communities()
 				s.IconBorder:SetOutside(s.Icon)
 				s.IconBorder:Hide()
 			end
-
-			s.GuildTabardBackground:Point('TOPLEFT', 6, -17)
-			s.GuildTabardEmblem:Point('TOPLEFT', 13, -17)
-			s.GuildTabardBorder:Point('TOPLEFT', 6, -17)
 
 			if not s.bg then
 				s.bg = CreateFrame('Frame', nil, s)
@@ -171,14 +162,10 @@ function S:Blizzard_Communities()
 
 	-- Add Community Button
 	hooksecurefunc(_G.CommunitiesListEntryMixin, 'SetAddCommunity', function(s) HandleCommunitiesButtons(s, 1) end)
-	hooksecurefunc(_G.CommunitiesListEntryMixin, 'SetFindCommunity', function(s) HandleCommunitiesButtons(s, 2) end)
-	hooksecurefunc(_G.CommunitiesListEntryMixin, 'SetGuildFinder', function(s) HandleCommunitiesButtons(s, 1) end)
 
 	S:HandleItemButton(CommunitiesFrame.ChatTab)
 	CommunitiesFrame.ChatTab:Point('TOPLEFT', '$parent', 'TOPRIGHT', E.PixelMode and 0 or E.Border + E.Spacing, -36)
 	S:HandleItemButton(CommunitiesFrame.RosterTab)
-	S:HandleItemButton(CommunitiesFrame.GuildBenefitsTab)
-	S:HandleItemButton(CommunitiesFrame.GuildInfoTab)
 
 	S:HandleInsetFrame(CommunitiesFrame.CommunitiesList)
 	S:HandleMaxMinFrame(CommunitiesFrame.MaximizeMinimizeFrame)
@@ -205,123 +192,12 @@ function S:Blizzard_Communities()
 	-- Chat Tab
 	CommunitiesFrame.MemberList:StripTextures()
 	CommunitiesFrame.MemberList.InsetFrame:Hide()
-	CommunitiesFrame.MemberList.WatermarkFrame:Hide()
 
 	CommunitiesFrame.Chat:StripTextures()
 	CommunitiesFrame.Chat.InsetFrame:CreateBackdrop('Transparent')
 
 	S:HandleEditBox(CommunitiesFrame.ChatEditBox)
 	CommunitiesFrame.ChatEditBox:Size(120, 20)
-
-	-- [[ GUILDFINDER FRAME ]]--
-	local ClubFinderGuildFinderFrame = _G.ClubFinderGuildFinderFrame
-	ClubFinderGuildFinderFrame:StripTextures()
-
-	S:HandleDropDownBox(_G.ClubFinderLanguageDropdown)
-	S:HandleNextPrevButton(ClubFinderGuildFinderFrame.GuildCards.PreviousPage)
-	S:HandleNextPrevButton(ClubFinderGuildFinderFrame.GuildCards.NextPage)
-
-	-->> Monitor this
-	for _, card in pairs(ClubFinderGuildFinderFrame.GuildCards.Cards, ClubFinderGuildFinderFrame.PendingGuildCards.Cards) do
-		if not card.isSkinned then
-			card.CardBackground:Hide()
-			card:CreateBackdrop()
-			card.GuildBannerEmblemLogo:SetDrawLayer('OVERLAY')
-			S:HandleButton(card.RequestJoin)
-			card.isSkinned = true
-		end
-	end
-
-	S:HandleDropDownBox(ClubFinderGuildFinderFrame.OptionsList.ClubFilterDropdown)
-	S:HandleDropDownBox(ClubFinderGuildFinderFrame.OptionsList.ClubSizeDropdown)
-
-	ClubFinderGuildFinderFrame.OptionsList.SearchBox:Size(118, 20)
-	ClubFinderGuildFinderFrame.OptionsList.Search:Size(118, 20)
-	ClubFinderGuildFinderFrame.OptionsList.Search:ClearAllPoints()
-	ClubFinderGuildFinderFrame.OptionsList.Search:Point('TOP', ClubFinderGuildFinderFrame.OptionsList.SearchBox, 'BOTTOM', 1, -3)
-	S:HandleEditBox(ClubFinderGuildFinderFrame.OptionsList.SearchBox)
-	S:HandleButton(ClubFinderGuildFinderFrame.OptionsList.Search)
-
-	HandleRoleChecks(ClubFinderGuildFinderFrame.OptionsList.TankRoleFrame, _G.LFDQueueFrameRoleButtonTank.background:GetTexCoord())
-	HandleRoleChecks(ClubFinderGuildFinderFrame.OptionsList.HealerRoleFrame, _G.LFDQueueFrameRoleButtonHealer.background:GetTexCoord())
-	HandleRoleChecks(ClubFinderGuildFinderFrame.OptionsList.DpsRoleFrame, _G.LFDQueueFrameRoleButtonDPS.background:GetTexCoord())
-
-	S:HandleItemButton(ClubFinderGuildFinderFrame.ClubFinderSearchTab)
-	S:HandleItemButton(ClubFinderGuildFinderFrame.ClubFinderPendingTab)
-
-	-- [[ClubFinderCommunityAndGuildFinderFrame ]]--
-	local ClubFinderCommunityAndGuildFinderFrame = _G.ClubFinderCommunityAndGuildFinderFrame
-	ClubFinderCommunityAndGuildFinderFrame:StripTextures()
-
-	-->> Monitor this
-	for _, button in pairs(ClubFinderCommunityAndGuildFinderFrame.CommunityCards.ListScrollFrame.buttons, ClubFinderCommunityAndGuildFinderFrame.PendingCommunityCards.ListScrollFrame.buttons) do
-		if not button.isSkinned then
-			button.CircleMask:Hide()
-			button.LogoBorder:Hide()
-			S:HandleIcon(button.CommunityLogo)
-			S:HandleButton(button)
-
-			button.isSkinned = true
-		end
-	end
-
-	S:HandleDropDownBox(ClubFinderCommunityAndGuildFinderFrame.OptionsList.ClubFilterDropdown)
-	S:HandleDropDownBox(ClubFinderCommunityAndGuildFinderFrame.OptionsList.SortByDropdown)
-
-	S:HandleButton(ClubFinderCommunityAndGuildFinderFrame.OptionsList.Search)
-	ClubFinderCommunityAndGuildFinderFrame.OptionsList.Search:ClearAllPoints()
-	ClubFinderCommunityAndGuildFinderFrame.OptionsList.Search:Point('TOP', ClubFinderCommunityAndGuildFinderFrame.OptionsList.SearchBox, 'BOTTOM', 1, -3)
-	ClubFinderCommunityAndGuildFinderFrame.OptionsList.Search:Size(118, 20)
-	ClubFinderCommunityAndGuildFinderFrame.OptionsList.SearchBox:Size(118, 20)
-	S:HandleEditBox(ClubFinderCommunityAndGuildFinderFrame.OptionsList.SearchBox)
-
-	HandleRoleChecks(ClubFinderCommunityAndGuildFinderFrame.OptionsList.TankRoleFrame, _G.LFDQueueFrameRoleButtonTank.background:GetTexCoord())
-	HandleRoleChecks(ClubFinderCommunityAndGuildFinderFrame.OptionsList.HealerRoleFrame, _G.LFDQueueFrameRoleButtonHealer.background:GetTexCoord())
-	HandleRoleChecks(ClubFinderCommunityAndGuildFinderFrame.OptionsList.DpsRoleFrame, _G.LFDQueueFrameRoleButtonDPS.background:GetTexCoord())
-
-	S:HandleScrollBar(ClubFinderCommunityAndGuildFinderFrame.CommunityCards.ListScrollFrame.scrollBar)
-	S:HandleScrollBar(ClubFinderCommunityAndGuildFinderFrame.PendingCommunityCards.ListScrollFrame.scrollBar)
-
-	S:HandleItemButton(ClubFinderCommunityAndGuildFinderFrame.ClubFinderSearchTab)
-	S:HandleItemButton(ClubFinderCommunityAndGuildFinderFrame.ClubFinderPendingTab)
-
-	for _, t in ipairs({ClubFinderGuildFinderFrame.RequestToJoinFrame, ClubFinderCommunityAndGuildFinderFrame.RequestToJoinFrame}) do
-		t:StripTextures()
-		t:CreateBackdrop('Transparent')
-
-		hooksecurefunc(t, 'Initialize', function(s)
-			for button in s.SpecsPool:EnumerateActive() do
-				if button.CheckBox then
-					S:HandleCheckBox(button.CheckBox)
-					button.CheckBox:Size(26, 26)
-				end
-			end
-		end)
-
-		t.MessageFrame:StripTextures(true)
-		t.MessageFrame.MessageScroll:StripTextures(true)
-
-		S:HandleEditBox(t.MessageFrame.MessageScroll)
-		S:HandleScrollBar(_G.ClubFinderGuildFinderFrameScrollBar)
-		S:HandleButton(t.Apply)
-		S:HandleButton(t.Cancel)
-	end
-
-	-- Member Details
-	CommunitiesFrame.GuildMemberDetailFrame:StripTextures()
-	CommunitiesFrame.GuildMemberDetailFrame:CreateBackdrop('Transparent')
-
-	CommunitiesFrame.GuildMemberDetailFrame.NoteBackground:SetTemplate('Transparent')
-	CommunitiesFrame.GuildMemberDetailFrame.OfficerNoteBackground:SetTemplate('Transparent')
-	S:HandleCloseButton(CommunitiesFrame.GuildMemberDetailFrame.CloseButton)
-	S:HandleButton(CommunitiesFrame.GuildMemberDetailFrame.RemoveButton)
-	S:HandleButton(CommunitiesFrame.GuildMemberDetailFrame.GroupInviteButton)
-
-	local DropDown = CommunitiesFrame.GuildMemberDetailFrame.RankDropdown
-	S:HandleDropDownBox(DropDown, 160)
-	DropDown.backdrop:Point('TOPLEFT', 0, -6)
-	DropDown.backdrop:Point('BOTTOMRIGHT', -12, 6)
-	DropDown:Point('LEFT', CommunitiesFrame.GuildMemberDetailFrame.RankLabel, 'RIGHT', 2, 0)
 
 	-- [[ ROSTER TAB ]]
 	local MemberList = CommunitiesFrame.MemberList
@@ -333,9 +209,6 @@ function S:Blizzard_Communities()
 	ColumnDisplay.InsetBorderTop:Hide()
 
 	S:HandleInsetFrame(CommunitiesFrame.MemberList.InsetFrame)
-	S:HandleDropDownBox(CommunitiesFrame.GuildMemberListDropDownMenu)
-	S:HandleButton(CommunitiesFrame.CommunitiesControlFrame.GuildControlButton)
-	S:HandleButton(CommunitiesFrame.CommunitiesControlFrame.GuildRecruitmentButton)
 	S:HandleButton(CommunitiesFrame.CommunitiesControlFrame.CommunitiesSettingsButton)
 	CommunitiesFrame.CommunitiesControlFrame.CommunitiesSettingsButton:Size(129, 19)
 	S:HandleCheckBox(CommunitiesFrame.MemberList.ShowOfflineButton)
@@ -368,266 +241,6 @@ function S:Blizzard_Communities()
 		end
 	end)
 
-	-- [[ PERKS TAB ]]
-	local GuildBenefitsFrame = CommunitiesFrame.GuildBenefitsFrame
-	GuildBenefitsFrame.InsetBorderLeft:Hide()
-	GuildBenefitsFrame.InsetBorderRight:Hide()
-	GuildBenefitsFrame.InsetBorderBottomRight:Hide()
-	GuildBenefitsFrame.InsetBorderBottomLeft:Hide()
-	GuildBenefitsFrame.InsetBorderTopRight:Hide()
-	GuildBenefitsFrame.InsetBorderTopLeft:Hide()
-	GuildBenefitsFrame.InsetBorderLeft2:Hide()
-	GuildBenefitsFrame.InsetBorderBottomLeft2:Hide()
-	GuildBenefitsFrame.InsetBorderTopLeft2:Hide()
-
-	GuildBenefitsFrame.Perks:StripTextures()
-	GuildBenefitsFrame.Perks.TitleText:FontTemplate(nil, 14)
-
-	for i = 1, 5 do
-		local button = _G['CommunitiesFrameContainerButton'..i]
-		button:DisableDrawLayer('BACKGROUND')
-		button:DisableDrawLayer('BORDER')
-		button:CreateBackdrop()
-
-		button.Icon:SetTexCoord(unpack(E.TexCoords))
-	end
-
-	GuildBenefitsFrame.Rewards.TitleText:FontTemplate(nil, 14)
-
-	GuildBenefitsFrame.Rewards.Bg:Hide()
-
-	S:HandleScrollBar(_G.CommunitiesFrameRewards.scrollBar)
-
-	for _, button in pairs(CommunitiesFrame.GuildBenefitsFrame.Rewards.RewardsContainer.buttons) do
-		if not button.backdrop then
-			button:CreateBackdrop()
-		end
-
-		button:SetNormalTexture('')
-		button:SetHighlightTexture('')
-
-		if not button.hover then
-			local hover = button:CreateTexture()
-			hover:SetColorTexture(1, 1, 1, 0.3)
-			hover:SetInside(button.backdrop)
-			button:SetHighlightTexture(hover)
-			button.hover = hover
-		end
-
-		if button.Icon then
-			button.Icon:SetTexCoord(unpack(E.TexCoords))
-
-			if not button.Icon.backdrop then
-				button.Icon:CreateBackdrop(nil, nil, nil, nil, nil, nil, nil, true)
-
-				if button.Icon.backdrop then
-					button.Icon.backdrop:SetOutside(button.Icon, 1, 1)
-				end
-			end
-		end
-	end
-
-	hooksecurefunc('CommunitiesGuildRewards_Update', function()
-		for _, button in pairs(CommunitiesFrame.GuildBenefitsFrame.Rewards.RewardsContainer.buttons) do
-			if button.index then
-				local _, itemID = GetGuildRewardInfo(button.index)
-				if itemID then
-					local _, _, quality = GetItemInfo(itemID)
-					if quality and quality > 1 then
-						button.Icon.backdrop:SetBackdropBorderColor(GetItemQualityColor(quality))
-					end
-				end
-			end
-		end
-	end)
-
-	-- Guild Reputation Bar TO DO: Adjust me!
-	local StatusBar = CommunitiesFrame.GuildBenefitsFrame.FactionFrame.Bar
-	StatusBar.Middle:Hide()
-	StatusBar.Right:Hide()
-	StatusBar.Left:Hide()
-	StatusBar.BG:Hide()
-	StatusBar.Shadow:Hide()
-	StatusBar.Progress:SetTexture(E.media.normTex)
-	StatusBar.Progress:SetAllPoints()
-	E:RegisterStatusBar(StatusBar)
-
-	local bg = CreateFrame('Frame', nil, StatusBar)
-	bg:Point('TOPLEFT', 0, -3)
-	bg:Point('BOTTOMRIGHT', 0, 1)
-	bg:SetFrameLevel(StatusBar:GetFrameLevel())
-	bg:CreateBackdrop()
-
-	-- [[ INFO TAB ]]
-	local GuildDetails = _G.CommunitiesFrameGuildDetailsFrame
-	GuildDetails.InsetBorderLeft:Hide()
-	GuildDetails.InsetBorderRight:Hide()
-	GuildDetails.InsetBorderBottomRight:Hide()
-	GuildDetails.InsetBorderBottomLeft:Hide()
-	GuildDetails.InsetBorderTopRight:Hide()
-	GuildDetails.InsetBorderTopLeft:Hide()
-	GuildDetails.InsetBorderLeft2:Hide()
-	GuildDetails.InsetBorderBottomLeft2:Hide()
-	GuildDetails.InsetBorderTopLeft2:Hide()
-
-	local striptextures = {
-		'CommunitiesFrameGuildDetailsFrameInfo',
-		'CommunitiesFrameGuildDetailsFrameNews',
-		'CommunitiesGuildNewsFiltersFrame',
-	}
-
-	for _, frame in pairs(striptextures) do
-		_G[frame]:StripTextures()
-	end
-
-	S:HandleScrollBar(_G.CommunitiesFrameGuildDetailsFrameInfoMOTDScrollFrameScrollBar)
-
-	hooksecurefunc('GuildNewsButton_SetNews', function(button, news_id)
-		local newsInfo = C_GuildInfo_GetGuildNewsInfo(news_id)
-		if newsInfo then
-			if button.header:IsShown() then
-				button.header:SetAlpha(0)
-			end
-		end
-	end)
-
-	-- Guild Challenges Background
-	local GuildDetailsFrameInfo = _G.CommunitiesFrameGuildDetailsFrameInfo
-	local backdrop1 = CreateFrame('Frame', nil, GuildDetailsFrameInfo, 'BackdropTemplate')
-	backdrop1:SetTemplate('Transparent')
-	backdrop1:SetFrameLevel(GuildDetailsFrameInfo:GetFrameLevel() - 1)
-	backdrop1:Point('TOPLEFT', GuildDetailsFrameInfo, 'TOPLEFT', 14, -22)
-	backdrop1:Point('BOTTOMRIGHT', GuildDetailsFrameInfo, 'BOTTOMRIGHT', 0, 200)
-
-	-- Guild MOTD Background
-	local backdrop2 = CreateFrame('Frame', nil, GuildDetailsFrameInfo, 'BackdropTemplate')
-	backdrop2:SetTemplate('Transparent')
-	backdrop2:SetFrameLevel(GuildDetailsFrameInfo:GetFrameLevel() - 1)
-	backdrop2:Point('TOPLEFT', GuildDetailsFrameInfo, 'TOPLEFT', 14, -158)
-	backdrop2:Point('BOTTOMRIGHT', GuildDetailsFrameInfo, 'BOTTOMRIGHT', 0, 118)
-
-	-- Guild Information Background
-	local backdrop3 = CreateFrame('Frame', nil, GuildDetailsFrameInfo, 'BackdropTemplate')
-	backdrop3:SetTemplate('Transparent')
-	backdrop3:SetFrameLevel(GuildDetailsFrameInfo:GetFrameLevel() - 1)
-	backdrop3:Point('TOPLEFT', GuildDetailsFrameInfo, 'TOPLEFT', 14, -236)
-	backdrop3:Point('BOTTOMRIGHT', GuildDetailsFrameInfo, 'BOTTOMRIGHT', -7, 1)
-
-	-- Guild News Background
-	local backdrop4 = CreateFrame('Frame', nil, GuildDetailsFrameInfo, 'BackdropTemplate')
-	backdrop4:SetTemplate('Transparent')
-	backdrop4:SetFrameLevel(GuildDetailsFrameInfo:GetFrameLevel() - 1)
-	backdrop4:Point('TOPLEFT', GuildDetailsFrameInfo, 'TOPLEFT', 591, -22)
-	backdrop4:Point('BOTTOMRIGHT', GuildDetailsFrameInfo, 'BOTTOMRIGHT', 18, 1)
-
-	_G.CommunitiesFrameGuildDetailsFrameInfo.TitleText:FontTemplate(nil, 14)
-	_G.CommunitiesFrameGuildDetailsFrameNews.TitleText:FontTemplate(nil, 14)
-
-	S:HandleScrollBar(_G.CommunitiesFrameGuildDetailsFrameInfoScrollBar)
-	S:HandleScrollBar(_G.CommunitiesFrameGuildDetailsFrameNewsContainer.ScrollBar)
-	S:HandleButton(CommunitiesFrame.GuildLogButton)
-
-	local BossModel = _G.CommunitiesFrameGuildDetailsFrameNews.BossModel
-	BossModel:StripTextures()
-	BossModel.TextFrame:StripTextures()
-	BossModel:CreateBackdrop('Transparent')
-	BossModel.TextFrame:CreateBackdrop('Transparent')
-
-	-- Filters Frame
-	local FiltersFrame = _G.CommunitiesGuildNewsFiltersFrame
-	FiltersFrame:CreateBackdrop('Transparent')
-	S:HandleCheckBox(FiltersFrame.GuildAchievement)
-	S:HandleCheckBox(FiltersFrame.Achievement)
-	S:HandleCheckBox(FiltersFrame.DungeonEncounter)
-	S:HandleCheckBox(FiltersFrame.EpicItemLooted)
-	S:HandleCheckBox(FiltersFrame.EpicItemCrafted)
-	S:HandleCheckBox(FiltersFrame.EpicItemPurchased)
-	S:HandleCheckBox(FiltersFrame.LegendaryItemLooted)
-	S:HandleCloseButton(FiltersFrame.CloseButton)
-
-	-- Guild Message EditBox
-	local EditFrame = _G.CommunitiesGuildTextEditFrame
-	EditFrame:StripTextures()
-	EditFrame:CreateBackdrop('Transparent')
-	EditFrame.Container:CreateBackdrop('Transparent')
-	S:HandleScrollBar(_G.CommunitiesGuildTextEditFrameScrollBar)
-	S:HandleButton(_G.CommunitiesGuildTextEditFrameAcceptButton)
-
-	local closeButton = select(4, _G.CommunitiesGuildTextEditFrame:GetChildren())
-	S:HandleButton(closeButton)
-	S:HandleCloseButton(_G.CommunitiesGuildTextEditFrameCloseButton)
-
-	-- Guild Log
-	local GuildLogFrame = _G.CommunitiesGuildLogFrame
-	GuildLogFrame:StripTextures()
-	GuildLogFrame.Container:StripTextures()
-	GuildLogFrame:CreateBackdrop('Transparent')
-
-	S:HandleScrollBar(_G.CommunitiesGuildLogFrameScrollBar, 4)
-	S:HandleCloseButton(_G.CommunitiesGuildLogFrameCloseButton)
-	closeButton = select(3, _G.CommunitiesGuildLogFrame:GetChildren()) -- swap local variable
-	S:HandleButton(closeButton)
-
-	-- Recruitment Info
-	local RecruitmentFrame = _G.CommunitiesGuildRecruitmentFrame
-	RecruitmentFrame:StripTextures()
-	RecruitmentFrame:CreateBackdrop('Transparent')
-	_G.CommunitiesGuildRecruitmentFrameInset:StripTextures(false)
-
-	-- Recruitment Dialog
-	local RecruitmentDialog = _G.CommunitiesFrame.RecruitmentDialog
-	RecruitmentDialog:StripTextures()
-	RecruitmentDialog:CreateBackdrop('Transparent')
-	S:HandleCheckBox(RecruitmentDialog.ShouldListClub.Button)
-	S:HandleDropDownBox(RecruitmentDialog.ClubFocusDropdown, 220)
-	S:HandleDropDownBox(RecruitmentDialog.LookingForDropdown, 220)
-	S:HandleDropDownBox(RecruitmentDialog.LanguageDropdown, 190)
-	RecruitmentDialog.RecruitmentMessageFrame:StripTextures()
-	S:HandleEditBox(RecruitmentDialog.RecruitmentMessageFrame.RecruitmentMessageInput)
-	S:HandleCheckBox(RecruitmentDialog.MaxLevelOnly.Button)
-	S:HandleCheckBox(RecruitmentDialog.MinIlvlOnly.Button)
-	S:HandleEditBox(RecruitmentDialog.MinIlvlOnly.EditBox)
-	S:HandleButton(RecruitmentDialog.Accept)
-	S:HandleButton(RecruitmentDialog.Cancel)
-	S:HandleScrollBar(RecruitmentDialog.RecruitmentMessageFrame.RecruitmentMessageInput.ScrollBar)
-
-	-- CheckBoxes
-	local CommunitiesGuildRecruitmentFrameRecruitment = _G.CommunitiesGuildRecruitmentFrameRecruitment
-	S:HandleCheckBox(CommunitiesGuildRecruitmentFrameRecruitment.InterestFrame.QuestButton)
-	S:HandleCheckBox(CommunitiesGuildRecruitmentFrameRecruitment.InterestFrame.DungeonButton)
-	S:HandleCheckBox(CommunitiesGuildRecruitmentFrameRecruitment.InterestFrame.RaidButton)
-	S:HandleCheckBox(CommunitiesGuildRecruitmentFrameRecruitment.InterestFrame.PvPButton)
-	S:HandleCheckBox(CommunitiesGuildRecruitmentFrameRecruitment.InterestFrame.RPButton)
-
-	S:HandleCheckBox(CommunitiesGuildRecruitmentFrameRecruitment.AvailabilityFrame.WeekdaysButton)
-	S:HandleCheckBox(CommunitiesGuildRecruitmentFrameRecruitment.AvailabilityFrame.WeekendsButton)
-
-	S:HandleCheckBox(CommunitiesGuildRecruitmentFrameRecruitment.RolesFrame.TankButton.checkButton)
-	S:HandleCheckBox(CommunitiesGuildRecruitmentFrameRecruitment.RolesFrame.HealerButton.checkButton)
-	S:HandleCheckBox(CommunitiesGuildRecruitmentFrameRecruitment.RolesFrame.DamagerButton.checkButton)
-
-	S:HandleCloseButton(_G.CommunitiesGuildRecruitmentFrameCloseButton)
-
-	S:HandleButton(CommunitiesGuildRecruitmentFrameRecruitment.ListGuildButton)
-
-	-- Tabs
-	for i = 1, 2 do
-		S:HandleTab(_G['CommunitiesGuildRecruitmentFrameTab'..i])
-	end
-
-	CommunitiesGuildRecruitmentFrameRecruitment.CommentFrame.CommentInputFrame:StripTextures()
-	S:HandleEditBox(CommunitiesGuildRecruitmentFrameRecruitment.CommentFrame.CommentInputFrame)
-
-	-- Recruitment Request
-	local CommunitiesGuildRecruitmentFrameApplicants = _G.CommunitiesGuildRecruitmentFrameApplicants
-	S:HandleButton(CommunitiesGuildRecruitmentFrameApplicants.InviteButton)
-	S:HandleButton(CommunitiesGuildRecruitmentFrameApplicants.MessageButton)
-	S:HandleButton(CommunitiesGuildRecruitmentFrameApplicants.DeclineButton)
-
-	for i = 1, 5 do
-		_G['CommunitiesGuildRecruitmentFrameApplicantsContainerButton'..i]:SetBackdrop()
-	end
-
 	-- Notification Settings Dialog
 	local NotificationSettings = _G.CommunitiesFrame.NotificationSettingsDialog
 	NotificationSettings:StripTextures()
@@ -656,7 +269,6 @@ function S:Blizzard_Communities()
 
 	-- Communities Settings
 	local Settings = _G.CommunitiesSettingsDialog
-	Settings.BG:Hide()
 	Settings:CreateBackdrop('Transparent', nil, nil, nil, nil, nil, true)
 	S:HandleIcon(Settings.IconPreview)
 	Settings.IconPreviewRing:Hide()
@@ -705,76 +317,12 @@ function S:Blizzard_Communities()
 	S:HandleScrollBar(TicketManager.InviteManager.ListScrollFrame.scrollBar)
 	S:HandleButton(TicketManager.MaximizeButton)
 
-	-- InvitationsFrames
-	local ClubFinderInvitationFrame = CommunitiesFrame.ClubFinderInvitationFrame
-	ClubFinderInvitationFrame.InsetFrame:StripTextures()
-	ClubFinderInvitationFrame:CreateBackdrop()
-	S:HandleButton(ClubFinderInvitationFrame.AcceptButton, nil, nil, nil, nil, nil, nil, nil, true)
-	S:HandleButton(ClubFinderInvitationFrame.DeclineButton, nil, nil, nil, nil, nil, nil, nil, true)
-	S:HandleButton(ClubFinderInvitationFrame.ApplyButton, nil, nil, nil, nil, nil, nil, nil, true)
-
-	ClubFinderInvitationFrame.WarningDialog:StripTextures()
-	ClubFinderInvitationFrame.WarningDialog:CreateBackdrop('Transparent')
-	S:HandleButton(ClubFinderInvitationFrame.WarningDialog.Accept)
-	S:HandleButton(ClubFinderInvitationFrame.WarningDialog.Cancel)
-
-	local InvitationFrame = CommunitiesFrame.InvitationFrame
-	InvitationFrame.InsetFrame:StripTextures()
-	InvitationFrame:CreateBackdrop()
-	S:HandleButton(InvitationFrame.AcceptButton)
-	S:HandleButton(InvitationFrame.DeclineButton)
-
-	-- ApplicationList
-	local ApplicantList = CommunitiesFrame.ApplicantList
-	ApplicantList:StripTextures()
-	ApplicantList.ColumnDisplay:StripTextures()
-	S:HandleScrollBar(ApplicantList.ListScrollFrame.scrollBar)
-
-	ApplicantList:CreateBackdrop()
-	ApplicantList.backdrop:Point('TOPLEFT', 0, 0)
-	ApplicantList.backdrop:Point('BOTTOMRIGHT', -15, 0)
-
-	hooksecurefunc(ApplicantList, 'BuildList', function(self)
-		local columnDisplay = self.ColumnDisplay
-		for i = 1, columnDisplay:GetNumChildren() do
-			local child = select(i, columnDisplay:GetChildren())
-			if not child.IsSkinned then
-				child:StripTextures()
-
-				child:CreateBackdrop()
-				child.backdrop:Point('TOPLEFT', 4, -2)
-				child.backdrop:Point('BOTTOMRIGHT', 0, 2)
-
-				child:SetHighlightTexture(E.media.normTex)
-				local hl = child:GetHighlightTexture()
-				hl:SetVertexColor(1, 1, 1, .25)
-				hl:SetInside(child.backdrop)
-
-				child.IsSkinned = true
-			end
-		end
-
-		local buttons = self.ListScrollFrame.buttons
-		for i = 1, #buttons do
-			local button = buttons[i]
-			if not button.IsSkinned then
-				button:Point('LEFT', ApplicantList.backdrop, 1, 0)
-				button:Point('RIGHT', ApplicantList.backdrop, -1, 0)
-
-				button:SetHighlightTexture(E.media.normTex)
-				button:GetHighlightTexture():SetVertexColor(1, 1, 1, .25)
-
-				button.InviteButton:Size(66, 18)
-				button.CancelInvitationButton:Size(20, 18)
-				S:HandleButton(button.InviteButton)
-				S:HandleButton(button.CancelInvitationButton)
-
-				hooksecurefunc(button, 'UpdateMemberInfo', ColorMemberName)
-
-				button.IsSkinned = true
-			end
-		end
-	end)
+	-- Bottom Tabs
+	S:HandleTab(_G.CommunitiesFrameTab1)
+	S:HandleTab(_G.CommunitiesFrameTab2)
+	S:HandleTab(_G.CommunitiesFrameTab3)
+	S:HandleTab(_G.CommunitiesFrameTab4)
+	S:HandleTab(_G.CommunitiesFrameTab5)
 end
 
 S:AddCallbackForAddon('Blizzard_Communities')

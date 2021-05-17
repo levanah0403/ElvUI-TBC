@@ -1,4 +1,4 @@
-local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local E, L, V, P, G = unpack(select(2, ...)) --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local A = E:GetModule('Auras')
 local LSM = E.Libs.LSM
 
@@ -373,8 +373,8 @@ function A:CreateAuraHeader(filter)
 	header:SetAttribute('filter', filter)
 	header.filter = filter
 	header.auraType = auraType
-	RegisterStateDriver(header, 'visibility', '[petbattle] hide; show')
-	RegisterAttributeDriver(header, 'unit', '[vehicleui] vehicle; player')
+	RegisterStateDriver(header, 'visibility', 'show')
+	RegisterAttributeDriver(header, 'unit', 'player')
 
 	if filter == 'HELPFUL' then
 		header:SetAttribute('consolidateDuration', -1)

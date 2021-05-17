@@ -1,4 +1,4 @@
-local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local E, L, V, P, G = unpack(select(2, ...)) --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local DT = E:GetModule('DataTexts')
 
 local time, max, strjoin = time, max, strjoin
@@ -36,8 +36,8 @@ local function OnEvent(self, event)
 	lastPanel = self
 
 	if event == 'UNIT_PET' then
-		petGUID = UnitGUID('pet')
-	elseif event == 'PLAYER_REGEN_DISABLED' or event == 'PLAYER_LEAVE_COMBAT' then
+		petGUID = UnitGUID("pet")
+	elseif event == 'PLAYER_REGEN_DISABLED' or event == "PLAYER_LEAVE_COMBAT" then
 		local now = time()
 		if now - lastSegment > 20 then --time since the last segment
 			Reset()
@@ -54,13 +54,13 @@ local function OnEvent(self, event)
 			if timeStamp == 0 then timeStamp = timestamp end
 			lastSegment = timeStamp
 			combatTime = timestamp - timeStamp
-			if Event == 'SWING_DAMAGE' then
+			if Event == "SWING_DAMAGE" then
 				lastDMGAmount = arg12
 			else
 				lastDMGAmount = arg15
 			end
 			if arg16 == nil then overKill = 0 else overKill = arg16 end
-			DMGTotal = DMGTotal +  max(0, lastDMGAmount - overKill)
+			DMGTotal = DMGTotal + max(0, lastDMGAmount - overKill)
 		end
 	end
 
@@ -73,9 +73,11 @@ local function OnClick(self)
 end
 
 local function ValueColorUpdate(hex)
-	displayString = strjoin('', '%s: ', hex, '%s')
+	displayString = strjoin("", "%s: ", hex, "%s")
 
-	if lastPanel then OnEvent(lastPanel) end
+	if lastPanel ~= nil then
+		OnEvent(lastPanel)
+	end
 end
 E.valueColorUpdateFuncs[ValueColorUpdate] = true
 

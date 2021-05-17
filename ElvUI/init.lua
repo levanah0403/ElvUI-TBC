@@ -1,17 +1,16 @@
 --[[
 	~AddOn Engine~
 	To load the AddOn engine add this to the top of your file:
-		local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+		local E, L, V, P, G = unpack(select(2, ...)) --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 
 	To load the AddOn engine inside another addon add this to the top of your file:
-		local E, L, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+		local E, L, V, P, G = unpack(ElvUI) --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 ]]
 
 local _G = _G
-local unpack = unpack
+local unpack, select = unpack, select
 local format, gsub, pairs, type = format, gsub, pairs, type
 
-local BAG_ITEM_QUALITY_COLORS = BAG_ITEM_QUALITY_COLORS
 local CreateFrame = CreateFrame
 local InCombatLockdown = InCombatLockdown
 local GetAddOnEnableState = GetAddOnEnableState
@@ -30,6 +29,11 @@ local GameMenuFrame = GameMenuFrame
 -- GLOBALS: ElvCharacterDB, ElvPrivateDB, ElvDB, ElvCharacterData, ElvPrivateData, ElvData
 
 _G.BINDING_HEADER_ELVUI = GetAddOnMetadata(..., 'Title')
+for _, barNumber in pairs({2, 7, 8, 9, 10}) do
+	for slot = 1, 12 do
+		_G[format('BINDING_NAME_ELVUIBAR%dBUTTON%d', barNumber, slot)] = format('ActionBar %d Button %d', barNumber, slot)
+	end
+end
 
 local AceAddon, AceAddonMinor = _G.LibStub('AceAddon-3.0')
 local CallbackHandler = _G.LibStub('CallbackHandler-1.0')
@@ -68,21 +72,13 @@ E.PluginInstaller = E:NewModule('PluginInstaller')
 E.RaidUtility = E:NewModule('RaidUtility','AceEvent-3.0')
 E.Skins = E:NewModule('Skins','AceTimer-3.0','AceHook-3.0','AceEvent-3.0')
 E.Tooltip = E:NewModule('Tooltip','AceTimer-3.0','AceHook-3.0','AceEvent-3.0')
-E.TotemBar = E:NewModule('Totems','AceEvent-3.0')
+E.TotemBar = E:NewModule('Totems', 'AceEvent-3.0')
 E.UnitFrames = E:NewModule('UnitFrames','AceTimer-3.0','AceEvent-3.0','AceHook-3.0')
 E.WorldMap = E:NewModule('WorldMap','AceHook-3.0','AceEvent-3.0','AceTimer-3.0')
 
+E.InfoColor = '|cff1784d1' -- blue
+E.InfoColor2 = '|cff9b9b9b' -- silver
 E.twoPixelsPlease = false -- changing this option is not supported! :P
-
--- Item Qualitiy stuff - used by MerathilisUI
-E.QualityColors = {}
-local qualityColors = BAG_ITEM_QUALITY_COLORS
-for index, value in pairs(qualityColors) do
-	E.QualityColors[index] = {r = value.r, g = value.g, b = value.b}
-end
-E.QualityColors[-1] = {r = 0, g = 0, b = 0}
-E.QualityColors[Enum.ItemQuality.Poor] = {r = .61, g = .61, b = .61}
-E.QualityColors[Enum.ItemQuality.Common] = {r = 0, g = 0, b = 0}
 
 do -- this is different from E.locale because we need to convert for ace locale files
 	local convert = {enGB = 'enUS', esES = 'esMX', itIT = 'enUS'}
@@ -114,9 +110,8 @@ do
 	E:AddLib('ACL', 'AceLocale-3.0-ElvUI')
 	E:AddLib('LAB', 'LibActionButton-1.0-ElvUI')
 	E:AddLib('LDB', 'LibDataBroker-1.1')
-	E:AddLib('DualSpec', 'LibDualSpec-1.0')
 	E:AddLib('SimpleSticky', 'LibSimpleSticky-1.0')
-	E:AddLib('SpellRange', 'SpellRange-1.0')
+	E:AddLib('RangeCheck', 'LibRangeCheck-2.0-ElvUI')
 	E:AddLib('ButtonGlow', 'LibButtonGlow-1.0', true)
 	E:AddLib('ItemSearch', 'LibItemSearch-1.2-ElvUI')
 	E:AddLib('Compress', 'LibCompress')
@@ -199,9 +194,9 @@ function E:OnInitialize()
 
 	if E.private.general.minimap.enable then
 		E.Minimap:SetGetMinimapShape()
-		_G.Minimap:SetMaskTexture(130937) -- interface/chatframe/chatframebackground.blp
+		_G.Minimap:SetMaskTexture('interface/chatframe/chatframebackground')
 	else
-		_G.Minimap:SetMaskTexture(186178) -- textures/minimapmask.blp
+		_G.Minimap:SetMaskTexture('textures/minimapmask')
 	end
 
 	if GetAddOnEnableState(E.myname, 'Tukui') == 2 then
@@ -227,8 +222,15 @@ function E:OnInitialize()
 end
 
 function E:PositionGameMenuButton()
-	GameMenuFrame.Header.Text:SetTextColor(unpack(E.media.rgbvaluecolor))
-	GameMenuFrame:Height(GameMenuFrame:GetHeight() + GameMenuButtonLogout:GetHeight() - 4)
+	for i=1, GameMenuFrame:GetNumRegions() do
+		local region = select(i, GameMenuFrame:GetRegions())
+		if region:IsObjectType('FontString') and region:GetText() == _G.MAINMENU_BUTTON then
+			region:SetTextColor(unpack(E.media.rgbvaluecolor))
+			break
+		end
+	end
+
+	GameMenuFrame:SetHeight(GameMenuFrame:GetHeight() + GameMenuButtonLogout:GetHeight() - 4)
 
 	local button = GameMenuFrame[E.name]
 	button:SetText(format('%s%s|r', E.media.hexvaluecolor, E.name))

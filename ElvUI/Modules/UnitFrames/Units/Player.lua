@@ -1,4 +1,4 @@
-local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local E, L, V, P, G = unpack(select(2, ...)) --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local UF = E:GetModule('UnitFrames')
 
 local _, ns = ...
@@ -36,13 +36,8 @@ function UF:Construct_PlayerFrame(frame)
 	frame.ClassBar = 'ClassPower'
 
 	--Some classes need another set of different classbars.
-	if E.myclass == 'DEATHKNIGHT' then
-		frame.Runes = UF:Construct_DeathKnightResourceBar(frame)
-		frame.ClassBar = 'Runes'
-	elseif E.myclass == 'DRUID' then
+	if E.myclass == 'DRUID' then
 		frame.AdditionalPower = UF:Construct_AdditionalPowerBar(frame)
-	elseif E.myclass == 'MONK' then
-		frame.Stagger = UF:Construct_Stagger(frame)
 	elseif E.myclass == 'PRIEST' then
 		frame.AdditionalPower = UF:Construct_AdditionalPowerBar(frame)
 	elseif E.myclass == 'SHAMAN' then
@@ -61,6 +56,7 @@ function UF:Construct_PlayerFrame(frame)
 	frame.PartyIndicator = UF:Construct_PartyIndicator(frame)
 	frame.PvPText = UF:Construct_PvPIndicator(frame)
 	frame.AuraHighlight = UF:Construct_AuraHighlight(frame)
+	frame.EnergyManaRegen = UF:Construct_EnergyManaRegen(frame)
 	frame.HealthPrediction = UF:Construct_HealComm(frame)
 	frame.AuraBars = UF:Construct_AuraBarHeader(frame)
 	frame.InfoPanel = UF:Construct_InfoPanel(frame)
@@ -148,6 +144,7 @@ function UF:Update_PlayerFrame(frame, db)
 	end
 
 	UF:Configure_Fader(frame)
+	UF:Configure_EnergyManaRegen(frame)
 	UF:Configure_AuraHighlight(frame)
 	UF:Configure_RaidIcon(frame)
 	UF:Configure_HealComm(frame)

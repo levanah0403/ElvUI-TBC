@@ -1,4 +1,4 @@
-local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local E, L, V, P, G = unpack(select(2, ...)) --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local S = E:GetModule('Skins')
 
 local _G = _G
@@ -7,35 +7,28 @@ function S:DressUpFrame()
 	if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.dressingroom) then return end
 
 	local DressUpFrame = _G.DressUpFrame
-	S:HandlePortraitFrame(DressUpFrame)
+	S:HandleFrame(DressUpFrame, true, nil, 11, -12, -32, 76)
 
-	S:HandleButton(_G.DressUpFrameResetButton)
+	DressUpFrame.BGBottomLeft:SetDesaturated(true)
+	DressUpFrame.BGBottomRight:SetDesaturated(true)
+	DressUpFrame.BGTopLeft:SetDesaturated(true)
+	DressUpFrame.BGTopRight:SetDesaturated(true)
+
+	_G.DressUpFrameDescriptionText:Point('CENTER', _G.DressUpFrameTitleText, 'BOTTOM', -5, -22)
+
+	S:HandleCloseButton(_G.DressUpFrameCloseButton, DressUpFrame.backdrop)
+
+	S:HandleRotateButton(_G.DressUpModelFrameRotateLeftButton)
+	_G.DressUpModelFrameRotateLeftButton:Point('TOPLEFT', DressUpFrame, 25, -79)
+	S:HandleRotateButton(_G.DressUpModelFrameRotateRightButton)
+	_G.DressUpModelFrameRotateRightButton:Point('TOPLEFT', _G.DressUpModelFrameRotateLeftButton, 'TOPRIGHT', 3, 0)
+
 	S:HandleButton(_G.DressUpFrameCancelButton)
+	_G.DressUpFrameCancelButton:Point('BOTTOMRIGHT', -35, 80)
+	S:HandleButton(_G.DressUpFrameResetButton)
+	_G.DressUpFrameResetButton:Point('RIGHT', _G.DressUpFrameCancelButton, 'LEFT', -3, 0)
 
-	local DressUpFrameOutfitDropDown = _G.DressUpFrameOutfitDropDown
-	S:HandleDropDownBox(DressUpFrameOutfitDropDown)
-	S:HandleButton(DressUpFrameOutfitDropDown.SaveButton)
-	DressUpFrameOutfitDropDown.SaveButton:Point('LEFT', DressUpFrameOutfitDropDown, 'RIGHT', -7, 3)
-	DressUpFrameOutfitDropDown.backdrop:Point('TOPLEFT', -25, 3)
-
-	S:HandleMaxMinFrame(DressUpFrame.MaximizeMinimizeFrame)
-	_G.DressUpFrameResetButton:Point('RIGHT', _G.DressUpFrameCancelButton, 'LEFT', -2, 0)
-
-	-- Wardrobe edit frame
-	local WardrobeOutfitFrame = _G.WardrobeOutfitFrame
-	WardrobeOutfitFrame:StripTextures(true)
-	WardrobeOutfitFrame:CreateBackdrop('Transparent')
-
-	local WardrobeOutfitEditFrame = _G.WardrobeOutfitEditFrame
-	WardrobeOutfitEditFrame:StripTextures(true)
-	WardrobeOutfitEditFrame:CreateBackdrop('Transparent')
-	WardrobeOutfitEditFrame.EditBox:StripTextures()
-	S:HandleEditBox(WardrobeOutfitEditFrame.EditBox)
-	WardrobeOutfitEditFrame.EditBox.backdrop:Point('TOPLEFT', WardrobeOutfitEditFrame.EditBox, 'TOPLEFT', -5, -5)
-	WardrobeOutfitEditFrame.EditBox.backdrop:Point('BOTTOMRIGHT', WardrobeOutfitEditFrame.EditBox, 'BOTTOMRIGHT', 0, 5)
-	S:HandleButton(WardrobeOutfitEditFrame.AcceptButton)
-	S:HandleButton(WardrobeOutfitEditFrame.CancelButton)
-	S:HandleButton(WardrobeOutfitEditFrame.DeleteButton)
+	S:HandleFrame(_G.DressUpModelFrame, true, nil, -2, 1, 0, 19)
 end
 
 S:AddCallback('DressUpFrame')

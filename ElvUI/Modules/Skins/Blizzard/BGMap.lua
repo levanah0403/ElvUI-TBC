@@ -1,4 +1,4 @@
-local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local E, L, V, P, G = unpack(select(2, ...)) --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local S = E:GetModule('Skins')
 
 local _G = _G
@@ -42,11 +42,10 @@ function S:Blizzard_BattlefieldMap()
 	local BattlefieldMapFrame = _G.BattlefieldMapFrame
 	local BattlefieldMapTab = _G.BattlefieldMapTab
 
-	BattlefieldMapFrame:SetClampedToScreen(true)
-	BattlefieldMapFrame:StripTextures()
+	S:HandleFrame(BattlefieldMapFrame, true)
 
 	refreshAlpha() -- will need this soon
-	BattlefieldMapFrame:CreateBackdrop()
+	BattlefieldMapFrame:SetClampedToScreen(true)
 	BattlefieldMapFrame:SetFrameStrata('LOW')
 	BattlefieldMapFrame.backdrop:SetOutside(BattlefieldMapFrame.ScrollContainer)
 	BattlefieldMapFrame.backdrop:SetBackdropColor(0, 0, 0, oldAlpha)
@@ -88,6 +87,8 @@ function S:Blizzard_BattlefieldMap()
 	BattlefieldMapFrame.ScrollContainer:HookScript('OnEnter', setRealAlpha)
 	BattlefieldMapFrame.BorderFrame.CloseButton:HookScript('OnLeave', setOldAlpha)
 	BattlefieldMapFrame.BorderFrame.CloseButton:HookScript('OnEnter', setRealAlpha)
+
+	S:HandleSliderFrame(_G.OpacityFrameSlider)
 end
 
 S:AddCallbackForAddon('Blizzard_BattlefieldMap')

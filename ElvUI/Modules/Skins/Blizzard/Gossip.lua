@@ -1,44 +1,42 @@
-local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local E, L, V, P, G = unpack(select(2, ...)) --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local S = E:GetModule('Skins')
 
 local _G = _G
-local next, pairs, ipairs = next, pairs, ipairs
+local strmatch = strmatch
+local gsub, pairs = gsub, pairs
+local IsQuestComplete = IsQuestComplete
+local GetQuestLogTitle = GetQuestLogTitle
+local GetNumQuestLogEntries = GetNumQuestLogEntries
 local hooksecurefunc = hooksecurefunc
-
-local function handleGossipText()
-	local buttons = _G.GossipFrame.buttons
-	if buttons and next(buttons) then
-		for _, button in ipairs(buttons) do
-			local str = button:GetFontString()
-			if str then
-				str:SetTextColor(1, 1, 1)
-
-				local text = str:GetText()
-				if text then
-					local stripped = E:StripString(text)
-					str:SetText(stripped)
-				end
-			end
-		end
-	end
-end
 
 function S:GossipFrame()
 	if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.gossip) then return end
 
-	_G.ItemTextFrame:StripTextures(true)
-	_G.ItemTextFrame:CreateBackdrop('Transparent')
+	-- GossipFrame
+	local GossipFrame = _G.GossipFrame
+	S:HandleFrame(GossipFrame, true, nil, 11, -12, -32, 66)
+
+	S:HandleFrame(_G.GossipGreetingScrollFrame, true, nil, -6, 2)
+
+	S:HandleScrollBar(_G.GossipGreetingScrollFrameScrollBar)
+
+	S:HandleCloseButton(_G.GossipFrameCloseButton, GossipFrame.backdrop)
+
+	_G.GossipFrameNpcNameText:ClearAllPoints()
+	_G.GossipFrameNpcNameText:Point('CENTER', _G.GossipNpcNameFrame, 'CENTER', -1, 0)
+
+	for i = 1, _G.NUMGOSSIPBUTTONS do
+		_G['GossipTitleButton'..i..'GossipIcon']:SetSize(16, 16)
+		_G['GossipTitleButton'..i..'GossipIcon']:SetPoint('TOPLEFT', 3, 1)
+	end
+
+	S:HandleButton(_G.GossipFrameGreetingGoodbyeButton)
+	_G.GossipFrameGreetingGoodbyeButton:Point('BOTTOMRIGHT', -38, 72)
+
+	-- ItemTextFrame
+	S:HandleFrame(_G.ItemTextFrame, true, nil, 11, -12, -32, 76)
 
 	_G.ItemTextScrollFrame:StripTextures()
-
-	_G.GossipFrame:CreateBackdrop('Transparent')
-	_G.GossipFrame.Background:Hide()
-	_G.GossipFramePortrait:Kill()
-
-	S:HandleCloseButton(_G.ItemTextFrameCloseButton)
-
-	S:HandleScrollBar(_G.GossipGreetingScrollFrameScrollBar, 5)
-	S:HandleScrollBar(_G.ItemTextScrollFrameScrollBar)
 
 	S:HandleNextPrevButton(_G.ItemTextPrevPageButton)
 	S:HandleNextPrevButton(_G.ItemTextNextPageButton)
@@ -56,44 +54,66 @@ function S:GossipFrame()
 		_G[object]:StripTextures()
 	end
 
-	local GossipFrame = _G.GossipFrame
-	S:HandlePortraitFrame(GossipFrame)
-
 	local GossipGreetingScrollFrame = _G.GossipGreetingScrollFrame
 	GossipGreetingScrollFrame:CreateBackdrop()
 
 	if E.private.skins.parchmentRemoverEnable then
-		hooksecurefunc('GossipFrameUpdate', handleGossipText)
 		_G.GossipGreetingText:SetTextColor(1, 1, 1)
-		handleGossipText()
+
+		hooksecurefunc('GossipFrameUpdate', function()
+			for i = 1, _G.NUMGOSSIPBUTTONS do
+				local button = _G['GossipTitleButton'..i]
+				local icon = _G['GossipTitleButton'..i..'GossipIcon']
+				local text = button:GetFontString()
+
+				if text and text:GetText() then
+					local textString = gsub(text:GetText(), '|c[Ff][Ff]%x%x%x%x%x%x(.+)|r', '%1')
+
+					button:SetText(textString)
+					text:SetTextColor(1, 1, 1)
+
+					if button.type == 'Available' or button.type == 'Active' then
+						if button.type == 'Active' then
+							icon:SetDesaturation(1)
+							text:SetTextColor(.6, .6, .6)
+						else
+							icon:SetDesaturation(0)
+							text:SetTextColor(1, .8, .1)
+						end
+
+						local numEntries = GetNumQuestLogEntries()
+						for k = 1, numEntries, 1 do
+							local questLogTitleText, _, _, _, _, isComplete, _, questId = GetQuestLogTitle(k)
+							if strmatch(questLogTitleText, textString) then
+								if (isComplete == 1 or IsQuestComplete(questId)) then
+									icon:SetDesaturation(0)
+									button:GetFontString():SetTextColor(1, .8, .1)
+									break
+								end
+							end
+						end
+					end
+				end
+			end
+		end)
 	else
 		GossipGreetingScrollFrame.spellTex = GossipGreetingScrollFrame:CreateTexture(nil, 'ARTWORK')
 		GossipGreetingScrollFrame.spellTex:SetTexture([[Interface\QuestFrame\QuestBG]])
-		GossipGreetingScrollFrame.spellTex:Point('TOPLEFT', 2, -2)
-		GossipGreetingScrollFrame.spellTex:Size(506, 615)
+		GossipGreetingScrollFrame.spellTex:Point('TOPLEFT', 2, 2)
+		GossipGreetingScrollFrame.spellTex:Size(506, 515)
 		GossipGreetingScrollFrame.spellTex:SetTexCoord(0, 1, 0.02, 1)
 	end
 
-	_G.GossipFrameGreetingGoodbyeButton:StripTextures()
-	S:HandleButton(_G.GossipFrameGreetingGoodbyeButton)
+	S:HandleScrollBar(_G.ItemTextScrollFrameScrollBar)
 
-	for i = 1, 4 do
-		local notch = _G['NPCFriendshipStatusBarNotch'..i]
-		if notch then
-			notch:SetColorTexture(0, 0, 0)
-			notch:Size(1, 16)
-		end
-	end
+	S:HandleCloseButton(_G.ItemTextCloseButton, _G.ItemTextFrame.backdrop)
 
 	local NPCFriendshipStatusBar = _G.NPCFriendshipStatusBar
 	NPCFriendshipStatusBar:StripTextures()
 	NPCFriendshipStatusBar:SetStatusBarTexture(E.media.normTex)
 	NPCFriendshipStatusBar:CreateBackdrop()
-	E:RegisterStatusBar(NPCFriendshipStatusBar)
 
-	NPCFriendshipStatusBar.icon:ClearAllPoints()
-	NPCFriendshipStatusBar.icon:Point('RIGHT', NPCFriendshipStatusBar, 'LEFT', 0, -3)
-	S:HandleIcon(NPCFriendshipStatusBar.icon)
+	E:RegisterStatusBar(NPCFriendshipStatusBar)
 end
 
 S:AddCallback('GossipFrame')

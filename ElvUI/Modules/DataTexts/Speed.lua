@@ -1,4 +1,4 @@
-local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local E, L, V, P, G = unpack(select(2, ...)) --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local DT = E:GetModule('DataTexts')
 
 local format, strjoin = format, strjoin
@@ -19,12 +19,8 @@ local displayString, lastPanel = ''
 
 local function OnEnter()
 	DT.tooltip:ClearLines()
-
-	local text = HIGHLIGHT_FONT_COLOR_CODE..format(PAPERDOLLFRAME_TOOLTIP_FORMAT, STAT_SPEED)..' '..format('%.2F%%', GetSpeed())..FONT_COLOR_CODE_CLOSE
-	local tooltip = format(CR_SPEED_TOOLTIP, BreakUpLargeNumbers(GetCombatRating(CR_SPEED)), GetCombatRatingBonus(CR_SPEED))
-
-	DT.tooltip:AddDoubleLine(text, nil, 1, 1, 1)
-	DT.tooltip:AddLine(tooltip, nil, nil, nil, true)
+	DT.tooltip:AddDoubleLine(HIGHLIGHT_FONT_COLOR_CODE..format(PAPERDOLLFRAME_TOOLTIP_FORMAT, STAT_SPEED)..' '..format('%.2F%%', GetSpeed())..FONT_COLOR_CODE_CLOSE, nil, 1, 1, 1)
+	DT.tooltip:AddLine(format(CR_SPEED_TOOLTIP, BreakUpLargeNumbers(GetCombatRating(CR_SPEED)), GetCombatRatingBonus(CR_SPEED)), nil, nil, nil, true)
 	DT.tooltip:Show()
 end
 
@@ -42,8 +38,10 @@ end
 local function ValueColorUpdate(hex)
 	displayString = strjoin('', E.global.datatexts.settings.Speed.NoLabel and '' or '%s:', hex, '%.'..E.global.datatexts.settings.Speed.decimalLength..'f%%|r')
 
-	if lastPanel then OnEvent(lastPanel) end
+	if lastPanel ~= nil then
+		OnEvent(lastPanel)
+	end
 end
 E.valueColorUpdateFuncs[ValueColorUpdate] = true
 
-DT:RegisterDatatext('Speed', STAT_CATEGORY_ENHANCEMENTS, {"UNIT_STATS", "UNIT_AURA", "ACTIVE_TALENT_GROUP_CHANGED", "PLAYER_TALENT_UPDATE", "PLAYER_DAMAGE_DONE_MODS"}, OnEvent, nil, nil, OnEnter, nil, STAT_SPEED, nil, ValueColorUpdate)
+DT:RegisterDatatext('Speed', STAT_CATEGORY_ENHANCEMENTS, {'UNIT_STATS', 'UNIT_AURA', 'PLAYER_DAMAGE_DONE_MODS'}, OnEvent, nil, nil, OnEnter, nil, STAT_SPEED, nil, ValueColorUpdate)

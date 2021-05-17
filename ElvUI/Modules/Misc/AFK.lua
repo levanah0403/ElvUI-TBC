@@ -1,4 +1,4 @@
-local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local E, L, V, P, G = unpack(select(2, ...)) --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local AFK = E:GetModule('AFK')
 local CH = E:GetModule('Chat')
 
@@ -23,7 +23,6 @@ local IsInGuild = IsInGuild
 local IsShiftKeyDown = IsShiftKeyDown
 local MoveViewLeftStart = MoveViewLeftStart
 local MoveViewLeftStop = MoveViewLeftStop
-local PVEFrame_ToggleFrame = PVEFrame_ToggleFrame
 local RemoveExtraSpaces = RemoveExtraSpaces
 local Screenshot = Screenshot
 local SetCVar = SetCVar
@@ -31,7 +30,6 @@ local UnitCastingInfo = UnitCastingInfo
 local UnitIsAFK = UnitIsAFK
 local CinematicFrame = CinematicFrame
 local MovieFrame = MovieFrame
-local C_PetBattles_IsInBattle = C_PetBattles.IsInBattle
 local DNDstr = _G.DND
 local AFKstr = _G.AFK
 
@@ -96,11 +94,6 @@ function AFK:SetAFK(status)
 		AFK.AFKMode.chat:UnregisterAllEvents()
 		AFK.AFKMode.chat:Clear()
 
-		if _G.PVEFrame:IsShown() then --odd bug, frame is blank
-			PVEFrame_ToggleFrame()
-			PVEFrame_ToggleFrame()
-		end
-
 		AFK.isAFK = false
 	end
 end
@@ -129,7 +122,7 @@ function AFK:OnEvent(event, ...)
 		return
 	end
 
-	AFK:SetAFK(UnitIsAFK('player') and not C_PetBattles_IsInBattle())
+	AFK:SetAFK(UnitIsAFK('player'))
 end
 
 function AFK:Toggle()

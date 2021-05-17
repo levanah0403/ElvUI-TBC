@@ -65,7 +65,7 @@ local CopyTable = CopyTable
 local UnitIsUnit = UnitIsUnit
 local UnitPlayerControlled = UnitPlayerControlled
 local UnitIsTapDenied = UnitIsTapDenied
-local UnitThreatSituation = UnitThreatSituation
+local UnitDetailedThreatSituation = UnitDetailedThreatSituation
 local UnitIsPlayer = UnitIsPlayer
 local UnitClass = UnitClass
 local UnitSelectionType = UnitSelectionType
@@ -73,7 +73,6 @@ local UnitReaction = UnitReaction
 local UnitPower = UnitPower
 local UnitPowerMax = UnitPowerMax
 local UnitIsConnected = UnitIsConnected
-local UnitHasVehicleUI = UnitHasVehicleUI
 local UnitPowerType = UnitPowerType
 -- end block
 
@@ -213,14 +212,13 @@ local function Visibility(self, event, unit)
 	local element = self.AdditionalPower
 	local shouldEnable
 
-	if(not UnitHasVehicleUI('player')) then
-		if(UnitPowerMax(unit, ADDITIONAL_POWER_BAR_INDEX) ~= 0) then
-			if(element.displayPairs[playerClass]) then
-				local powerType = UnitPowerType(unit)
-				shouldEnable = element.displayPairs[playerClass][powerType]
-			end
+	if(UnitPowerMax(unit, ADDITIONAL_POWER_BAR_INDEX) ~= 0) then
+		if(element.displayPairs[playerClass]) then
+			local powerType = UnitPowerType(unit)
+			shouldEnable = element.displayPairs[playerClass][powerType]
 		end
 	end
+
 
 	local isEnabled = element.__isEnabled
 

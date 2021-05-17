@@ -40,7 +40,9 @@ local type, error, tostring, tonumber, assert, select = type, error, tostring, t
 local setmetatable, wipe, unpack, pairs, next = setmetatable, wipe, unpack, pairs, next
 local str_match, format, tinsert, tremove = string.match, format, tinsert, tremove
 
-local WoWClassic = select(4, GetBuildInfo()) < 20000
+local Classic = WOW_PROJECT_ID == WOW_PROJECT_CLASSIC
+local Retail = WOW_PROJECT_ID == WOW_PROJECT_MAINLINE
+local TBC = WOW_PROJECT_ID == WOW_PROJECT_BURNING_CRUSADE_CLASSIC
 
 local KeyBound = LibStub("LibKeyBound-1.0", true)
 local CBH = LibStub("CallbackHandler-1.0")
@@ -436,9 +438,9 @@ function Generic:UpdateState(state)
 	self:SetAttribute(format("labaction-%s", state), self.state_actions[state])
 	if state ~= tostring(self:GetAttribute("state")) then return end
 	if self.header then
-		SecureHandlerSetFrameRef(self.header, "updateButton", self)
-		SecureHandlerExecute(self.header, [[
-			local frame = self:GetAttribute("frameref-updateButton")
+		self.header:SetFrameRef("updateButton", self)
+		self.header:Execute([[
+			local frame = self:GetFrameRef("updateButton")
 			control:RunFor(frame, frame:GetAttribute("UpdateState"), frame:GetAttribute("state"))
 		]])
 	else
@@ -611,8 +613,8 @@ function Generic:PostClick()
 		end
 		local oldType, oldAction = self._state_type, self._state_action
 		local kind, data, subtype, extra = GetCursorInfo()
-		SecureHandlerSetFrameRef(self.header, "updateButton", self)
-		SecureHandlerExecute(self.header, format([[
+		self.header:SetFrameRef("updateButton", self)
+		self.header:Execute(format([[
 			local frame = self:GetAttribute("frameref-updateButton")
 			control:RunFor(frame, frame:GetAttribute("OnReceiveDrag"), %s, %s, %s, %s)
 			control:RunFor(frame, frame:GetAttribute("UpdateState"), %s)
@@ -709,7 +711,7 @@ function InitializeEventHandler()
 	lib.eventFrame:RegisterEvent("SPELL_UPDATE_CHARGES")
 	lib.eventFrame:RegisterEvent("SPELL_UPDATE_ICON")
 
-	if not WoWClassic then
+	if Retail then
 		lib.eventFrame:RegisterEvent("UPDATE_VEHICLE_ACTIONBAR")
 		lib.eventFrame:RegisterEvent("ARCHAEOLOGY_CLOSED")
 		lib.eventFrame:RegisterEvent("UNIT_ENTERED_VEHICLE")
@@ -1118,7 +1120,7 @@ function Update(self, fromUpdateConfig)
 	local texture = self:GetTexture()
 
 	-- Cooldown desaturate can control saturation, we don't want to override it here
-	local allowSaturation = not self.saturationLocked and not self.LevelLinkLockIcon:IsShown()
+	local allowSaturation = not self.saturationLocked and self.LevelLinkLockIcon and not self.LevelLinkLockIcon:IsShown()
 
 	-- Zone ability button handling
 	self.zoneAbilityDisabled = false
@@ -1168,7 +1170,7 @@ function Update(self, fromUpdateConfig)
 
 	UpdateFlyout(self)
 
-	UpdateOverlayGlow(self)
+	--UpdateOverlayGlow(self)
 
 	UpdateNewAction(self)
 
@@ -1184,8 +1186,8 @@ function Update(self, fromUpdateConfig)
 	if not InCombatLockdown() and self._state_type == "action" then
 		local onStateChanged = self:GetAttribute("OnStateChanged")
 		if onStateChanged then
-			SecureHandlerSetFrameRef(self.header, "updateButton", self)
-			SecureHandlerExecute(self.header, ([[
+			self.header:SetFrameRef("updateButton", self)
+			self.header:Execute(([[
 				local frame = self:GetAttribute("frameref-updateButton")
 				control:RunFor(frame, frame:GetAttribute("OnStateChanged"), %s, %s, %s)
 			]]):format(formatHelper(self:GetAttribute("state")), formatHelper(self._state_type), formatHelper(self._state_action)))
@@ -1209,7 +1211,7 @@ end
 
 function UpdateUsable(self)
 	local isLevelLinkLocked
-	if not WoWClassic and self._state_type == "action" then
+	if Retail and self._state_type == "action" then
 		isLevelLinkLocked = C_LevelLink.IsActionLocked(self._state_action)
 		if not self.icon:IsDesaturated() then
 			self.icon:SetDesaturated(isLevelLinkLocked)
@@ -1417,14 +1419,14 @@ function HideOverlayGlow(self)
 	end
 end
 
-function UpdateOverlayGlow(self)
+--[[function UpdateOverlayGlow(self)
 	local spellId = self.config.handleOverlay and self:GetSpellId()
 	if spellId and IsSpellOverlayed(spellId) then
 		ShowOverlayGlow(self)
 	else
 		HideOverlayGlow(self)
 	end
-end
+end]]
 
 function ClearNewActionHighlight(action, preventIdenticalActionsFromClearing, value)
 	lib.ACTION_HIGHLIGHT_MARKS[action] = value
@@ -1636,7 +1638,7 @@ end
 Action.GetLossOfControlCooldown = function(self) return GetActionLossOfControlCooldown(self._state_action) end
 
 -- Classic overrides for item count breakage
-if WoWClassic then
+if Classic or TBC then
 	-- if the library is present, simply use it to override action counts
 	local LibClassicSpellActionCount = LibStub("LibClassicSpellActionCount-1.0", true)
 	if LibClassicSpellActionCount then
@@ -1748,7 +1750,7 @@ Custom.GetSpellId              = function(self) return nil end
 Custom.RunCustom               = function(self, unit, button) return self._state_action.func(self, unit, button) end
 
 --- WoW Classic overrides
-if WoWClassic then
+if Classic then
 	UpdateOverlayGlow = function() end
 end
 

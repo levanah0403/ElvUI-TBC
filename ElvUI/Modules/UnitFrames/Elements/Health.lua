@@ -1,5 +1,5 @@
-local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
-local UF = E:GetModule('UnitFrames');
+local E, L, V, P, G = unpack(select(2, ...)) --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local UF = E:GetModule('UnitFrames')
 
 local random = random
 local strmatch = strmatch
@@ -84,7 +84,6 @@ function UF:Configure_HealthBar(frame)
 	health.colorHealth = nil
 	health.colorClass = nil
 	health.colorReaction = nil
-	health.colorSelection = nil
 
 	if db.colorOverride and db.colorOverride == 'FORCE_ON' then
 		health.colorClass = true
@@ -96,11 +95,7 @@ function UF:Configure_HealthBar(frame)
 			health.colorHealth = true
 		end
 	else
-		if self.db.colors.healthselection then
-			health.colorSelection = true
-		--[[elseif self.db.colors.healththreat then
-			health.colorThreat = true]]
-		elseif self.db.colors.healthclass ~= true then
+		if self.db.colors.healthclass ~= true then
 			if self.db.colors.colorhealthbyvalue then
 				health.colorSmooth = true
 			else

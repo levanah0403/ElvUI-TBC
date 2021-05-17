@@ -1,4 +1,4 @@
-local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local E, L, V, P, G = unpack(select(2, ...)) --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local NP = E:GetModule('NamePlates')
 local LSM = E.Libs.LSM
 
@@ -14,7 +14,6 @@ local CreateFrame = CreateFrame
 function NP:Health_UpdateColor(_, unit)
 	if not unit or self.unit ~= unit then return end
 	local element = self.Health
-	local Selection = element.colorSelection and NP:UnitSelectionType(unit, element.considerSelectionInCombatHostile)
 
 	local r, g, b, t
 	if element.colorDisconnected and not UnitIsConnected(unit) then
@@ -24,9 +23,6 @@ function NP:Health_UpdateColor(_, unit)
 	elseif (element.colorClass and self.isPlayer) or (element.colorClassNPC and not self.isPlayer) or (element.colorClassPet and UnitPlayerControlled(unit) and not self.isPlayer) then
 		local _, class = UnitClass(unit)
 		t = self.colors.class[class]
-	elseif Selection then
-		if Selection == 3 then Selection = UnitPlayerControlled(unit) and 5 or 3 end
-		t = NP.db.colors.selection[Selection]
 	elseif element.colorReaction and UnitReaction(unit, 'player') then
 		local reaction = UnitReaction(unit, 'player')
 		if reaction <= 3 then reaction = 'bad' elseif reaction == 4 then reaction = 'neutral' else reaction = 'good' end
@@ -89,7 +85,7 @@ function NP:Construct_Health(nameplate)
 	nameplate.HealthFlashTexture = healthFlashTexture
 
 	Health.colorTapping = true
-	Health.colorSelection = true
+	Health.colorReaction = true
 	Health.UpdateColor = NP.Health_UpdateColor
 
 	return Health
@@ -99,9 +95,8 @@ function NP:Update_Health(nameplate, skipUpdate)
 	local db = NP:PlateDB(nameplate)
 
 	nameplate.Health.colorTapping = true
-	nameplate.Health.colorSelection = true
+	nameplate.Health.colorReaction = true
 	nameplate.Health.colorClass = db.health.useClassColor
-	nameplate.Health.considerSelectionInCombatHostile = true
 	if skipUpdate then return end
 
 	if db.health.enable then
@@ -128,6 +123,8 @@ end
 
 local bars = { 'myBar', 'otherBar', 'absorbBar', 'healAbsorbBar' }
 function NP:Construct_HealthPrediction(nameplate)
+	if nameplate then return end
+
 	local HealthPrediction = CreateFrame('Frame', nameplate:GetName()..'HealthPrediction', nameplate)
 
 	for _, name in ipairs(bars) do
@@ -168,6 +165,8 @@ function NP:Construct_HealthPrediction(nameplate)
 end
 
 function NP:Update_HealthPrediction(nameplate)
+	if nameplate then return end
+
 	local db = NP:PlateDB(nameplate)
 
 	if db.health.enable and db.health.healPrediction then

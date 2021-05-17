@@ -1,4 +1,4 @@
-local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local E, L, V, P, G = unpack(select(2, ...)) --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local AB = E:GetModule('ActionBars')
 
 local _G = _G
@@ -10,13 +10,9 @@ local ClearOverrideBindings = ClearOverrideBindings
 local ClearPetActionHighlightMarks = ClearPetActionHighlightMarks
 local CreateFrame = CreateFrame
 local GetBindingKey = GetBindingKey
-local GetOverrideBarIndex = GetOverrideBarIndex
 local GetSpellBookItemInfo = GetSpellBookItemInfo
-local GetVehicleBarIndex = GetVehicleBarIndex
-local HasOverrideActionBar = HasOverrideActionBar
 local hooksecurefunc = hooksecurefunc
 local InCombatLockdown = InCombatLockdown
-local IsPossessBarVisible = IsPossessBarVisible
 local PetDismiss = PetDismiss
 local RegisterStateDriver = RegisterStateDriver
 local SecureHandlerSetFrameRef = SecureHandlerSetFrameRef
@@ -41,7 +37,6 @@ local SPELLS_PER_PAGE = SPELLS_PER_PAGE
 local TOOLTIP_UPDATE_TIME = TOOLTIP_UPDATE_TIME
 local NUM_ACTIONBAR_BUTTONS = NUM_ACTIONBAR_BUTTONS
 local COOLDOWN_TYPE_LOSS_OF_CONTROL = COOLDOWN_TYPE_LOSS_OF_CONTROL
-local C_PetBattles_IsInBattle = C_PetBattles.IsInBattle
 
 local LAB = E.Libs.LAB
 local LSM = E.Libs.LSM
@@ -60,12 +55,12 @@ AB.barDefaults = {
 	bar1 = {
 		page = 1,
 		bindButtons = 'ACTIONBUTTON',
-		conditions = format('[overridebar] %d; [vehicleui] %d; [possessbar] %d; [shapeshift] 13; [form,noform] 0; [bar:2] 2; [bar:3] 3; [bar:4] 4; [bar:5] 5; [bar:6] 6;', GetOverrideBarIndex(), GetVehicleBarIndex(), GetVehicleBarIndex()),
+		conditions = '[bonusbar:5] 11; [shapeshift] 13; [form,noform] 0; [bar:2] 2; [bar:3] 3; [bar:4] 4; [bar:5] 5; [bar:6] 6;',
 		position = 'BOTTOM,ElvUIParent,BOTTOM,-1,191',
 	},
 	bar2 = {
 		page = 2,
-		bindButtons = 'ELVUIBAR6BUTTON',
+		bindButtons = 'ELVUIBAR2BUTTON',
 		position = 'BOTTOM,ElvUIParent,BOTTOM,0,4',
 	},
 	bar3 = {
@@ -90,22 +85,22 @@ AB.barDefaults = {
 	},
 	bar7 = {
 		page = 7,
-		bindButtons = 'EXTRABAR7BUTTON',
+		bindButtons = 'ELVUIBAR7BUTTON',
 		position = 'BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-4,298',
 	},
 	bar8 = {
 		page = 8,
-		bindButtons = 'EXTRABAR8BUTTON',
+		bindButtons = 'ELVUIBAR8BUTTON',
 		position = 'BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-4,332',
 	},
 	bar9 = {
 		page = 9,
-		bindButtons = 'EXTRABAR9BUTTON',
+		bindButtons = 'ELVUIBAR9BUTTON',
 		position = 'BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-4,366',
 	},
 	bar10 = {
 		page = 10,
-		bindButtons = 'EXTRABAR10BUTTON',
+		bindButtons = 'ELVUIBAR10BUTTON',
 		position = 'BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-4,400',
 	},
 }
@@ -430,10 +425,6 @@ function AB:PLAYER_REGEN_ENABLED()
 		AB:AdjustMaxStanceButtons(AB.NeedsAdjustMaxStanceButtons) --sometimes it holds the event, otherwise true. pass it before we nil it.
 		AB.NeedsAdjustMaxStanceButtons = nil
 	end
-	if AB.NeedsReparentExtraButtons then
-		AB:ExtraButtons_Reparent()
-		AB.NeedsReparentExtraButtons = nil
-	end
 
 	AB:UnregisterEvent('PLAYER_REGEN_ENABLED')
 end
@@ -490,7 +481,6 @@ function AB:ReassignBindings(event)
 	if event == 'UPDATE_BINDINGS' then
 		AB:UpdatePetBindings()
 		AB:UpdateStanceBindings()
-		AB:UpdateExtraBindings()
 	end
 
 	AB:UnregisterEvent('PLAYER_REGEN_DISABLED')
@@ -529,7 +519,7 @@ end
 
 do
 	local texts = { 'hotkey', 'macro', 'count' }
-	local bars = { 'barPet', 'stanceBar', 'vehicleExitButton', 'extraActionButton' }
+	local bars = { 'barPet', 'stanceBar', 'vehicleExitButton', }
 
 	local function saveSetting(option, value)
 		for i = 1, 10 do
@@ -590,7 +580,6 @@ function AB:UpdateButtonSettings(specific)
 
 		AB:UpdatePetBindings()
 		AB:UpdateStanceBindings() -- call after AdjustMaxStanceButtons
-		AB:UpdateExtraBindings()
 
 		AB:UpdateFlyoutButtons()
 	end
@@ -617,9 +606,9 @@ function AB:StyleButton(button, noBackdrop, useMasque, ignoreNormal)
 	local icon = _G[name..'Icon']
 	local shine = _G[name..'Shine']
 	local count = _G[name..'Count']
-	local flash	 = _G[name..'Flash']
-	local border  = _G[name..'Border']
-	local normal  = _G[name..'NormalTexture']
+	local flash = _G[name..'Flash']
+	local border = _G[name..'Border']
+	local normal = _G[name..'NormalTexture']
 	local normal2 = button:GetNormalTexture()
 
 	local db = button:GetParent().db
@@ -731,7 +720,7 @@ end
 
 function AB:FadeBlingTexture(cooldown, alpha)
 	if not cooldown then return end
-	cooldown:SetBlingTexture(alpha > 0.5 and 131010 or [[Interface\AddOns\ElvUI\Media\Textures\Blank]])  -- interface/cooldown/star4.blp
+	cooldown:SetBlingTexture(alpha > 0.5 and 'interface/cooldown/star4' or [[Interface\AddOns\ElvUI\Media\Textures\Blank]])
 end
 
 function AB:FadeBlings(alpha)
@@ -821,7 +810,7 @@ end
 
 function AB:FadeParent_OnEvent()
 	if UnitCastingInfo('player') or UnitChannelInfo('player') or UnitExists('target') or UnitExists('focus') or UnitExists('vehicle')
-	or UnitAffectingCombat('player') or (UnitHealth('player') ~= UnitHealthMax('player')) or IsPossessBarVisible() or HasOverrideActionBar() then
+	or UnitAffectingCombat('player') or (UnitHealth('player') ~= UnitHealthMax('player')) then
 		self.mouseLock = true
 		E:UIFrameFadeIn(self, 0.2, self:GetAlpha(), 1)
 		AB:FadeBlings(1)
@@ -940,9 +929,11 @@ function AB:DisableBlizzard()
 		_G.UIPARENT_MANAGED_FRAME_POSITIONS[name] = nil
 
 		local frame = _G[name]
-		if i < 6 then frame:UnregisterAllEvents() end
-		frame:SetParent(hiddenParent)
-		AB:SetNoopsi(frame)
+		if frame then
+			if i < 6 then frame:UnregisterAllEvents() end
+			frame:SetParent(hiddenParent)
+			AB:SetNoopsi(frame)
+		end
 	end
 
 	-- let spell book buttons work without tainting by replacing this function
@@ -961,19 +952,12 @@ function AB:DisableBlizzard()
 
 	-- shut down some events for things we dont use
 	AB:SetNoopsi(_G.MainMenuBarArtFrame)
-	AB:SetNoopsi(_G.MainMenuBarArtFrameBackground)
 	_G.MainMenuBarArtFrame:UnregisterAllEvents()
-	_G.StatusTrackingBarManager:UnregisterAllEvents()
 	_G.ActionBarButtonEventsFrame:UnregisterAllEvents()
 	_G.ActionBarButtonEventsFrame:RegisterEvent('ACTIONBAR_SLOT_CHANGED') -- these are needed to let the ExtraActionButton show
 	_G.ActionBarButtonEventsFrame:RegisterEvent('ACTIONBAR_UPDATE_COOLDOWN') -- needed for ExtraActionBar cooldown
 	_G.ActionBarActionEventsFrame:UnregisterAllEvents()
 	_G.ActionBarController:UnregisterAllEvents()
-	_G.ActionBarController:RegisterEvent('UPDATE_EXTRA_ACTIONBAR') -- this is needed to let the ExtraActionBar show
-
-	-- lets only keep ExtraActionButtons in here
-	hooksecurefunc(_G.ActionBarButtonEventsFrame, 'RegisterFrame', AB.ButtonEventsRegisterFrame)
-	AB.ButtonEventsRegisterFrame()
 
 	-- this would taint along with the same path as the SetNoopers: ValidateActionBarTransition
 	_G.VerticalMultiBarsContainer:Size(10, 10) -- dummy values so GetTop etc doesnt fail without replacing
@@ -994,16 +978,7 @@ function AB:DisableBlizzard()
 	_G.InterfaceOptionsActionBarsPanelLockActionBars:SetScale(0.0001)
 	_G.InterfaceOptionsActionBarsPanelLockActionBars:SetAlpha(0)
 
-	AB:IconIntroTracker_Toggle() --Enable/disable functionality to automatically put spells on the actionbar.
 	AB:SecureHook('BlizzardOptionsPanel_OnEvent')
-
-	if _G.PlayerTalentFrame then
-		_G.PlayerTalentFrame:UnregisterEvent('ACTIVE_TALENT_GROUP_CHANGED')
-	else
-		hooksecurefunc('TalentFrame_LoadUI', function()
-			_G.PlayerTalentFrame:UnregisterEvent('ACTIVE_TALENT_GROUP_CHANGED')
-		end)
-	end
 end
 
 function AB:ToggleCountDownNumbers(bar, button, cd)
@@ -1283,10 +1258,6 @@ function AB:ToggleCooldownOptions()
 end
 
 function AB:SetButtonDesaturation(button, duration)
-	if button.LevelLinkLockIcon:IsShown() then
-		button.saturationLocked = nil
-		return
-	end
 
 	if AB.db.desaturateOnCooldown and (duration and duration > 1.5) then
 		button.icon:SetDesaturated(true)
@@ -1373,16 +1344,11 @@ function AB:Initialize()
 	AB.fadeParent:RegisterEvent('PLAYER_REGEN_DISABLED')
 	AB.fadeParent:RegisterEvent('PLAYER_REGEN_ENABLED')
 	AB.fadeParent:RegisterEvent('PLAYER_TARGET_CHANGED')
-	AB.fadeParent:RegisterEvent('UPDATE_OVERRIDE_ACTIONBAR')
-	AB.fadeParent:RegisterEvent('UPDATE_POSSESS_BAR')
-	AB.fadeParent:RegisterEvent('VEHICLE_UPDATE')
-	AB.fadeParent:RegisterUnitEvent('UNIT_ENTERED_VEHICLE', 'player')
-	AB.fadeParent:RegisterUnitEvent('UNIT_EXITED_VEHICLE', 'player')
 	AB.fadeParent:RegisterUnitEvent('UNIT_SPELLCAST_START', 'player')
 	AB.fadeParent:RegisterUnitEvent('UNIT_SPELLCAST_STOP', 'player')
 	AB.fadeParent:RegisterUnitEvent('UNIT_SPELLCAST_CHANNEL_START', 'player')
 	AB.fadeParent:RegisterUnitEvent('UNIT_SPELLCAST_CHANNEL_STOP', 'player')
-	AB.fadeParent:RegisterUnitEvent('UNIT_HEALTH', 'player')
+	AB.fadeParent:RegisterUnitEvent('UNIT_HEALTH_FREQUENT', 'player')
 	AB.fadeParent:RegisterEvent('PLAYER_FOCUS_CHANGED')
 	AB.fadeParent:SetScript('OnEvent', AB.FadeParent_OnEvent)
 
@@ -1397,7 +1363,6 @@ function AB:Initialize()
 	end
 
 	AB:DisableBlizzard()
-	AB:SetupExtraButton()
 	AB:SetupMicroBar()
 
 	for i = 1, 10 do
@@ -1418,25 +1383,11 @@ function AB:Initialize()
 	AB:RegisterEvent('PET_BATTLE_OPENING_DONE', 'RemoveBindings')
 	AB:RegisterEvent('SPELL_UPDATE_COOLDOWN', 'UpdateSpellBookTooltip')
 
-	if _G.KeyBindingFrame then
-		AB:SwapKeybindButton()
-	else
-		AB:RegisterEvent('ADDON_LOADED', 'SwapKeybindButton')
-	end
-
-	if C_PetBattles_IsInBattle() then
-		AB:RemoveBindings()
-	else
-		AB:ReassignBindings()
-	end
+	AB:ReassignBindings()
 
 	-- We handle actionbar lock for regular bars, but the lock on PetBar needs to be handled by WoW so make some necessary updates
 	SetCVar('lockActionBars', (AB.db.lockActionBars == true and 1 or 0))
 	_G.LOCK_ACTIONBAR = (AB.db.lockActionBars == true and '1' or '0') -- Keep an eye on this, in case it taints
-
-	hooksecurefunc(_G.SpellFlyout, 'Show', AB.UpdateFlyoutButtons)
-	_G.SpellFlyout:HookScript('OnEnter', AB.SpellFlyout_OnEnter)
-	_G.SpellFlyout:HookScript('OnLeave', AB.SpellFlyout_OnLeave)
 end
 
 E:RegisterModule(AB:GetName())

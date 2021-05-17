@@ -1,4 +1,4 @@
-local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local E, L, V, P, G = unpack(select(2, ...)) --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local LSM = E.Libs.LSM
 
 local wipe, sort, unpack = wipe, sort, unpack
@@ -9,8 +9,6 @@ local GetAddOnInfo = GetAddOnInfo
 local GetCVarBool = GetCVarBool
 local GetNumAddOns = GetNumAddOns
 local GetRealZoneText = GetRealZoneText
-local GetSpecialization = GetSpecialization
-local GetSpecializationInfo = GetSpecializationInfo
 local UNKNOWN = UNKNOWN
 
 function E:AreOtherAddOnsEnabled()
@@ -31,12 +29,9 @@ function E:GetDisplayMode()
 end
 
 local EnglishClassName = {
-	DEATHKNIGHT = 'Death Knight',
-	DEMONHUNTER = 'Demon Hunter',
 	DRUID = 'Druid',
 	HUNTER = 'Hunter',
 	MAGE = 'Mage',
-	MONK = 'Monk',
 	PALADIN = 'Paladin',
 	PRIEST = 'Priest',
 	ROGUE = 'Rogue',
@@ -44,49 +39,6 @@ local EnglishClassName = {
 	WARLOCK = 'Warlock',
 	WARRIOR = 'Warrior',
 }
-
-local EnglishSpecName = {
-	[250] = 'Blood',
-	[251] = 'Frost',
-	[252] = 'Unholy',
-	[102] = 'Balance',
-	[103] = 'Feral',
-	[104] = 'Guardian',
-	[105] = 'Restoration',
-	[253] = 'Beast Mastery',
-	[254] = 'Marksmanship',
-	[255] = 'Survival',
-	[62] = 'Arcane',
-	[63] = 'Fire',
-	[64] = 'Frost',
-	[268] = 'Brewmaster',
-	[270] = 'Mistweaver',
-	[269] = 'Windwalker',
-	[65] = 'Holy',
-	[66] = 'Protection',
-	[70] = 'Retribution',
-	[256] = 'Discipline',
-	[257] = 'Holy',
-	[258] = 'Shadow',
-	[259] = 'Assasination',
-	[260] = 'Combat',
-	[261] = 'Sublety',
-	[262] = 'Elemental',
-	[263] = 'Enhancement',
-	[264] = 'Restoration',
-	[265] = 'Affliction',
-	[266] = 'Demonoligy',
-	[267] = 'Destruction',
-	[71] = 'Arms',
-	[72] = 'Fury',
-	[73] = 'Protection',
-	[577] = 'Havoc',
-	[581] = 'Vengeance',
-}
-
-local function GetSpecName()
-	return EnglishSpecName[GetSpecializationInfo(GetSpecialization())] or UNKNOWN
-end
 
 function E:CreateStatusContent(num, width, parent, anchorTo, content)
 	if not content then content = CreateFrame('Frame', nil, parent) end
@@ -215,16 +167,12 @@ function E:CreateStatusFrame()
 	StatusFrame.Section1 = E:CreateStatusSection(300, 125, nil, 30, StatusFrame, 'TOP', StatusFrame, 'TOP', -30)
 	StatusFrame.Section2 = E:CreateStatusSection(300, 150, nil, 30, StatusFrame, 'TOP', StatusFrame.Section1, 'BOTTOM', 0)
 	StatusFrame.Section3 = E:CreateStatusSection(300, 185, nil, 30, StatusFrame, 'TOP', StatusFrame.Section2, 'BOTTOM', 0)
-	--StatusFrame.Section4 = E:CreateStatusSection(300, 60, nil, 30, StatusFrame, 'TOP', StatusFrame.Section3, 'BOTTOM', 0)
 	PluginFrame.SectionP = E:CreateStatusSection(280, nil, nil, 30, PluginFrame, 'TOP', PluginFrame, 'TOP', -10)
 
 	--Section content
 	StatusFrame.Section1.Content = E:CreateStatusContent(4, 260, StatusFrame.Section1, StatusFrame.Section1.Header)
 	StatusFrame.Section2.Content = E:CreateStatusContent(5, 260, StatusFrame.Section2, StatusFrame.Section2.Header)
 	StatusFrame.Section3.Content = E:CreateStatusContent(6, 260, StatusFrame.Section3, StatusFrame.Section3.Header)
-	--StatusFrame.Section4.Content = CreateFrame('Frame', nil, StatusFrame.Section4)
-	--StatusFrame.Section4.Content:SetSize(240, 25)
-	--StatusFrame.Section4.Content:SetPoint('TOP', StatusFrame.Section4.Header, 'BOTTOM', 0, 0)
 
 	--Content lines
 	StatusFrame.Section1.Content.Line3.Text:SetFormattedText('Recommended Scale: |cff4beb2c%s|r', E:PixelBestSize())
@@ -235,20 +183,6 @@ function E:CreateStatusFrame()
 	StatusFrame.Section3.Content.Line1.Text:SetFormattedText('Faction: |cff4beb2c%s|r', E.myfaction)
 	StatusFrame.Section3.Content.Line2.Text:SetFormattedText('Race: |cff4beb2c%s|r', E.myrace)
 	StatusFrame.Section3.Content.Line3.Text:SetFormattedText('Class: |cff4beb2c%s|r', EnglishClassName[E.myclass])
-
-	--[[Export buttons
-	StatusFrame.Section4.Content.Button1 = CreateFrame('Button', nil, StatusFrame.Section4.Content, 'UIPanelButtonTemplate')
-	StatusFrame.Section4.Content.Button1:SetSize(100, 25)
-	StatusFrame.Section4.Content.Button1:SetPoint('LEFT', StatusFrame.Section4.Content, 'LEFT')
-	StatusFrame.Section4.Content.Button1:SetText('Forum')
-	StatusFrame.Section4.Content.Button1:SetButtonState('DISABLED')
-	StatusFrame.Section4.Content.Button2 = CreateFrame('Button', nil, StatusFrame.Section4.Content, 'UIPanelButtonTemplate')
-	StatusFrame.Section4.Content.Button2:SetSize(100, 25)
-	StatusFrame.Section4.Content.Button2:SetPoint('RIGHT', StatusFrame.Section4.Content, 'RIGHT')
-	StatusFrame.Section4.Content.Button2:SetText('Ticket')
-	StatusFrame.Section4.Content.Button2:SetButtonState('DISABLED')
-	Skins:HandleButton(StatusFrame.Section4.Content.Button1, true)
-	Skins:HandleButton(StatusFrame.Section4.Content.Button2, true)]]
 
 	return StatusFrame
 end
@@ -318,11 +252,9 @@ function E:UpdateStatusFrame()
 	local Section2 = StatusFrame.Section2
 	Section2.Content.Line3.Text:SetFormattedText('Display Mode: |cff4beb2c%s|r', E:GetDisplayMode())
 	Section2.Content.Line4.Text:SetFormattedText('Resolution: |cff4beb2c%s|r', E.resolution)
-
 	local Section3 = StatusFrame.Section3
-	Section3.Content.Line4.Text:SetFormattedText('Specialization: |cff4beb2c%s|r', GetSpecName())
-	Section3.Content.Line5.Text:SetFormattedText('Level: |cff4beb2c%s|r', E.mylevel)
-	Section3.Content.Line6.Text:SetFormattedText('Zone: |cff4beb2c%s|r', GetRealZoneText() or UNKNOWN)
+	Section3.Content.Line4.Text:SetFormattedText('Level: |cff4beb2c%s|r', E.mylevel)
+	Section3.Content.Line5.Text:SetFormattedText('Zone: |cff4beb2c%s|r', GetRealZoneText() or UNKNOWN)
 
 	StatusFrame.TitleLogoFrame.LogoTop:SetVertexColor(unpack(E.media.rgbvaluecolor))
 end

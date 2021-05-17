@@ -1,305 +1,536 @@
-local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local E, L, V, P, G = unpack(select(2, ...)) --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local S = E:GetModule('Skins')
 
 local _G = _G
-local pairs, select, unpack = pairs, select, unpack
+local unpack = unpack
+local pairs = pairs
 
-local CreateFrame = CreateFrame
+local BNConnected = BNConnected
+local BNFeaturesEnabled = BNFeaturesEnabled
+local GetGuildRosterInfo = GetGuildRosterInfo
+local GetNumSubgroupMembers = GetNumSubgroupMembers
+local GetQuestDifficultyColor = GetQuestDifficultyColor
 local hooksecurefunc = hooksecurefunc
-local WhoFrameColumn_SetWidth = WhoFrameColumn_SetWidth
 
---Tab Regions
-local tabs = {
-	'LeftDisabled',
-	'MiddleDisabled',
-	'RightDisabled',
-	'Left',
-	'Middle',
-	'Right',
-}
+local GUILDMEMBERS_TO_DISPLAY = GUILDMEMBERS_TO_DISPLAY
+local C_FriendList_GetNumWhoResults = C_FriendList.GetNumWhoResults
+local C_FriendList_GetWhoInfo = C_FriendList.GetWhoInfo
 
-local function SkinFriendRequest(frame)
-	if frame.isSkinned then return; end
-	S:HandleButton(frame.DeclineButton, nil, true, nil, nil, nil, nil, nil, true)
-	S:HandleButton(frame.AcceptButton, nil, nil, nil, nil, nil, nil, nil, true)
+local function skinFriendRequest(frame)
+	if frame.isSkinned then return end
+	S:HandleButton(frame.DeclineButton, nil, true)
+	S:HandleButton(frame.AcceptButton)
 	frame.isSkinned = true
-end
-
-local function UpdateWhoSkins()
-	_G.WhoListScrollFrame:StripTextures()
-end
-
---Social Frame
-local function SkinSocialHeaderTab(tab)
-	if not tab then return end
-	for _, object in pairs(tabs) do
-		local tex = _G[tab:GetName()..object]
-		tex:SetTexture()
-	end
-
-	tab:GetHighlightTexture():SetTexture()
-
-	tab.backdrop = CreateFrame('Frame', nil, tab, 'BackdropTemplate')
-	tab.backdrop:SetTemplate()
-	tab.backdrop:SetFrameLevel(tab:GetFrameLevel() - 1)
-	tab.backdrop:Point('TOPLEFT', 3, -8)
-	tab.backdrop:Point('BOTTOMRIGHT', -6, 0)
-end
-
-local function BattleNetFrame_OnEnter(button)
-	if not button.backdrop then return end
-	local bnetColor = _G.FRIENDS_BNET_NAME_COLOR
-
-	button.backdrop:SetBackdropBorderColor(bnetColor.r, bnetColor.g, bnetColor.b)
-end
-
-local function BattleNetFrame_OnLeave(button)
-	if not button.backdrop then return end
-
-	button.backdrop:SetBackdropBorderColor(unpack(E.media.bordercolor))
-end
-
-local function RAFRewards()
-	for reward in _G.RecruitAFriendRewardsFrame.rewardPool:EnumerateActive() do
-		S:HandleIcon(reward.Button.Icon)
-		reward.Button.IconBorder:Kill()
-	end
 end
 
 function S:FriendsFrame()
 	if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.friends) then return end
 
-	S:HandleScrollBar(_G.FriendsListFrameScrollFrame.scrollBar, 5)
-	S:HandleScrollBar(_G.WhoListScrollFrame.scrollBar, 5)
-
-	local StripAllTextures = {
-		'FriendsTabHeaderTab1',
-		'FriendsTabHeaderTab2',
-		'WhoFrameColumnHeader1',
-		'WhoFrameColumnHeader2',
-		'WhoFrameColumnHeader3',
-		'WhoFrameColumnHeader4',
-		'AddFriendFrame',
-	}
-
-	local buttons = {
-		'FriendsFrameAddFriendButton',
-		'FriendsFrameSendMessageButton',
-		'WhoFrameWhoButton',
-		'WhoFrameAddFriendButton',
-		'WhoFrameGroupInviteButton',
-		'FriendsFrameIgnorePlayerButton',
-		'FriendsFrameUnsquelchButton',
-		'AddFriendEntryFrameAcceptButton',
-		'AddFriendEntryFrameCancelButton',
-		'AddFriendInfoFrameContinueButton',
-	}
-
-	for _, button in pairs(buttons) do
-		S:HandleButton(_G[button])
-	end
-
-	for _, object in pairs(StripAllTextures) do
-		_G[object]:StripTextures()
-	end
-
-	local mainFrames = {
-		'WhoFrame',
-		'LFRQueueFrame',
-	}
-
-	for _, frame in pairs(mainFrames) do
-		_G[frame]:StripTextures()
-	end
-
+	-- Friends Frame
 	local FriendsFrame = _G.FriendsFrame
-	S:HandlePortraitFrame(FriendsFrame)
+	S:HandleFrame(FriendsFrame, true, nil, -5, 0, -2)
 
-	_G.WhoFrameListInset:StripTextures()
-	_G.WhoFrameListInset.NineSlice:Hide()
-	_G.WhoFrameEditBoxInset:StripTextures()
-	_G.WhoFrameEditBoxInset.NineSlice:Hide()
+	_G.FriendsFrameCloseButton:Point('TOPRIGHT', 0, 2)
 
-	-- Kill the Portrait!
-	for i = 1, FriendsFrame:GetNumRegions() do
-		local region = select(i, FriendsFrame:GetRegions())
-		if region:IsObjectType('Texture') then
-			region:SetTexture()
-			region:SetAlpha(0)
-		end
-	end
+	S:HandleDropDownBox(_G.FriendsFrameStatusDropDown, 72)
+	S:HandlePointXY(_G.FriendsFrameStatusDropDown, 266, -55)
 
-	_G.IgnoreListFrame:StripTextures()
-
-	S:HandleScrollBar(_G.IgnoreListFrameScrollFrame.scrollBar, 4)
-	S:HandleDropDownBox(_G.FriendsFrameStatusDropDown, 70)
-
-	_G.FriendsFrameStatusDropDown:ClearAllPoints()
-	_G.FriendsFrameStatusDropDown:Point('TOPLEFT', FriendsFrame, 'TOPLEFT', 5, -24)
-
-	local FriendsFrameBattlenetFrame = _G.FriendsFrameBattlenetFrame
-	FriendsFrameBattlenetFrame:StripTextures()
-	FriendsFrameBattlenetFrame:CreateBackdrop('Transparent')
-
-	local bnetColor = _G.FRIENDS_BNET_BACKGROUND_COLOR
-	local button = CreateFrame('Button', nil, FriendsFrameBattlenetFrame)
-	button:Point('TOPLEFT', FriendsFrameBattlenetFrame, 'TOPLEFT')
-	button:Point('BOTTOMRIGHT', FriendsFrameBattlenetFrame, 'BOTTOMRIGHT')
-	button:Size(FriendsFrameBattlenetFrame:GetSize())
-	button:CreateBackdrop()
-	button.backdrop:SetBackdropColor(bnetColor.r, bnetColor.g, bnetColor.b, bnetColor.a)
-	button.backdrop:SetBackdropBorderColor(unpack(E.media.bordercolor))
-
-	button:SetScript('OnClick', function() FriendsFrameBattlenetFrame.BroadcastFrame:ToggleFrame() end)
-	button:SetScript('OnEnter', BattleNetFrame_OnEnter)
-	button:SetScript('OnLeave', BattleNetFrame_OnLeave)
-
-	FriendsFrameBattlenetFrame.BroadcastButton:Kill() -- We use the BattlenetFrame to enter a Status Message
-
-	FriendsFrameBattlenetFrame.UnavailableInfoFrame:ClearAllPoints()
-	FriendsFrameBattlenetFrame.UnavailableInfoFrame:Point('TOPLEFT', FriendsFrame, 'TOPRIGHT', 1, -18)
-
-	FriendsFrameBattlenetFrame.BroadcastFrame:StripTextures()
-	FriendsFrameBattlenetFrame.BroadcastFrame:CreateBackdrop('Transparent')
-	FriendsFrameBattlenetFrame.BroadcastFrame.EditBox:StripTextures()
-	FriendsFrameBattlenetFrame.BroadcastFrame:ClearAllPoints()
-	FriendsFrameBattlenetFrame.BroadcastFrame:Point('TOPLEFT', FriendsFrame, 'TOPRIGHT', 3, -1)
-	S:HandleEditBox(FriendsFrameBattlenetFrame.BroadcastFrame.EditBox)
-	S:HandleButton(FriendsFrameBattlenetFrame.BroadcastFrame.UpdateButton)
-	S:HandleButton(FriendsFrameBattlenetFrame.BroadcastFrame.CancelButton)
-
-	S:HandleEditBox(_G.AddFriendNameEditBox)
-	_G.AddFriendFrame:CreateBackdrop('Transparent')
-
-	--Pending invites
-	local PendingHeader = _G.FriendsListFrameScrollFrame.PendingInvitesHeaderButton
-	S:HandleButton(PendingHeader)
-	if PendingHeader.backdrop then PendingHeader.backdrop:SetInside() end
-	hooksecurefunc(_G.FriendsListFrameScrollFrame.invitePool, 'Acquire', function()
-		for object in pairs(_G.FriendsListFrameScrollFrame.invitePool.activeObjects) do
-			SkinFriendRequest(object)
-		end
-	end)
-
-	--Who Frame
-	_G.WhoFrame:HookScript('OnShow', UpdateWhoSkins)
-	hooksecurefunc('FriendsFrame_OnEvent', UpdateWhoSkins)
-
-	--Increase width of Level column slightly
-	WhoFrameColumn_SetWidth(_G.WhoFrameColumnHeader3, 37) --Default is 32
-	for i = 1, 17 do
-		local level = _G['WhoFrameButton'..i..'Level']
-		if level then
-			level:Width(level:GetWidth() + 5)
-		end
-	end
-
-	S:HandleDropDownBox(_G.WhoFrameDropDown, 120)
-
-	--Bottom Tabs
-	for i = 1, 4 do
+	for i = 1, #_G.FRIENDSFRAME_SUBFRAMES do
 		S:HandleTab(_G['FriendsFrameTab'..i])
 	end
 
-	for i = 1, 3 do
-		SkinSocialHeaderTab(_G['FriendsTabHeaderTab'..i])
+	-- Friends List Frame
+	for i = 1, _G.FRIEND_HEADER_TAB_IGNORE do
+		local tab = _G['FriendsTabHeaderTab'..i]
+		S:HandleFrame(tab, true, nil, 3, -7, -2, -1)
+
+		tab:HookScript('OnEnter', S.SetModifiedBackdrop)
+		tab:HookScript('OnLeave', S.SetOriginalBackdrop)
 	end
 
-	--View Friends BN Frame
-	local FriendsFriendsFrame = _G.FriendsFriendsFrame
-	FriendsFriendsFrame:StripTextures()
-	FriendsFriendsFrame.ScrollFrameBorder:Hide()
-	FriendsFriendsFrame:CreateBackdrop('Transparent')
+	for i = 1, _G.FRIENDS_FRIENDS_TO_DISPLAY do
+		local button = 'FriendsFrameFriendsScrollFrameButton'..i
+
+		_G[button..'SummonButtonIcon']:SetTexCoord(unpack(E.TexCoords))
+		_G[button..'SummonButtonNormalTexture']:SetAlpha(0)
+		_G[button..'SummonButton']:StyleButton()
+		_G[button].highlight:SetTexture(E.Media.Textures.Highlight)
+		_G[button].highlight:SetAlpha(0.35)
+	end
+
+	for i = 1, _G.FRIENDS_FRIENDS_TO_DISPLAY do
+		S:HandleButtonHighlight(_G['FriendsFriendsButton'..i])
+	end
+
+	S:HandleScrollBar(_G.FriendsFrameFriendsScrollFrameScrollBar)
+
+	S:HandleButton(_G.AddFriendEntryFrameAcceptButton)
+	S:HandleButton(_G.AddFriendEntryFrameCancelButton)
+	S:HandleButton(_G.FriendsFrameAddFriendButton)
+	S:HandleButton(_G.FriendsFrameSendMessageButton)
+	S:HandleButton(_G.FriendsFrameUnsquelchButton)
+
+	S:HandlePointXY(_G.FriendsFrameAddFriendButton, -1, 4)
+
+	-- Battle.net
+	local FriendsFrameBattlenetFrame = _G.FriendsFrameBattlenetFrame
+	FriendsFrameBattlenetFrame:StripTextures()
+	FriendsFrameBattlenetFrame:GetRegions():Hide()
+
+	FriendsFrameBattlenetFrame.UnavailableInfoFrame:Point('TOPLEFT', FriendsFrame, 'TOPRIGHT', 1, -18)
+
+	FriendsFrameBattlenetFrame.Tag:SetParent(_G.FriendsListFrame)
+	FriendsFrameBattlenetFrame.Tag:Point('TOP', FriendsFrame, 'TOP', 0, -8)
+
+	local FriendsFrameBroadcastInput = _G.FriendsFrameBroadcastInput
+	FriendsFrameBroadcastInput:CreateBackdrop()
+	FriendsFrameBroadcastInput:Width(250)
+	FriendsFrameBroadcastInput:Point('TOPLEFT', 22, -32)
+	FriendsFrameBroadcastInput:Point('TOPRIGHT', -9, -32)
+
+	_G.FriendsFrameBroadcastInputLeft:Kill()
+	_G.FriendsFrameBroadcastInputRight:Kill()
+	_G.FriendsFrameBroadcastInputMiddle:Kill()
+
+	hooksecurefunc('FriendsFrame_CheckBattlenetStatus', function()
+		if BNFeaturesEnabled() then
+			local frame = FriendsFrameBattlenetFrame
+
+			frame.BroadcastButton:Hide()
+
+			if BNConnected() then
+				frame:Hide()
+				_G.FriendsFrameBroadcastInput:Show()
+				_G.FriendsFrameBroadcastInput_UpdateDisplay()
+			end
+		end
+	end)
+
+	_G.FriendsFrame_CheckBattlenetStatus()
+
+	hooksecurefunc('FriendsFrame_Update', function()
+		if FriendsFrame.selectedTab == 1 and _G.FriendsTabHeader.selectedTab == 1 and _G.FriendsFrameBattlenetFrame.Tag:IsShown() then
+			_G.FriendsFrameTitleText:Hide()
+		else
+			_G.FriendsFrameTitleText:Show()
+		end
+	end)
+
+	S:HandleEditBox(_G.AddFriendNameEditBox)
+
+	_G.AddFriendFrame:SetTemplate('Transparent')
+
+	-- Pending invites
+	_G.FriendsFrameFriendsScrollFrame:StripTextures()
+
+	S:HandleButton(_G.FriendsFrameFriendsScrollFrame.PendingInvitesHeaderButton, true)
+
+	_G.FriendsFrameFriendsScrollFrame.PendingInvitesHeaderButton:SetScript('OnMouseUp', nil)
+	_G.FriendsFrameFriendsScrollFrame.PendingInvitesHeaderButton:SetScript('OnMouseDown', nil)
+
+	_G.FriendsFrameFriendsScrollFrame.PendingInvitesHeaderButton.RightArrow:SetTexture(E.Media.Textures.ArrowUp)
+	_G.FriendsFrameFriendsScrollFrame.PendingInvitesHeaderButton.RightArrow:SetRotation(S.ArrowRotation['right'])
+	_G.FriendsFrameFriendsScrollFrame.PendingInvitesHeaderButton.DownArrow:SetTexture(E.Media.Textures.ArrowUp)
+	_G.FriendsFrameFriendsScrollFrame.PendingInvitesHeaderButton.DownArrow:SetRotation(S.ArrowRotation['down'])
+	_G.FriendsFrameFriendsScrollFrame.PendingInvitesHeaderButton.RightArrow:SetPoint('LEFT', 11, 0)
+	_G.FriendsFrameFriendsScrollFrame.PendingInvitesHeaderButton.DownArrow:SetPoint('TOPLEFT', 8, -10)
+	hooksecurefunc(_G.FriendsFrameFriendsScrollFrame.invitePool, 'Acquire', function()
+		for object in pairs(_G.FriendsFrameFriendsScrollFrame.invitePool.activeObjects) do
+			skinFriendRequest(object)
+		end
+	end)
+
+	S:HandleFrame(_G.FriendsFriendsFrame, true)
+
+	_G.FriendsFriendsList:StripTextures()
+	_G.IgnoreListFrame:StripTextures()
+
+	S:HandleButton(_G.FriendsFriendsCloseButton)
+	S:HandleButton(_G.FriendsFriendsSendRequestButton)
+
+	S:HandleEditBox(_G.FriendsFriendsList)
+
+	S:HandleScrollBar(_G.FriendsFriendsScrollFrameScrollBar)
+
 	S:HandleDropDownBox(_G.FriendsFriendsFrameDropDown, 150)
-	S:HandleButton(FriendsFriendsFrame.SendRequestButton)
-	S:HandleButton(FriendsFriendsFrame.CloseButton)
-	S:HandleScrollBar(_G.FriendsFriendsScrollFrame.scrollBar)
 
-	--Quick join
-	local QuickJoinFrame = _G.QuickJoinFrame
-	local QuickJoinRoleSelectionFrame = _G.QuickJoinRoleSelectionFrame
-	S:HandleScrollBar(_G.QuickJoinScrollFrame.scrollBar, 5)
-	S:HandleButton(_G.QuickJoinFrame.JoinQueueButton)
-	QuickJoinFrame.JoinQueueButton:Size(131, 21)  --Match button on other tab
-	QuickJoinFrame.JoinQueueButton:ClearAllPoints()
-	QuickJoinFrame.JoinQueueButton:Point('BOTTOMRIGHT', QuickJoinFrame, 'BOTTOMRIGHT', -6, 4)
-	_G.QuickJoinScrollFrameTop:SetTexture()
-	_G.QuickJoinScrollFrameBottom:SetTexture()
-	_G.QuickJoinScrollFrameMiddle:SetTexture()
-	QuickJoinRoleSelectionFrame:StripTextures()
-	QuickJoinRoleSelectionFrame:CreateBackdrop('Transparent')
-	S:HandleButton(QuickJoinRoleSelectionFrame.AcceptButton)
-	S:HandleButton(QuickJoinRoleSelectionFrame.CancelButton)
-	S:HandleCloseButton(QuickJoinRoleSelectionFrame.CloseButton)
-	S:HandleCheckBox(QuickJoinRoleSelectionFrame.RoleButtonTank.CheckButton)
-	S:HandleCheckBox(QuickJoinRoleSelectionFrame.RoleButtonHealer.CheckButton)
-	S:HandleCheckBox(QuickJoinRoleSelectionFrame.RoleButtonDPS.CheckButton)
+	-- Ignore List Frame
+	_G.IgnoreListFrame:StripTextures()
 
-	-- GameIcons
-	for i = 1, _G.FRIENDS_TO_DISPLAY do
-		local btn = _G['FriendsListFrameScrollFrameButton'..i]
-		local icon = _G['FriendsListFrameScrollFrameButton'..i..'GameIcon']
+	S:HandleButton(_G.FriendsFrameIgnorePlayerButton, true)
+	S:HandleButton(_G.FriendsFrameUnsquelchButton, true)
 
-		icon:Size(22, 22)
-		icon:SetTexCoord(.15, .85, .15, .85)
+	S:HandleScrollBar(_G.FriendsFrameIgnoreScrollFrameScrollBar)
 
-		icon:ClearAllPoints()
-		icon:Point('RIGHT', btn, 'RIGHT', -24, 0)
-		icon.SetPoint = E.noop
+	-- Who Frame
+	_G.WhoFrameListInset:StripTextures()
+	_G.WhoFrameEditBoxInset:StripTextures()
+	_G.WhoListScrollFrame:StripTextures()
+
+	for i = 1, 4 do
+		local header = _G['WhoFrameColumnHeader'..i]
+		header:StripTextures()
+		header:StyleButton()
+		header:ClearAllPoints()
 	end
 
-	-- RecruitAFriend 8.2.5
-	local RAF = _G.RecruitAFriendFrame
-	S:HandleButton(RAF.RecruitmentButton)
+	_G.WhoFrameColumnHeader1:Point('LEFT', _G.WhoFrameColumnHeader4, 'RIGHT', -2, 0)
+	_G.WhoFrameColumn_SetWidth(_G.WhoFrameColumnHeader1, 105)
+	_G.WhoFrameColumnHeader2:Point('LEFT', _G.WhoFrameColumnHeader1, 'RIGHT', -5, 0)
+	_G.WhoFrameColumnHeader3:Point('TOPLEFT', _G.WhoFrame, 'TOPLEFT', 8, -57)
+	_G.WhoFrameColumnHeader4:Point('LEFT', _G.WhoFrameColumnHeader3, 'RIGHT', -2, 0)
+	_G.WhoFrameColumn_SetWidth(_G.WhoFrameColumnHeader4, 50)
 
-	-- /run RecruitAFriendFrame:ShowSplashScreen()
-	local SplashFrame = RAF.SplashFrame
-	S:HandleButton(SplashFrame.OKButton)
+	_G.WhoFrameButton1:Point('TOPLEFT', 10, -82)
 
-	if E.private.skins.parchmentRemoverEnable then
-		SplashFrame.Background:SetColorTexture(unpack(E.media.bordercolor))
+	S:HandleEditBox(_G.WhoFrameEditBox)
+	_G.WhoFrameEditBox:Point('BOTTOM', -3, 29)
+	_G.WhoFrameEditBox:Size(332, 18)
 
-		SplashFrame.PictureFrame:Hide()
-		SplashFrame.Bracket_TopLeft:Hide()
-		SplashFrame.Bracket_TopRight:Hide()
-		SplashFrame.Bracket_BottomRight:Hide()
-		SplashFrame.Bracket_BottomLeft:Hide()
-		SplashFrame.PictureFrame_Bracket_TopLeft:Hide()
-		SplashFrame.PictureFrame_Bracket_TopRight:Hide()
-		SplashFrame.PictureFrame_Bracket_BottomRight:Hide()
-		SplashFrame.PictureFrame_Bracket_BottomLeft:Hide()
+	S:HandleButton(_G.WhoFrameWhoButton)
+	_G.WhoFrameWhoButton:Point('RIGHT', _G.WhoFrameAddFriendButton, 'LEFT', -2, 0)
+	_G.WhoFrameWhoButton:Width(90)
+
+	S:HandleButton(_G.WhoFrameAddFriendButton)
+	_G.WhoFrameAddFriendButton:Point('RIGHT', _G.WhoFrameGroupInviteButton, 'LEFT', -2, 0)
+
+	S:HandleButton(_G.WhoFrameGroupInviteButton)
+	_G.WhoFrameGroupInviteButton:Point('BOTTOMRIGHT', -6, 4)
+
+	S:HandleDropDownBox(_G.WhoFrameDropDown)
+	_G.WhoFrameDropDown:Point('TOPLEFT', -6, 4)
+
+	S:HandleScrollBar(_G.WhoListScrollFrameScrollBar, 3)
+	_G.WhoListScrollFrameScrollBar:ClearAllPoints()
+	_G.WhoListScrollFrameScrollBar:Point('TOPRIGHT', _G.WhoListScrollFrame, 'TOPRIGHT', 26, -13)
+	_G.WhoListScrollFrameScrollBar:Point('BOTTOMRIGHT', _G.WhoListScrollFrame, 'BOTTOMRIGHT', 0, 18)
+
+	do
+		local button, level, name, class
+
+		for i = 1, _G.WHOS_TO_DISPLAY do
+			button = _G['WhoFrameButton'..i]
+			level = _G['WhoFrameButton'..i..'Level']
+			name = _G['WhoFrameButton'..i..'Name']
+			class = _G['WhoFrameButton'..i..'Class']
+
+			button.icon = button:CreateTexture('$parentIcon', 'ARTWORK')
+			button.icon:Point('LEFT', 45, 0)
+			button.icon:Size(15)
+			button.icon:SetTexture([[Interface\WorldStateFrame\Icons-Classes]])
+
+			button:CreateBackdrop('Default', true)
+			button.backdrop:SetAllPoints(button.icon)
+			S:HandleButtonHighlight(button)
+
+			level:ClearAllPoints()
+			level:SetPoint('TOPLEFT', 11, -1)
+
+			name:SetSize(100, 14)
+			name:ClearAllPoints()
+			name:SetPoint('LEFT', 85, 0)
+
+			class:Hide()
+		end
 	end
 
-	local Claiming = RAF.RewardClaiming
-	Claiming:StripTextures()
-	Claiming:CreateBackdrop('Transparent')
-	S:HandleIcon(Claiming.NextRewardButton.Icon)
-	Claiming.NextRewardButton.CircleMask:Hide()
-	Claiming.NextRewardButton.IconBorder:Kill()
-	S:HandleButton(Claiming.ClaimOrViewRewardButton)
+	hooksecurefunc('WhoList_Update', function()
+		local numWhos = C_FriendList_GetNumWhoResults()
+		if numWhos == 0 then return end
 
-	local RecruitList = RAF.RecruitList
-	RecruitList.Header:StripTextures()
-	RecruitList.ScrollFrameInset:StripTextures()
-	RecruitList.ScrollFrameInset:CreateBackdrop('Transparent')
-	S:HandleScrollBar(RecruitList.ScrollFrame.Slider)
+		local playerZone = E.MapInfo.realZoneText
+		local WHOS_TO_DISPLAY = _G.WHOS_TO_DISPLAY
 
-	-- Recruitment
-	local Recruitment = _G.RecruitAFriendRecruitmentFrame
-	Recruitment:StripTextures()
-	Recruitment:CreateBackdrop('Transparent')
-	S:HandleEditBox(Recruitment.EditBox)
-	S:HandleButton(Recruitment.GenerateOrCopyLinkButton)
-	S:HandleCloseButton(Recruitment.CloseButton)
+		numWhos = (numWhos > WHOS_TO_DISPLAY and WHOS_TO_DISPLAY) or numWhos
 
-	-- Rewards
-	local Reward = _G.RecruitAFriendRewardsFrame
-	Reward:StripTextures()
-	Reward:CreateBackdrop('Transparent')
-	S:HandleCloseButton(Reward.CloseButton)
+		local button, buttonText, classTextColor, levelTextColor, info
 
-	hooksecurefunc(Reward, 'UpdateRewards', RAFRewards)
-	RAFRewards() -- Because it's loaded already. The securehook is for when it updates in game. Thanks for playing.
+		for i = 1, numWhos do
+			button = _G['WhoFrameButton'..i]
+			info = C_FriendList_GetWhoInfo(button.whoIndex)
+
+			if info.filename then
+				classTextColor = E:ClassColor(info.filename)
+				button.icon:Show()
+				button.icon:SetTexCoord(unpack(_G.CLASS_ICON_TCOORDS[info.filename]))
+			else
+				classTextColor = _G.HIGHLIGHT_FONT_COLOR
+				button.icon:Hide()
+			end
+
+			levelTextColor = GetQuestDifficultyColor(info.level)
+
+			buttonText = _G['WhoFrameButton'..i..'Name']
+			buttonText:SetTextColor(classTextColor.r, classTextColor.g, classTextColor.b)
+			buttonText = _G['WhoFrameButton'..i..'Level']
+			buttonText:SetTextColor(levelTextColor.r, levelTextColor.g, levelTextColor.b)
+			buttonText = _G['WhoFrameButton'..i..'Class']
+			buttonText:SetTextColor(1, 1, 1)
+			buttonText = _G['WhoFrameButton'..i..'Variable']
+			buttonText:SetTextColor(1, 1, 1)
+
+			if info.area == playerZone then
+				buttonText:SetTextColor(0, 1, 0)
+			end
+		end
+	end)
+
+	-- Guild Frame
+	_G.GuildFrame:StripTextures()
+
+	_G.GuildFrameColumnHeader3:ClearAllPoints()
+	_G.GuildFrameColumnHeader3:Point('TOPLEFT', 8, -57)
+
+	_G.GuildFrameColumnHeader4:ClearAllPoints()
+	_G.GuildFrameColumnHeader4:Point('LEFT', _G.GuildFrameColumnHeader3, 'RIGHT', -2, -0)
+	_G.GuildFrameColumnHeader4:Width(50)
+
+	_G.GuildFrameColumnHeader1:ClearAllPoints()
+	_G.GuildFrameColumnHeader1:Point('LEFT', _G.GuildFrameColumnHeader4, 'RIGHT', -2, -0)
+	_G.GuildFrameColumnHeader1:Width(105)
+
+	_G.GuildFrameColumnHeader2:ClearAllPoints()
+	_G.GuildFrameColumnHeader2:Point('LEFT', _G.GuildFrameColumnHeader1, 'RIGHT', -2, -0)
+	_G.GuildFrameColumnHeader2:Width(127)
+
+	do
+		local button, level, name, class, statusButton, statusName
+
+		for i = 1, _G.GUILDMEMBERS_TO_DISPLAY do
+			button = _G['GuildFrameButton'..i]
+			level = _G['GuildFrameButton'..i..'Level']
+			name = _G['GuildFrameButton'..i..'Name']
+			class = _G['GuildFrameButton'..i..'Class']
+			statusButton = _G['GuildFrameGuildStatusButton'..i]
+			statusName = _G['GuildFrameGuildStatusButton'..i..'Name']
+
+			button.icon = button:CreateTexture('$parentIcon', 'ARTWORK')
+			button.icon:Point('LEFT', 48, 0)
+			button.icon:Size(15)
+			button.icon:SetTexture([[Interface\WorldStateFrame\Icons-Classes]])
+
+			button:CreateBackdrop('Default', true)
+			button.backdrop:SetAllPoints(button.icon)
+
+			S:HandleButtonHighlight(button)
+			S:HandleButtonHighlight(statusButton)
+
+			level:ClearAllPoints()
+			level:SetPoint('TOPLEFT', 10, -1)
+
+			name:SetSize(100, 14)
+			name:ClearAllPoints()
+			name:SetPoint('LEFT', 85, 0)
+
+			class:Hide()
+
+			statusName:ClearAllPoints()
+			statusName:SetPoint('LEFT', 10, 0)
+		end
+	end
+
+	hooksecurefunc('GuildStatus_Update', function()
+		local _, level, class, zone, online
+		local button, buttonText
+		local playerZone = E.MapInfo.realZoneText
+
+		if FriendsFrame.playerStatusFrame then
+			for i = 1, GUILDMEMBERS_TO_DISPLAY, 1 do
+				button = _G['GuildFrameButton'..i]
+				_, _, _, level, class, zone, _, _, online = GetGuildRosterInfo(button.guildIndex)
+
+				local classFileName = E:UnlocalizedClassName(class)
+				if classFileName then
+					if online then
+						local classTextColor = E:ClassColor(classFileName)
+						local levelTextColor = GetQuestDifficultyColor(level)
+
+						buttonText = _G['GuildFrameButton'..i..'Name']
+						buttonText:SetTextColor(classTextColor.r, classTextColor.g, classTextColor.b)
+						buttonText = _G['GuildFrameButton'..i..'Level']
+						buttonText:SetTextColor(levelTextColor.r, levelTextColor.g, levelTextColor.b)
+						buttonText = _G['GuildFrameButton'..i..'Zone']
+						buttonText:SetTextColor(1, 1, 1)
+
+						if zone == playerZone then
+							buttonText:SetTextColor(0, 1, 0)
+						end
+					end
+
+					button.icon:SetTexCoord(unpack(_G.CLASS_ICON_TCOORDS[classFileName]))
+				end
+			end
+		else
+			for i = 1, _G.GUILDMEMBERS_TO_DISPLAY, 1 do
+				button = _G['GuildFrameGuildStatusButton'..i]
+				_, _, _, _, class, _, _, _, online = GetGuildRosterInfo(button.guildIndex)
+
+				local classFileName = E:UnlocalizedClassName(class)
+				if classFileName then
+					if online then
+						local classTextColor = E:ClassColor(classFileName)
+						_G['GuildFrameGuildStatusButton'..i..'Name']:SetTextColor(classTextColor.r, classTextColor.g, classTextColor.b)
+						_G['GuildFrameGuildStatusButton'..i..'Online']:SetTextColor(1, 1, 1)
+					end
+				end
+			end
+		end
+	end)
+
+	S:HandleFrame(_G.GuildFrameLFGFrame, true)
+	S:HandleCheckBox(_G.GuildFrameLFGButton)
+
+	for i = 1, 4 do
+		_G['GuildFrameColumnHeader'..i]:StripTextures()
+		_G['GuildFrameColumnHeader'..i]:StyleButton()
+		_G['GuildFrameGuildStatusColumnHeader'..i]:StripTextures()
+		_G['GuildFrameGuildStatusColumnHeader'..i]:StyleButton()
+	end
+
+	_G.GuildListScrollFrame:StripTextures()
+	S:HandleScrollBar(_G.GuildListScrollFrameScrollBar)
+
+	S:HandleNextPrevButton(_G.GuildFrameGuildListToggleButton, 'left')
+
+	S:HandleButton(_G.GuildFrameGuildInformationButton)
+	_G.GuildFrameGuildInformationButton:Point('BOTTOMLEFT', -1, 4)
+	S:HandleButton(_G.GuildFrameAddMemberButton)
+	S:HandleButton(_G.GuildFrameControlButton)
+
+	-- Member Detail Frame
+	_G.GuildMemberDetailFrame:StripTextures()
+	_G.GuildMemberDetailFrame:CreateBackdrop('Transparent')
+	_G.GuildMemberDetailFrame:Point('TOPLEFT', _G.GuildFrame, 'TOPRIGHT', 3, -1)
+
+	S:HandleCloseButton(_G.GuildMemberDetailCloseButton, _G.GuildMemberDetailFrame.backdrop)
+
+	S:HandleButton(_G.GuildMemberRemoveButton)
+	_G.GuildMemberRemoveButton:Point('BOTTOMLEFT', 3, 3)
+
+	S:HandleButton(_G.GuildMemberGroupInviteButton)
+	_G.GuildMemberGroupInviteButton:Point('BOTTOMRIGHT', -3, 3)
+
+	S:HandleNextPrevButton(_G.GuildFramePromoteButton, 'up')
+	_G.GuildFramePromoteButton:SetHitRectInsets(0, 0, 0, 0)
+	_G.GuildFramePromoteButton:SetPoint('TOPLEFT', _G.GuildMemberDetailFrame, 'TOPLEFT', 155, -68)
+
+	S:HandleNextPrevButton(_G.GuildFrameDemoteButton)
+	_G.GuildFrameDemoteButton:SetHitRectInsets(0, 0, 0, 0)
+	_G.GuildFrameDemoteButton:Point('LEFT', _G.GuildFramePromoteButton, 'RIGHT', 2, 0)
+
+	_G.GuildMemberNoteBackground:StripTextures()
+	_G.GuildMemberNoteBackground:CreateBackdrop('Default')
+	_G.GuildMemberNoteBackground.backdrop:Point('TOPLEFT', 0, -2)
+	_G.GuildMemberNoteBackground.backdrop:Point('BOTTOMRIGHT', 0, 2)
+
+	_G.PersonalNoteText:Point('TOPLEFT', 4, -4)
+	_G.PersonalNoteText:Width(197)
+
+	_G.GuildMemberOfficerNoteBackground:StripTextures()
+	_G.GuildMemberOfficerNoteBackground:CreateBackdrop('Default')
+	_G.GuildMemberOfficerNoteBackground.backdrop:Point('TOPLEFT', 0, -2)
+	_G.GuildMemberOfficerNoteBackground.backdrop:Point('BOTTOMRIGHT', 0, -1)
+
+	_G.GuildFrameNotesLabel:Point('TOPLEFT', _G.GuildFrame, 'TOPLEFT', 6, -328)
+	_G.GuildFrameNotesText:Point('TOPLEFT', _G.GuildFrameNotesLabel, 'BOTTOMLEFT', 0, -6)
+
+	_G.GuildFrameBarLeft:StripTextures()
+
+	_G.GuildMOTDEditButton:CreateBackdrop('Default')
+	_G.GuildMOTDEditButton.backdrop:Point('TOPLEFT', -7, 3)
+	_G.GuildMOTDEditButton.backdrop:Point('BOTTOMRIGHT', 7, -2)
+	_G.GuildMOTDEditButton:SetHitRectInsets(-7, -7, -3, -2)
+
+	-- Info Frame
+	_G.GuildInfoFrame:StripTextures()
+	_G.GuildInfoFrame:CreateBackdrop('Transparent')
+	_G.GuildInfoFrame:Point('TOPLEFT', _G.GuildFrame, 'TOPRIGHT', -1, 6)
+	_G.GuildInfoFrame.backdrop:Point('TOPLEFT', 3, -6)
+	_G.GuildInfoFrame.backdrop:Point('BOTTOMRIGHT', -2, 3)
+
+	_G.GuildInfoTextBackground:SetTemplate('Default')
+	S:HandleScrollBar(_G.GuildInfoFrameScrollFrameScrollBar)
+
+	S:HandleCloseButton(_G.GuildInfoCloseButton, _G.GuildInfoFrame.backdrop)
+
+	S:HandleButton(_G.GuildInfoSaveButton)
+	_G.GuildInfoSaveButton:Point('BOTTOMLEFT', 8, 8)
+
+	S:HandleButton(_G.GuildInfoCancelButton)
+	_G.GuildInfoCancelButton:Point('LEFT', _G.GuildInfoSaveButton, 'RIGHT', 4, 0)
+
+	-- Control Frame
+	_G.GuildControlPopupFrame:StripTextures()
+	_G.GuildControlPopupFrame:CreateBackdrop('Transparent')
+	_G.GuildControlPopupFrame.backdrop:Point('TOPLEFT', 3, 0)
+
+	S:HandleDropDownBox(_G.GuildControlPopupFrameDropDown, 185)
+	_G.GuildControlPopupFrameDropDownButton:Size(18)
+
+	local function SkinPlusMinus(button, minus)
+		local texture = E.Media.Textures.PlusButton
+		if minus then
+			texture = E.Media.Textures.MinusButton
+		end
+
+		button:SetNormalTexture(texture)
+		button.SetNormalTexture = E.noop
+
+		button:SetPushedTexture(texture)
+		button.SetPushedTexture = E.noop
+
+		button:SetHighlightTexture('')
+		button.SetHighlightTexture = E.noop
+
+		button:SetDisabledTexture(texture)
+		button.SetDisabledTexture = E.noop
+		button:GetDisabledTexture():SetDesaturated(true)
+	end
+
+	SkinPlusMinus(_G.GuildControlPopupFrameAddRankButton)
+	_G.GuildControlPopupFrameAddRankButton:Point('LEFT', _G.GuildControlPopupFrameDropDown, 'RIGHT', -8, 3)
+
+	SkinPlusMinus(_G.GuildControlPopupFrameRemoveRankButton, true)
+	_G.GuildControlPopupFrameRemoveRankButton:Point('LEFT', _G.GuildControlPopupFrameAddRankButton, 'RIGHT', 4, 0)
+
+	_G.GuildControlPopupFrameEditBox:StripTextures()
+
+	S:HandleEditBox(_G.GuildControlPopupFrameEditBox)
+	_G.GuildControlPopupFrameEditBox.backdrop:Point('TOPLEFT', 0, -5)
+	_G.GuildControlPopupFrameEditBox.backdrop:Point('BOTTOMRIGHT', 0, 5)
+
+	for _, CheckBox in pairs({ _G.GuildControlPopupFrameCheckboxes:GetChildren()}) do
+		if CheckBox:IsObjectType("CheckButton") then
+			S:HandleCheckBox(CheckBox)
+		end
+	end
+
+	S:HandleButton(_G.GuildControlPopupAcceptButton)
+	S:HandleButton(_G.GuildControlPopupFrameCancelButton)
+
+	-- Raid Frame
+	S:HandleButton(_G.RaidFrameConvertToRaidButton)
+	_G.RaidFrameConvertToRaidButton:Point('BOTTOMRIGHT', -6, 4)
+	S:HandleButton(_G.RaidFrameRaidInfoButton)
+
+	S:HandleCheckBox(_G.RaidFrameAllAssistCheckButton)
+
+	-- Raid Info Frame
+	_G.RaidInfoFrame:StripTextures(true)
+	_G.RaidInfoFrame:SetTemplate('Transparent')
+
+	_G.RaidInfoFrame:HookScript('OnShow', function()
+		if GetNumSubgroupMembers() > 0 then
+			_G.RaidInfoFrame:Point('TOPLEFT', _G.RaidFrame, 'TOPRIGHT', 0, 0)
+		else
+			_G.RaidInfoFrame:Point('TOPLEFT', _G.RaidFrame, 'TOPRIGHT', 0, 0)
+		end
+	end)
+
+	S:HandleCloseButton(_G.RaidInfoCloseButton, _G.RaidInfoFrame)
+
+	_G.RaidInfoScrollFrame:StripTextures()
+	S:HandleScrollBar(_G.RaidInfoScrollFrameScrollBar)
 end
 
 S:AddCallback('FriendsFrame')

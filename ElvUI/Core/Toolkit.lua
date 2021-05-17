@@ -1,4 +1,4 @@
-local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local E, L, V, P, G = unpack(select(2, ...)) --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local UF = E:GetModule('UnitFrames')
 local NP = E:GetModule('NamePlates')
 
@@ -22,6 +22,14 @@ end
 function E:SafeGetPoint(frame)
 	if frame and frame.GetPoint and not E:SetPointsRestricted(frame) then
 		return frame:GetPoint()
+	end
+end
+
+function E:GetBackdropColor(frame)
+	if frame.pixelBorders then
+		return frame.pixelBorders.CENTER:GetVertexColor()
+	else
+		return frame:GetBackdropColor()
 	end
 end
 
@@ -131,6 +139,11 @@ local function SetTemplate(frame, template, glossTex, ignoreUpdates, forcePixelM
 	frame.forcePixelMode = forcePixelMode
 	frame.isUnitFrameElement = isUnitFrameElement
 	frame.isNamePlateElement = isNamePlateElement
+
+	if not frame.SetBackdrop then
+		_G.Mixin(frame, _G.BackdropTemplateMixin)
+		frame:HookScript('OnSizeChanged', frame.OnBackdropSizeChanged)
+	end
 
 	if template == 'NoBackdrop' then
 		frame:SetBackdrop()

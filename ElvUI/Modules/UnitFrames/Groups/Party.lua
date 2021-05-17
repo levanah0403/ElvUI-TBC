@@ -1,4 +1,4 @@
-local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local E, L, V, P, G = unpack(select(2, ...)) --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local UF = E:GetModule('UnitFrames')
 
 local _, ns = ...
@@ -58,17 +58,14 @@ function UF:Construct_PartyFrames()
 		self.AuraHighlight = UF:Construct_AuraHighlight(self)
 		self.ResurrectIndicator = UF:Construct_ResurrectionIcon(self)
 		self.SummonIndicator = UF:Construct_SummonIcon(self)
-		self.GroupRoleIndicator = UF:Construct_RoleIcon(self)
 		self.RaidRoleFramesAnchor = UF:Construct_RaidRoleFrames(self)
 		self.MouseGlow = UF:Construct_MouseGlow(self)
-		self.PhaseIndicator = UF:Construct_PhaseIcon(self)
 		self.TargetGlow = UF:Construct_TargetGlow(self)
 		self.FocusGlow = UF:Construct_FocusGlow(self)
 		self.ThreatIndicator = UF:Construct_Threat(self)
 		self.RaidTargetIndicator = UF:Construct_RaidIcon(self)
 		self.ReadyCheckIndicator = UF:Construct_ReadyCheckIcon(self)
 		self.HealthPrediction = UF:Construct_HealComm(self)
-		self.AlternativePower = UF:Construct_AltPowerBar(self)
 		self.ClassBar = 'AlternativePower'
 		self.customTexts = {}
 
@@ -175,20 +172,17 @@ function UF:Update_PartyFrames(frame, db)
 		UF:Configure_AllAuras(frame)
 		UF:Configure_HealthBar(frame)
 		UF:Configure_InfoPanel(frame)
-		UF:Configure_PhaseIcon(frame)
 		UF:Configure_Power(frame)
 		UF:Configure_Portrait(frame)
 		UF:Configure_RaidDebuffs(frame)
 		UF:Configure_Castbar(frame)
 		UF:Configure_ResurrectionIcon(frame)
 		UF:Configure_SummonIcon(frame)
-		UF:Configure_RoleIcon(frame)
 		UF:Configure_RaidRoleIcons(frame)
 		UF:Configure_AuraWatch(frame)
 		UF:Configure_HealComm(frame)
 		UF:Configure_ReadyCheckIcon(frame)
 		UF:Configure_ClassBar(frame)
-		UF:Configure_AltPowerBar(frame)
 		UF:Configure_CustomTexts(frame)
 	end
 

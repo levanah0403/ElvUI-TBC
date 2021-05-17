@@ -10,13 +10,11 @@ local pairs, type, strsplit, strmatch, gsub = pairs, type, strsplit, strmatch, g
 local next, ipairs, tremove, tinsert, sort, tonumber, format = next, ipairs, tremove, tinsert, sort, tonumber, format
 
 local C_Map_GetMapInfo = C_Map.GetMapInfo
-local C_SpecializationInfo_GetPvpTalentSlotInfo = C_SpecializationInfo.GetPvpTalentSlotInfo
 local GetClassInfo = GetClassInfo
 local GetCVar = GetCVar
 local GetCVarBool = GetCVarBool
 local GetDifficultyInfo = GetDifficultyInfo
 local GetInstanceInfo = GetInstanceInfo
-local GetNumClasses = GetNumClasses
 local GetNumSpecializationsForClassID = GetNumSpecializationsForClassID
 local GetPvpTalentInfoByID = GetPvpTalentInfoByID
 local GetRealZoneText = GetRealZoneText
@@ -162,8 +160,8 @@ local function UpdateClassSection()
 		if not classTable then
 			local classDisplayName, classTag, classID
 			classTable, classIndexTable = {}, {}
-			for i = 1, GetNumClasses() do
-				classDisplayName, classTag, classID = GetClassInfo(i)
+			for i, classTag in ipairs(CLASS_SORT_ORDER) do
+				classDisplayName = LOCALIZED_CLASS_NAMES_MALE[classTag]
 				if not classTable[classTag] then
 					classTable[classTag] = {}
 				end
@@ -227,154 +225,6 @@ local function GetPvpTalentString(talentID)
 	return formatStr:format(texture, name)
 end
 
-local function GenerateValues(tier, isPvP)
-	local values = {}
-
-	if isPvP then
-		local slotInfo = C_SpecializationInfo_GetPvpTalentSlotInfo(tier)
-		if slotInfo.availableTalentIDs then
-			for i = 1, #slotInfo.availableTalentIDs do
-				local talentID = slotInfo.availableTalentIDs[i]
-				values[talentID] = GetPvpTalentString(talentID)
-			end
-		end
-	else
-		for i = 1, 3 do
-			values[i] = GetTalentString(tier, i)
-		end
-	end
-
-	return values
-end
-
-local function UpdateTalentSection()
-	if E.global.nameplate.filters[selectedNameplateFilter] then
-		local maxTiers = (E.global.nameplate.filters[selectedNameplateFilter].triggers.talent.type == 'normal' and 7) or 4
-		E.Options.args.nameplate.args.filters.args.triggers.args.talent.args = {
-			enabled = {
-				type = 'toggle',
-				order = 1,
-				name = L["Enable"],
-				get = function(info)
-					return E.global.nameplate.filters[selectedNameplateFilter].triggers.talent.enabled
-				end,
-				set = function(info, value)
-					E.global.nameplate.filters[selectedNameplateFilter].triggers.talent.enabled = value
-					UpdateTalentSection()
-					NP:ConfigureAll()
-				end
-			},
-			type = {
-				type = 'toggle',
-				order = 2,
-				name = L["Is PvP Talents"],
-				disabled = function()
-					return not E.global.nameplate.filters[selectedNameplateFilter].triggers.talent.enabled
-				end,
-				get = function(info)
-					return E.global.nameplate.filters[selectedNameplateFilter].triggers.talent.type == 'pvp'
-				end,
-				set = function(info, value)
-					E.global.nameplate.filters[selectedNameplateFilter].triggers.talent.type = value and 'pvp' or 'normal'
-					UpdateTalentSection()
-					NP:ConfigureAll()
-				end
-			},
-			requireAll = {
-				type = 'toggle',
-				order = 3,
-				name = L["Require All"],
-				disabled = function()
-					return not E.global.nameplate.filters[selectedNameplateFilter].triggers.talent.enabled
-				end,
-				get = function(info)
-					return E.global.nameplate.filters[selectedNameplateFilter].triggers.talent.requireAll
-				end,
-				set = function(info, value)
-					E.global.nameplate.filters[selectedNameplateFilter].triggers.talent.requireAll = value
-					UpdateTalentSection()
-					NP:ConfigureAll()
-				end
-			}
-		}
-
-		if not E.Options.args.nameplate.args.filters.args.triggers.args.talent.args.tiers then
-			E.Options.args.nameplate.args.filters.args.triggers.args.talent.args.tiers = {
-				type = 'group',
-				order = 4,
-				name = L["Tiers"],
-				inline = true,
-				disabled = function()
-					return not E.global.nameplate.filters[selectedNameplateFilter].triggers.talent.enabled
-				end,
-				args = {}
-			}
-		end
-
-		local order = 1
-		for i = 1, maxTiers do
-			E.Options.args.nameplate.args.filters.args.triggers.args.talent.args.tiers.args['tier' .. i .. 'enabled'] = {
-				type = 'toggle',
-				order = order,
-				name = format(L["GARRISON_CURRENT_LEVEL"], i),
-				get = function(info)
-					return E.global.nameplate.filters[selectedNameplateFilter].triggers.talent['tier' .. i .. 'enabled']
-				end,
-				set = function(info, value)
-					E.global.nameplate.filters[selectedNameplateFilter].triggers.talent['tier' .. i .. 'enabled'] = value
-					UpdateTalentSection()
-					NP:ConfigureAll()
-				end
-			}
-			order = order + 1
-			if (E.global.nameplate.filters[selectedNameplateFilter].triggers.talent['tier' .. i .. 'enabled']) then
-				E.Options.args.nameplate.args.filters.args.triggers.args.talent.args.tiers.args['tier' .. i] = {
-					type = 'group',
-					order = order,
-					inline = true,
-					name = L["Tier " .. i],
-					args = {
-						missing = {
-							type = 'toggle',
-							order = 2,
-							name = L["Missing"],
-							desc = L["Match this trigger if the talent is not selected"],
-							get = function(info)
-								return E.global.nameplate.filters[selectedNameplateFilter].triggers.talent['tier' .. i].missing
-							end,
-							set = function(info, value)
-								E.global.nameplate.filters[selectedNameplateFilter].triggers.talent['tier' .. i].missing = value
-								UpdateTalentSection()
-								NP:ConfigureAll()
-							end
-						},
-						column = {
-							type = 'select',
-							order = 1,
-							name = L["TALENT"],
-							style = 'dropdown',
-							desc = L["Talent to match"],
-							get = function(info)
-								return E.global.nameplate.filters[selectedNameplateFilter].triggers.talent['tier' .. i].column
-							end,
-							set = function(info, value)
-								E.global.nameplate.filters[selectedNameplateFilter].triggers.talent['tier' .. i].column = value
-								NP:ConfigureAll()
-							end,
-							values = function()
-								return GenerateValues(i, E.global.nameplate.filters[selectedNameplateFilter].triggers.talent.type == 'pvp')
-							end
-						}
-					}
-				}
-				order = order + 1
-			end
-
-			order = order + 1
-		end
-	end
-end
-
 local function UpdateInstanceDifficulty()
 	if (E.global.nameplate.filters[selectedNameplateFilter].triggers.instanceType.party) then
 		E.Options.args.nameplate.args.filters.args.triggers.args.instanceType.args.types.args.dungeonDifficulty = {
@@ -393,9 +243,6 @@ local function UpdateInstanceDifficulty()
 			values = {
 				normal = GetDifficultyInfo(1),
 				heroic = GetDifficultyInfo(2),
-				mythic = GetDifficultyInfo(23),
-				['mythic+'] = GetDifficultyInfo(8),
-				timewalking = GetDifficultyInfo(24),
 			}
 		}
 	else
@@ -417,15 +264,7 @@ local function UpdateInstanceDifficulty()
 				NP:ConfigureAll()
 			end,
 			values = {
-				lfr = GetDifficultyInfo(17),
 				normal = GetDifficultyInfo(14),
-				heroic = GetDifficultyInfo(15),
-				mythic = GetDifficultyInfo(16),
-				timewalking = GetDifficultyInfo(24),
-				legacy10normal = GetDifficultyInfo(3),
-				legacy25normal = GetDifficultyInfo(4),
-				legacy10heroic = GetDifficultyInfo(5),
-				legacy25heroic = GetDifficultyInfo(6),
 			}
 		}
 	else
@@ -729,7 +568,6 @@ local function UpdateFilterGroup()
 						E.global.nameplate.filters[selectedNameplateFilter] = filter
 						UpdateStyleLists()
 						UpdateClassSection()
-						UpdateTalentSection()
 						UpdateInstanceDifficulty()
 						NP:ConfigureAll()
 					end
@@ -999,35 +837,23 @@ local function UpdateFilterGroup()
 									desc = L["If enabled then the filter will only activate when you are out of combat."],
 									order = 2
 								},
-								inVehicle = {
-									type = 'toggle',
-									name = L["In Vehicle"],
-									desc = L["If enabled then the filter will only activate when you are in a Vehicle."],
-									order = 3
-								},
-								outOfVehicle = {
-									type = 'toggle',
-									name = L["Out of Vehicle"],
-									desc = L["If enabled then the filter will only activate when you are not in a Vehicle."],
-									order = 4
-								},
 								isResting = {
 									type = 'toggle',
 									name = L["Is Resting"],
 									desc = L["If enabled then the filter will only activate when you are resting at an Inn."],
-									order = 5
+									order = 3
 								},
 								playerCanAttack = {
 									type = 'toggle',
 									name = L["Can Attack"],
 									desc = L["If enabled then the filter will only activate when the unit can be attacked by the active player."],
-									order = 6
+									order = 4
 								},
 								playerCanNotAttack = {
 									type = 'toggle',
 									name = L["Can Not Attack"],
 									desc = L["If enabled then the filter will only activate when the unit can not be attacked by the active player."],
-									order = 7
+									order = 5
 								}
 							}
 						},
@@ -1049,41 +875,29 @@ local function UpdateFilterGroup()
 									desc = L["If enabled then the filter will only activate when the unit is out of combat."],
 									order = 2
 								},
-								inVehicleUnit = {
-									type = 'toggle',
-									name = L["In Vehicle"],
-									desc = L["If enabled then the filter will only activate when the unit is in a Vehicle."],
-									order = 3
-								},
-								outOfVehicleUnit = {
-									type = 'toggle',
-									name = L["Out of Vehicle"],
-									desc = L["If enabled then the filter will only activate when the unit is not in a Vehicle."],
-									order = 4
-								},
 								inParty = {
 									type = 'toggle',
 									name = L["In Party"],
 									desc = L["If enabled then the filter will only activate when the unit is in your Party."],
-									order = 5
+									order = 3
 								},
 								notInParty = {
 									type = 'toggle',
 									name = L["Not in Party"],
 									desc = L["If enabled then the filter will only activate when the unit is not in your Party."],
-									order = 6
+									order = 4
 								},
 								inRaid = {
 									type = 'toggle',
 									name = L["In Raid"],
 									desc = L["If enabled then the filter will only activate when the unit is in your Raid."],
-									order = 7
+									order = 5
 								},
 								notInRaid = {
 									type = 'toggle',
 									name = L["Not in Raid"],
 									desc = L["If enabled then the filter will only activate when the unit is not in your Raid."],
-									order = 8
+									order = 6
 								},
 								isPet = {
 									type = 'toggle',
@@ -1148,7 +962,7 @@ local function UpdateFilterGroup()
 							}
 						},
 						npcGroup = {
-							name = '',
+							name = 'NPC',
 							type = 'group',
 							inline = true,
 							order = 3,
@@ -1165,29 +979,6 @@ local function UpdateFilterGroup()
 								},
 							}
 						},
-						questGroup = {
-							name = '',
-							type = 'group',
-							inline = true,
-							order = 4,
-							args = {
-								isQuest = {
-									type = 'toggle',
-									name = L["Quest Unit"],
-									order = 1
-								},
-								notQuest = {
-									type = 'toggle',
-									name = L["Not Quest Unit"],
-									order = 2
-								},
-								questBoss = {
-									type = 'toggle',
-									name = L["Quest Boss"],
-									order = 3,
-								},
-							}
-						}
 					}
 				},
 				class = {
@@ -1200,89 +991,6 @@ local function UpdateFilterGroup()
 							E.db.nameplates.filters[selectedNameplateFilter].triggers.enable)
 					end,
 					args = {}
-				},
-				talent = {
-					order = 11,
-					type = 'group',
-					name = L["TALENT"],
-					disabled = function()
-						return not (E.db.nameplates and E.db.nameplates.filters and E.db.nameplates.filters[selectedNameplateFilter] and
-							E.db.nameplates.filters[selectedNameplateFilter].triggers and
-							E.db.nameplates.filters[selectedNameplateFilter].triggers.enable)
-					end,
-					args = {}
-				},
-				role = {
-					order = 12,
-					type = 'group',
-					name = L["ROLE"],
-					disabled = function()
-						return not (E.db.nameplates and E.db.nameplates.filters and E.db.nameplates.filters[selectedNameplateFilter] and
-							E.db.nameplates.filters[selectedNameplateFilter].triggers and
-							E.db.nameplates.filters[selectedNameplateFilter].triggers.enable)
-					end,
-					args = {
-						myRole = {
-							name = L["Player"],
-							type = 'group',
-							inline = true,
-							order = 2,
-							get = function(info)
-								return E.global.nameplate.filters[selectedNameplateFilter].triggers.role[info[#info]]
-							end,
-							set = function(info, value)
-								E.global.nameplate.filters[selectedNameplateFilter].triggers.role[info[#info]] = value
-								NP:ConfigureAll()
-							end,
-							args = {
-								tank = {
-									type = 'toggle',
-									order = 1,
-									name = L["TANK"]
-								},
-								healer = {
-									type = 'toggle',
-									order = 2,
-									name = L["Healer"]
-								},
-								damager = {
-									type = 'toggle',
-									order = 3,
-									name = L["DAMAGER"]
-								}
-							}
-						},
-						unitRole = {
-							name = L["Unit"],
-							type = 'group',
-							inline = true,
-							order = 2,
-							get = function(info)
-								return E.global.nameplate.filters[selectedNameplateFilter].triggers.unitRole[info[#info]]
-							end,
-							set = function(info, value)
-								E.global.nameplate.filters[selectedNameplateFilter].triggers.unitRole[info[#info]] = value
-								NP:ConfigureAll()
-							end,
-							args = {
-								tank = {
-									type = 'toggle',
-									order = 1,
-									name = L["TANK"]
-								},
-								healer = {
-									type = 'toggle',
-									order = 2,
-									name = L["Healer"]
-								},
-								damager = {
-									type = 'toggle',
-									order = 3,
-									name = L["DAMAGER"]
-								}
-							}
-						}
-					}
 				},
 				classification = {
 					order = 13,
@@ -2334,7 +2042,6 @@ local function UpdateFilterGroup()
 									end,
 									set = function(info, value)
 										E.global.nameplate.filters[selectedNameplateFilter].triggers.instanceType.raid = value
-										UpdateInstanceDifficulty()
 										NP:ConfigureAll()
 									end
 								},
@@ -3040,7 +2747,6 @@ local function UpdateFilterGroup()
 
 		specListOrder = 50 -- reset this to 50
 		UpdateClassSection()
-		UpdateTalentSection()
 		UpdateInstanceDifficulty()
 		UpdateStyleLists()
 	end
@@ -4821,9 +4527,6 @@ local function GetUnitSettings(unit, name)
 						desc = L["Descending"],
 						NONE = _G.NONE
 					},
-					hidden = function()
-						return (E.myclass ~= 'DEATHKNIGHT')
-					end
 				}
 			}
 		}
@@ -4952,107 +4655,6 @@ local function GetUnitSettings(unit, name)
 					min = -100,
 					max = 100,
 					step = 1
-				}
-			}
-		}
-		group.args.questIcon = {
-			order = 13,
-			name = L["Quest Icon"],
-			type = 'group',
-			get = function(info)
-				return E.db.nameplates.units[unit].questIcon[info[#info]]
-			end,
-			set = function(info, value)
-				E.db.nameplates.units[unit].questIcon[info[#info]] = value
-				NP:SetCVars()
-				NP:ConfigureAll()
-			end,
-			args = {
-				enable = {
-					type = 'toggle',
-					order = 0,
-					name = L["Enable"]
-				},
-				hideIcon = {
-					type = 'toggle',
-					order = 1,
-					name = L["Hide Icon"]
-				},
-				font = {
-					type = 'select',
-					dialogControl = 'LSM30_Font',
-					order = 2,
-					name = L["Font"],
-					values = _G.AceGUIWidgetLSMlists.font
-				},
-				fontSize = {
-					order = 3,
-					name = L["FONT_SIZE"],
-					type = 'range',
-					min = 4,
-					max = 40,
-					step = 1
-				},
-				fontOutline = {
-					order = 4,
-					name = L["Font Outline"],
-					desc = L["Set the font outline."],
-					type = 'select',
-					values = C.Values.FontFlags
-				},
-				size = {
-					type = 'range',
-					order = 5,
-					name = L["Size"],
-					min = 10,
-					max = 50,
-					step = 1
-				},
-				xOffset = {
-					order = 6,
-					name = L["X-Offset"],
-					type = 'range',
-					min = -100,
-					max = 100,
-					step = 1
-				},
-				yOffset = {
-					order = 7,
-					name = L["Y-Offset"],
-					type = 'range',
-					min = -100,
-					max = 100,
-					step = 1
-				},
-				position = {
-					order = 8,
-					type = 'select',
-					name = L["Icon Position"],
-					values = {
-						CENTER = 'CENTER',
-						TOPLEFT = 'TOPLEFT',
-						BOTTOMLEFT = 'BOTTOMLEFT',
-						TOPRIGHT = 'TOPRIGHT',
-						BOTTOMRIGHT = 'BOTTOMRIGHT',
-						LEFT = 'LEFT',
-						RIGHT = 'RIGHT'
-					}
-				},
-				textPosition = {
-					order = 9,
-					type = 'select',
-					name = L["Text Position"],
-					values = {
-						TOP = 'TOP',
-						LEFT = 'LEFT',
-						BOTTOM = 'BOTTOM',
-						CENTER = 'CENTER',
-						TOPLEFT = 'TOPLEFT',
-						BOTTOMLEFT = 'BOTTOMLEFT',
-						BOTTOMRIGHT = 'BOTTOMRIGHT',
-						RIGHT = 'RIGHT',
-						TOPRIGHT = 'TOPRIGHT'
-					}
 				}
 			}
 		}
@@ -5356,6 +4958,13 @@ E.Options.args.nameplate = {
 							dialogControl = 'LSM30_Statusbar',
 							name = L["StatusBar Texture"],
 							values = _G.AceGUIWidgetLSMlists.statusbar
+						},
+						loadDistance = {
+							order = 6,
+							type = 'range',
+							name = L["Load Distance"],
+							desc = L["Only load nameplates for units within this range."],
+							min = 0, max = 41, step = 1,
 						},
 						overlapV = {
 							order = 7,
@@ -6362,44 +5971,14 @@ E.Options.args.nameplate = {
 									name = L["FOCUS"],
 									type = 'color'
 								},
-								FURY = {
-									order = 3,
-									name = L["FURY"],
-									type = 'color'
-								},
-								INSANITY = {
-									order = 4,
-									name = L["INSANITY"],
-									type = 'color'
-								},
-								LUNAR_POWER = {
-									order = 5,
-									name = L["LUNAR_POWER"],
-									type = 'color'
-								},
-								MAELSTROM = {
-									order = 6,
-									name = L["MAELSTROM"],
-									type = 'color'
-								},
 								MANA = {
 									order = 7,
 									name = L["MANA"],
 									type = 'color'
 								},
-								PAIN = {
-									order = 8,
-									name = L["PAIN"],
-									type = 'color'
-								},
 								RAGE = {
 									order = 9,
 									name = L["RAGE"],
-									type = 'color'
-								},
-								RUNIC_POWER = {
-									order = 10,
-									name = L["RUNIC_POWER"],
 									type = 'color'
 								},
 								ALT_POWER = {
@@ -6424,28 +6003,7 @@ E.Options.args.nameplate = {
 								t.r, t.g, t.b, t.a = r, g, b, a
 								NP:ConfigureAll()
 							end,
-							args = {
-								PALADIN = {
-									type = 'color',
-									order = 1,
-									name = L["HOLY_POWER"]
-								},
-								MAGE = {
-									type = 'color',
-									order = 2,
-									name = L["POWER_TYPE_ARCANE_CHARGES"]
-								},
-								WARLOCK = {
-									type = 'color',
-									order = 3,
-									name = L["SOUL_SHARDS"]
-								},
-								DEATHKNIGHT = {
-									type = 'color',
-									order = 4,
-									name = L["RUNES"]
-								},
-							}
+							args = {},
 						}
 					}
 				}
@@ -6681,9 +6239,6 @@ E.Options.args.nameplate = {
 								desc = L["Descending"],
 								NONE = L["NONE"]
 							},
-							hidden = function()
-								return (E.myclass ~= 'DEATHKNIGHT')
-							end
 						}
 					}
 				},
@@ -6717,38 +6272,7 @@ end
 
 ORDER = 10
 
-E.Options.args.nameplate.args.generalGroup.args.colorsGroup.args.classResources.args.chargedComboPoint = {
-	order = 17,
-	type = 'color',
-	name = L["Charged Combo Point"],
-	get = function()
-		local t = E.db.nameplates.colors.classResources.chargedComboPoint
-		local d = P.nameplates.colors.classResources.chargedComboPoint
-		return t.r, t.g, t.b, t.a, d.r, d.g, d.b
-	end,
-	set = function(_, r, g, b)
-		local t = E.db.nameplates.colors.classResources.chargedComboPoint
-		t.r, t.g, t.b = r, g, b
-		NP:ConfigureAll()
-	end,
-}
-
 for i = 1, 6 do
-	E.Options.args.nameplate.args.generalGroup.args.colorsGroup.args.classResources.args['CHI_POWER' .. i] = {
-		type = 'color',
-		order = i + ORDER,
-		name = L["CHI_POWER"] .. ' #' .. i,
-		get = function(info)
-			local t = E.db.nameplates.colors.classResources.MONK[i]
-			local d = P.nameplates.colors.classResources.MONK[i]
-			return t.r, t.g, t.b, t.a, d.r, d.g, d.b
-		end,
-		set = function(info, r, g, b)
-			local t = E.db.nameplates.colors.classResources.MONK[i]
-			t.r, t.g, t.b = r, g, b
-			NP:ConfigureAll()
-		end
-	}
 	E.Options.args.nameplate.args.generalGroup.args.colorsGroup.args.classResources.args['COMBO_POINTS' .. i] = {
 		type = 'color',
 		order = i + (ORDER * 2),

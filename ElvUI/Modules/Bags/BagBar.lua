@@ -1,4 +1,4 @@
-local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local E, L, V, P, G = unpack(select(2, ...)) --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local B = E:GetModule('Bags')
 
 local _G = _G
@@ -7,19 +7,17 @@ local unpack = unpack
 local tinsert = tinsert
 local CreateFrame = CreateFrame
 local GetCVarBool = GetCVarBool
-local GetBagSlotFlag = GetBagSlotFlag
 local RegisterStateDriver = RegisterStateDriver
+local CalculateTotalNumberOfFreeBagSlots = CalculateTotalNumberOfFreeBagSlots
 local NUM_BAG_FRAMES = NUM_BAG_FRAMES
-local LE_BAG_FILTER_FLAG_EQUIPMENT = LE_BAG_FILTER_FLAG_EQUIPMENT
-local NUM_LE_BAG_FILTER_FLAGS = NUM_LE_BAG_FILTER_FLAGS
 
 local function OnEnter()
-	if not E.db.bags.bagBar.mouseover then return; end
+	if not E.db.bags.bagBar.mouseover then return end
 	E:UIFrameFadeIn(B.BagBar, 0.2, B.BagBar:GetAlpha(), 1)
 end
 
 local function OnLeave()
-	if not E.db.bags.bagBar.mouseover then return; end
+	if not E.db.bags.bagBar.mouseover then return end
 	E:UIFrameFadeOut(B.BagBar, 0.2, B.BagBar:GetAlpha(), 0)
 end
 
@@ -60,11 +58,9 @@ function B:SizeAndPositionBagBar()
 	local firstButton, lastButton
 	for i, button in ipairs(B.BagBar.buttons) do
 		local prevButton = B.BagBar.buttons[i-1]
-		button.ElvUIFilterIcon.FilterBackdrop:Size(bagBarSize / 2)
 		button:Size(bagBarSize)
 		button:ClearAllPoints()
 		button:SetShown(i == 1 and justBackpack or not justBackpack)
-		button.Count:SetShown(GetCVarBool('displayFreeBagSlots'))
 
 		if sortDirection == 'ASCENDING'then
 			if i == 1 then firstButton = button else lastButton = button end
@@ -97,24 +93,6 @@ function B:SizeAndPositionBagBar()
 				button:Point('BOTTOM', prevButton, 'TOP', 0, buttonSpacing)
 			end
 		end
-		for j = LE_BAG_FILTER_FLAG_EQUIPMENT, NUM_LE_BAG_FILTER_FLAGS do
-			local active = GetBagSlotFlag(i - 1, j)
-			if active then
-				button.ElvUIFilterIcon:SetTexture(B.BAG_FILTER_ICONS[j])
-				button.ElvUIFilterIcon:SetShown(E.db.bags.showAssignedIcon)
-
-				local r, g, b, a = unpack(B.AssignmentColors[j])
-
-				button.forcedBorderColors = {r, g, b, a}
-				button.backdrop:SetBackdropBorderColor(r, g, b, a)
-				break -- this loop
-			else
-				button.ElvUIFilterIcon:SetShown(false)
-
-				button.forcedBorderColors = nil
-				button.backdrop:SetBackdropBorderColor(unpack(E.media.bordercolor))
-			end
-		end
 	end
 
 	local btnSize = bagBarSize * (NUM_BAG_FRAMES + 1)
@@ -133,6 +111,12 @@ function B:SizeAndPositionBagBar()
 	end
 
 	B.BagBar.mover:SetSize(B.BagBar.backdrop:GetSize())
+	B:UpdateMainButtonCount()
+end
+
+function B:UpdateMainButtonCount()
+	B.BagBar.buttons[1].Count:SetShown(GetCVarBool('displayFreeBagSlots'))
+	B.BagBar.buttons[1].Count:SetText(CalculateTotalNumberOfFreeBagSlots())
 end
 
 function B:LoadBagBar()
@@ -168,27 +152,32 @@ function B:LoadBagBar()
 		tinsert(B.BagBar.buttons, b)
 	end
 
-	--Item assignment
-	for i, bagButton in ipairs(B.BagBar.buttons) do
-		B:CreateFilterIcon(bagButton)
-		bagButton.id = (i - 1)
+	_G.KeyRingButton:SetParent(B.BagBar)
+	_G.KeyRingButton.SetParent = E.dummy
+	_G.KeyRingButton:HookScript('OnEnter', OnEnter)
+	_G.KeyRingButton:HookScript('OnLeave', OnLeave)
 
-		bagButton:SetScript('OnClick', function(holder, button)
-			if button == 'RightButton' then
-				B.AssignBagDropdown.holder = holder
-				_G.ToggleDropDownMenu(1, nil, B.AssignBagDropdown, 'cursor')
-			else
-				if holder.id == 0 then
-					_G.MainMenuBarBackpackButton_OnClick(holder)
-				else
-					_G.BagSlotButton_OnClick(holder)
-				end
-			end
+	if E.private.bags.enable then
+		_G.KeyRingButton:HookScript('PostClick', function()
+			B.ShowKeyRing = not B.ShowKeyRing
+			B:Layout()
 		end)
 	end
+
+	_G.KeyRingButton:StripTextures()
+	_G.KeyRingButton:SetTemplate(nil, true)
+	_G.KeyRingButton:StyleButton(true)
+	_G.KeyRingButton:SetNormalTexture("Interface/ICONS/INV_Misc_Key_03")
+	_G.KeyRingButton:GetNormalTexture():SetTexCoord(unpack(E.TexCoords))
+	_G.KeyRingButton:GetNormalTexture():SetInside()
+	_G.KeyRingButton:SetPushedTexture("Interface/ICONS/INV_Misc_Key_03")
+	_G.KeyRingButton:GetPushedTexture():SetTexCoord(unpack(E.TexCoords))
+	_G.KeyRingButton:GetPushedTexture():SetInside()
+	tinsert(B.BagBar.buttons, _G.KeyRingButton)
 
 	E:CreateMover(B.BagBar, 'BagsMover', L["Bags"], nil, nil, nil, nil, nil, 'bags,general')
 	B.BagBar:SetPoint('BOTTOMLEFT', B.BagBar.mover)
 	B:RegisterEvent('BAG_SLOT_FLAGS_UPDATED', 'SizeAndPositionBagBar')
+	B:RegisterEvent('BAG_UPDATE_DELAYED', 'UpdateMainButtonCount')
 	B:SizeAndPositionBagBar()
 end

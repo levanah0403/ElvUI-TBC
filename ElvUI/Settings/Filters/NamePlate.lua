@@ -3,7 +3,7 @@
 
 	Add the nameplates name that you do NOT want to see.
 ]]
-local E, L, V, P, G = unpack(select(2, ...)) --Engine
+local E, L, V, P, G = unpack(select(2, ...)) --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 
 G.nameplate.filters = {
 	ElvUI_Boss = {
@@ -41,26 +41,6 @@ G.nameplate.filters = {
 			alpha = 50
 		}
 	},
-	ElvUI_Explosives = {
-		triggers = {
-			priority = 2,
-			nameplateType = {
-				enable = true,
-				enemyNPC = true
-			},
-			names = {
-				['120651'] = true
-			}
-		},
-		actions = {
-			usePortrait = true,
-			scale = 1.15,
-			color = {
-				health = true,
-				healthColor = {r = 0, g = 255, b = 255}
-			}
-		}
-	}
 }
 
 E.StyleFilterDefaults = {
@@ -79,16 +59,6 @@ E.StyleFilterDefaults = {
 			interruptible = false,
 			notSpell = false,
 			spells = {}
-		},
-		role = {
-			tank = false,
-			healer = false,
-			damager = false
-		},
-		unitRole = {
-			tank = false,
-			healer = false,
-			damager = false
 		},
 		classification = {
 			worldboss = false,
@@ -109,25 +79,6 @@ E.StyleFilterDefaults = {
 			square = false,
 			cross = false,
 			skull = false
-		},
-		talent = {
-			type = 'normal',
-			enabled = false,
-			requireAll = false,
-			tier1enabled = false,
-			tier1 = {missing = false, column = 0},
-			tier2enabled = false,
-			tier2 = {missing = false, column = 0},
-			tier3enabled = false,
-			tier3 = {missing = false, column = 0},
-			tier4enabled = false,
-			tier4 = {missing = false, column = 0},
-			tier5enabled = false,
-			tier5 = {missing = false, column = 0},
-			tier6enabled = false,
-			tier6 = {missing = false, column = 0},
-			tier7enabled = false,
-			tier7 = {missing = false, column = 0}
 		},
 		threat = {
 			enable = false,
@@ -224,21 +175,7 @@ E.StyleFilterDefaults = {
 			dungeon = {
 				normal = false,
 				heroic = false,
-				mythic = false,
-				['mythic+'] = false,
-				timewalking = false
 			},
-			raid = {
-				lfr = false,
-				normal = false,
-				heroic = false,
-				mythic = false,
-				timewalking = false,
-				legacy10normal = false,
-				legacy25normal = false,
-				legacy10heroic = false,
-				legacy25heroic = false
-			}
 		},
 		cooldowns = {
 			names = {},
@@ -275,19 +212,11 @@ E.StyleFilterDefaults = {
 		playerCanNotAttack = false,
 		hasTitleNPC = false,
 		noTitleNPC = false,
-		isQuest = false,
-		notQuest = false,
-		questBoss = false,
 		-- combat
 		inCombat = false,
 		outOfCombat = false,
 		inCombatUnit = false,
 		outOfCombatUnit = false,
-		-- vehicle
-		inVehicle = false,
-		outOfVehicle = false,
-		inVehicleUnit = false,
-		outOfVehicleUnit = false
 	},
 	actions = {
 		color = {

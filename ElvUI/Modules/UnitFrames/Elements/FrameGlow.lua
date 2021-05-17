@@ -67,7 +67,7 @@ function UF:FrameGlow_ClassGlowPosition(frame, powerName, glow, offset, fromScri
 	-- check for Additional Power to hook scripts on
 	local useBonusPower, bonus
 	if powerName == 'ClassPower' then
-		local bonusName = (frame.AdditionalPower and 'AdditionalPower') or (frame.Stagger and 'Stagger') or (frame.Runes and 'Runes')
+		local bonusName = (frame.AdditionalPower and 'AdditionalPower')
 		bonus = bonusName and frame[bonusName]
 
 		if bonus then
@@ -103,7 +103,6 @@ function UF:FrameGlow_PositionGlow(frame, mainGlow, powerGlow)
 	local infoPanel = frame.InfoPanel
 	local classPower = frame.ClassPower
 	local altPower = frame.AlternativePower
-	local pvpSpec = frame.PVPSpecIcon
 	local power = frame.Power and frame.Power.backdrop
 	local health = frame.Health and frame.Health.backdrop
 	local portrait = (frame.USE_PORTRAIT and not frame.USE_PORTRAIT_OVERLAY) and (frame.Portrait and frame.Portrait.backdrop)
@@ -134,10 +133,6 @@ function UF:FrameGlow_PositionGlow(frame, mainGlow, powerGlow)
 		UF:FrameGlow_ClassGlowPosition(frame, 'ClassPower', mainGlow, offset)
 	elseif altPower then
 		UF:FrameGlow_ClassGlowPosition(frame, 'AlternativePower', mainGlow, offset)
-	elseif pvpSpec and pvpSpec:IsShown() then
-		local shownPanel = (infoPanel and infoPanel:IsShown() and infoPanel.backdrop)
-		mainGlow:SetPoint('TOPLEFT', pvpSpec.bg, -offset, offset)
-		mainGlow:SetPoint('BOTTOMLEFT', shownPanel or pvpSpec.bg, -offset, -offset)
 	end
 end
 

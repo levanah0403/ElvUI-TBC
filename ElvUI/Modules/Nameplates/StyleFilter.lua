@@ -1,4 +1,4 @@
-local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local E, L, V, P, G = unpack(select(2, ...)) --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local mod = E:GetModule('NamePlates')
 local LSM = E.Libs.LSM
 
@@ -9,11 +9,9 @@ local strmatch, tinsert, tremove, sort, wipe = strmatch, tinsert, tremove, sort,
 
 local GetInstanceInfo = GetInstanceInfo
 local GetRaidTargetIndex = GetRaidTargetIndex
-local GetSpecializationInfo = GetSpecializationInfo
 local GetSpellCharges = GetSpellCharges
 local GetSpellCooldown = GetSpellCooldown
 local GetSpellInfo = GetSpellInfo
-local GetTalentInfo = GetTalentInfo
 local GetTime = GetTime
 local IsResting = IsResting
 local UnitPlayerControlled = UnitPlayerControlled
@@ -22,22 +20,18 @@ local UnitCanAttack = UnitCanAttack
 local UnitExists = UnitExists
 local UnitHealth = UnitHealth
 local UnitHealthMax = UnitHealthMax
-local UnitInVehicle = UnitInVehicle
 local UnitIsOwnerOrControllerOfUnit = UnitIsOwnerOrControllerOfUnit
 local UnitIsPVP = UnitIsPVP
 local UnitInParty = UnitInParty
 local UnitInRaid = UnitInRaid
-local UnitIsQuestBoss = UnitIsQuestBoss
 local UnitIsTapDenied = UnitIsTapDenied
 local UnitIsUnit = UnitIsUnit
 local UnitLevel = UnitLevel
 local UnitPower = UnitPower
 local UnitPowerMax = UnitPowerMax
 local UnitThreatSituation = UnitThreatSituation
-local UnitGroupRolesAssigned = UnitGroupRolesAssigned
 
 local C_Timer_NewTimer = C_Timer.NewTimer
-local C_SpecializationInfo_GetPvpTalentSlotInfo = C_SpecializationInfo.GetPvpTalentSlotInfo
 
 local FallbackColor = {r=1, b=1, g=1}
 
@@ -52,11 +46,6 @@ mod.TriggerConditions = {
 		ENEMY_PLAYER = 'enemyPlayer',
 		ENEMY_NPC = 'enemyNPC',
 		PLAYER = 'player'
-	},
-	roles = {
-		TANK = 'tank',
-		HEALER = 'healer',
-		DAMAGER = 'damager'
 	},
 	keys = {
 		Modifier = IsModifierKeyDown,
@@ -79,25 +68,6 @@ mod.TriggerConditions = {
 		[2] = 'goodTransition',
 		[3] = 'bad'
 	},
-	difficulties = {
-		-- dungeons
-		[1] = 'normal',
-		[2] = 'heroic',
-		[8] = 'mythic+',
-		[23] = 'mythic',
-		[24] = 'timewalking',
-		-- raids
-		[7] = 'lfr',
-		[17] = 'lfr',
-		[14] = 'normal',
-		[15] = 'heroic',
-		[16] = 'mythic',
-		[33] = 'timewalking',
-		[3] = 'legacy10normal',
-		[4] = 'legacy25normal',
-		[5] = 'legacy10heroic',
-		[6] = 'legacy25heroic',
-	}
 }
 
 do -- E.CreatureTypes; Do *not* change the value, only the key (['key'] = 'value').
@@ -470,8 +440,8 @@ function mod:StyleFilterSetChanges(frame, actions, HealthColor, PowerColor, Bord
 		local pc = actions.color.powerColor
 		c.PowerColor = true
 
-        frame.Power:SetStatusBarColor(pc.r, pc.g, pc.b, pc.a)
-        frame.Cutaway.Power:SetVertexColor(pc.r * 1.5, pc.g * 1.5, pc.b * 1.5, pc.a)
+		frame.Power:SetStatusBarColor(pc.r, pc.g, pc.b, pc.a)
+		frame.Cutaway.Power:SetVertexColor(pc.r * 1.5, pc.g * 1.5, pc.b * 1.5, pc.a)
 	end
 	if Borders then
 		local bc = actions.color.borderColor
@@ -612,9 +582,9 @@ function mod:StyleFilterClearChanges(frame, HealthColor, PowerColor, Borders, He
 end
 
 function mod:StyleFilterThreatUpdate(frame, unit)
-	if mod:UnitExists(unit) then
+	if UnitExists(unit) then
 		local isTank, offTank, feedbackUnit = mod.ThreatIndicator_PreUpdate(frame.ThreatIndicator, unit, true)
-		if feedbackUnit and (feedbackUnit ~= unit) and mod:UnitExists(feedbackUnit) then
+		if feedbackUnit and (feedbackUnit ~= unit) and UnitExists(feedbackUnit) then
 			return isTank, offTank, UnitThreatSituation(feedbackUnit, unit)
 		else
 			return isTank, offTank, UnitThreatSituation(unit)
@@ -630,9 +600,16 @@ function mod:StyleFilterConditionCheck(frame, filter, trigger)
 		local healthUnit = (trigger.healthUsePlayer and 'player') or frame.unit
 		local health, maxHealth = UnitHealth(healthUnit), UnitHealthMax(healthUnit)
 		local percHealth = (maxHealth and (maxHealth > 0) and health/maxHealth) or 0
-		local underHealthThreshold = trigger.underHealthThreshold and (trigger.underHealthThreshold ~= 0) and (trigger.underHealthThreshold > percHealth)
-		local overHealthThreshold = trigger.overHealthThreshold and (trigger.overHealthThreshold ~= 0) and (trigger.overHealthThreshold < percHealth)
-		if underHealthThreshold or overHealthThreshold then passed = true else return end
+
+		local underHealth = trigger.underHealthThreshold and (trigger.underHealthThreshold ~= 0)
+		local overHealth = trigger.overHealthThreshold and (trigger.overHealthThreshold ~= 0)
+
+		local underThreshold = underHealth and (trigger.underHealthThreshold > percHealth)
+		local overThreshold = overHealth and (trigger.overHealthThreshold < percHealth)
+
+		if underHealth and overHealth then
+			if underThreshold and overThreshold then passed = true else return end
+		elseif underThreshold or overThreshold then passed = true else return end
 	end
 
 	-- Power
@@ -640,9 +617,16 @@ function mod:StyleFilterConditionCheck(frame, filter, trigger)
 		local powerUnit = (trigger.powerUsePlayer and 'player') or frame.unit
 		local power, maxPower = UnitPower(powerUnit, frame.PowerType), UnitPowerMax(powerUnit, frame.PowerType)
 		local percPower = (maxPower and (maxPower > 0) and power/maxPower) or 0
-		local underPowerThreshold = trigger.underPowerThreshold and (trigger.underPowerThreshold ~= 0) and (trigger.underPowerThreshold > percPower)
-		local overPowerThreshold = trigger.overPowerThreshold and (trigger.overPowerThreshold ~= 0) and (trigger.overPowerThreshold < percPower)
-		if underPowerThreshold or overPowerThreshold then passed = true else return end
+
+		local underPower = trigger.underPowerThreshold and (trigger.underPowerThreshold ~= 0)
+		local overPower = trigger.overPowerThreshold and (trigger.overPowerThreshold ~= 0)
+
+		local underThreshold = underPower and (trigger.underPowerThreshold > percPower)
+		local overThreshold = overPower and (trigger.overPowerThreshold < percPower)
+
+		if underPower and overPower then
+			if underThreshold and overThreshold then passed = true else return end
+		elseif underThreshold or overThreshold then passed = true else return end
 	end
 
 	-- Level
@@ -659,17 +643,6 @@ function mod:StyleFilterConditionCheck(frame, filter, trigger)
 	-- Resting
 	if trigger.isResting then
 		if IsResting() then passed = true else return end
-	end
-
-	-- Quest Boss
-	if trigger.questBoss then
-		if UnitIsQuestBoss(frame.unit) then passed = true else return end
-	end
-
-	-- Quest Unit
-	if trigger.isQuest or trigger.notQuest then
-		local quest = E.TagFunctions.GetQuestData(frame.unit)
-		if (trigger.isQuest and quest) or (trigger.notQuest and not quest) then passed = true else return end
 	end
 
 	-- Require Target
@@ -733,17 +706,6 @@ function mod:StyleFilterConditionCheck(frame, filter, trigger)
 		if (trigger.isTapDenied and tapDenied) or (trigger.isNotTapDenied and not tapDenied) then passed = true else return end
 	end
 
-	-- Player Vehicle
-	if trigger.inVehicle or trigger.outOfVehicle then
-		local inVehicle = UnitInVehicle('player')
-		if (trigger.inVehicle and inVehicle) or (trigger.outOfVehicle and not inVehicle) then passed = true else return end
-	end
-
-	-- Unit Vehicle
-	if trigger.inVehicleUnit or trigger.outOfVehicleUnit then
-		if (trigger.inVehicleUnit and frame.inVehicle) or (trigger.outOfVehicleUnit and not frame.inVehicle) then passed = true else return end
-	end
-
 	-- Player Can Attack
 	if trigger.playerCanAttack or trigger.playerCanNotAttack then
 		local canAttack = UnitCanAttack('player', frame.unit)
@@ -759,17 +721,6 @@ function mod:StyleFilterConditionCheck(frame, filter, trigger)
 	-- Classification
 	if trigger.classification.worldboss or trigger.classification.rareelite or trigger.classification.elite or trigger.classification.rare or trigger.classification.normal or trigger.classification.trivial or trigger.classification.minus then
 		if trigger.classification[frame.classification] then passed = true else return end
-	end
-
-	-- My Role
-	if trigger.role.tank or trigger.role.healer or trigger.role.damager then
-		if trigger.role[mod.TriggerConditions.roles[E.myrole]] then passed = true else return end
-	end
-
-	-- Unit Role
-	if trigger.unitRole.tank or trigger.unitRole.healer or trigger.unitRole.damager then
-		local role = UnitGroupRolesAssigned(frame.unit)
-		if trigger.unitRole[mod.TriggerConditions.roles[role]] then passed = true else return end
 	end
 
 	-- In Party
@@ -824,16 +775,6 @@ function mod:StyleFilterConditionCheck(frame, filter, trigger)
 		if trigger.raidTarget[mod.TriggerConditions.raidTargets[frame.RaidTargetIndex]] then passed = true else return end
 	end
 
-	-- Class and Specialization
-	if trigger.class and next(trigger.class) then
-		local Class = trigger.class[E.myclass]
-		if not Class or (Class.specs and next(Class.specs) and not Class.specs[E.myspec and GetSpecializationInfo(E.myspec)]) then
-			return
-		else
-			passed = true
-		end
-	end
-
 	do
 		local activeID = trigger.location.instanceIDEnabled
 		local activeType = trigger.instanceType.none or trigger.instanceType.scenario or trigger.instanceType.party or trigger.instanceType.raid or trigger.instanceType.arena or trigger.instanceType.pvp
@@ -873,36 +814,6 @@ function mod:StyleFilterConditionCheck(frame, filter, trigger)
 				if trigger.location.subZoneNames[E.MapInfo.subZoneText] then passed = true else return end
 			end
 		end
-	end
-
-	-- Talents
-	if trigger.talent.enabled then
-		local pvpTalent = trigger.talent.type == 'pvp'
-		local selected, complete
-
-		for i = 1, (pvpTalent and 4) or 7 do
-			local Tier = 'tier'..i
-			local Talent = trigger.talent[Tier]
-			if trigger.talent[Tier..'enabled'] and Talent.column > 0 then
-				if pvpTalent then
-					-- column is actually the talentID for pvpTalents
-					local slotInfo = C_SpecializationInfo_GetPvpTalentSlotInfo(i)
-					selected = (slotInfo and slotInfo.selectedTalentID) == Talent.column
-				else
-					selected = select(4, GetTalentInfo(i, Talent.column, 1))
-				end
-
-				if (selected and not Talent.missing) or (Talent.missing and not selected) then
-					complete = true
-					if not trigger.talent.requireAll then
-						break -- break when not using requireAll because we matched one
-					end
-				elseif trigger.talent.requireAll then
-					complete = false -- fail because requireAll
-					break
-		end end end
-
-		if complete then passed = true else return end
 	end
 
 	-- Casting
@@ -1037,11 +948,6 @@ function mod:StyleFilterSort(place)
 	end
 end
 
-function mod:StyleFilterVehicleFunction(_, unit)
-	unit = unit or self.unit
-	self.inVehicle = UnitInVehicle(unit) or nil
-end
-
 mod.StyleFilterEventFunctions = { -- a prefunction to the injected ouf watch
 	PLAYER_TARGET_CHANGED = function(self)
 		self.isTarget = self.unit and UnitIsUnit(self.unit, 'target') or nil
@@ -1056,9 +962,6 @@ mod.StyleFilterEventFunctions = { -- a prefunction to the injected ouf watch
 		unit = unit or self.unit
 		self.isTargetingMe = UnitIsUnit(unit..'target', 'player') or nil
 	end,
-	UNIT_ENTERED_VEHICLE = mod.StyleFilterVehicleFunction,
-	UNIT_EXITED_VEHICLE = mod.StyleFilterVehicleFunction,
-	VEHICLE_UPDATE = mod.StyleFilterVehicleFunction
 }
 
 function mod:StyleFilterSetVariables(nameplate)
@@ -1076,7 +979,6 @@ function mod:StyleFilterClearVariables(nameplate)
 
 	nameplate.isTarget = nil
 	nameplate.isFocused = nil
-	nameplate.inVehicle = nil
 	nameplate.isTargetingMe = nil
 	nameplate.RaidTargetIndex = nil
 	nameplate.ThreatScale = nil
@@ -1089,7 +991,7 @@ mod.StyleFilterDefaultEvents = { -- list of events style filter uses to populate
 	-- existing:
 	UNIT_AURA = false,
 	UNIT_DISPLAYPOWER = false,
-	UNIT_HEALTH = false,
+	UNIT_HEALTH_FREQUENT = false,
 	UNIT_MAXHEALTH = false,
 	UNIT_NAME_UPDATE = false,
 	UNIT_PET = false,
@@ -1102,16 +1004,12 @@ mod.StyleFilterDefaultEvents = { -- list of events style filter uses to populate
 	PLAYER_TARGET_CHANGED = true,
 	PLAYER_UPDATE_RESTING = true,
 	GROUP_ROSTER_UPDATE = true,
-	QUEST_LOG_UPDATE = true,
 	RAID_TARGET_UPDATE = true,
 	SPELL_UPDATE_COOLDOWN = true,
-	UNIT_ENTERED_VEHICLE = false,
-	UNIT_EXITED_VEHICLE = false,
 	UNIT_FLAGS = false,
 	UNIT_TARGET = false,
 	UNIT_THREAT_LIST_UPDATE = false,
 	UNIT_THREAT_SITUATION_UPDATE = false,
-	VEHICLE_UPDATE = true
 }
 mod.StyleFilterCastEvents = {
 	UNIT_SPELLCAST_START = 1,			-- start
@@ -1137,7 +1035,7 @@ function mod:StyleFilterConfigure()
 	wipe(events)
 	wipe(list)
 
-	if E.db.nameplates and E.db.nameplates.filters  then
+	if E.db.nameplates and E.db.nameplates.filters then
 		for filterName, filter in pairs(E.global.nameplate.filters) do
 			local t = filter.triggers
 			if t and E.db.nameplates.filters[filterName] and E.db.nameplates.filters[filterName].triggers and E.db.nameplates.filters[filterName].triggers.enable then
@@ -1176,14 +1074,8 @@ function mod:StyleFilterConfigure()
 					events.RAID_TARGET_UPDATE = 1
 				end
 
-				if t.unitInVehicle then
-					events.UNIT_ENTERED_VEHICLE = 1
-					events.UNIT_EXITED_VEHICLE = 1
-					events.VEHICLE_UPDATE = 1
-				end
-
 				if t.healthThreshold then
-					events.UNIT_HEALTH = 1
+					events.UNIT_HEALTH_FREQUENT = 1
 					events.UNIT_MAXHEALTH = 1
 				end
 
@@ -1204,7 +1096,7 @@ function mod:StyleFilterConfigure()
 					events.UNIT_FLAGS = 1
 				end
 
-				if t.inParty or t.notInParty or t.inRaid or t.notInRaid or t.unitRole then
+				if t.inParty or t.notInParty or t.inRaid or t.notInRaid then
 					events.GROUP_ROSTER_UPDATE = 1
 				end
 
@@ -1218,10 +1110,6 @@ function mod:StyleFilterConfigure()
 						events.ZONE_CHANGED_INDOORS = 1
 						events.ZONE_CHANGED = 1
 					end
-				end
-
-				if t.isQuest or t.notQuest then
-					events.QUEST_LOG_UPDATE = 1
 				end
 
 				if t.hasTitleNPC or t.noTitleNPC then

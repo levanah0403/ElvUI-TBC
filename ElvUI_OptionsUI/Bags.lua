@@ -1,4 +1,4 @@
-local E, _, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local E, _, V, P, G = unpack(ElvUI) --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local C, L = unpack(select(2, ...))
 local B = E:GetModule('Bags')
 local ACH = E.Libs.ACH
@@ -22,7 +22,7 @@ Bags.args.cooldownShortcut = ACH:Execute(L["Cooldown Text"], nil, 3, function() 
 Bags.args.general = ACH:Group(L["General"], nil, 1, nil, nil, function(info, value) E.db.bags[info[#info]] = value B:UpdateAll() end, function() return not E.Bags.Initialized end)
 Bags.args.general.args.strata = ACH:Select(L["Frame Strata"], nil, 1, { BACKGROUND = 'BACKGROUND', LOW = 'LOW', MEDIUM = 'MEDIUM', HIGH = 'HIGH' })
 Bags.args.general.args.currencyFormat = ACH:Select(L["Currency Format"], L["The display format of the currency icons that get displayed below the main bag. (You have to be watching a currency for this to display)"], 2, { ICON = L["Icons Only"], ICON_TEXT = L["Icons and Text"], ICON_TEXT_ABBR = L["Icons and Text (Short)"] }, nil, nil, nil, function(info, value) E.db.bags[info[#info]] = value B:UpdateTokens() end)
-Bags.args.general.args.moneyFormat = ACH:Select(L["Gold Format"], L["The display format of the money text that is shown at the top of the main bag."], 3, { SMART = L["Smart"], FULL = L["Full"], SHORT = L["SHORT"], SHORTINT = L["Short (Whole Numbers)"], CONDENSED = L["Condensed"], BLIZZARD = L["Blizzard Style"], BLIZZARD2 = L["Blizzard Style"]..' 2' }, nil, nil, nil, function(info, value) E.db.bags[info[#info]] = value B:UpdateGoldText() end)
+Bags.args.general.args.moneyFormat = ACH:Select(L["Gold Format"], L["The display format of the money text that is shown at the top of the main bag."], 3, { SMART = L["Smart"], FULL = L["Full"], SHORT = L["SHORT"], SHORTSPACED = L["Short (Whole Numbers Spaced)"], SHORTINT = L["Short (Whole Numbers)"], CONDENSED = L["Condensed"], CONDENSED_SPACED = L["Condensed (Spaced)"], BLIZZARD = L["Blizzard Style"], BLIZZARD2 = L["Blizzard Style"].." 2" }, nil, nil, nil, function(info, value) E.db.bags[info[#info]] = value B:UpdateGoldText() end)
 Bags.args.general.args.moneyCoins = ACH:Toggle(L["Show Coins"], L["Use coin icons instead of colored text."], 4, nil, nil, nil, nil, function(info, value) E.db.bags[info[#info]] = value B:UpdateGoldText() end)
 
 Bags.args.general.args.generalGroup = ACH:MultiSelect(L["General"], nil, 5, nil, nil, nil, function(_, key) return E.db.bags[key] end)
@@ -30,24 +30,17 @@ Bags.args.general.args.generalGroup.values = {
 	transparent = L["Transparent"],
 	junkIcon = L["Junk Icon"],
 	junkDesaturate = L["Desaturate Junk"],
-	upgradeIcon = L["Upgrade Icon"],
-	scrapIcon = L["Scrap Icon"],
 	newItemGlow = L["New Item Glow"],
-	showAssignedIcon = L["Assigned Icon"],
 	showBindType = L["Bind on Equip/Use Text"],
 	clearSearchOnClose = L["Clear Search On Close"],
 	reverseLoot = L["REVERSE_NEW_LOOT_TEXT"],
 	reverseSlots = L["Reverse Bag Slots"],
-	useBlizzardCleanup = L["Use Blizzard Cleanup"],
 	auctionToggle = L["Auction Toggle"],
 }
 
 Bags.args.general.args.generalGroup.set = function(_, key, value)
 	E.db.bags[key] = value
-	if key == 'showAssignedIcon' then
-		B:Layout()
-		B:SizeAndPositionBagBar()
-	elseif key == 'reverseLoot' then
+	if key == 'reverseLoot' then
 		SetInsertItemsLeftToRight(value)
 	elseif key == 'reverseSlots' or key == 'transparent' then
 		B:UpdateAll()
@@ -70,14 +63,6 @@ Bags.args.general.args.itemLevelGroup.args.itemLevelCustomColor = ACH:Color(" ",
 Bags.args.general.args.itemLevelGroup.args.itemLevelFont = ACH:SharedMediaFont(L["Font"], nil, 5, nil, nil, nil, nil, function() return not E.db.bags.itemLevel end)
 Bags.args.general.args.itemLevelGroup.args.itemLevelFontSize = ACH:Range(L["Font Size"], nil, 6, C.Values.FontSize, nil, nil, nil, nil, function() return not E.db.bags.itemLevel end)
 Bags.args.general.args.itemLevelGroup.args.itemLevelFontOutline = ACH:FontFlags(L["Font Outline"], nil, 7, nil, nil, nil, nil, function() return not E.db.bags.itemLevel end)
-
-Bags.args.general.args.itemInfoGroup = ACH:Group(L["Item Info"], nil, 8, nil, nil, function(info, value) E.db.bags[info[#info]] = value B:UpdateItemInfoDisplay() end)
-Bags.args.general.args.itemInfoGroup.inline = true
-Bags.args.general.args.itemInfoGroup.args.itemInfo = ACH:Toggle(L["Display Item Info"], L["Displays item info on center of item."], 1)
-Bags.args.general.args.itemInfoGroup.args.itemInfoColor = ACH:Color(L["COLOR"], nil, 4, nil, nil, function(info) local t = E.db.bags[info[#info]] local d = P.bags[info[#info]] return t.r, t.g, t.b, t.a, d.r, d.g, d.b end, function(info, r, g, b) local t = E.db.bags[info[#info]] t.r, t.g, t.b = r, g, b B:UpdateItemInfoDisplay() end, nil, function() return not E.db.bags.itemInfo end)
-Bags.args.general.args.itemInfoGroup.args.itemInfoFont = ACH:SharedMediaFont(L["Font"], nil, 5, nil, nil, nil, nil, function() return not E.db.bags.itemInfo end)
-Bags.args.general.args.itemInfoGroup.args.itemInfoFontSize = ACH:Range(L["Font Size"], nil, 6, C.Values.FontSize, nil, nil, nil, nil, function() return not E.db.bags.itemInfo end)
-Bags.args.general.args.itemInfoGroup.args.itemInfoFontOutline = ACH:FontFlags(L["Font Outline"], nil, 7, nil, nil, nil, nil, function() return not E.db.bags.itemInfo end)
 
 Bags.args.general.args.playerGroup = ACH:Group(L["Player"], nil, 8, nil, nil, nil, function() return not E.Bags.Initialized end)
 Bags.args.general.args.playerGroup.inline = true
@@ -116,21 +101,11 @@ Bags.args.colorGroup.args.general.args.colorBackdrop = ACH:Toggle(L["Color Backd
 
 Bags.args.colorGroup.args.profession = ACH:Group(L["Profession Bags"], nil, 1)
 Bags.args.colorGroup.args.profession.inline = true
-Bags.args.colorGroup.args.profession.args.leatherworking = ACH:Color(L["Leatherworking"])
-Bags.args.colorGroup.args.profession.args.inscription = ACH:Color(L["INSCRIPTION"])
+Bags.args.colorGroup.args.profession.args.quiver = ACH:Color(L["Quiver"])
+Bags.args.colorGroup.args.profession.args.ammoPouch = ACH:Color(L["Ammo Pouch"])
 Bags.args.colorGroup.args.profession.args.herbs = ACH:Color(L["Herbalism"])
 Bags.args.colorGroup.args.profession.args.enchanting = ACH:Color(L["Enchanting"])
-Bags.args.colorGroup.args.profession.args.engineering = ACH:Color(L["Engineering"])
-Bags.args.colorGroup.args.profession.args.gems = ACH:Color(L["Gems"])
-Bags.args.colorGroup.args.profession.args.mining = ACH:Color(L["Mining"])
-Bags.args.colorGroup.args.profession.args.fishing = ACH:Color(L["PROFESSIONS_FISHING"])
-Bags.args.colorGroup.args.profession.args.cooking = ACH:Color(L["PROFESSIONS_COOKING"])
-
-Bags.args.colorGroup.args.assignment = ACH:Group(L["Bag Assignment"], nil, 2)
-Bags.args.colorGroup.args.assignment.inline = true
-Bags.args.colorGroup.args.assignment.args.equipment = ACH:Color(L["BAG_FILTER_EQUIPMENT"])
-Bags.args.colorGroup.args.assignment.args.consumables = ACH:Color(L["BAG_FILTER_CONSUMABLES"])
-Bags.args.colorGroup.args.assignment.args.tradegoods = ACH:Color(L["BAG_FILTER_TRADE_GOODS"])
+Bags.args.colorGroup.args.profession.args.soulBag = ACH:Color(L["Soul Bag"])
 
 Bags.args.colorGroup.args.items = ACH:Group(L["ITEMS"], nil, 3)
 Bags.args.colorGroup.args.items.inline = true
@@ -146,8 +121,8 @@ Bags.args.bagBar.args.size = ACH:Range(L["Button Size"], L["Set the size of your
 Bags.args.bagBar.args.justBackpack = ACH:Toggle(L['Backpack Only'], nil, 6)
 Bags.args.bagBar.args.spacing = ACH:Range(L["Button Spacing"], L["The spacing between buttons."], 7, { min = -3, max = 20, step = 1 }, nil, nil, nil, nil, function() return E.db.bags.bagBar.justBackpack end)
 Bags.args.bagBar.args.backdropSpacing = ACH:Range(L["Backdrop Spacing"], L["The spacing between the backdrop and the buttons."], 8, { min = 0, max = 10, step = 1 }, nil, nil, nil, nil, function() return E.db.bags.bagBar.justBackpack end)
-Bags.args.bagBar.args.sortDirection = ACH:Select(L["Sort Direction"], L["The direction that the bag frames will grow from the anchor."], 9, { ASCENDING = L["Ascending"], DESCENDING = L["Descending"] }, nil, nil, nil, nil, nil, function() return E.db.bags.bagBar.justBackpack end)
-Bags.args.bagBar.args.growthDirection = ACH:Select(L["Bar Direction"], L["The direction that the bag frames be (Horizontal or Vertical)."], 10, { VERTICAL = L["Vertical"], HORIZONTAL = L["Horizontal"] }, nil, nil, nil, nil, nil, function() return E.db.bags.bagBar.justBackpack end)
+Bags.args.bagBar.args.sortDirection = ACH:Select(L["Sort Direction"], L["The direction that the bag frames will grow from the anchor."], 9, { ASCENDING = L["Ascending"], DESCENDING = L["Descending"] })
+Bags.args.bagBar.args.growthDirection = ACH:Select(L["Bar Direction"], L["The direction that the bag frames be (Horizontal or Vertical)."], 10, { VERTICAL = L["Vertical"], HORIZONTAL = L["Horizontal"] })
 Bags.args.bagBar.args.visibility = ACH:Input(L["Visibility State"], L["This works like a macro, you can run different situations to get the actionbar to show/hide differently.\n Example: '[combat] show;hide'"], 11, true, 'full', nil, function(_, value) E.db.bags.bagBar.visibility = value B:SizeAndPositionBagBar() end)
 
 Bags.args.vendorGrays = ACH:Group(L["Vendor Grays"], nil, 4, nil, function(info) return E.db.bags.vendorGrays[info[#info]] end, function(info, value) E.db.bags.vendorGrays[info[#info]] = value; B:UpdateSellFrameSettings() end)
@@ -156,7 +131,7 @@ Bags.args.vendorGrays.args.interval = ACH:Range(L["Sell Interval"], L["Will atte
 Bags.args.vendorGrays.args.details = ACH:Toggle(L["Vendor Gray Detailed Report"], L["Displays a detailed report of every item sold when enabled."], 3)
 Bags.args.vendorGrays.args.progressBar = ACH:Toggle(L["Progress Bar"], nil, 4)
 
-Bags.args.bagSortingGroup = ACH:Group(L["Sorting"], nil, 5, nil, nil, nil, function() return (not E.Bags.Initialized) or E.db.bags.useBlizzardCleanup end)
+Bags.args.bagSortingGroup = ACH:Group(L["Sorting"], nil, 5, nil, nil, nil, function() return (not E.Bags.Initialized) end)
 Bags.args.bagSortingGroup.args.sortInverted = ACH:Toggle(L["Sort Inverted"], L["Direction the bag sorting will use to allocate the items."], 1)
 Bags.args.bagSortingGroup.args.description = ACH:Description(L["Here you can add items or search terms that you want to be excluded from sorting. To remove an item just click on its name in the list."], 3)
 Bags.args.bagSortingGroup.args.addEntryGroup = ACH:Group(L["Add Item or Search Syntax"], nil, 3)

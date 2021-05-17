@@ -1,5 +1,5 @@
-local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
-local UF = E:GetModule('UnitFrames');
+local E, L, V, P, G = unpack(select(2, ...)) --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local UF = E:GetModule('UnitFrames')
 
 local _, ns = ...
 local ElvUF = ns.oUF
@@ -241,11 +241,11 @@ function UF:GetDisplayPower()
 	end
 end
 
-local tokens = {[0]='MANA','RAGE','FOCUS','ENERGY','RUNIC_POWER'}
+local tokens = {[0]='MANA','RAGE','FOCUS','ENERGY'}
 function UF:PostUpdatePowerColor()
 	local parent = self.origParent or self:GetParent()
 	if parent.isForced and not self.colorClass then
-		local color = ElvUF.colors.power[tokens[random(0,4)]]
+		local color = ElvUF.colors.power[tokens[random(0,3)]]
 		self:SetStatusBarColor(color[1], color[2], color[3])
 
 		if self.BG then
@@ -255,6 +255,8 @@ function UF:PostUpdatePowerColor()
 end
 
 local powerTypesFull = {MANA = true, FOCUS = true, ENERGY = true}
+local individualUnits = {player = true, target = true, targettarget = true, targettargettarget = true, focus = true, focustarget = true, pet = true, pettarget = true}
+
 function UF:PostUpdatePower(unit, cur, min, max)
 	local parent = self.origParent or self:GetParent()
 	if parent.isForced then
@@ -267,7 +269,7 @@ function UF:PostUpdatePower(unit, cur, min, max)
 	local db = parent.db and parent.db.power
 	if not db then return end
 
-	if (unit == 'player' or unit == 'target') and db.autoHide and parent.POWERBAR_DETACHED then
+	if individualUnits[unit] and db.autoHide and parent.POWERBAR_DETACHED then
 		local _, powerType = UnitPowerType(unit)
 		if (powerTypesFull[powerType] and cur == max) or cur == min then
 			self:Hide()

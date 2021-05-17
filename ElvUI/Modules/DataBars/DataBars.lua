@@ -1,4 +1,4 @@
-local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local E, L, V, P, G = unpack(select(2, ...)) --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local DB = E:GetModule('DataBars')
 local LSM = E.Libs.LSM
 
@@ -8,7 +8,6 @@ local pairs, ipairs = pairs, ipairs
 local CreateFrame = CreateFrame
 local GetInstanceInfo = GetInstanceInfo
 local UnitAffectingCombat = UnitAffectingCombat
-local C_PvP_IsWarModeActive = C_PvP.IsWarModeActive
 
 function DB:OnLeave()
 	if self.db.mouseover then
@@ -102,12 +101,6 @@ function DB:UpdateAll()
 			bar.holder:SetAlpha(bar.db.mouseover and 0 or 1)
 		end
 
-		if bar.db.hideInVehicle then
-			E:RegisterObjectForVehicleLock(bar.holder, E.UIParent)
-		else
-			E:UnregisterObjectForVehicleLock(bar.holder)
-		end
-
 		if bar.db.orientation == 'AUTOMATIC' then
 			bar:SetOrientation(bar.db.height > bar.db.width and 'VERTICAL' or 'HORIZONTAL')
 			bar:SetRotatesTexture(bar.db.height > bar.db.width)
@@ -142,7 +135,7 @@ function DB:SetVisibility(bar)
 		bar.holder:SetShown(bar.showBar)
 	elseif bar.db.enable then
 		local hideBar = (bar == DB.StatusBars.Threat or bar.db.hideInCombat) and UnitAffectingCombat('player')
-		or (bar.db.hideOutsidePvP and not (C_PvP_IsWarModeActive() or select(2, GetInstanceInfo()) == 'pvp'))
+		or (bar.db.hideOutsidePvP and not select(2, GetInstanceInfo()) == 'pvp')
 		or (bar.ShouldHide and bar:ShouldHide())
 
 		bar:SetShown(not hideBar)
@@ -166,9 +159,8 @@ function DB:Initialize()
 	DB.db = E.db.databars
 
 	DB:ExperienceBar()
+	DB:PetExperienceBar()
 	DB:ReputationBar()
-	DB:HonorBar()
-	DB:AzeriteBar()
 	DB:ThreatBar()
 
 	DB:UpdateAll()

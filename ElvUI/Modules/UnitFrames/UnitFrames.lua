@@ -15,7 +15,6 @@ local CreateFrame = CreateFrame
 local GetInstanceInfo = GetInstanceInfo
 local hooksecurefunc = hooksecurefunc
 local IsReplacingUnit = IsReplacingUnit
-local IsAddOnLoaded = IsAddOnLoaded
 local RegisterStateDriver = RegisterStateDriver
 local UnitExists = UnitExists
 local UnitIsEnemy = UnitIsEnemy
@@ -58,10 +57,8 @@ UF.badHeaderPoints = {
 
 UF.headerFunctions = {}
 UF.classMaxResourceBar = {
-	DEATHKNIGHT = 6,
 	PALADIN = 5,
 	WARLOCK = 5,
-	MONK = 6,
 	MAGE = 4,
 	ROGUE = 6,
 	DRUID = 5
@@ -92,9 +89,9 @@ UF.instanceMapIDs = {
 
 UF.headerGroupBy = {
 	CLASS = function(header)
-		local groupingOrder = header.db and strjoin(',', header.db.CLASS1, header.db.CLASS2, header.db.CLASS3, header.db.CLASS4, header.db.CLASS5, header.db.CLASS6, header.db.CLASS7, header.db.CLASS8, header.db.CLASS9, header.db.CLASS10, header.db.CLASS11, header.db.CLASS12)
+		local groupingOrder = header.db and strjoin(',', header.db.CLASS1, header.db.CLASS2, header.db.CLASS3, header.db.CLASS4, header.db.CLASS5, header.db.CLASS6, header.db.CLASS7, header.db.CLASS8, header.db.CLASS9)
 		local sortMethod = header.db and header.db.sortMethod
-		header:SetAttribute('groupingOrder', groupingOrder or 'DEATHKNIGHT,DEMONHUNTER,DRUID,HUNTER,MAGE,PALADIN,PRIEST,ROGUE,SHAMAN,WARLOCK,WARRIOR,MONK')
+		header:SetAttribute('groupingOrder', groupingOrder or 'DRUID,HUNTER,MAGE,PALADIN,PRIEST,ROGUE,SHAMAN,WARLOCK,WARRIOR')
 		header:SetAttribute('sortMethod', sortMethod or 'NAME')
 		header:SetAttribute('groupBy', 'CLASS')
 	end,
@@ -325,9 +322,6 @@ function UF:GetAuraAnchorFrame(frame, attachTo)
 		return frame.Health
 	elseif attachTo == 'POWER' and frame.Power then
 		return frame.Power
-	elseif attachTo == 'TRINKET' and (frame.Trinket or frame.PVPSpecIcon) then
-		local _, instanceType = GetInstanceInfo()
-		return (instanceType == 'arena' and frame.Trinket) or frame.PVPSpecIcon
 	else
 		return frame
 	end
@@ -350,12 +344,6 @@ function UF:UpdateColors()
 	ElvUF.colors.power.RAGE = E:SetColorTable(ElvUF.colors.power.RAGE, db.power.RAGE)
 	ElvUF.colors.power.FOCUS = E:SetColorTable(ElvUF.colors.power.FOCUS, db.power.FOCUS)
 	ElvUF.colors.power.ENERGY = E:SetColorTable(ElvUF.colors.power.ENERGY, db.power.ENERGY)
-	ElvUF.colors.power.RUNIC_POWER = E:SetColorTable(ElvUF.colors.power.RUNIC_POWER, db.power.RUNIC_POWER)
-	ElvUF.colors.power.PAIN = E:SetColorTable(ElvUF.colors.power.PAIN, db.power.PAIN)
-	ElvUF.colors.power.FURY = E:SetColorTable(ElvUF.colors.power.FURY, db.power.FURY)
-	ElvUF.colors.power.LUNAR_POWER = E:SetColorTable(ElvUF.colors.power.LUNAR_POWER, db.power.LUNAR_POWER)
-	ElvUF.colors.power.INSANITY = E:SetColorTable(ElvUF.colors.power.INSANITY, db.power.INSANITY)
-	ElvUF.colors.power.MAELSTROM = E:SetColorTable(ElvUF.colors.power.MAELSTROM, db.power.MAELSTROM)
 	ElvUF.colors.power[ALTERNATE_POWER_INDEX] = E:SetColorTable(ElvUF.colors.power[ALTERNATE_POWER_INDEX], db.power.ALT_POWER)
 
 	ElvUF.colors.threat[0] = E:SetColorTable(ElvUF.colors.threat[0], db.threat[0])
@@ -381,21 +369,6 @@ function UF:UpdateColors()
 	ElvUF.colors.ComboPoints[4] = E:SetColorTable(ElvUF.colors.ComboPoints[4], db.classResources.comboPoints[4])
 	ElvUF.colors.ComboPoints[5] = E:SetColorTable(ElvUF.colors.ComboPoints[5], db.classResources.comboPoints[5])
 	ElvUF.colors.ComboPoints[6] = E:SetColorTable(ElvUF.colors.ComboPoints[6], db.classResources.comboPoints[6])
-	ElvUF.colors.chargedComboPoint = E:SetColorTable(ElvUF.colors.chargedComboPoint, db.classResources.chargedComboPoint)
-
-	--Monk, Mage, Paladin and Warlock, Death Knight
-	if not ElvUF.colors.ClassBars then ElvUF.colors.ClassBars = {} end
-	if not ElvUF.colors.ClassBars.MONK then ElvUF.colors.ClassBars.MONK = {} end
-	ElvUF.colors.ClassBars.PALADIN = E:SetColorTable(ElvUF.colors.ClassBars.PALADIN, db.classResources.PALADIN)
-	ElvUF.colors.ClassBars.MAGE = E:SetColorTable(ElvUF.colors.ClassBars.MAGE, db.classResources.MAGE)
-	ElvUF.colors.ClassBars.MONK[1] = E:SetColorTable(ElvUF.colors.ClassBars.MONK[1], db.classResources.MONK[1])
-	ElvUF.colors.ClassBars.MONK[2] = E:SetColorTable(ElvUF.colors.ClassBars.MONK[2], db.classResources.MONK[2])
-	ElvUF.colors.ClassBars.MONK[3] = E:SetColorTable(ElvUF.colors.ClassBars.MONK[3], db.classResources.MONK[3])
-	ElvUF.colors.ClassBars.MONK[4] = E:SetColorTable(ElvUF.colors.ClassBars.MONK[4], db.classResources.MONK[4])
-	ElvUF.colors.ClassBars.MONK[5] = E:SetColorTable(ElvUF.colors.ClassBars.MONK[5], db.classResources.MONK[5])
-	ElvUF.colors.ClassBars.MONK[6] = E:SetColorTable(ElvUF.colors.ClassBars.MONK[6], db.classResources.MONK[6])
-	ElvUF.colors.ClassBars.DEATHKNIGHT = E:SetColorTable(ElvUF.colors.ClassBars.DEATHKNIGHT, db.classResources.DEATHKNIGHT)
-	ElvUF.colors.ClassBars.WARLOCK = E:SetColorTable(ElvUF.colors.ClassBars.WARLOCK, db.classResources.WARLOCK)
 
 	-- these are just holders.. to maintain and update tables
 	if not ElvUF.colors.reaction.good then ElvUF.colors.reaction.good = {} end
@@ -596,7 +569,7 @@ function UF:CreateAndUpdateUFGroup(group, numGroup)
 			end
 
 			-- for some reason the boss/arena 'uncheck disable' doesnt fire this, we need to so putting it here.
-			if group == 'boss' or group == 'arena' then
+			if group == 'arena' then
 				UF:Configure_Fader(frame)
 			end
 
@@ -621,8 +594,6 @@ function UF:HeaderUpdateSpecificElement(group, elementName)
 	end
 end
 
---Keep an eye on this one, it may need to be changed too
---Reference: http://www.tukui.org/forums/topic.php?id=35332
 function UF.groupPrototype:GetAttribute(name)
 	return self.groups[1]:GetAttribute(name)
 end
@@ -853,7 +824,7 @@ function UF:HandleSmartVisibility(skip)
 	if instanceType == 'raid' or instanceType == 'pvp' then
 		local maxInstancePlayers = UF.instanceMapIDs[instanceID]
 		if maxInstancePlayers then
-			maxPlayers =  maxInstancePlayers
+			maxPlayers = maxInstancePlayers
 		elseif not maxPlayers or maxPlayers == 0 then
 			maxPlayers = 40
 		end
@@ -904,7 +875,7 @@ function UF:CreateHeader(parent, groupFilter, overrideName, template, groupName,
 
 	local header = ElvUF:SpawnHeader(overrideName, headerTemplate, nil,
 		'oUF-initialConfigFunction', format('self:SetWidth(%d); self:SetHeight(%d);', db.width, db.height),
-		'groupFilter', groupFilter, 'showParty', true, 'showRaid', true, 'showSolo', true,
+		'groupFilter', groupFilter, 'showParty', true, 'showRaid', group ~= "party", 'showSolo', true,
 		template and 'template', template
 	)
 
@@ -1187,15 +1158,6 @@ function ElvUF:DisableBlizzard(unit)
 		HandleFrame(_G.TargetofFocusFrame)
 	elseif (unit == 'targettarget') and E.private.unitframe.disabledBlizzardFrames.target then
 		HandleFrame(_G.TargetFrameToT)
-	elseif (unit:match('boss%d?$')) and E.private.unitframe.disabledBlizzardFrames.boss then
-		local id = unit:match('boss(%d)')
-		if id then
-			HandleFrame('Boss' .. id .. 'TargetFrame')
-		else
-			for i = 1, _G.MAX_BOSS_FRAMES do
-				HandleFrame(('Boss%dTargetFrame'):format(i))
-			end
-		end
 	elseif (unit:match('party%d?$')) and E.private.unitframe.disabledBlizzardFrames.party then
 		local id = unit:match('party(%d)')
 		if id then
@@ -1294,7 +1256,6 @@ local Blacklist = {
 	},
 	arena = { enable = true, fader = true },
 	assist = { enable = true, fader = true },
-	boss = { enable = true, fader = true },
 	focus = { enable = true, fader = true },
 	focustarget = { enable = true, fader = true },
 	pet = { enable = true, fader = true },
@@ -1474,14 +1435,15 @@ function UF:Initialize()
 
 	E.ElvUF_Parent = CreateFrame('Frame', 'ElvUF_Parent', E.UIParent, 'SecureHandlerStateTemplate')
 	E.ElvUF_Parent:SetFrameStrata('LOW')
-	RegisterStateDriver(E.ElvUF_Parent, 'visibility', '[petbattle] hide;show')
+	RegisterStateDriver(E.ElvUF_Parent, 'visibility', 'show')
 
-	UF:UpdateColors()
 	ElvUF:RegisterInitCallback(UF.AfterStyleCallback)
 	ElvUF:RegisterStyle('ElvUF', function(frame, unit)
 		UF:Construct_UF(frame, unit)
 	end)
 	ElvUF:SetActiveStyle('ElvUF')
+
+	UF:UpdateColors()
 	UF:LoadUnits()
 
 	UF:RegisterEvent('PLAYER_ENTERING_WORLD')
@@ -1497,19 +1459,17 @@ function UF:Initialize()
 		E.RaidUtility.Initialize = E.noop
 	end
 
-	if E.private.unitframe.disabledBlizzardFrames.arena then
-		UF:SecureHook('UnitFrameThreatIndicator_Initialize')
+	--if E.private.unitframe.disabledBlizzardFrames.arena then
+	--	UF:SecureHook('UnitFrameThreatIndicator_Initialize')
 
-		Arena_LoadUI = E.noop -- Blizzard_ArenaUI should not be loaded, called on PLAYER_ENTERING_WORLD if in pvp or arena
+	--	Arena_LoadUI = E.noop -- Blizzard_ArenaUI should not be loaded, called on PLAYER_ENTERING_WORLD if in pvp or arena
 
-		if IsAddOnLoaded('Blizzard_ArenaUI') then
-			ElvUF:DisableBlizzard('arena')
-		else
-			UF:RegisterEvent('ADDON_LOADED')
-		end
-	end
-
-	UF:UpdateRangeCheckSpells()
+	--	if IsAddOnLoaded('Blizzard_ArenaUI') then
+	--		ElvUF:DisableBlizzard('arena')
+	--	else
+	--		UF:RegisterEvent('ADDON_LOADED')
+	--	end
+	--end
 
 	local ORD = E.oUF_RaidDebuffs or _G.oUF_RaidDebuffs
 	if not ORD then return end

@@ -1,4 +1,4 @@
-local E, L, V, P, G =unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB, Localize Underscore
+local E, L, V, P, G = unpack(select(2, ...)) --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB, Localize Underscore
 local NP = E:GetModule('NamePlates')
 local UF = E:GetModule('UnitFrames')
 local CH = E:GetModule('Chat')
@@ -88,7 +88,7 @@ function E:SetupChat(noDisplayMsg)
 	end
 
 	-- keys taken from `ChatTypeGroup` but doesnt add: 'OPENING', 'TRADESKILLS', 'PET_INFO', 'COMBAT_MISC_INFO', 'COMMUNITIES_CHANNEL', 'PET_BATTLE_COMBAT_LOG', 'PET_BATTLE_INFO', 'TARGETICONS'
-	local chatGroup = { 'SYSTEM', 'CHANNEL', 'SAY', 'EMOTE', 'YELL', 'WHISPER', 'PARTY', 'PARTY_LEADER', 'RAID', 'RAID_LEADER', 'RAID_WARNING', 'INSTANCE_CHAT', 'INSTANCE_CHAT_LEADER', 'GUILD', 'OFFICER', 'MONSTER_SAY', 'MONSTER_YELL', 'MONSTER_EMOTE', 'MONSTER_WHISPER', 'MONSTER_BOSS_EMOTE', 'MONSTER_BOSS_WHISPER', 'ERRORS', 'AFK', 'DND', 'IGNORED', 'BG_HORDE', 'BG_ALLIANCE', 'BG_NEUTRAL', 'ACHIEVEMENT', 'GUILD_ACHIEVEMENT', 'BN_WHISPER', 'BN_INLINE_TOAST_ALERT' }
+	local chatGroup = { 'SYSTEM', 'CHANNEL', 'SAY', 'EMOTE', 'YELL', 'WHISPER', 'PARTY', 'PARTY_LEADER', 'RAID', 'RAID_LEADER', 'RAID_WARNING', 'INSTANCE_CHAT', 'INSTANCE_CHAT_LEADER', 'GUILD', 'OFFICER', 'MONSTER_SAY', 'MONSTER_YELL', 'MONSTER_EMOTE', 'MONSTER_WHISPER', 'MONSTER_BOSS_EMOTE', 'MONSTER_BOSS_WHISPER', 'ERRORS', 'AFK', 'DND', 'IGNORED', 'BG_HORDE', 'BG_ALLIANCE', 'BG_NEUTRAL', 'BN_WHISPER', 'BN_INLINE_TOAST_ALERT' }
 	ChatFrame_RemoveAllMessageGroups(_G.ChatFrame1)
 	for _, v in ipairs(chatGroup) do
 		ChatFrame_AddMessageGroup(_G.ChatFrame1, v)
@@ -106,7 +106,7 @@ function E:SetupChat(noDisplayMsg)
 	ChatFrame_AddChannel(_G.ChatFrame3, TRADE)
 
 	-- set the chat groups names in class color to enabled for all chat groups which players names appear
-	chatGroup = { 'SAY', 'EMOTE', 'YELL', 'WHISPER', 'PARTY', 'PARTY_LEADER', 'RAID', 'RAID_LEADER', 'RAID_WARNING', 'INSTANCE_CHAT', 'INSTANCE_CHAT_LEADER', 'GUILD', 'OFFICER', 'ACHIEVEMENT', 'GUILD_ACHIEVEMENT', 'COMMUNITIES_CHANNEL' }
+	chatGroup = { 'SAY', 'EMOTE', 'YELL', 'WHISPER', 'PARTY', 'PARTY_LEADER', 'RAID', 'RAID_LEADER', 'RAID_WARNING', 'INSTANCE_CHAT', 'INSTANCE_CHAT_LEADER', 'GUILD', 'OFFICER', 'COMMUNITIES_CHANNEL' }
 	for i = 1, _G.MAX_WOW_CHAT_CHANNELS do
 		tinsert(chatGroup, 'CHANNEL'..i)
 	end
@@ -149,15 +149,13 @@ function E:SetupCVars(noDisplayMsg)
 	SetCVar('whisperMode', 'inline')
 	SetCVar('wholeChatWindowClickable', 0)
 	SetCVar('showTutorials', 0)
-	SetCVar('showNPETutorials', 0)
 	SetCVar('UberTooltips', 1)
-	SetCVar('threatWarning', 3)
 	SetCVar('alwaysShowActionBars', 1)
 	SetCVar('lockActionBars', 1)
 	SetCVar('spamFilter', 0)
 	SetCVar('cameraDistanceMaxZoomFactor', 2.6)
-	SetCVar('showQuestTrackingTooltips', 1)
-	SetCVar('fstack_preferParentKeys', 0) --Add back the frame names via fstack!
+	SetCVar('chatClassColorOverride', 0)
+	SetCVar('colorChatNamesByClass', 1)
 
 	NP:CVarReset()
 
@@ -241,9 +239,7 @@ function E:SetupLayout(layout, noDataReset, noDisplayMsg)
 
 		--Shared base layout, tweaks to individual layouts will be below
 		E:ResetMovers()
-		if not E.db.movers then
-			E.db.movers = {}
-		end
+		if not E.db.movers then E.db.movers = {} end
 
 		--ActionBars
 			E.db.actionbar.bar1.buttons = 8
@@ -253,17 +249,17 @@ function E:SetupLayout(layout, noDataReset, noDisplayMsg)
 			E.db.actionbar.bar2.buttonSize = 38
 			E.db.actionbar.bar2.buttonSpacing = 1
 			E.db.actionbar.bar2.enabled = true
-			E.db.actionbar.bar2.visibility = '[petbattle] hide; show'
+			E.db.actionbar.bar2.visibility = 'show'
 			E.db.actionbar.bar3.buttons = 8
 			E.db.actionbar.bar3.buttonSize = 50
 			E.db.actionbar.bar3.buttonSpacing = 1
 			E.db.actionbar.bar3.buttonsPerRow = 10
-			E.db.actionbar.bar3.visibility = '[petbattle] hide; show'
+			E.db.actionbar.bar3.visibility = 'show'
 			E.db.actionbar.bar4.enabled = false
-			E.db.actionbar.bar4.visibility = '[petbattle] hide; show'
+			E.db.actionbar.bar4.visibility = 'show'
 			E.db.actionbar.bar5.enabled = false
-			E.db.actionbar.bar5.visibility = '[petbattle] hide; show'
-			E.db.actionbar.bar6.visibility = '[petbattle] hide; show'
+			E.db.actionbar.bar5.visibility = 'show'
+			E.db.actionbar.bar6.visibility = 'show'
 		--Auras
 			E.db.auras.buffs.countFontSize = 10
 			E.db.auras.buffs.size = 40
@@ -275,7 +271,6 @@ function E:SetupLayout(layout, noDataReset, noDisplayMsg)
 			E.db.bags.bankSize = 42
 			E.db.bags.bankWidth = 474
 			E.db.bags.itemLevelCustomColorEnable = true
-			E.db.bags.scrapIcon = true
 			E.db.bags.split.bag1 = true
 			E.db.bags.split.bag2 = true
 			E.db.bags.split.bag3 = true
@@ -289,23 +284,16 @@ function E:SetupLayout(layout, noDataReset, noDisplayMsg)
 			E.db.chat.panelWidth = 472
 			E.db.chat.tabFontSize = 12
 			E.db.chat.copyChatLines = true
-		--DataTexts
-			E.db.datatexts.panels.LeftChatDataPanel[3] = 'QuickJoin'
 		--DataBars
 			E.db.databars.threat.height = 24
 			E.db.databars.threat.width = 472
-			E.db.databars.azerite.enable = false
 			E.db.databars.reputation.enable = true
 		--General
-			E.db.general.bonusObjectivePosition = 'AUTO'
 			E.db.general.minimap.size = 220
-			E.db.general.objectiveFrameHeight = 400
-			E.db.general.talkingHeadFrameScale = 1
+			E.db.general.autoTrackReputation = true
 			E.db.general.totems.growthDirection = 'HORIZONTAL'
 			E.db.general.totems.size = 50
 			E.db.general.totems.spacing = 8
-			E.db.general.autoTrackReputation = true
-			E.db.general.bonusObjectivePosition = "AUTO"
 		--Movers
 			for mover, position in pairs(E.LayoutMoverPositions.ALL) do
 				E.db.movers[mover] = position
@@ -335,8 +323,6 @@ function E:SetupLayout(layout, noDataReset, noDisplayMsg)
 			E.db.nameplates.units.ENEMY_PLAYER.portrait.position = "LEFT"
 			E.db.nameplates.units.ENEMY_PLAYER.portrait.xOffset = 0
 			E.db.nameplates.units.ENEMY_PLAYER.portrait.yOffset = 0
-
-
 		--UnitFrames
 			E.db.unitframe.smoothbars = true
 			E.db.unitframe.thinBorders = true
@@ -398,20 +384,6 @@ function E:SetupLayout(layout, noDataReset, noDisplayMsg)
 				E.db.unitframe.units.pet.infoPanel.height = 14
 				E.db.unitframe.units.pet.portrait.camDistanceScale = 2
 				E.db.unitframe.units.pet.width = 270
-			--Boss
-				E.db.unitframe.units.boss.buffs.maxDuration = 300
-				E.db.unitframe.units.boss.buffs.sizeOverride = 27
-				E.db.unitframe.units.boss.buffs.yOffset = 16
-				E.db.unitframe.units.boss.castbar.width = 246
-				E.db.unitframe.units.boss.debuffs.maxDuration = 300
-				E.db.unitframe.units.boss.debuffs.numrows = 1
-				E.db.unitframe.units.boss.debuffs.sizeOverride = 27
-				E.db.unitframe.units.boss.debuffs.yOffset = -16
-				E.db.unitframe.units.boss.height = 60
-				E.db.unitframe.units.boss.infoPanel.height = 17
-				E.db.unitframe.units.boss.portrait.camDistanceScale = 2
-				E.db.unitframe.units.boss.portrait.width = 45
-				E.db.unitframe.units.boss.width = 246
 			--Party
 				E.db.unitframe.units.party.height = 74
 				E.db.unitframe.units.party.power.height = 13
@@ -429,10 +401,6 @@ function E:SetupLayout(layout, noDataReset, noDisplayMsg)
 				E.db.unitframe.units.raid.rdebuffs.xOffset = 30
 				E.db.unitframe.units.raid.rdebuffs.yOffset = 25
 				E.db.unitframe.units.raid.resurrectIcon.attachTo = 'BOTTOMRIGHT'
-				E.db.unitframe.units.raid.roleIcon.attachTo = 'InfoPanel'
-				E.db.unitframe.units.raid.roleIcon.position = 'BOTTOMRIGHT'
-				E.db.unitframe.units.raid.roleIcon.size = 12
-				E.db.unitframe.units.raid.roleIcon.xOffset = 0
 				E.db.unitframe.units.raid.visibility = '[@raid6,noexists] hide;show'
 				E.db.unitframe.units.raid.width = 92
 			--Raid40
@@ -582,7 +550,7 @@ function E:SetPage(PageNum)
 	f.Desc3:FontTemplate(nil, 16)
 
 	if PageNum == 1 then
-		f.SubTitle:SetFormattedText(L["Welcome to ElvUI version %.2f!"], E.version)
+		f.SubTitle:SetFormattedText(L["Welcome to ElvUI TBC version %.2f!"], E.version)
 		f.Desc1:SetText(L["This install process will help you learn some of the features in ElvUI has to offer and also prepare your user interface for usage."])
 		f.Desc2:SetText(L["The in-game configuration menu can be accessed by typing the /ec command. Press the button below if you wish to skip the installation process."])
 		f.Desc3:SetText(L["Please press the continue button to go onto the next step."])
@@ -711,16 +679,16 @@ function E:SetPage(PageNum)
 
 		InstallOption1Button:Show()
 		InstallOption1Button:SetScript('OnClick', function() E.db.layoutSet = nil; E:SetupLayout('tank') end)
-		InstallOption1Button:SetText(_G.STAT_CATEGORY_MELEE)
+		InstallOption1Button:SetText('Melee')
 		InstallOption2Button:Show()
 		InstallOption2Button:SetScript('OnClick', function() E.db.layoutSet = nil; E:SetupLayout('healer') end)
-		InstallOption2Button:SetText(_G.CLUB_FINDER_HEALER)
+		InstallOption2Button:SetText('Healer')
 		InstallOption3Button:Show()
 		InstallOption3Button:SetScript('OnClick', function() E.db.layoutSet = nil; E:SetupLayout('dpsCaster') end)
-		InstallOption3Button:SetText(_G.STAT_CATEGORY_RANGED)
+		InstallOption3Button:SetText('Ranged')
 	elseif PageNum == 8 then
 		f.SubTitle:SetText(L["Auras"])
-		f.Desc1:SetText(L["Select the type of aura system you want to use with ElvUI's unitframes. Set to Aura Bar & Icons to use both aura bars and icons, set to icons only to only see icons."])
+		f.Desc1:SetText(L["Select the type of aura system you want to use with ElvUI's unitframes. Set to Aura Bars to use both aura bars and icons, set to Icons Only to only see icons."])
 		f.Desc2:SetText(L["If you have an icon or aurabar that you don't want to display simply hold down shift and right click the icon for it to disapear."])
 		f.Desc3:SetText(L["Importance: |cffD3CF00Medium|r"])
 		f.Desc3:FontTemplate(nil, 18)
@@ -902,7 +870,7 @@ function E:Install()
 		f.Option3:Point('LEFT', f.Option2, 'RIGHT', 4, 0)
 		f.Option3:SetText('')
 		f.Option3:Hide()
-		f.Option3:SetScript('OnShow', function() f.Option1:Width(100); f.Option1:ClearAllPoints(); f.Option1:Point('RIGHT', f.Option2, 'LEFT', -4, 0); f.Option2:Width(100); f.Option2:ClearAllPoints(); f.Option2:Point('BOTTOM', f, 'BOTTOM', 0, 45)  end)
+		f.Option3:SetScript('OnShow', function() f.Option1:Width(100); f.Option1:ClearAllPoints(); f.Option1:Point('RIGHT', f.Option2, 'LEFT', -4, 0); f.Option2:Width(100); f.Option2:ClearAllPoints(); f.Option2:Point('BOTTOM', f, 'BOTTOM', 0, 45) end)
 		f.Option3:SetScript('OnHide', function() f.Option1:Width(160); f.Option1:ClearAllPoints(); f.Option1:Point('BOTTOM', 0, 45); f.Option2:Width(110); f.Option2:ClearAllPoints(); f.Option2:Point('BOTTOMLEFT', f, 'BOTTOM', 4, 45) end)
 		S:HandleButton(f.Option3, true)
 

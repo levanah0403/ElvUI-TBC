@@ -1,5 +1,5 @@
-local E, L, V, P, G = unpack(select(2, ...)); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
-local UF = E:GetModule('UnitFrames');
+local E, L, V, P, G = unpack(select(2, ...)) --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+local UF = E:GetModule('UnitFrames')
 
 local unpack = unpack
 local CreateFrame = CreateFrame
@@ -71,11 +71,9 @@ end
 
 do
 	local classPowers = {
-		MONK = 'Stagger',
 		DRUID = 'AdditionalPower',
 		PRIEST = 'AdditionalPower',
 		SHAMAN = 'AdditionalPower',
-		DEATHKNIGHT = 'Runes'
 	}
 
 	local myClassPower = classPowers[E.myclass]
