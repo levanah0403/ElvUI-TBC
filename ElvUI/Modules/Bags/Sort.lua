@@ -111,12 +111,12 @@ local conjured_items = {
 	[8079] = true, -- Conjured Crystal Water (Level 55)
 
 	-- Mage food
-	[5349] = true,  -- Conjured Muffin
-	[1113] = true,  -- Conjured Bread (Level 5)
-	[1114] = true,  -- Conjured Rye (Level 15)
-	[1487] = true,  -- Conjured Pumpernickel (Level 25)
-	[8075] = true,  -- Conjured Sourdough (Level 35)
-	[8076] = true,  -- Conjured Sweet Roll (Level 45)
+	[5349]	= true, -- Conjured Muffin
+	[1113]	= true, -- Conjured Bread (Level 5)
+	[1114]	= true, -- Conjured Rye (Level 15)
+	[1487]	= true, -- Conjured Pumpernickel (Level 25)
+	[8075]	= true, -- Conjured Sourdough (Level 35)
+	[8076]	= true, -- Conjured Sweet Roll (Level 45)
 	[22895] = true, -- Conjured Cinnamon Roll (Level 55)
 
 	-- Mage mana
@@ -126,34 +126,44 @@ local conjured_items = {
 	[8008] = true, -- Mana Ruby
 
 	-- Warlock soulstones
-	[5232] = true,  -- Minor Soulstone
+	[5232]	= true, -- Minor Soulstone
 	[16892] = true, -- Lesser Soulstone
 	[16893] = true, -- Soulstone
 	[16895] = true, -- Greater Soulstone
 	[16896] = true, -- Major Soulstone
+	[22116] = true, -- Master Soulstone
 
 	-- Warlock firestones
-	[1254] = true,  -- Lesser Firestone
+	[1254]	= true, -- Lesser Firestone
 	[13699] = true, -- Firestone
 	[13700] = true, -- Greater Firestone
 	[13701] = true, -- Major Firestone
 
+	-- Warlock Spellstones
+	[5522]	= true, -- Spellstone
+	[13602] = true, -- Greater Spellstone
+	[13603] = true, -- Major Spellstone
+	[22646] = true, -- Master Spellstone
+
 	-- Warlock healthstones
-	[5512] = true,  -- Minor Healthstone
-	[19004] = true, -- Minor Healthstone (1 tp)
-	[19005] = true, -- Minor Healthstone (2 tp)
-	[5511] = true,  -- Lesser Healthstone
-	[19006] = true, -- Lesser Healthstone (1 tp)
-	[19007] = true, -- Lesser Healthstone (2 tp)
-	[5509] = true,  -- Healthstone
-	[19008] = true, -- Healthstone (1 tp)
-	[19009] = true, -- Healthstone (2 tp)
-	[5510] = true,  -- Greater Healthstone
-	[19010] = true, -- Greater Healthstone (1 tp)
-	[19011] = true, -- Greater Healthstone (2 tp)
-	[9421] = true,  -- Major Healthstone
-	[19012] = true, -- Major Healthstone (1 tp)
-	[19013] = true, -- Major Healthstone (2 tp)
+	[5512]	= true, -- Minor Healthstone
+	[19004] = true, -- Minor Healthstone (1/2 Improved Healthstone)
+	[19005] = true, -- Minor Healthstone (2/2 Improved Healthstone)
+	[5511]	= true, -- Lesser Healthstone
+	[19006] = true, -- Lesser Healthstone (1/2 Improved Healthstone)
+	[19007] = true, -- Lesser Healthstone (2/2 Improved Healthstone)
+	[5509]	= true, -- Healthstone
+	[19008] = true, -- Healthstone (1/2 Improved Healthstone)
+	[19009] = true, -- Healthstone (2/2 Improved Healthstone)
+	[5510]	= true, -- Greater Healthstone
+	[19010] = true, -- Greater Healthstone (1/2 Improved Healthstone)
+	[19011] = true, -- Greater Healthstone (2/2 Improved Healthstone)
+	[9421]	= true, -- Major Healthstone
+	[19012] = true, -- Major Healthstone (1/2 Improved Healthstone)
+	[19013] = true, -- Major Healthstone (2/2 Improved Healthstone)
+	[22103] = true, -- Master Healthstone
+	[22104] = true, -- Master Healthstone (1/2 Improved Healthstone)
+	[22105] = true, -- Master Healthstone (2/2 Improved Healthstone)
 }
 
 local safe = {

@@ -895,7 +895,7 @@ function B:ConstructContainerFrame(name, isBank)
 					end
 				end)
 				f.ContainerHolder[i]:HookScript('OnEnter', function(s)
-					local color =  _G.HIGHLIGHT_FONT_COLOR
+					local color = _G.HIGHLIGHT_FONT_COLOR
 					GameTooltip:SetOwner(s, 'ANCHOR_LEFT', 0, 4);
 					GameTooltip:ClearLines()
 					GameTooltip:SetText(_G.KEYRING, color.r, color.g, color.b);
