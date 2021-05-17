@@ -4,6 +4,8 @@
 **• Updated BagBar Keyring icon**  
 **• Updated Website and Git links**  
 ___
+### BETA BUILDS BELOW
+___
 ### Version 0.23 [14-05-2021]
 **• Added Druid Lifebloom to AuraWatch**  
 **• Default NamePlate Range 20 -> 41 (Blizzard Max)**  
