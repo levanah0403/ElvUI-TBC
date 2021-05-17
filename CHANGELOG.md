@@ -1,3 +1,6 @@
+### Version 1.01 [ ETA: 🍨 ]
+**• Added ArenaRegistrar skin**  
+___
 ### Version 1.00 [17-05-2021]
 **• Added tooltip IDs in Spellbook**  
 **• Fixed SpellCrit DataText**  
