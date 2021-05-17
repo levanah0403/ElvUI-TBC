@@ -1,4 +1,6 @@
 ### Version 1.00 [17-05-2021]
+**• Added tooltip IDs in Spellbook**  
+**• Fixed SpellCrit DataText**  
 **• Skin tweaks: Stable, Macro**  
 **• Updated Bag Sort (Warlock Items, Mage Items)**  
 **• Updated BagBar Keyring icon**  
