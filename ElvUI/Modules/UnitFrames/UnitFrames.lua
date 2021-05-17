@@ -594,8 +594,6 @@ function UF:HeaderUpdateSpecificElement(group, elementName)
 	end
 end
 
---Keep an eye on this one, it may need to be changed too
---Reference: http://www.tukui.org/forums/topic.php?id=35332
 function UF.groupPrototype:GetAttribute(name)
 	return self.groups[1]:GetAttribute(name)
 end
