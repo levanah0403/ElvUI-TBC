@@ -9,6 +9,7 @@ local STAT_CATEGORY_ENHANCEMENTS = STAT_CATEGORY_ENHANCEMENTS
 
 local displayString, lastPanel = ''
 
+-- Modified version of PaperDoll.lua
 function GetRealSpellCrit()
 
 	local holySchool = 2
