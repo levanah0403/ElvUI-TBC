@@ -177,7 +177,7 @@ E.Options.args.info.args.spacer = ACH:Spacer(2)
 
 E.Options.args.info.args.support = ACH:Group(L["Support & Download"], nil, 3)
 E.Options.args.info.args.support.inline = true
-E.Options.args.info.args.support.args.homepage = ACH:Execute(L["Support Forum"], nil, 1, function() E:StaticPopup_Show('ELVUI_EDITBOX', nil, nil, 'https://www.tukui.org/forum/viewforum.php?f=4') end)
+E.Options.args.info.args.support.args.homepage = ACH:Execute(L["Support Forum"], nil, 1, function() E:StaticPopup_Show('ELVUI_EDITBOX', nil, nil, 'https://www.tukui.org/forum') end)
 E.Options.args.info.args.support.args.homepage.customWidth = 140
 E.Options.args.info.args.support.args.git = ACH:Execute(L["Ticket Tracker"], nil, 2, function() E:StaticPopup_Show('ELVUI_EDITBOX', nil, nil, 'https://git.tukui.org/elvui/elvui-tbc/-/issues') end)
 E.Options.args.info.args.support.args.git.customWidth = 140
