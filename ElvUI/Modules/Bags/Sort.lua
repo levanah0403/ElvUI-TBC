@@ -731,7 +731,7 @@ function B:StopStacking(message, noUpdate)
 	B.SortUpdateTimer:Hide()
 
 	if not noUpdate then
-		--Add a delayed update call, as BAG_UPDATE fires slightly delayed
+		-- Add a delayed update call, as BAG_UPDATE fires slightly delayed
 		-- and we don't want the last few unneeded updates to be catched
 		E:Delay(0.6, B.RegisterUpdateDelayed)
 	end
@@ -834,7 +834,7 @@ function B:DoMoves()
 					B:StopStacking()
 					return
 				end
-				return --give processing time to happen
+				return -- give processing time to happen
 			end
 			moveTracker[slot] = nil
 		end
