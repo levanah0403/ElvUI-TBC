@@ -1,6 +1,5 @@
 local E, L, V, P, G = unpack(select(2, ...)) --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local AB = E:GetModule('ActionBars')
-local TT = E:GetModule('Tooltip')
 
 local _G = _G
 local ipairs, pairs, select, strmatch, unpack = ipairs, pairs, select, strmatch, unpack
@@ -888,11 +887,6 @@ function AB:SpellButtonOnEnter(_, tt)
 
 	if tt == SpellBookTooltip then
 		tt:SetScript('OnUpdate', (needsUpdate and AB.SpellBookTooltipOnUpdate) or nil)
-	end
-
-	if TT:IsModKeyDown(db) then
-		local _, id = tt:GetSpell()
-		tt:AddLine(format('|cFFCA3C3C%s|r %d', _G.ID, id))
 	end
 
 	tt:Show()
