@@ -9,8 +9,28 @@ local STAT_CATEGORY_ENHANCEMENTS = STAT_CATEGORY_ENHANCEMENTS
 
 local displayString, lastPanel = ''
 
+function GetRealSpellCrit()
+
+	local holySchool = 2
+	local minCrit = GetSpellCritChance(holySchool)
+	local spellCrit
+
+	realSpellCrit = {}
+	realSpellCrit[holySchool] = minCrit
+
+	for i=(holySchool+1), 7 do
+
+		spellCrit = GetSpellCritChance(i)
+		minCrit = min(minCrit, spellCrit)
+		realSpellCrit[i] = spellCrit
+	end
+
+	minCrit = format("%.2f", minCrit)
+	return minCrit
+end
+
 local function OnEvent(self)
-	self.text:SetFormattedText(displayString, CRIT_ABBR, GetSpellCritChance())
+	self.text:SetFormattedText(displayString, CRIT_ABBR, GetRealSpellCrit())
 
 	lastPanel = self
 end
