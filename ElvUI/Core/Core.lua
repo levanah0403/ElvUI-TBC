@@ -36,7 +36,7 @@ local LE_PARTY_CATEGORY_INSTANCE = LE_PARTY_CATEGORY_INSTANCE
 local C_ChatInfo_SendAddonMessage = C_ChatInfo.SendAddonMessage
 -- GLOBALS: ElvCharacterDB, ElvUIPlayerBuffs, ElvUIPlayerDebuffs
 
---Modules
+-- Modules
 local ActionBars = E:GetModule('ActionBars')
 local AFK = E:GetModule('AFK')
 local Auras = E:GetModule('Auras')
@@ -53,7 +53,7 @@ local Totems = E:GetModule('Totems')
 local UnitFrames = E:GetModule('UnitFrames')
 local LSM = E.Libs.LSM
 
---Constants
+-- Constants
 E.noop = function() end
 E.title = format('%s%s|r', E.InfoColor, 'ElvUI')
 E.version = tonumber(GetAddOnMetadata('ElvUI', 'Version'))
@@ -81,7 +81,7 @@ E.UserList = {}
 E.oUF.Tags.Vars.E = E
 E.oUF.Tags.Vars.L = L
 
---Tables
+-- Tables
 E.media = {}
 E.frames = {}
 E.unitFrameElements = {}
@@ -130,11 +130,11 @@ E.DispelClasses = {
 }
 
 E.BadDispels = {
-	[34914]		= 'Vampiric Touch',		-- horrifies
-	[233490]	= 'Unstable Affliction'	-- silences
+	[34914]		= 'Vampiric Touch',		-- Horrifies
+	[233490]	= 'Unstable Affliction' -- Silences
 }
 
---Workaround for people wanting to use white and it reverting to their class color.
+-- Workaround for people wanting to use white and it reverting to their class color.
 E.PriestColors = { r = 0.99, g = 0.99, b = 0.99, colorStr = 'fffcfcfc' }
 
 -- Socket Type info from 8.2
@@ -151,7 +151,7 @@ E.GemTypeInfo = {
 	PunchcardBlue	= { r = 0.47, g = 0.67, b = 1.00 },
 }
 
---This frame everything in ElvUI should be anchored to for Eyefinity support.
+-- This frame everything in ElvUI should be anchored to for Eyefinity support.
 E.UIParent = CreateFrame('Frame', 'ElvUIParent', _G.UIParent)
 E.UIParent:SetFrameLevel(_G.UIParent:GetFrameLevel())
 E.UIParent:SetSize(_G.UIParent:GetSize())
@@ -206,7 +206,7 @@ function E:GrabColorPickerValues(r, g, b)
 	return r, g, b
 end
 
---Basically check if another class border is being used on a class that doesn't match. And then return true if a match is found.
+-- Basically check if another class border is being used on a class that doesn't match. And then return true if a match is found.
 function E:CheckClassColor(r, g, b)
 	r, g, b = E:GrabColorPickerValues(r, g, b)
 
@@ -270,18 +270,18 @@ function E:GetColorTable(data)
 end
 
 function E:UpdateMedia()
-	if not E.db.general or not E.private.general then return end --Prevent rare nil value errors
+	if not E.db.general or not E.private.general then return end -- Prevent rare nil value errors
 
-	--Fonts
+	-- Fonts
 	E.media.normFont = LSM:Fetch('font', E.db.general.font)
 	E.media.combatFont = LSM:Fetch('font', E.private.general.dmgfont)
 
-	--Textures
+	-- Textures
 	E.media.blankTex = LSM:Fetch('background', 'ElvUI Blank')
 	E.media.normTex = LSM:Fetch('statusbar', E.private.general.normTex)
 	E.media.glossTex = LSM:Fetch('statusbar', E.private.general.glossTex)
 
-	--Border Color
+	-- Border Color
 	local border = E.db.general.bordercolor
 	if E:CheckClassColor(border.r, border.g, border.b) then
 		local classColor = E:ClassColor(E.myclass, true)
@@ -292,7 +292,7 @@ function E:UpdateMedia()
 
 	E.media.bordercolor = {border.r, border.g, border.b}
 
-	--UnitFrame Border Color
+	-- UnitFrame Border Color
 	border = E.db.unitframe.colors.borderColor
 	if E:CheckClassColor(border.r, border.g, border.b) then
 		local classColor = E:ClassColor(E.myclass, true)
@@ -302,13 +302,13 @@ function E:UpdateMedia()
 	end
 	E.media.unitframeBorderColor = {border.r, border.g, border.b}
 
-	--Backdrop Color
+	-- Backdrop Color
 	E.media.backdropcolor = E:SetColorTable(E.media.backdropcolor, E.db.general.backdropcolor)
 
-	--Backdrop Fade Color
+	-- Backdrop Fade Color
 	E.media.backdropfadecolor = E:SetColorTable(E.media.backdropfadecolor, E.db.general.backdropfadecolor)
 
-	--Value Color
+	-- Value Color
 	local value = E.db.general.valuecolor
 	if E:CheckClassColor(value.r, value.g, value.b) then
 		value = E:ClassColor(E.myclass, true)
@@ -317,7 +317,7 @@ function E:UpdateMedia()
 		E.db.general.valuecolor.b = value.b
 	end
 
-	--Chat Tab Selector Color
+	-- Chat Tab Selector Color
 	local selectorColor = E.db.chat.tabSelectorColor
 	if E:CheckClassColor(selectorColor.r, selectorColor.g, selectorColor.b) then
 		selectorColor = E:ClassColor(E.myclass, true)
@@ -1658,7 +1658,7 @@ do
 		return funcs ~= nil, funcs
 	end
 
-	--- Registers specified event and adds specified func to be called for the specified object.
+	-- Registers specified event and adds specified func to be called for the specified object.
 	-- Unless all parameters are supplied it will not register.
 	-- If the specified object has already been registered for the specified event
 	-- then it will just add the specified func to a table of functions that should be called.
@@ -1688,7 +1688,7 @@ do
 		end
 	end
 
-	--- Unregisters specified function for the specified object on the specified event.
+	-- Unregisters specified function for the specified object on the specified event.
 	-- Unless all parameters are supplied it will not unregister.
 	-- @param event The event you want to unregister an object from.
 	-- @param object The object you want to unregister a func from.

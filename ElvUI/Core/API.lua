@@ -156,11 +156,11 @@ do
 	local Masque = E.Libs.Masque
 	local MasqueGroupState = {}
 	local MasqueGroupToTableElement = {
-		['ActionBars'] = {'actionbar', 'actionbars'},
-		['Pet Bar'] = {'actionbar', 'petBar'},
-		['Stance Bar'] = {'actionbar', 'stanceBar'},
-		['Buffs'] = {'auras', 'buffs'},
-		['Debuffs'] = {'auras', 'debuffs'},
+		['ActionBars']	= {'actionbar', 'actionbars'},
+		['Pet Bar']		= {'actionbar', 'petBar'},
+		['Stance Bar']	= {'actionbar', 'stanceBar'},
+		['Buffs']		= {'auras', 'buffs'},
+		['Debuffs']		= {'auras', 'debuffs'},
 	}
 
 	function E:MasqueCallback(Group, _, _, _, _, Disabled)

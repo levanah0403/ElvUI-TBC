@@ -239,9 +239,7 @@ function E:SetupLayout(layout, noDataReset, noDisplayMsg)
 
 		--Shared base layout, tweaks to individual layouts will be below
 		E:ResetMovers()
-		if not E.db.movers then
-			E.db.movers = {}
-		end
+		if not E.db.movers then E.db.movers = {} end
 
 		--ActionBars
 			E.db.actionbar.bar1.buttons = 8
@@ -325,8 +323,6 @@ function E:SetupLayout(layout, noDataReset, noDisplayMsg)
 			E.db.nameplates.units.ENEMY_PLAYER.portrait.position = "LEFT"
 			E.db.nameplates.units.ENEMY_PLAYER.portrait.xOffset = 0
 			E.db.nameplates.units.ENEMY_PLAYER.portrait.yOffset = 0
-
-
 		--UnitFrames
 			E.db.unitframe.smoothbars = true
 			E.db.unitframe.thinBorders = true

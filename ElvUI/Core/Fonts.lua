@@ -25,11 +25,11 @@ end
 
 local chatFontHeights = {6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20}
 function E:UpdateBlizzardFonts()
-	local NORMAL		= E.media.normFont
-	local NUMBER		= E.media.normFont
-	local COMBAT		= LSM:Fetch('font', E.private.general.dmgfont)
-	local NAMEFONT		= LSM:Fetch('font', E.private.general.namefont)
-	local BUBBLE		= LSM:Fetch('font', E.private.general.chatBubbleFont)
+	local NORMAL	= E.media.normFont
+	local NUMBER	= E.media.normFont
+	local COMBAT	= LSM:Fetch('font', E.private.general.dmgfont)
+	local NAMEFONT	= LSM:Fetch('font', E.private.general.namefont)
+	local BUBBLE	= LSM:Fetch('font', E.private.general.chatBubbleFont)
 
 	_G.CHAT_FONT_HEIGHTS = chatFontHeights
 

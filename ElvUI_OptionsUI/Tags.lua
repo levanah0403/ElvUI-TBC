@@ -16,7 +16,7 @@ E.Options.args.tagGroup.args.description = ACH:Description('|cffFF0000This is fo
 E.Options.args.tagGroup.args.spacer = ACH:Spacer(5)
 
 E.Options.args.tagGroup.args.Colors = ACH:Group(L["Colors"])
-E.Options.args.tagGroup.args.Colors.args.customTagColorInfo  = ACH:Input('Custom color your Text: replace the XXXXXX with a Hex color code', nil, 1, nil, 'full', function() return '||cffXXXXXX [tags] or text here ||r' end)
+E.Options.args.tagGroup.args.Colors.args.customTagColorInfo = ACH:Input('Custom color your Text: replace the XXXXXX with a Hex color code', nil, 1, nil, 'full', function() return '||cffXXXXXX [tags] or text here ||r' end)
 E.Options.args.tagGroup.args.Names = ACH:Group(L["Names"])
 E.Options.args.tagGroup.args.Names.args.nameHealthInfo1 = ACH:Input('|cFF666666[1/5]|r White name text, missing hp red', nil, 1, nil, 'full', function() return '[name:health]' end)
 E.Options.args.tagGroup.args.Names.args.nameHealthInfo2 = ACH:Input('|cFF666666[2/5]|r Class color name text, missing hp red', nil, 2, nil, 'full', function() return '[name:health{class}]' end)
