@@ -50,9 +50,9 @@ local function OnEvent(self)
 
 	local OldMoney = oldMoney or NewMoney
 	local Change = NewMoney-OldMoney -- Positive if we gain money
-	if OldMoney>NewMoney then		-- Lost Money
+	if OldMoney>NewMoney then -- Lost Money
 		Spent = Spent - Change
-	else							-- Gained Moeny
+	else -- Gained Moeny
 		Profit = Profit + Change
 	end
 
