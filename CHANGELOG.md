@@ -1,5 +1,8 @@
 ### Version 1.00 [17-05-2021]
 **• Skin tweaks: Stable, Macro**  
+**• Updated Bag Sort (Warlock Items, Mage Items)**  
+**• Updated BagBar Keyring icon**  
+**• Updated Website and Git links**  
 ___
 ### Version 0.23 [14-05-2021]
 **• Added Druid Lifebloom to AuraWatch**  
