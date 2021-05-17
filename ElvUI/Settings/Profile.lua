@@ -475,8 +475,6 @@ P.nameplates = {
 			others = {r = 0, g = 1, b = 0, a = 0.25},
 			absorbs = {r = 1, g = 1, b = 0, a = 0.25},
 			healAbsorbs = {r = 1, g = 0, b = 0, a = 0.25},
-			--overabsorbs = {r = 1, g = 1, b = 0, a = 0.25},
-			--overhealabsorbs = {r = 1, g = 0, b = 0, a = 0.25},
 		},
 		threat = {
 			goodColor = {r = 050/255, g = 180/255, b = 000/255},
