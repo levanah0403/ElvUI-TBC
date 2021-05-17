@@ -1,5 +1,6 @@
 local E, L, V, P, G = unpack(select(2, ...)) --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local TT = E:GetModule('Tooltip')
+local AB = E:GetModule('ActionBars')
 local Skins = E:GetModule('Skins')
 
 local _G = _G
@@ -504,6 +505,10 @@ function TT:MODIFIER_STATE_CHANGED(_, key)
 			GameTooltip:SetUnit('mouseover')
 		end
 	end
+
+    if _G.ElvUISpellBookTooltip:IsShown() then
+        AB:UpdateSpellBookTooltip()
+    end
 end
 
 function TT:SetUnitAura(tt, unit, index, filter)
@@ -651,6 +656,7 @@ function TT:Initialize()
 	TT:SecureHookScript(GameTooltip, 'OnTooltipSetItem', 'GameTooltip_OnTooltipSetItem')
 	TT:SecureHookScript(GameTooltip, 'OnTooltipSetUnit', 'GameTooltip_OnTooltipSetUnit')
 	TT:SecureHookScript(GameTooltip.StatusBar, 'OnValueChanged', 'GameTooltipStatusBar_OnValueChanged')
+	TT:SecureHookScript(_G.ElvUISpellBookTooltip, 'OnTooltipSetSpell', 'GameTooltip_OnTooltipSetSpell')
 	TT:RegisterEvent('MODIFIER_STATE_CHANGED')
 
 	--Variable is localized at top of file, then set here when we're sure the frame has been created
