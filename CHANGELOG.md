@@ -4,6 +4,7 @@
 **• Skin tweaks: Stable, Macro**  
 **• Updated Bag Sort (Warlock Items, Mage Items)**  
 **• Updated BagBar Keyring icon**  
+**• Updated SpellHit DataText to display the Character Stats value**  
 **• Updated Website and Git links**  
 ___
 ### BETA BUILDS BELOW
