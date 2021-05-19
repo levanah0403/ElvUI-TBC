@@ -1,4 +1,7 @@
-### Version 2.01 [ ETA: 🍨 ]
+### Version 2.02 [ ETA: 🍨 ]
+___
+### Version 2.01 [19-05-2021]
+**• NamePlate fixes / Error fixes**  
 ___
 ### Version 2.00 [19-05-2021]
 **• Added ArenaRegistrar skin**  
