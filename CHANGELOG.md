@@ -1,5 +1,9 @@
-### Version 1.01 [ ETA: 🍨 ]
+### Version 2.01 [ ETA: 🍨 ]
+___
+### Version 2.00 [19-05-2021]
 **• Added ArenaRegistrar skin**  
+**• Bump version to 2.00 so people with ElvUI Classic**  
+**dont force show a "out of date" message to TBC users**  
 ___
 ### Version 1.00 [17-05-2021]
 **• Added tooltip IDs in Spellbook**  
