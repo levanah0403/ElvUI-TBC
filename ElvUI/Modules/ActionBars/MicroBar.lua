@@ -105,18 +105,6 @@ function AB:UpdateMicroButtonsParent()
 	end
 end
 
--- we use this table to sort the micro buttons on our bar to match Blizzard's button placements.
-local __buttonIndex = {
-	[1]='CharacterMicroButton',
-	[2]='SpellbookMicroButton',
-	[3]='TalentMicroButton',
-	[4]='QuestLogMicroButton',
-	[5]='SocialsMicroButton',
-	[6]='WorldMapMicroButton',
-	[7]='MainMenuMicroButton',
-	[8]='HelpMicroButton'
-}
-
 function AB:UpdateMicroBarVisibility()
 	if InCombatLockdown() then
 		AB.NeedsUpdateMicroBarVisibility = true
@@ -146,9 +134,9 @@ function AB:UpdateMicroPositionDimensions()
 	local _, horizontal, anchorUp, anchorLeft = AB:GetGrowth(db.point)
 	local lastButton, anchorRowButton = microBar
 	for i = 1, #_G.MICRO_BUTTONS do
-		local button = _G[__buttonIndex[i]] or _G[_G.MICRO_BUTTONS[i]]
+		local button = _G[_G.MICRO_BUTTONS[i]]
 		local lastColumnButton = i - db.buttonsPerRow
-		lastColumnButton = _G[__buttonIndex[lastColumnButton]] or _G[_G.MICRO_BUTTONS[lastColumnButton]]
+		lastColumnButton = _G[_G.MICRO_BUTTONS[lastColumnButton]]
 		button.db = db
 
 		if i == 1 or i == db.buttonsPerRow then
