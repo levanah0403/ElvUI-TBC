@@ -207,5 +207,5 @@ function AB:SetupMicroBar()
 	_G.MainMenuBarPerformanceBar:SetAlpha(0)
 	_G.MainMenuBarPerformanceBar:SetScale(0.00001)
 
-	E:CreateMover(microBar, 'MicrobarMover', L['Micro Bar'], nil, nil, nil, 'ALL,ACTIONBARS', nil, 'actionbar,microbar')
+	E:CreateMover(microBar, 'MicrobarMover', L["Micro Bar"], nil, nil, nil, 'ALL,ACTIONBARS', nil, 'actionbar,microbar')
 end
