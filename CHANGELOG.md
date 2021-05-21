@@ -1,4 +1,7 @@
 ### Version 2.04 [ ETA: 🍨 ]
+**• Fixed Skin errors**  
+**• Updated Minimap dropdown**  
+**• Updated Powerprediction**  
 ___
 ### Version 2.03 [21-05-2021]
 **• Added Master Looter Icon**  
