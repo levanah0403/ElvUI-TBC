@@ -10,10 +10,10 @@ ___
 **• Fixed Skin error**  
 ___
 ### Version 2.02 [20-05-2021]
-**• Auto repair fix**  
-**• Chat error fix**  
-**• Druid action paging update (Tree of Life fix)**  
-**• Leader icon back to original position**  
+**• Fixed Aura Repair**  
+**• Fixed Chat error**  
+**• Updated Druid Action Paging (Tree of Life fix)**  
+**• Updated Leader icon position**  
 ___
 ### Version 2.01 [19-05-2021]
 **• NamePlate fixes / Error fixes**  
