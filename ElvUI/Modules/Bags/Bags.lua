@@ -15,7 +15,6 @@ local CloseBag, CloseBackpack, CloseBankFrame = CloseBag, CloseBackpack, CloseBa
 local CooldownFrame_Set = CooldownFrame_Set
 local CreateFrame = CreateFrame
 local CursorHasItem = CursorHasItem
-local DeleteCursorItem = DeleteCursorItem
 local GameTooltip_Hide = GameTooltip_Hide
 local GetBagName = GetBagName
 local GetBindingKey = GetBindingKey
@@ -1437,20 +1436,16 @@ end
 function B:ProgressQuickVendor()
 	local item = B.SellFrame.Info.itemList[1]
 	if not item then return nil, true end --No more to sell
-	local bag, slot,itemPrice, link = unpack(item)
 
-	local stackPrice = 0
-	if B.SellFrame.Info.delete then
-		PickupContainerItem(bag, slot)
-		DeleteCursorItem()
-	else
-		local stackCount = select(2, GetContainerItemInfo(bag, slot)) or 1
-		stackPrice = (itemPrice or 0) * stackCount
-		if E.db.bags.vendorGrays.details and link then
-			E:Print(format('%s|cFF00DDDDx%d|r %s', link, stackCount, E:FormatMoney(stackPrice, E.db.bags.moneyFormat, not E.db.bags.moneyCoins)))
-		end
-		UseContainerItem(bag, slot)
+	local bag, slot, itemPrice, link = unpack(item)
+	local stackCount = select(2, GetContainerItemInfo(bag, slot)) or 1
+	local stackPrice = (itemPrice or 0) * stackCount
+
+	if E.db.bags.vendorGrays.details and link then
+		E:Print(format('%s|cFF00DDDDx%d|r %s', link, stackCount, E:FormatMoney(stackPrice, E.db.bags.moneyFormat, not E.db.bags.moneyCoins)))
 	end
+
+	UseContainerItem(bag, slot)
 
 	tremove(B.SellFrame.Info.itemList, 1)
 
