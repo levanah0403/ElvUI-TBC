@@ -7,9 +7,7 @@ local pairs = pairs
 local assert = assert
 local unpack = unpack
 local CreateFrame = CreateFrame
-local C_StorePublic_IsEnabled = C_StorePublic.IsEnabled
 local UpdateMicroButtonsParent = UpdateMicroButtonsParent
-local GetCurrentRegionName = GetCurrentRegionName
 local RegisterStateDriver = RegisterStateDriver
 local InCombatLockdown = InCombatLockdown
 
@@ -118,6 +116,25 @@ function AB:UpdateMicroBarVisibility()
 	RegisterStateDriver(microBar.visibility, 'visibility', (AB.db.microbar.enabled and visibility) or 'hide')
 end
 
+local commandKeys = {
+	CharacterMicroButton = 'TOGGLECHARACTER0',
+	SpellbookMicroButton = 'TOGGLESPELLBOOK',
+	TalentMicroButton = 'TOGGLETALENTS',
+	AchievementMicroButton = 'TOGGLEACHIEVEMENT',
+	QuestLogMicroButton = 'TOGGLEQUESTLOG',
+	GuildMicroButton = 'TOGGLEGUILDTAB',
+	LFDMicroButton = 'TOGGLEGROUPFINDER',
+	CollectionsMicroButton = 'TOGGLECOLLECTIONS',
+	EJMicroButton = 'TOGGLEENCOUNTERJOURNAL',
+	MainMenuMicroButton = 'TOGGLEGAMEMENU',
+	StoreMicroButton = nil, -- special
+
+	-- tbc specific
+	SocialsMicroButton = 'TOGGLESOCIAL',
+	WorldMapMicroButton = 'TOGGLEWORLDMAP',
+	HelpMicroButton = nil, -- special
+}
+
 function AB:UpdateMicroPositionDimensions()
 	local db = AB.db.microbar
 	microBar.db = db
@@ -127,16 +144,18 @@ function AB:UpdateMicroPositionDimensions()
 
 	AB:MoverMagic(microBar)
 
-	db.buttons = #_G.MICRO_BUTTONS
+	local btns = _G.MICRO_BUTTONS
+	db.buttons = #btns
 
 	local backdropSpacing = db.backdropSpacing
-
 	local _, horizontal, anchorUp, anchorLeft = AB:GetGrowth(db.point)
 	local lastButton, anchorRowButton = microBar
-	for i = 1, #_G.MICRO_BUTTONS do
-		local button = _G[_G.MICRO_BUTTONS[i]]
+	for i = 1, #btns do
+		local name = btns[i]
+		local button = _G[name]
 		local lastColumnButton = i - db.buttonsPerRow
-		lastColumnButton = _G[_G.MICRO_BUTTONS[lastColumnButton]]
+		lastColumnButton = _G[btns[lastColumnButton]]
+		button.commandName = commandKeys[name] -- to support KB like retail
 		button.db = db
 
 		if i == 1 or i == db.buttonsPerRow then
