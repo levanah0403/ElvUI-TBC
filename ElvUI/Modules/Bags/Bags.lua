@@ -15,7 +15,6 @@ local CloseBag, CloseBackpack, CloseBankFrame = CloseBag, CloseBackpack, CloseBa
 local CooldownFrame_Set = CooldownFrame_Set
 local CreateFrame = CreateFrame
 local CursorHasItem = CursorHasItem
-local DeleteCursorItem = DeleteCursorItem
 local GameTooltip_Hide = GameTooltip_Hide
 local GetBagName = GetBagName
 local GetBindingKey = GetBindingKey
@@ -35,7 +34,6 @@ local GetNumBankSlots = GetNumBankSlots
 local GetScreenWidth, GetScreenHeight = GetScreenWidth, GetScreenHeight
 local IsBagOpen, IsOptionFrameOpen = IsBagOpen, IsOptionFrameOpen
 local IsShiftKeyDown, IsControlKeyDown = IsShiftKeyDown, IsControlKeyDown
-local PickupContainerItem = PickupContainerItem
 local PlaySound = PlaySound
 local PutItemInBackpack = PutItemInBackpack
 local PutItemInBag = PutItemInBag
@@ -705,7 +703,7 @@ end
 
 function B:VendorGrays()
 	if B.SellFrame:IsShown() then return end
-	if (not _G.MerchantFrame or not _G.MerchantFrame:IsShown()) and not delete then
+	if not _G.MerchantFrame or not _G.MerchantFrame:IsShown() then
 		E:Print(L["You must be at a vendor."])
 		return
 	end
@@ -723,12 +721,13 @@ function B:VendorGrays()
 		end
 	end
 
-	if (not B.SellFrame.Info.itemList) then return end
-	if (tmaxn(B.SellFrame.Info.itemList) < 1) then return end
+	local listMax = B.SellFrame.Info.itemList and tmaxn(B.SellFrame.Info.itemList)
+	if not listMax or listMax < 1 then return end
+
 	--Resetting stuff
 	B.SellFrame.Info.ProgressTimer = 0
 	B.SellFrame.Info.SellInterval = 0.2
-	B.SellFrame.Info.ProgressMax = tmaxn(B.SellFrame.Info.itemList)
+	B.SellFrame.Info.ProgressMax = listMax
 	B.SellFrame.Info.goldGained = 0
 	B.SellFrame.Info.itemsSold = 0
 
@@ -1424,12 +1423,13 @@ function B:ProgressQuickVendor()
 	if not item then return nil, true end --No more to sell
 	local bag, slot,itemPrice, link = unpack(item)
 
-	local stackPrice = 0
 	local stackCount = select(2, GetContainerItemInfo(bag, slot)) or 1
-	stackPrice = (itemPrice or 0) * stackCount
+	local stackPrice = (itemPrice or 0) * stackCount
+
 	if E.db.bags.vendorGrays.details and link then
 		E:Print(format('%s|cFF00DDDDx%d|r %s', link, stackCount, E:FormatMoney(stackPrice, E.db.bags.moneyFormat, not E.db.bags.moneyCoins)))
 	end
+
 	UseContainerItem(bag, slot)
 
 	tremove(B.SellFrame.Info.itemList, 1)
