@@ -155,9 +155,9 @@ function AB:UpdateMicroPositionDimensions()
 		local name = btns[i]
 		local button = _G[name]
 
-		local lastIndex = i - db.buttonsPerRow
-		local lastName = btns[lastIndex]
-		local lastColumn = _G[lastName]
+		local columnIndex = i - db.buttonsPerRow
+		local columnName = btns[columnIndex]
+		local columnButton = _G[columnName]
 
 		button.commandName = commandKeys[name] -- to support KB like retail
 		button.db = db
@@ -167,7 +167,7 @@ function AB:UpdateMicroPositionDimensions()
 		end
 
 		button.handleBackdrop = true -- keep over HandleButton
-		AB:HandleButton(microBar, button, i, lastButton, lastColumn)
+		AB:HandleButton(microBar, button, i, lastButton, columnButton)
 
 		lastButton = button
 	end
