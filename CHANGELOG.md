@@ -1,4 +1,7 @@
-### Version 2.04 [ ETA: 🍨 ]
+### Version 2.05 [ ETA: 🍨 ]
+___
+### Version 2.04 [22-05-2021]
+**• Fixed SaveBindings error**  
 **• Fixed Skin errors**  
 **• Updated Minimap dropdown**  
 **• Updated Powerprediction**  
