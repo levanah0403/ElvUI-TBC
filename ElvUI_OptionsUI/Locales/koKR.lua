@@ -1,4 +1,4 @@
--- Korean localization file for koKR.(OptionsUI)-20210521
+-- Korean localization file for koKR.
 local L = ElvUI[1].Libs.ACL:NewLocale("ElvUI", "koKR")
 
 L["# Displayed Auras"] = "표시되는 효과 수량"
