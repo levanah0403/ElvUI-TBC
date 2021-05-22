@@ -703,7 +703,7 @@ function B:GetGraysValue()
 	return value
 end
 
-function B:VendorGrays()
+function B:VendorGrays(delete)
 	if B.SellFrame:IsShown() then return end
 	if (not _G.MerchantFrame or not _G.MerchantFrame:IsShown()) and not delete then
 		E:Print(L["You must be at a vendor."])
@@ -726,6 +726,7 @@ function B:VendorGrays()
 	if (not B.SellFrame.Info.itemList) then return end
 	if (tmaxn(B.SellFrame.Info.itemList) < 1) then return end
 	--Resetting stuff
+	B.SellFrame.Info.delete = delete or false
 	B.SellFrame.Info.ProgressTimer = 0
 	B.SellFrame.Info.SellInterval = 0.2
 	B.SellFrame.Info.ProgressMax = tmaxn(B.SellFrame.Info.itemList)
@@ -738,6 +739,19 @@ function B:VendorGrays()
 
 	--Time to sell
 	B.SellFrame:Show()
+end
+
+function B:VendorGrayCheck()
+	local value = B:GetGraysValue()
+
+	if value == 0 then
+		E:Print(L['No gray items to delete.'])
+	elseif not _G.MerchantFrame or not _G.MerchantFrame:IsShown() then
+		E.PopupDialogs.DELETE_GRAYS.Money = value
+		E:StaticPopup_Show('DELETE_GRAYS')
+	else
+		B:VendorGrays()
+	end
 end
 
 function B:SetButtonTexture(button, texture)
@@ -1027,11 +1041,11 @@ function B:ConstructContainerFrame(name, isBank)
 		f.vendorGraysButton:Point('RIGHT', f.bagsButton, 'LEFT', -5, 0)
 		B:SetButtonTexture(f.vendorGraysButton, 'Interface/ICONS/INV_Misc_Coin_01')
 		f.vendorGraysButton:StyleButton(nil, true)
-		f.vendorGraysButton.ttText = L["Vendor Grays"]
+		f.vendorGraysButton.ttText = L["Vendor / Delete Grays"]
 		f.vendorGraysButton.ttValue = B.GetGraysValue
 		f.vendorGraysButton:SetScript('OnEnter', B.Tooltip_Show)
 		f.vendorGraysButton:SetScript('OnLeave', GameTooltip_Hide)
-		f.vendorGraysButton:SetScript('OnClick', B.VendorGrays)
+		f.vendorGraysButton:SetScript('OnClick', B.VendorGrayCheck)
 
 		-- Keyring
 		f.keyRingButton = CreateFrame('Button', nil, f.holderFrame)
@@ -1412,6 +1426,7 @@ function B:MERCHANT_CLOSED()
 	B.SellFrame:Hide()
 
 	twipe(B.SellFrame.Info.itemList)
+	B.SellFrame.Info.delete = false
 	B.SellFrame.Info.ProgressTimer = 0
 	B.SellFrame.Info.SellInterval = E.db.bags.vendorGrays.interval
 	B.SellFrame.Info.ProgressMax = 0
@@ -1425,12 +1440,17 @@ function B:ProgressQuickVendor()
 	local bag, slot,itemPrice, link = unpack(item)
 
 	local stackPrice = 0
-	local stackCount = select(2, GetContainerItemInfo(bag, slot)) or 1
-	stackPrice = (itemPrice or 0) * stackCount
-	if E.db.bags.vendorGrays.details and link then
-		E:Print(format('%s|cFF00DDDDx%d|r %s', link, stackCount, E:FormatMoney(stackPrice, E.db.bags.moneyFormat, not E.db.bags.moneyCoins)))
+	if B.SellFrame.Info.delete then
+		PickupContainerItem(bag, slot)
+		DeleteCursorItem()
+	else
+		local stackCount = select(2, GetContainerItemInfo(bag, slot)) or 1
+		stackPrice = (itemPrice or 0) * stackCount
+		if E.db.bags.vendorGrays.details and link then
+			E:Print(format('%s|cFF00DDDDx%d|r %s', link, stackCount, E:FormatMoney(stackPrice, E.db.bags.moneyFormat, not E.db.bags.moneyCoins)))
+		end
+		UseContainerItem(bag, slot)
 	end
-	UseContainerItem(bag, slot)
 
 	tremove(B.SellFrame.Info.itemList, 1)
 
