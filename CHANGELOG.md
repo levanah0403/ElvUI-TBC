@@ -1,4 +1,8 @@
 ### Version 2.05 [ ETA: 🍨 ]
+**• Fixed Friendly Blizzard NamePlates in instances**  
+**• Fixed Git issue #3 (PixelPerfect error)**  
+**• Fixed Git issue #4 (SaveBindings error)**  
+**• Updated LibHealComm-4.0**  
 ___
 ### Version 2.04 [22-05-2021]
 **• Fixed SaveBindings error**  
