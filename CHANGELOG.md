@@ -1,4 +1,5 @@
 ### Version 2.05 [ ETA: 🍨 ]
+**• Added KeyBind (/kb) support for Micro, Pet & Stance- Bar**  
 **• Fixed Friendly Blizzard NamePlates in instances**  
 **• Fixed Git issue #3 (PixelPerfect error)**  
 **• Fixed Git issue #4 (SaveBindings error)**  
