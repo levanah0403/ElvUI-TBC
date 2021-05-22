@@ -187,12 +187,16 @@ function S:BlizzardMiscFrames()
 		end
 
 		local Backdrop = _G[listFrameName..'Backdrop']
-		if not Backdrop.template then Backdrop:StripTextures() end
-		Backdrop:CreateBackdrop('Transparent')
+		if not Backdrop.backdrop then
+			Backdrop:StripTextures()
+			Backdrop:CreateBackdrop('Transparent')
+		end
 
 		local menuBackdrop = _G[listFrameName..'MenuBackdrop']
-		if not menuBackdrop.template then menuBackdrop:StripTextures() end
-		menuBackdrop:CreateBackdrop('Transparent')
+		if not menuBackdrop.backdrop then
+			menuBackdrop:StripTextures()
+			menuBackdrop:CreateBackdrop('Transparent')
+		end
 	end)
 
 	hooksecurefunc('UIDropDownMenu_SetIconImage', function(icon, texture)
