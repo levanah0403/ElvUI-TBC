@@ -18,7 +18,14 @@ function S:HelpFrame()
 	S:HandleCloseButton(_G.HelpFrameCloseButton)
 
 	-- Insets
-	local insets = { _G.HelpBrowser.BrowserInset, _G.HelpBrowserInsetTopBorder, _G.HelpBrowserInsetLeftBorder, _G.HelpBrowserInsetRightBorder, _G.HelpBrowserInsetBottomBorder }
+	local insets = {
+		_G.HelpBrowser.BrowserInset,
+		_G.HelpBrowserInsetTopBorder,
+		_G.HelpBrowserInsetLeftBorder,
+		_G.HelpBrowserInsetRightBorder,
+		_G.HelpBrowserInsetBottomBorder
+	}
+
 	for _, inset in pairs(insets) do
 		inset:StripTextures()
 	end
