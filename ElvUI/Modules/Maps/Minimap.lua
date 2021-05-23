@@ -374,7 +374,8 @@ function M:Initialize()
 		_G.MinimapNorthTag,
 		_G.MinimapZoneTextButton,
 		_G.MinimapToggleButton,
-		_G.MiniMapMailBorder
+		_G.MiniMapMailBorder,
+		_G.GameTimeFrame,
 	}
 
 	for _, frame in pairs(frames) do
