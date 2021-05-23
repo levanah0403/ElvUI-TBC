@@ -319,9 +319,6 @@ function B:UpdateSlot(frame, bagID, slotID)
 	local link = GetContainerItemLink(bagID, slotID)
 
 	slot:Show()
-	if slot.questIcon then
-		slot.questIcon:Hide()
-	end
 
 	slot.isJunk = (slot.rarity and slot.rarity == LE_ITEM_QUALITY_POOR) and not noValue
 	slot.junkDesaturate = slot.isJunk and E.db.bags.junkDesaturate
@@ -355,7 +352,7 @@ function B:UpdateSlot(frame, bagID, slotID)
 	local professionColors = keyring and B.KeyRingColor or B.ProfessionColors[bagType]
 	local showItemLevel = B.db.itemLevel and link and not professionColors
 	local showBindType = B.db.showBindType and (slot.rarity and slot.rarity > LE_ITEM_QUALITY_COMMON)
-	local forceColor, isQuestItem, r, g, b, a = true
+	local forceColor, r, g, b, a = true
 
 	if link then
 		local name, _, itemRarity, _, _, _, _, _, itemEquipLoc, _, _, itemClassID, itemSubClassID, bindType = GetItemInfo(link)
@@ -379,7 +376,7 @@ function B:UpdateSlot(frame, bagID, slotID)
 			end
 		end
 
-		isQuestItem = itemClassID == LE_ITEM_CLASS_QUESTITEM
+		slot.isQuestItem = itemClassID == LE_ITEM_CLASS_QUESTITEM
 		if showBindType and (bindType == 2 or bindType == 3) then
 			local BoE, BoU
 
@@ -413,14 +410,19 @@ function B:UpdateSlot(frame, bagID, slotID)
 		r, g, b, a = unpack(professionColors)
 	--elseif questId and not isActiveQuest then
 	--	r, g, b, a = unpack(B.QuestColors.questStarter)
-	elseif isQuestItem then
+	elseif slot.isQuestItem then
 		r, g, b, a = unpack(B.QuestColors.questItem)
-		if slot.questIcon then
-			slot.questIcon:Show()
-		end
 	elseif not link or B.db.qualityColors and slot.rarity and slot.rarity <= LE_ITEM_QUALITY_COMMON then
 		r, g, b, a = unpack(E.media.bordercolor)
 		forceColor = nil
+	end
+
+	if slot.questIcon then
+		if slot.isQuestItem and E.db.bags.questIcon then
+			slot.questIcon:Show()
+		else
+			slot.questIcon:Hide()
+		end
 	end
 
 	slot:SetBackdropBorderColor(r, g, b, a)

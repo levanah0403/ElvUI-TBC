@@ -156,6 +156,7 @@ P.bags = {
 	currencyFormat = 'ICON_TEXT_ABBR',
 	moneyFormat = 'SMART',
 	moneyCoins = true,
+	questIcon = false,
 	junkIcon = false,
 	junkDesaturate = false,
 	newItemGlow = true,
