@@ -314,7 +314,7 @@ function B:UpdateSlot(frame, bagID, slotID)
 	local bagType = frame.Bags[bagID].type
 	local keyring = (bagID == -2)
 	local texture, count, locked, rarity, readable, _, itemLink, _, noValue, itemID = GetContainerItemInfo(bagID, slotID)
-	slot.name, slot.rarity, slot.locked = nil, rarity, locked
+	slot.name, slot.rarity, slot.locked, slot.isQuestItem = nil, rarity, locked, false
 
 	local link = GetContainerItemLink(bagID, slotID)
 
@@ -354,10 +354,10 @@ function B:UpdateSlot(frame, bagID, slotID)
 	local showBindType = B.db.showBindType and (slot.rarity and slot.rarity > LE_ITEM_QUALITY_COMMON)
 	local forceColor, r, g, b, a = true
 
-	local name, itemRarity, itemEquipLoc, itemClassID, itemSubClassID, bindType
 	if link then
-		name, _, itemRarity, _, _, _, _, _, itemEquipLoc, _, _, itemClassID, itemSubClassID, bindType = GetItemInfo(link)
+		local name, _, itemRarity, _, _, _, _, _, itemEquipLoc, _, _, itemClassID, itemSubClassID, bindType = GetItemInfo(link)
 		slot.name = name
+		slot.isQuestItem = itemClassID == LE_ITEM_CLASS_QUESTITEM
 
 		if slot.rarity or itemRarity then
 			r, g, b = GetItemQualityColor(slot.rarity or itemRarity)
@@ -405,7 +405,6 @@ function B:UpdateSlot(frame, bagID, slotID)
 			end
 		end
 	end
-	slot.isQuestItem = itemClassID == LE_ITEM_CLASS_QUESTITEM
 
 	if B.db.specialtyColors and professionColors then
 		r, g, b, a = unpack(professionColors)
