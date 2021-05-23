@@ -14,16 +14,14 @@ function S:HelpFrame()
 	_G.HelpFrameTopBorder:StripTextures(true)
 
 	-- Buttons
-	_G.HelpFrameCloseButton:StripTextures(true)
+	_G.HelpFrameCloseButton:StripTextures()
 	S:HandleCloseButton(_G.HelpFrameCloseButton)
 
 	-- Insets
-	_G.HelpBrowser.BrowserInset:StripTextures()
-	_G.HelpBrowserInsetTopBorder:StripTextures()
-	_G.HelpBrowserInsetLeftBorder:StripTextures()
-	_G.HelpBrowserInsetRightBorder:StripTextures()
-	_G.HelpBrowserInsetBottomBorder:StripTextures()
-
+	local insets = { _G.HelpBrowser.BrowserInset, _G.HelpBrowserInsetTopBorder, _G.HelpBrowserInsetLeftBorder, _G.HelpBrowserInsetRightBorder, _G.HelpBrowserInsetBottomBorder }
+	for _, inset in pairs(insets) do
+		inset:StripTextures()
+	end
 end
 
 S:AddCallback('HelpFrame')
