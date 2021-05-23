@@ -46,13 +46,6 @@ P.general = {
 			time = 3,
 		},
 		icons = {
-			calendar = {
-				scale = 1,
-				position = 'TOPRIGHT',
-				xOffset = 0,
-				yOffset = 0,
-				hide = true,
-			},
 			mail = {
 				scale = 1,
 				texture = 'Mail3',
