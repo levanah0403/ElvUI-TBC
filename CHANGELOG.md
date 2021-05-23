@@ -1,4 +1,10 @@
 ### Version 2.06 [ ETA: 🍨 ]
+**• Added an option to turn off Quest Icons in Bags**  
+**• Added back "Delete Grays" to Bags**  
+**• Removed Calendar options for the Minimap (Not available in TBC)**  
+**• Removed CD text from Wand/Shoot GCD swipe**  
+**• Tweaked some Skins (DebugTools, HelpFrame)**  
+**• Updated TurtleBuffs default whitelist**  
 ___
 ### Version 2.05 [23-05-2021]
 **• Added KeyBind (/kb) support for Micro, Pet & Stance- Bar**  
