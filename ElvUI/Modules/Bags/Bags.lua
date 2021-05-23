@@ -354,8 +354,9 @@ function B:UpdateSlot(frame, bagID, slotID)
 	local showBindType = B.db.showBindType and (slot.rarity and slot.rarity > LE_ITEM_QUALITY_COMMON)
 	local forceColor, r, g, b, a = true
 
+	local name, itemRarity, itemEquipLoc, itemClassID, itemSubClassID, bindType
 	if link then
-		local name, _, itemRarity, _, _, _, _, _, itemEquipLoc, _, _, itemClassID, itemSubClassID, bindType = GetItemInfo(link)
+		name, _, itemRarity, _, _, _, _, _, itemEquipLoc, _, _, itemClassID, itemSubClassID, bindType = GetItemInfo(link)
 		slot.name = name
 
 		if slot.rarity or itemRarity then
@@ -376,7 +377,6 @@ function B:UpdateSlot(frame, bagID, slotID)
 			end
 		end
 
-		slot.isQuestItem = itemClassID == LE_ITEM_CLASS_QUESTITEM
 		if showBindType and (bindType == 2 or bindType == 3) then
 			local BoE, BoU
 
@@ -405,6 +405,7 @@ function B:UpdateSlot(frame, bagID, slotID)
 			end
 		end
 	end
+	slot.isQuestItem = itemClassID == LE_ITEM_CLASS_QUESTITEM
 
 	if B.db.specialtyColors and professionColors then
 		r, g, b, a = unpack(professionColors)
