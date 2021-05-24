@@ -317,6 +317,7 @@ function B:UpdateSlot(frame, bagID, slotID)
 	local slot = frame.Bags[bagID][slotID]
 	local bagType = frame.Bags[bagID].type
 	local keyring = (bagID == -2)
+
 	local texture, count, locked, rarity, readable, _, itemLink, _, noValue, itemID = GetContainerItemInfo(bagID, slotID)
 	slot.name, slot.rarity, slot.locked, slot.isQuestItem = nil, rarity, locked, false
 
@@ -361,11 +362,11 @@ function B:UpdateSlot(frame, bagID, slotID)
 	if link then
 		local name, _, itemRarity, _, _, _, _, _, itemEquipLoc, _, _, itemClassID, itemSubClassID, bindType = GetItemInfo(link)
 		slot.name = name
+		if not slot.rarity then slot.rarity = itemRarity end
+
 		slot.isQuestItem = itemClassID == LE_ITEM_CLASS_QUESTITEM
 
-		if slot.rarity or itemRarity then
-			r, g, b = GetItemQualityColor(slot.rarity or itemRarity)
-		end
+		r, g, b = GetItemQualityColor(slot.rarity)
 
 		if showItemLevel then
 			local canShowItemLevel = B:IsItemEligibleForItemLevelDisplay(itemClassID, itemSubClassID, itemEquipLoc, slot.rarity)
@@ -410,15 +411,16 @@ function B:UpdateSlot(frame, bagID, slotID)
 		end
 	end
 
-	if B.db.specialtyColors and professionColors then
-		r, g, b, a = unpack(professionColors)
-	--elseif questId and not isActiveQuest then
-	--	r, g, b, a = unpack(B.QuestColors.questStarter)
-	elseif slot.isQuestItem then
+	if slot.isQuestItem then
 		r, g, b, a = unpack(B.QuestColors.questItem)
-	elseif not link or B.db.qualityColors and slot.rarity and slot.rarity <= LE_ITEM_QUALITY_COMMON then
-		r, g, b, a = unpack(E.media.bordercolor)
-		forceColor = nil
+	elseif not link then
+		if B.db.specialtyColors and professionColors then
+			r, g, b, a = unpack(professionColors)
+		--elseif questId and not isActiveQuest then
+		--	r, g, b, a = unpack(B.QuestColors.questStarter)
+		elseif slot.isQuestItem then
+			r, g, b, a = unpack(B.QuestColors.questItem)
+		end
 	end
 
 	if slot.questIcon then
@@ -429,7 +431,10 @@ function B:UpdateSlot(frame, bagID, slotID)
 		end
 	end
 
-	slot:SetBackdropBorderColor(r, g, b, a)
+	if not B.db.qualityColors or (B.db.qualityColors and slot.rarity and slot.rarity <= LE_ITEM_QUALITY_COMMON) then
+		r, g, b, a = unpack(E.media.bordercolor)
+		forceColor = nil
+	end
 
 	if forceColor and B.db.colorBackdrop then
 		slot:SetBackdropColor(r, g, b, a)
@@ -437,10 +442,11 @@ function B:UpdateSlot(frame, bagID, slotID)
 		slot:SetBackdropColor(unpack(E.db.bags.transparent and E.media.backdropfadecolor or E.media.backdropcolor))
 	end
 
+	slot.newItemGlow:SetVertexColor(r, g, b, a or 1)
+	slot:SetBackdropBorderColor(r, g, b, a or 1)
 	slot.ignoreBorderColors = forceColor
 
 	if E.db.bags.newItemGlow then
-		slot.newItemGlow:SetVertexColor(r, g, b, a or 1)
 		E:Delay(0.1, B.CheckSlotNewItem, B, slot, bagID, slotID)
 	end
 
@@ -1550,7 +1556,6 @@ function B:UpdateBagColors(table, indice, r, g, b)
 		colorTable = B.QuestColors[B.QuestKeys[indice]]
 	else
 		if table == 'profession' then table = 'ProfessionColors' end
-		if table == 'assignment' then table = 'AssignmentColors' end
 		colorTable = B[table][B.BagIndice[indice]]
 	end
 
