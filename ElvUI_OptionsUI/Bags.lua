@@ -65,7 +65,7 @@ Bags.args.general.args.itemLevelGroup.args.itemLevelCustomColor = ACH:Color(" ",
 Bags.args.general.args.itemLevelGroup.args.itemLevelFont = ACH:SharedMediaFont(L["Font"], nil, 5, nil, nil, nil, nil, function() return not E.db.bags.itemLevel end)
 Bags.args.general.args.itemLevelGroup.args.itemLevelFontSize = ACH:Range(L["Font Size"], nil, 6, C.Values.FontSize, nil, nil, nil, nil, function() return not E.db.bags.itemLevel end)
 Bags.args.general.args.itemLevelGroup.args.itemLevelFontOutline = ACH:FontFlags(L["Font Outline"], nil, 7, nil, nil, nil, nil, function() return not E.db.bags.itemLevel end)
-Bags.args.general.args.itemLevelGroup.args.itemLevelPosition = ACH:Select(L["Position"], nil, 8, textAnchors, nil, nil, nil, nil, function() return not E.db.bags.itemLevel end)
+Bags.args.general.args.itemLevelGroup.args.itemLevelPosition = ACH:Select(L["Position"], nil, 8, textAnchors, nil, nil, nil, nil, nil, function() return not E.db.bags.itemLevel end)
 Bags.args.general.args.itemLevelGroup.args.itemLevelxOffset = ACH:Range(L["X-Offset"], nil, 9, { min = -45, max = 45, step = 1 }, nil, nil, nil, nil, function() return not E.db.bags.itemLevel end)
 Bags.args.general.args.itemLevelGroup.args.itemLevelyOffset = ACH:Range(L["Y-Offset"], nil, 10, { min = -45, max = 45, step = 1 }, nil, nil, nil, nil, function() return not E.db.bags.itemLevel end)
 
