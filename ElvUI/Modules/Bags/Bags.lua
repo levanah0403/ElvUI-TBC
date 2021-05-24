@@ -214,7 +214,8 @@ function B:UpdateItemLevelDisplay()
 			for slotID = 1, GetContainerNumSlots(bagID) do
 				local slot = bagFrame.Bags[bagID][slotID]
 				if slot and slot.itemLevel then
-					slot.itemLevel:Point('TOP', slot, E.db.bags.itemLevelxOffset, E.db.bags.itemLevelyOffset)
+					slot.itemLevel:ClearAllPoints()
+					slot.itemLevel:Point(E.db.bags.itemLevelPosition, slot, E.db.bags.itemLevelxOffset, E.db.bags.itemLevelyOffset)
 					slot.itemLevel:FontTemplate(E.Libs.LSM:Fetch('font', E.db.bags.itemLevelFont), E.db.bags.itemLevelFontSize, E.db.bags.itemLevelFontOutline)
 				end
 			end
@@ -1138,7 +1139,7 @@ function B:ConstructContainerButton(f, slotID, bagID)
 	slot.icon:SetTexCoord(unpack(E.TexCoords))
 
 	slot.itemLevel = slot:CreateFontString(nil, 'OVERLAY', nil, 1)
-	slot.itemLevel:Point('BOTTOMRIGHT', 0, 2)
+	slot.itemLevel:Point(E.db.bags.itemLevelPosition, slot, E.db.bags.itemLevelxOffset, E.db.bags.itemLevelyOffset)
 	slot.itemLevel:FontTemplate(E.Libs.LSM:Fetch('font', E.db.bags.itemLevelFont), E.db.bags.itemLevelFontSize, E.db.bags.itemLevelFontOutline)
 
 	slot.bindType = slot:CreateFontString(nil, 'OVERLAY', nil, 1)
