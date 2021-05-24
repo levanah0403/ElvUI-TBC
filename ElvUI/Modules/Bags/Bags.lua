@@ -214,6 +214,7 @@ function B:UpdateItemLevelDisplay()
 			for slotID = 1, GetContainerNumSlots(bagID) do
 				local slot = bagFrame.Bags[bagID][slotID]
 				if slot and slot.itemLevel then
+					slot.itemLevel:Point('TOP', slot, E.db.bags.itemLevelxOffset, E.db.bags.itemLevelyOffset)
 					slot.itemLevel:FontTemplate(E.Libs.LSM:Fetch('font', E.db.bags.itemLevelFont), E.db.bags.itemLevelFontSize, E.db.bags.itemLevelFontOutline)
 				end
 			end

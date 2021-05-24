@@ -168,6 +168,8 @@ P.bags = {
 	itemLevelFontOutline = 'MONOCHROMEOUTLINE',
 	itemLevelCustomColorEnable = false,
 	itemLevelCustomColor = { r = 1, g = 1, b = 1 },
+	itemLevelxOffset = 0,
+	itemLevelyOffset = 0,
 	countFont = 'Homespun',
 	countFontSize = 10,
 	countFontOutline = 'MONOCHROMEOUTLINE',
