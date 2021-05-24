@@ -233,6 +233,8 @@ function B:UpdateCountDisplay()
 			for slotID = 1, GetContainerNumSlots(bagID) do
 				local slot = bagFrame.Bags[bagID][slotID]
 				if slot and slot.Count then
+					slot.Count:ClearAllPoints()
+					slot.Count:Point(E.db.bags.countPosition, E.db.bags.countxOffset, E.db.bags.countyOffset)
 					slot.Count:FontTemplate(E.Libs.LSM:Fetch('font', E.db.bags.countFont), E.db.bags.countFontSize, E.db.bags.countFontOutline)
 				end
 			end
@@ -1100,7 +1102,7 @@ function B:ConstructContainerButton(f, slotID, bagID)
 	end
 
 	slot.Count:ClearAllPoints()
-	slot.Count:Point('BOTTOMRIGHT', 0, 2)
+	slot.Count:Point(E.db.bags.countPosition, E.db.bags.countxOffset, E.db.bags.countyOffset)
 	slot.Count:FontTemplate(E.Libs.LSM:Fetch('font', E.db.bags.countFont), E.db.bags.countFontSize, E.db.bags.countFontOutline)
 
 	if not (slot.questIcon) then

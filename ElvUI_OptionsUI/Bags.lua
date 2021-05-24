@@ -55,6 +55,9 @@ Bags.args.general.args.countGroup.args.countFontColor = ACH:Color(L["COLOR"], ni
 Bags.args.general.args.countGroup.args.countFont = ACH:SharedMediaFont(L["Font"], nil, 2)
 Bags.args.general.args.countGroup.args.countFontSize = ACH:Range(L["Font Size"], nil, 3, C.Values.FontSize)
 Bags.args.general.args.countGroup.args.countFontOutline = ACH:FontFlags(L["Font Outline"], nil, 4)
+Bags.args.general.args.countGroup.args.countPosition = ACH:Select(L["Position"], nil, 5, textAnchors)
+Bags.args.general.args.countGroup.args.countxOffset = ACH:Range(L["X-Offset"], nil, 6, { min = -45, max = 45, step = 1 })
+Bags.args.general.args.countGroup.args.countyOffset = ACH:Range(L["Y-Offset"], nil, 7, { min = -45, max = 45, step = 1 })
 
 Bags.args.general.args.itemLevelGroup = ACH:Group(L["Item Level"], nil, 7, nil, nil, function(info, value) E.db.bags[info[#info]] = value B:UpdateItemLevelDisplay() end)
 Bags.args.general.args.itemLevelGroup.inline = true
