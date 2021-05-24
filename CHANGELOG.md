@@ -1,6 +1,7 @@
 ### Version 2.07 [ ETA: 🍨 ]
-**• Fixed Soul Bags color issue**  
 **• Blacklisted Honor Event Buff on UnitFrames by default**  
+**• Fixed Soul Bags color issue**  
+**• Fixed Zoom Out button for Fullscreen Worldmap**  
 ___
 ### Version 2.06 [24-05-2021]
 **• Added an option to turn off Quest Icons in Bags**  
