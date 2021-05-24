@@ -8,7 +8,7 @@ function S:WorldMapFrame()
 
 	local WorldMapFrame = _G.WorldMapFrame
 	WorldMapFrame:StripTextures()
-	WorldMapFrame.BorderFrame:CreateBackdrop('Transparent')
+	WorldMapFrame.BorderFrame:SetTemplate('Transparent')
 
 	S:HandleDropDownBox(_G.WorldMapZoneMinimapDropDown)
 	S:HandleDropDownBox(_G.WorldMapContinentDropDown)
