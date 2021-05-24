@@ -194,8 +194,8 @@ function DT:ReleasePanel(givenName)
 	end
 end
 
-function DT:BuildPanelFrame(name, db, fromInit)
-	db = db or DT:GetPanelSettings(name)
+function DT:BuildPanelFrame(name, fromInit)
+	local db = DT:GetPanelSettings(name)
 
 	local Panel = DT:FetchFrame(name)
 	Panel:ClearAllPoints()
@@ -333,11 +333,13 @@ end
 function DT:GetPanelSettings(name)
 	local db = E:CopyTable({}, G.datatexts.newPanelInfo)
 
-	if E.global.datatexts.customPanels[name] then
-		db = E:CopyTable(db, E.global.datatexts.customPanels[name])
+	local customPanels = E.global.datatexts.customPanels
+	local customPanel = customPanels[name]
+	if customPanel then
+		db = E:CopyTable(db, customPanel)
 	end
 
-	E.global.datatexts.customPanels[name] = db
+	customPanels[name] = db
 
 	return db
 end
@@ -701,8 +703,8 @@ function DT:Initialize()
 	LDB.RegisterCallback(E, 'LibDataBroker_DataObjectCreated', DT.SetupObjectLDB)
 	DT:RegisterLDB() -- LibDataBroker
 
-	for name, db in pairs(E.global.datatexts.customPanels) do
-		DT:BuildPanelFrame(name, db, true)
+	for name in pairs(E.global.datatexts.customPanels) do
+		DT:BuildPanelFrame(name, true)
 	end
 
 	do -- we need to register the panels to access them for the text
