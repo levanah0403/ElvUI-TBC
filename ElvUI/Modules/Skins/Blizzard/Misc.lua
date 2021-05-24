@@ -224,7 +224,7 @@ function S:BlizzardMiscFrames()
 			highlight:SetDrawLayer('BACKGROUND')
 			highlight:SetVertexColor(r, g, b)
 
-			if not button.backdrop then
+			if not button.template then
 				button:CreateBackdrop()
 			end
 
@@ -266,7 +266,7 @@ function S:BlizzardMiscFrames()
 	-- StackSplit
 	local StackSplitFrame = _G.StackSplitFrame
 	StackSplitFrame:StripTextures()
-	StackSplitFrame:CreateBackdrop('Transparent')
+	StackSplitFrame:SetTemplate('Transparent')
 
 	StackSplitFrame.bg1 = CreateFrame('Frame', nil, StackSplitFrame)
 	StackSplitFrame.bg1:SetTemplate('Transparent')
