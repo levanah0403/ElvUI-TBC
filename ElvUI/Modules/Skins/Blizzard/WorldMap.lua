@@ -8,7 +8,7 @@ function S:WorldMapFrame()
 
 	local WorldMapFrame = _G.WorldMapFrame
 	WorldMapFrame:StripTextures()
-	WorldMapFrame.BorderFrame:SetTemplate('Transparent')
+	WorldMapFrame.BorderFrame:CreateBackdrop('Transparent')
 
 	S:HandleDropDownBox(_G.WorldMapZoneMinimapDropDown)
 	S:HandleDropDownBox(_G.WorldMapContinentDropDown)
@@ -21,16 +21,14 @@ function S:WorldMapFrame()
 	_G.WorldMapZoneDropDown:Width(205)
 	_G.WorldMapZoneDropDown:Height(33)
 
-	_G.WorldMapZoomOutButton:Point('LEFT', _G.WorldMapZoneDropDown, 'RIGHT', 3, 3)
-	_G.WorldMapZoomOutButton:Height(21)
-
 	_G.WorldMapZoneMinimapDropDown:Point('RIGHT', _G.WorldMapContinentDropDown, 'LEFT', 20, 0)
 	_G.WorldMapZoneMinimapDropDown:Width(205)
 	_G.WorldMapZoneMinimapDropDown:Height(33)
 
+	_G.WorldMapZoomOutButton:Point('LEFT', _G.WorldMapZoneDropDown, 'RIGHT', 3, 3)
+	_G.WorldMapZoomOutButton:Height(23)
+	_G.WorldMapZoomOutButton:SetFrameStrata('HIGH')
 	S:HandleButton(_G.WorldMapZoomOutButton)
-	_G.WorldMapZoomOutButton:Width(100)
-	_G.WorldMapZoomOutButton:Height(22)
 
 	S:HandleCloseButton(_G.WorldMapFrameCloseButton, WorldMapFrame.backdrop)
 	_G.WorldMapFrameCloseButton:SetFrameLevel(_G.WorldMapFrameCloseButton:GetFrameLevel() + 2)
