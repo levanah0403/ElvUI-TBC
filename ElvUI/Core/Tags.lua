@@ -111,7 +111,7 @@ E.TagFunctions.Abbrev = Abbrev
 ElvUF.Tags.Events['afk'] = 'PLAYER_FLAGS_CHANGED'
 ElvUF.Tags.Methods['afk'] = function(unit)
 	if UnitIsAFK(unit) then
-		return format('|cffFFFFFF[|r|cffFF0000%s|r|cFFFFFFFF]|r', DEFAULT_AFK_MESSAGE)
+		return format('|cffFFFFFF[|r|cffFF3333%s|r|cFFFFFFFF]|r', DEFAULT_AFK_MESSAGE)
 	end
 end
 
