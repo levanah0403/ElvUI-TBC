@@ -29,6 +29,7 @@ DT.SelectedDatatext = nil
 DT.HyperList = HyperList
 DT.RegisteredPanels = {}
 DT.RegisteredDataTexts = {}
+DT.DataTextList = {}
 DT.LoadedInfo = {}
 DT.PanelPool = {
 	InUse = {},
@@ -60,7 +61,7 @@ function DT:SetEasyMenuAnchor(menu, dt)
 end
 
 --> [HyperDT Credits] <--
---> Original Work: NihilisticPandemonium
+--> Original Work: Nihilistzsche
 --> Modified by Azilroka! :)
 
 function DT:SingleHyperMode(_, key, active)
@@ -199,8 +200,8 @@ function DT:BuildPanelFrame(name, fromInit)
 
 	local Panel = DT:FetchFrame(name)
 	Panel:ClearAllPoints()
-	Panel:Point('CENTER')
-	Panel:Size(db.width, db.height)
+	Panel:SetPoint('CENTER')
+	Panel:SetSize(db.width, db.height)
 
 	local MoverName = 'DTPanel'..name..'Mover'
 	Panel.moverName = MoverName
@@ -376,7 +377,6 @@ function DT:AssignPanelToDataText(dt, data, event, ...)
 		if not data.objectEvent then
 			dt:SetScript('OnEvent', data.eventFunc)
 		end
-
 		data.eventFunc(dt, ev, ...)
 	end
 
@@ -485,9 +485,9 @@ function DT:UpdatePanelInfo(panelName, panel, ...)
 	--Restore Panels
 	for i, dt in ipairs(panel.dataPanels) do
 		dt:SetShown(i <= numPoints)
-		dt:Size(width, height)
+		dt:SetSize(width, height)
 		dt:ClearAllPoints()
-		dt:Point(DT:GetDataPanelPoint(panel, i, numPoints, vertical))
+		dt:SetPoint(DT:GetDataPanelPoint(panel, i, numPoints, vertical))
 		dt:UnregisterAllEvents()
 		dt:EnableMouseWheel(false)
 		dt:SetScript('OnUpdate', nil)
@@ -556,9 +556,9 @@ function DT:PanelSizeChanged()
 	local width, height, vertical, numPoints = DT:GetTextAttributes(self, db)
 
 	for i, dt in ipairs(self.dataPanels) do
-		dt:Size(width, height)
+		dt:SetSize(width, height)
 		dt:ClearAllPoints()
-		dt:Point(DT:GetDataPanelPoint(self, i, numPoints, vertical))
+		dt:SetPoint(DT:GetDataPanelPoint(self, i, numPoints, vertical))
 	end
 end
 
@@ -573,7 +573,7 @@ function DT:UpdatePanelAttributes(name, db, fromLoad)
 	Panel.yOff = db.tooltipYOffset
 	Panel.anchor = db.tooltipAnchor
 	Panel.vertical = db.growth == 'VERTICAL'
-	Panel:Size(db.width, db.height)
+	Panel:SetSize(db.width, db.height)
 	Panel:SetFrameStrata(db.frameStrata)
 	Panel:SetFrameLevel(db.frameLevel)
 
@@ -770,6 +770,7 @@ function DT:RegisterDatatext(name, category, events, eventFunc, updateFunc, clic
 	end
 
 	DT.RegisteredDataTexts[name] = data
+	DT.DataTextList[name] = localizedName or name
 
 	return data
 end
