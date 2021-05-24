@@ -186,15 +186,15 @@ function S:BlizzardMiscFrames()
 		end
 
 		local Backdrop = _G[listFrameName..'Backdrop']
-		if Backdrop and not Backdrop.backdrop then
+		if Backdrop and not Backdrop.template then
 			Backdrop:StripTextures()
-			Backdrop:CreateBackdrop('Transparent')
+			Backdrop:SetTemplate('Transparent')
 		end
 
 		local menuBackdrop = _G[listFrameName..'MenuBackdrop']
-		if menuBackdrop and not menuBackdrop.backdrop then
+		if menuBackdrop and not menuBackdrop.template then
 			menuBackdrop:StripTextures()
-			menuBackdrop:CreateBackdrop('Transparent')
+			menuBackdrop:SetTemplate('Transparent')
 		end
 	end)
 
