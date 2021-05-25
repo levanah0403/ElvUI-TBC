@@ -35,7 +35,7 @@ function DT:UPDATE_BATTLEFIELD_SCORE()
 	myIndex = nil
 
 	for i = 1, GetNumBattlefieldScores() do
-		local name, kb, hks, deaths, honor, _, _, _, _, dmg, heals = GetBattlefieldScore(i)
+		local name, kb, hks, deaths, honor, _, _, _, _, _, dmg, heals = GetBattlefieldScore(i)
 		if name == E.myname then
 			LEFT[1], LEFT[2], LEFT[3] = E:ShortValue(hks), E:ShortValue(kb), E:ShortValue(deaths)
 			RIGHT[1], RIGHT[2], RIGHT[3] = E:ShortValue(dmg), E:ShortValue(heals), E:ShortValue(honor)
