@@ -183,7 +183,6 @@ P.bags = {
 	clearSearchOnClose = false,
 	disableBagSort = false,
 	disableBankSort = false,
-	showAssignedColor = true,
 	strata = 'HIGH',
 	qualityColors = true,
 	specialtyColors = true,
