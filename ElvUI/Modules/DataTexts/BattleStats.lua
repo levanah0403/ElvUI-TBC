@@ -10,7 +10,7 @@ local GetBattlefieldScore = GetBattlefieldScore
 local displayString = ''
 local holder = {
 	LEFT = { data = {}, _G.KILLS, _G.KILLING_BLOWS, _G.DEATHS },
-	RIGHT = { data = {}, _G.DAMAGE, _G.HONOR }
+	RIGHT = { data = {}, _G.DAMAGE, _G.HEALS, _G.HONOR }
 }
 
 DT.BattleStats = holder
@@ -38,7 +38,7 @@ function DT:UPDATE_BATTLEFIELD_SCORE()
 		local name, kb, hks, deaths, honor, _, _, _, _, dmg, heals = GetBattlefieldScore(i)
 		if name == E.myname then
 			LEFT[1], LEFT[2], LEFT[3] = E:ShortValue(hks), E:ShortValue(kb), E:ShortValue(deaths)
-			RIGHT[1], RIGHT[2] = E:ShortValue(dmg), E:ShortValue(honor)
+			RIGHT[1], RIGHT[2], RIGHT[3] = E:ShortValue(dmg), E:ShortValue(heals), E:ShortValue(honor)
 			myIndex = i
 			break
 		end
