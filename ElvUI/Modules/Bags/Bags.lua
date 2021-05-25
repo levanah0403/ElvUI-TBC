@@ -418,6 +418,7 @@ function B:UpdateSlot(frame, bagID, slotID)
 			r, g, b, a = unpack(professionColors)
 		--elseif questId and not isActiveQuest then
 		--	r, g, b, a = unpack(B.QuestColors.questStarter)
+		forceColor = nil
 		elseif slot.isQuestItem then
 			r, g, b, a = unpack(B.QuestColors.questItem)
 		end
