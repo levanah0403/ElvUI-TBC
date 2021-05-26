@@ -230,6 +230,7 @@ function S:BlizzardMiscFrames()
 
 			if not button.notCheckable then
 				uncheck:SetTexture()
+
 				local _, co = check:GetTexCoord()
 				if co == 0 then
 					check:SetTexture([[Interface\Buttons\UI-CheckBox-Check]])
