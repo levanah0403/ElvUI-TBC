@@ -224,12 +224,6 @@ function S:BlizzardMiscFrames()
 			highlight:SetDrawLayer('BACKGROUND')
 			highlight:SetVertexColor(r, g, b)
 
-			if not button.template then
-				button:CreateBackdrop()
-			end
-
-			button.backdrop:Hide()
-
 			if not button.notCheckable then
 				uncheck:SetTexture()
 				local _, co = check:GetTexCoord()
@@ -238,18 +232,19 @@ function S:BlizzardMiscFrames()
 					check:SetVertexColor(r, g, b, 1)
 					check:Size(20, 20)
 					check:SetDesaturated(true)
-					button.backdrop:SetInside(check, 4, 4)
+					--button.backdrop:SetInside(check, 4, 4)
 				else
 					check:SetTexture(E.media.normTex)
 					check:SetVertexColor(r, g, b, 1)
 					check:Size(10, 10)
 					check:SetDesaturated(false)
-					button.backdrop:SetOutside(check)
+					--button.backdrop:SetOutside(check)
 				end
 
-				button.backdrop:Show()
+				button:SetTemplate()
 				check:SetTexCoord(0, 1, 0, 1)
 			else
+				button:SetTemplate('NoBackdrop')
 				check:Size(16, 16)
 			end
 		end
