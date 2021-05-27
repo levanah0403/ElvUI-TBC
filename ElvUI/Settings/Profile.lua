@@ -310,23 +310,6 @@ local NP_Power = {
 	},
 }
 
-local NP_PvPIcon = {
-	enable = false,
-	showBadge = true,
-	position = 'RIGHT',
-	size = 36,
-	xOffset = 0,
-	yOffset = 0,
-}
-
-local NP_PvPClassificationIndicator = {
-	enable = false,
-	position = 'TOPLEFT',
-	size = 36,
-	xOffset = 0,
-	yOffset = 0,
-}
-
 local NP_Portrait = {
 	enable = false,
 	position = 'RIGHT',
@@ -577,8 +560,6 @@ P.nameplates = {
 			name = CopyTable(NP_Name),
 			portrait = CopyTable(NP_Portrait),
 			power = CopyTable(NP_Power),
-			pvpclassificationindicator = CopyTable(NP_PvPClassificationIndicator),
-			pvpindicator = CopyTable(NP_PvPIcon),
 			raidTargetIndicator = CopyTable(NP_RaidTargetIndicator),
 			title = CopyTable(NP_Title),
 		},
@@ -612,8 +593,6 @@ P.nameplates = {
 			name = CopyTable(NP_Name),
 			portrait = CopyTable(NP_Portrait),
 			power = CopyTable(NP_Power),
-			pvpclassificationindicator = CopyTable(NP_PvPClassificationIndicator),
-			pvpindicator = CopyTable(NP_PvPIcon),
 			raidTargetIndicator = CopyTable(NP_RaidTargetIndicator),
 			title = CopyTable(NP_Title),
 		},
@@ -631,8 +610,6 @@ P.nameplates = {
 			name = CopyTable(NP_Name),
 			portrait = CopyTable(NP_Portrait),
 			power = CopyTable(NP_Power),
-			pvpclassificationindicator = CopyTable(NP_PvPClassificationIndicator),
-			pvpindicator = CopyTable(NP_PvPIcon),
 			raidTargetIndicator = CopyTable(NP_RaidTargetIndicator),
 			title = CopyTable(NP_Title),
 		},
@@ -649,7 +626,6 @@ P.nameplates = {
 			name = CopyTable(NP_Name),
 			portrait = CopyTable(NP_Portrait),
 			power = CopyTable(NP_Power),
-			pvpindicator = CopyTable(NP_PvPIcon),
 			raidTargetIndicator = CopyTable(NP_RaidTargetIndicator),
 			title = CopyTable(NP_Title),
 		},
@@ -666,7 +642,6 @@ P.nameplates = {
 			name = CopyTable(NP_Name),
 			portrait = CopyTable(NP_Portrait),
 			power = CopyTable(NP_Power),
-			pvpindicator = CopyTable(NP_PvPIcon),
 			raidTargetIndicator = CopyTable(NP_RaidTargetIndicator),
 			title = CopyTable(NP_Title),
 		},
@@ -1163,14 +1138,6 @@ local UF_Power = {
 	strataAndLevel = CopyTable(UF_StrataAndLevel),
 }
 
-local UF_PvPClassificationIndicator = {
-	enable = true,
-	position = 'CENTER',
-	size = 36,
-	xOffset = 0,
-	yOffset = 0,
-}
-
 local UF_PVPIcon = {
 	anchorPoint = 'CENTER',
 	enable = false,
@@ -1615,7 +1582,6 @@ P.unitframe = {
 			portrait = CopyTable(UF_Portrait),
 			power = CopyTable(UF_Power),
 			raidicon = CopyTable(UF_RaidIcon),
-			pvpclassificationindicator = CopyTable(UF_PvPClassificationIndicator),
 		},
 		party = {
 			enable = true,
