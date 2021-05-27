@@ -1,4 +1,9 @@
 ### Version 2.08 [ ETA: 🍨 ]
+**• Added Blessing of Salvation to Aura Indicators**  
+**• Added class:icon tag**  
+**• Added Earth Shield to Aura Indicators**  
+**• Fixed LossOfControl ActionBar swipe**  
+**• Updated some Skins**  
 ___
 ### Version 2.07 [25-05-2021]
 **• Added an option to enable/disable the ElvUI Quest Objective Frame Mover**  
