@@ -809,7 +809,6 @@ G.unitframe.aurawatch = {
 	SHAMAN = {
 		[29203]   = UF:AuraWatch_AddSpell(29203, 'TOPRIGHT', {0.7, 0.3, 0.7}), -- Healing Way
 		[16237]   = UF:AuraWatch_AddSpell(16237, 'RIGHT', {0.2, 0.2, 1}), -- Ancestral Fortitude
-		[25909]   = UF:AuraWatch_AddSpell(25909, 'TOP', {0.00, 0.00, 0.50}), -- Tranquil Air
 		[8185]    = UF:AuraWatch_AddSpell(8185, 'TOPLEFT', {0.05, 1.00, 0.50}), -- Fire Resistance Totem(Rank 1)
 		[10534]   = UF:AuraWatch_AddSpell(10534, 'TOPLEFT', {0.05, 1.00, 0.50}), -- Fire Resistance Totem(Rank 2)
 		[10535]   = UF:AuraWatch_AddSpell(10535, 'TOPLEFT', {0.05, 1.00, 0.50}), -- Fire Resistance Totem(Rank 3)
@@ -844,6 +843,9 @@ G.unitframe.aurawatch = {
 		[10405]   = UF:AuraWatch_AddSpell(10405, 'BOTTOMRIGHT', {0.00, 0.00, 0.26}), -- Stoneskin Totem(Rank 6)
 		[25508]   = UF:AuraWatch_AddSpell(25508, 'BOTTOMRIGHT', {0.00, 0.00, 0.26}), -- Stoneskin Totem(Rank 7)
 		[25509]   = UF:AuraWatch_AddSpell(25509, 'BOTTOMRIGHT', {0.00, 0.00, 0.26}), -- Stoneskin Totem(Rank 8)
+		[974]     = UF:AuraWatch_AddSpell(974, 'TOP', {0.08, 0.21, 0.43}), -- Earth Shield(Rank 1)
+		[32593]   = UF:AuraWatch_AddSpell(32593, 'TOP', {0.08, 0.21, 0.43}), -- Earth Shield(Rank 2)
+		[32594]   = UF:AuraWatch_AddSpell(32594, 'TOP', {0.08, 0.21, 0.43}), -- Earth Shield(Rank 3)
 	},
 	WARRIOR = {
 		[6673]    = UF:AuraWatch_AddSpell(6673, 'TOPLEFT', {0.2, 0.2, 1}, true), -- Battle Shout(Rank 1)
