@@ -37,6 +37,14 @@ G.unitframe.aurafilters.CCDebuffs = {
 		[9823]   = Defaults(2), -- Pounce(Rank 2)
 		[9827]   = Defaults(2), -- Pounce(Rank 3)
 		[27006]  = Defaults(2), -- Pounce(Rank 4)
+		[770]    = Defaults(5), -- Faerie Fire(Rank 1)
+		[778]    = Defaults(5), -- Faerie Fire(Rank 2)
+		[9749]   = Defaults(5), -- Faerie Fire(Rank 3)
+		[9907]   = Defaults(5), -- Faerie Fire(Rank 4)
+		[16857]  = Defaults(5), -- Faerie Fire(Feral)(Rank 1)
+		[17390]  = Defaults(5), -- Faerie Fire(Feral)(Rank 2)
+		[17391]  = Defaults(5), -- Faerie Fire(Feral)(Rank 3)
+		[17392]  = Defaults(5), -- Faerie Fire(Feral)(Rank 4)
 	-- Hunter
 		[1499]   = Defaults(3), -- Freezing Trap(Rank 1)
 		[14310]  = Defaults(3), -- Freezing Trap(Rank 2)
@@ -83,6 +91,7 @@ G.unitframe.aurafilters.CCDebuffs = {
 		[27071]  = Defaults(2), -- Frostbolt(Rank 12)
 		[27072]  = Defaults(2), -- Frostbolt(Rank 13)
 		[12355]  = Defaults(2), -- Impact
+		[12579]  = Defaults(5), -- Winter's Chill
 	-- Paladin
 		[853]    = Defaults(3), -- Hammer of Justice(Rank 1)
 		[5588]   = Defaults(3), -- Hammer of Justice(Rank 2)
@@ -147,24 +156,13 @@ G.unitframe.aurafilters.CCDebuffs = {
 		[20617]  = Defaults(2), -- Intercept(Rank 3)
 		[25272]  = Defaults(2), -- Intercept(Rank 4)
 		[25275]  = Defaults(2), -- Intercept(Rank 5)
-	-- Racial
-		[20549]  = Defaults(2), -- War Stomp
-	-- Sunder Armor, Faerie Fire, Faerie Fire(Feral)
 		[7386]   = Defaults(6), -- Sunder Armor(Rank 1)
 		[7405]   = Defaults(6), -- Sunder Armor(Rank 2)
 		[8380]   = Defaults(6), -- Sunder Armor(Rank 3)
 		[11596]  = Defaults(6), -- Sunder Armor(Rank 4)
 		[11597]  = Defaults(6), -- Sunder Armor(Rank 5)
-		[770]    = Defaults(5), -- Faerie Fire(Rank 1)
-		[778]    = Defaults(5), -- Faerie Fire(Rank 2)
-		[9749]   = Defaults(5), -- Faerie Fire(Rank 3)
-		[9907]   = Defaults(5), -- Faerie Fire(Rank 4)
-		[16857]  = Defaults(5), -- Faerie Fire(Feral)(Rank 1)
-		[17390]  = Defaults(5), -- Faerie Fire(Feral)(Rank 2)
-		[17391]  = Defaults(5), -- Faerie Fire(Feral)(Rank 3)
-		[17392]  = Defaults(5), -- Faerie Fire(Feral)(Rank 4)
-	-- Winter's Chill Debuff
-		[12579]  = Defaults(5), -- Winter's Chill
+	-- Racial
+		[20549]  = Defaults(2), -- War Stomp
 	},
 }
 
