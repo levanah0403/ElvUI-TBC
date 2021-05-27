@@ -941,19 +941,16 @@ ElvUF.Tags.Methods['ElvUI-Users'] = function(unit)
 end
 
 local classIcons = {
-	WARRIOR 	= '0:64:0:64',
-	MAGE 		= '64:128:0:64',
-	ROGUE 		= '128:196:0:64',
-	DRUID 		= '196:256:0:64',
-	HUNTER 		= '0:64:64:128',
-	SHAMAN 		= '64:128:64:128',
-	PRIEST 		= '128:196:64:128',
-	WARLOCK 	= '196:256:64:128',
-	PALADIN 	= '0:64:128:196',
-	DEATHKNIGHT = '64:128:128:196',
-	MONK 		= '128:192:128:196',
-	DEMONHUNTER = '192:256:128:196',
- }
+	WARRIOR = '0:64:0:64',
+	MAGE    = '64:128:0:64',
+	ROGUE   = '128:196:0:64',
+	DRUID   = '196:256:0:64',
+	HUNTER  = '0:64:64:128',
+	SHAMAN  = '64:128:64:128',
+	PRIEST  = '128:196:64:128',
+	WARLOCK = '196:256:64:128',
+	PALADIN = '0:64:128:196',
+}
 
 ElvUF.Tags.Events['class:icon'] = 'PLAYER_TARGET_CHANGED'
 ElvUF.Tags.Methods['class:icon'] = function(unit)
