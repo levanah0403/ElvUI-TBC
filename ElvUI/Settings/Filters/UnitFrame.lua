@@ -357,7 +357,7 @@ G.unitframe.aurafilters.Blacklist = {
 	type = 'Blacklist',
 	spells = {
 	-- General
-	[186403] = Defaults(), -- Sign of Battle
+		[186403] = Defaults(), -- Sign of Battle
 	},
 }
 
@@ -998,7 +998,7 @@ G.unitframe.ChannelTicks = {
 	[8417]   = 5, -- Arcane Missiles(Rank 5)
 	[10211]  = 5, -- Arcane Missiles(Rank 6)
 	[10212]  = 5, -- Arcane Missiles(Rank 7)
-	[25345]   = 5, -- Arcane Missiles(Rank 8)
+	[25345]  = 5, -- Arcane Missiles(Rank 8)
 	[27075]  = 5, -- Arcane Missiles(Rank 9)
 	[38699]  = 5, -- Arcane Missiles(Rank 10)
 	[12051]  = 4, -- Evocation
@@ -1017,14 +1017,6 @@ G.unitframe.ChannelTicks = {
 	[14294]  = 6, -- Volley(Rank 2)
 	[14295]  = 6, -- Volley(Rank 3)
 	[27022]  = 6, -- Volley(Rank 4)
-	[136]    = 5, -- Mend Pet(Rank 1)
-	[3111]   = 5, -- Mend Pet(Rank 2)
-	[3661]   = 5, -- Mend Pet(Rank 3)
-	[3662]   = 5, -- Mend Pet(Rank 4)
-	[13542]  = 5, -- Mend Pet(Rank 5)
-	[13543]  = 5, -- Mend Pet(Rank 6)
-	[13544]  = 5, -- Mend Pet(Rank 7)
-	[27046]  = 5, -- Mend Pet(Rank 8)
 }
 
 -- Spells Effected By Talents
