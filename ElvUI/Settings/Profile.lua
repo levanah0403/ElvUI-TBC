@@ -439,7 +439,6 @@ P.nameplates = {
 		ElvUI_Boss = {triggers = {enable = false}},
 		ElvUI_Target = {triggers = {enable = true}},
 		ElvUI_NonTarget = {triggers = {enable = true}},
-		ElvUI_Explosives = {triggers = {enable = true}},
 	},
 	colors = {
 		glowColor = {r = 1, g = 1, b = 1, a = 1},
