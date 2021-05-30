@@ -75,6 +75,7 @@ DataBars.args.experience.args.conditionGroup.values = {
 	questCompletedOnly = L["Completed Quests Only"],
 	hideAtMaxLevel = L["Hide At Max Level"],
 	hideInCombat = L["Hide In Combat"],
+	showQuestXP = L["Show QuestXP"],
 }
 
 E.Options.args.databars.args.petExperience = ACH:Group(L["Pet Experience"], nil, 2, nil, function(info) return DB.db.petExperience[info[#info]] end, function(info, value) DB.db.petExperience[info[#info]] = value DB:PetExperienceBar_Update() DB:UpdateAll() end, nil, E.myclass ~= 'HUNTER')
