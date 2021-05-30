@@ -63,7 +63,7 @@ for i = 1, 8 do
 end
 DataBars.args.colorGroup.args.factionColors.args["9"] = ACH:Color(L["Paragon"], nil, 9, true)
 
-DataBars.args.experience = ACH:Group(L["Experience"], nil, 1, nil, function(info) return DB.db.experience[info[#info]] end, function(info, value) DB.db.experience[info[#info]] = value DB:ExperienceBar_Update() DB:ExperienceBar_QuestXP() DB:UpdateAll() end)
+DataBars.args.experience = ACH:Group(L["Experience"], nil, 1, nil, function(info) return DB.db.experience[info[#info]] end, function(info, value) DB.db.experience[info[#info]] = value DB:ExperienceBar_Update() DB:UpdateAll() end)
 DataBars.args.experience.args = CopyTable(SharedOptions)
 DataBars.args.experience.args.showLevel = ACH:Toggle(L["Level"], nil, 6)
 DataBars.args.experience.args.enable.set = function(info, value) DB.db.experience[info[#info]] = value DB:ExperienceBar_Toggle() DB:UpdateAll() end
@@ -75,7 +75,7 @@ DataBars.args.experience.args.conditionGroup.values = {
 	hideInCombat = L["Hide In Combat"],
 }
 
-DataBars.args.experience.args.questGroup = ACH:Group(L["Quests"], nil, -3, nil, function(info) return DB.db.experience[info[#info]] end, function(info, value) DB.db.experience[info[#info]] = value DB:ExperienceBar_Update() DB:ExperienceBar_QuestXP() DB:UpdateAll() end)
+DataBars.args.experience.args.questGroup = ACH:Group(L["Quests"], nil, -3, nil, function(info) return DB.db.experience[info[#info]] end, function(info, value) DB.db.experience[info[#info]] = value DB:ExperienceBar_QuestXP() DB:UpdateAll() end)
 DataBars.args.experience.args.questGroup.inline = true
 DataBars.args.experience.args.questGroup.args.showQuestXP = ACH:Toggle(L["Show QuestXP"], nil, 1)
 DataBars.args.experience.args.questGroup.args.questCompletedOnly = ACH:Toggle(L["Completed Quests Only"], nil, 2, nil, nil, nil, nil, nil, function() return not DB.db.experience.showQuestXP end)
