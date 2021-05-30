@@ -165,8 +165,10 @@ function DB:ExperienceBar_Toggle()
 	end
 
 	if bar.db.enable and not bar:ShouldHide() then
-		DB:RegisterEvent('PLAYER_XP_UPDATE', 'ExperienceBar_Update')
-		DB:RegisterEvent('PLAYER_XP_UPDATE', 'ExperienceBar_QuestXP')
+		DB:RegisterEvent('PLAYER_XP_UPDATE', function()
+			DB:ExperienceBar_Update()
+			DB:ExperienceBar_QuestXP()
+		end)
 		DB:RegisterEvent('DISABLE_XP_GAIN', 'ExperienceBar_Update')
 		DB:RegisterEvent('ENABLE_XP_GAIN', 'ExperienceBar_Update')
 		DB:RegisterEvent('UPDATE_EXHAUSTION', 'ExperienceBar_Update')
