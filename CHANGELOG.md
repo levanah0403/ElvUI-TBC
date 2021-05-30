@@ -1,4 +1,6 @@
-### Version 2.08 [ ETA: 🍨 ]
+### Version 2.09 [ ETA: 🍨 ]
+___
+### Version 2.08 [30-05-2021]
 **• Added an option to enable/disable QuestXP for the Experience bar**  
 **• Added Blessing of Salvation to Aura Indicators**  
 **• Added class:icon tag**  
