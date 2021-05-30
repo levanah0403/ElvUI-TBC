@@ -118,7 +118,7 @@ function DB:ExperienceBar_QuestXP()
 	QuestLogXP = 0
 	DB:ExperienceBar_CheckQuests(bar.db.questCurrentZoneOnly, bar.db.questCompletedOnly)
 
-	if QuestLogXP > 0 then
+	if bar.db.showQuestXP and QuestLogXP > 0 then
 		bar.Quest:SetMinMaxValues(0, XPToLevel)
 		bar.Quest:SetValue(min(CurrentXP + QuestLogXP, XPToLevel))
 		bar.Quest:SetStatusBarColor(DB.db.colors.quest.r, DB.db.colors.quest.g, DB.db.colors.quest.b, DB.db.colors.quest.a)
