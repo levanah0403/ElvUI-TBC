@@ -1,9 +1,11 @@
 ### Version 2.08 [ ETA: 🍨 ]
+**• Added an option to enable/disable QuestXP for the Experience bar**  
 **• Added Blessing of Salvation to Aura Indicators**  
 **• Added class:icon tag**  
 **• Added Earth Shield to Aura Indicators**  
 **• Fixed :deficit tags**  
 **• Fixed LossOfControl ActionBar swipe**  
+**• Fixed QuestXP not updating in the Experience bar**  
 **• Updated some Skins**  
 ___
 ### Version 2.07 [25-05-2021]
