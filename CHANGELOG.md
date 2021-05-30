@@ -2,6 +2,7 @@
 **• Added Blessing of Salvation to Aura Indicators**  
 **• Added class:icon tag**  
 **• Added Earth Shield to Aura Indicators**  
+**• Fixed :deficit tags**  
 **• Fixed LossOfControl ActionBar swipe**  
 **• Updated some Skins**  
 ___
