@@ -584,7 +584,7 @@ end
 
 if not GetThreatStatusColor then
 	function GetThreatStatusColor(status)
-		return ElvUF.colors.threat[status]
+		return unpack(ElvUF.colors.threat[status])
 	end
 end
 
