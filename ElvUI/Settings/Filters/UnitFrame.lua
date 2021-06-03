@@ -144,6 +144,7 @@ G.unitframe.aurafilters.CCDebuffs = {
 		[18093]  = Defaults(2), -- Pyroclasm
 		[710]    = Defaults(2), -- Banish(Rank 1)
 		[18647]  = Defaults(2), -- Banish(Rank 2)
+		[30413]  = Defaults(2), -- Shadowfury
 	-- Warrior
 		[5246]   = Defaults(4), -- Intimidating Shout
 		[1715]   = Defaults(2), -- Hamstring(Rank 1)
