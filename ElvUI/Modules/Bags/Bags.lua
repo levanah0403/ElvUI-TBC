@@ -683,6 +683,7 @@ function B:UpdateGoldText()
 	B.BagFrame.goldText:SetText(E:FormatMoney(GetMoney(), E.db.bags.moneyFormat, not E.db.bags.moneyCoins))
 end
 
+-- Those items should not be deleted by Vendor / Delete Grays
 B.Grays = {
 	[32888] = "The Relics of Terokk",
 	[28664] = "Nitrin's Instructions",
