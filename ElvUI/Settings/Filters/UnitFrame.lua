@@ -91,7 +91,6 @@ G.unitframe.aurafilters.CCDebuffs = {
 		[27071]  = Defaults(2), -- Frostbolt(Rank 12)
 		[27072]  = Defaults(2), -- Frostbolt(Rank 13)
 		[12355]  = Defaults(2), -- Impact
-		[12579]  = Defaults(5), -- Winter's Chill
 	-- Paladin
 		[853]    = Defaults(3), -- Hammer of Justice(Rank 1)
 		[5588]   = Defaults(3), -- Hammer of Justice(Rank 2)
