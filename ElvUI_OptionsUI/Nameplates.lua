@@ -1283,7 +1283,7 @@ local function UpdateFilterGroup()
 				levels = {
 					order = 17,
 					type = 'group',
-					name = L["LEVEL"],
+					name = L["Level"],
 					get = function(info)
 						return E.global.nameplate.filters[selectedNameplateFilter].triggers[info[#info]]
 					end,
@@ -4121,7 +4121,7 @@ local function GetUnitSettings(unit, name)
 			},
 			levelGroup = {
 				order = 8,
-				name = L["LEVEL"],
+				name = L["Level"],
 				type = 'group',
 				get = function(info)
 					return E.db.nameplates.units[unit].level[info[#info]]
