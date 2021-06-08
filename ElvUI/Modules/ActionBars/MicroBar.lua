@@ -207,7 +207,7 @@ function AB:SetupMicroBar()
 		AB:HandleMicroButton(_G[x])
 	end
 
-	-- _G.MicroButtonPortrait:SetInside(_G.CharacterMicroButton.backdrop)
+	_G.MicroButtonPortrait:SetInside(_G.CharacterMicroButton.backdrop)
 
 	AB:SecureHook('UpdateMicroButtonsParent')
 	AB:SecureHook('MoveMicroButtons', 'UpdateMicroPositionDimensions')
