@@ -169,19 +169,22 @@ function AB:UpdateMicroPositionDimensions()
 	local numBtns = #btns
 	db.buttons = numBtns
 
+	local buttonsPerRow = db.buttonsPerRow
 	local backdropSpacing = db.backdropSpacing
+
 	local _, horizontal, anchorUp, anchorLeft = AB:GetGrowth(db.point)
 	local lastButton, anchorRowButton = microBar
 	for i, name in next, btns do
 		local button = _G[name]
-		local columnIndex = i - db.buttonsPerRow
+
+		local columnIndex = i - buttonsPerRow
 		local columnName = btns[columnIndex]
 		local columnButton = _G[columnName]
 
 		button.commandName = commandKeys[name] -- to support KB like retail
 		button.db = db
 
-		if i == 1 or i == db.buttonsPerRow then
+		if i == 1 or i == buttonsPerRow then
 			anchorRowButton = button
 		end
 
