@@ -726,6 +726,7 @@ G.unitframe.aurawatch = {
 		[26990]   = UF:AuraWatch_AddSpell(26990, 'TOPLEFT', {0.2, 0.8, 0.8}, true), -- Mark of the Wild(Rank 8)
 		[21849]   = UF:AuraWatch_AddSpell(21849, 'TOPLEFT', {0.2, 0.8, 0.8}, true), -- Gift of the Wild(Rank 1)
 		[21850]   = UF:AuraWatch_AddSpell(21850, 'TOPLEFT', {0.2, 0.8, 0.8}, true), -- Gift of the Wild(Rank 2)
+		[26991]   = UF:AuraWatch_AddSpell(26991, 'TOPLEFT', {0.2, 0.8, 0.8}, true), -- Gift of the Wild(Rank 3)
 		[467]     = UF:AuraWatch_AddSpell(467, 'TOPRIGHT', {0.4, 0.2, 0.8}, true), -- Thorns(Rank 1)
 		[782]     = UF:AuraWatch_AddSpell(782, 'TOPRIGHT', {0.4, 0.2, 0.8}, true), -- Thorns(Rank 2)
 		[1075]    = UF:AuraWatch_AddSpell(1075, 'TOPRIGHT', {0.4, 0.2, 0.8}, true), -- Thorns(Rank 3)

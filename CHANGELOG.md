@@ -1,4 +1,5 @@
 ### Version 2.10 [ ETA: 🍨 ]
+**• Updated AuraWatch for Druids**  
 ___
 ### Version 2.09 [08-06-2021]
 **• Account for Blizzards MicroBar hotfix**  
