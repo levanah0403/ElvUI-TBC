@@ -1,4 +1,10 @@
-### Version 2.09 [ ETA: 🍨 ]
+### Version 2.10 [ ETA: 🍨 ]
+___
+### Version 2.09 [08-06-2021]
+**• Account for Blizzards MicroBar hotfix**  
+**• Blacklisted some gray quest items from Auto-Delete**  
+**• Updated AuraWatch positions for Hunters**  
+**• Updated CCDebuffs spell ID list**  
 ___
 ### Version 2.08 [30-05-2021]
 **• Added an option to enable/disable QuestXP for the Experience bar**  
