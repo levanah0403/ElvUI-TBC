@@ -1298,7 +1298,7 @@ function CH:GetColoredName(event, _, arg2, _, _, _, _, _, arg8, _, _, _, arg12)
 	arg2 = Ambiguate(arg2, (chatType == 'GUILD' and 'guild') or 'none')
 
 	local info = arg12 and _G.ChatTypeInfo[chatType]
-	if info and _G.Chat_ShouldColorChatByClass(info) then
+	if info then
 		local data = CH:GetPlayerInfoByGUID(arg12)
 		local classColor = data and data.classColor
 		if classColor then
