@@ -554,11 +554,6 @@ function B:Layout(isBank)
 	local numContainerSlots = isBank and 8 or 6
 
 	f:SetFrameStrata(E.db.bags.strata or 'HIGH')
-
-	-- Adjust StackSplitFrame
-	StackSplitFrame:SetFrameStrata(E.db.bags.strata or 'HIGH')
-	StackSplitFrame:SetFrameLevel(f:GetFrameLevel() + 2)
-
 	f.totalSlots = 0
 	f.holderFrame:Width(holderWidth)
 	f.ContainerHolder:Size(((buttonSize + buttonSpacing) * numContainerSlots) + buttonSpacing, buttonSize + (buttonSpacing * 2))
@@ -1663,6 +1658,8 @@ function B:Initialize()
 
 	--Enable/Disable 'Loot to Leftmost Bag'
 	SetInsertItemsLeftToRight(E.db.bags.reverseLoot)
+
+	StackSplitFrame:SetFrameLevel(255)
 end
 
 E:RegisterModule(B:GetName())
