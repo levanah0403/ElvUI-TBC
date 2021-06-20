@@ -105,6 +105,7 @@ function S:BlizzardOptions()
 		_G.ChatConfigOtherSettingsSystem,
 		_G.ChatConfigOtherSettingsCreature,
 		_G.ChatConfigChannelSettingsAvailable,
+		_G.ChatConfigChannelSettingsAvailableBox,
 		_G.ChatConfigChannelSettingsLeft,
 		_G.CombatConfigMessageSourcesDoneBy,
 		_G.CombatConfigColorsUnitColors,
