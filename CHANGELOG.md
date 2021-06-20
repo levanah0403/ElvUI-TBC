@@ -1,5 +1,9 @@
 ### Version 2.10 [ ETA: 🍨 ]
+**• Fixed Frame Strata for Bags & Stack Split**  
 **• Updated AuraWatch for Druids**  
+**• Updated AuraWatch for Priests**  
+**• Updated LibHealComm-4.0**  
+**• Updated Skins**  
 ___
 ### Version 2.09 [08-06-2021]
 **• Account for Blizzards MicroBar hotfix**  
