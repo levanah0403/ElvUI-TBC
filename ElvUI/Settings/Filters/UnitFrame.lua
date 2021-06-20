@@ -678,6 +678,7 @@ G.unitframe.aurawatch = {
 		[25389]   = UF:AuraWatch_AddSpell(25389, 'TOPLEFT', {1, 1, 0.66}, true), -- Power Word: Fortitude(Rank 7)
 		[21562]   = UF:AuraWatch_AddSpell(21562, 'TOPLEFT', {1, 1, 0.66}, true), -- Prayer of Fortitude(Rank 1)
 		[21564]   = UF:AuraWatch_AddSpell(21564, 'TOPLEFT', {1, 1, 0.66}, true), -- Prayer of Fortitude(Rank 2)
+		[25392]   = UF:AuraWatch_AddSpell(25392, 'TOPLEFT', {1, 1, 0.66}, true), -- Prayer of Fortitude(Rank 3)
 		[14752]   = UF:AuraWatch_AddSpell(14752, 'TOPRIGHT', {0.2, 0.7, 0.2}, true), -- Divine Spirit(Rank 1)
 		[14818]   = UF:AuraWatch_AddSpell(14818, 'TOPRIGHT', {0.2, 0.7, 0.2}, true), -- Divine Spirit(Rank 2)
 		[14819]   = UF:AuraWatch_AddSpell(14819, 'TOPRIGHT', {0.2, 0.7, 0.2}, true), -- Divine Spirit(Rank 3)
