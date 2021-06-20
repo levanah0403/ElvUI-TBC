@@ -1,4 +1,6 @@
-### Version 2.10 [ ETA: 🍨 ]
+### Version 2.11 [ ETA: 🍨 ]
+___
+### Version 2.10 [20-06-2021]
 **• Fixed Frame Strata for Bags & Stack Split**  
 **• Updated AuraWatch for Druids**  
 **• Updated AuraWatch for Priests**  
