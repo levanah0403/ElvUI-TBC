@@ -1,4 +1,5 @@
 ### Version 2.11 [ ETA: 🍨 ]
+**• Added an option to enable/disable combat text repeat in Chat**  
 ___
 ### Version 2.10 [20-06-2021]
 **• Fixed Frame Strata for Bags & Stack Split**  
