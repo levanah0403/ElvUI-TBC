@@ -12,9 +12,10 @@ local GetInventoryItemTexture = GetInventoryItemTexture
 local GetInventoryItemLink = GetInventoryItemLink
 local GetMoneyString = GetMoneyString
 
-local DURABILITY = DURABILITY .. ': '
+local DURABILITY = DURABILITY
 local REPAIR_COST = REPAIR_COST
-local displayString = '%s%d%%|r'
+local formatString = '%s%d%%|r'
+local labelString = DURABILITY..': '..formatString
 local tooltipString = "%d%%"
 local totalDurability = 0
 local invDurability = {}
@@ -58,9 +59,9 @@ local function OnEvent(self)
 	local hex = E:RGBToHex(r, g, b)
 
 	if E.global.datatexts.settings.Durability.NoLabel then
-		self.text:SetFormattedText(displayString, hex, totalDurability)
+		self.text:SetFormattedText(formatString, hex, totalDurability)
 	else
-		self.text:SetFormattedText(DURABILITY .. displayString, hex, totalDurability)
+		self.text:SetFormattedText(labelString, hex, totalDurability)
 	end
 
 	if totalDurability <= E.global.datatexts.settings.Durability.percThreshold then
