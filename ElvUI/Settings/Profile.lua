@@ -1645,6 +1645,7 @@ P.unitframe = {
 			cutaway = CopyTable(UF_Cutaway),
 			debuffs = CopyTable(UF_Auras),
 			fader = CopyTable(UF_Fader),
+			healPrediction = CopyTable(UF_HealthPrediction),
 			name = CopyTable(UF_Name),
 			raidicon = CopyTable(UF_RaidIcon),
 			rdebuffs = CopyTable(UF_RaidDebuffs),
