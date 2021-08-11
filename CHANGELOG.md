@@ -8,6 +8,7 @@ ___
 **• Updated AuraWatch for Priest Prayer of Shadow Protection(Rank 2)**  
 **• Updated Dispellable Filter (Paladin, Shaman)**  
 **• Updated ElvUI Version decimals in tooltip**  
+**• Updated LibHealComm-4.0 Minor 95**  
 ___
 ### Version 2.10 [20-06-2021]
 **• Fixed Frame Strata for Bags & Stack Split**  
