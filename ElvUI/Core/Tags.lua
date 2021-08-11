@@ -788,8 +788,6 @@ do
 	end)
 end
 
-ElvUF.Tags.SharedEvents.PLAYER_GUILD_UPDATE = true
-
 E:AddTag('guild', 'UNIT_NAME_UPDATE PLAYER_GUILD_UPDATE', function(unit)
 	if UnitIsPlayer(unit) then
 		return GetGuildInfo(unit)
@@ -1135,3 +1133,5 @@ function E:AddTagInfo(tagName, category, description, order)
 	E.TagInfo[tagName].description = description or ''
 	E.TagInfo[tagName].order = order or nil
 end
+
+RefreshNewTags = true
