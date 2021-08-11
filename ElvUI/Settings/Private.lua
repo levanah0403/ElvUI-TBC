@@ -86,6 +86,7 @@ V.skins = {
 		guildregistrar = true,
 		help = true,
 		inspect = true,
+		lfg = true,
 		loot = true,
 		macro = true,
 		mail = true,

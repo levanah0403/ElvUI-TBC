@@ -48,6 +48,7 @@ E.Options.args.skins.args.blizzard.values = {
 	guildregistrar = L["Guild Registrar"],
 	help = L["Help Frame"],
 	inspect = L["INSPECT"],
+	lfg = L["LFG_TITLE"],
 	loot = L["Loot Frames"],
 	macro = L["MACROS"],
 	mail = L["Mail Frame"],
