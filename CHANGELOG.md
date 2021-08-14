@@ -1,8 +1,13 @@
-### Version 2.12 [ ETA: 🍨 ]
+### Version 2.13 [ ETA: 🍨 ]
+___
+### Version 2.12 [14-08-2021]
 **• Added missing tag info for classcolor:target**  
+**• Fixed [mouseover] tags**  
+**• Updated AuraWatch (Succubus, Freeze Trap)**  
 **• Updated Avoidance DataText (Merge Request #8)**  
 **• Updated LibChatAnims Minor 4**  
 **• Updated LibSharedMedia Rev 114**  
+**• Updated zhTW Locales (Credits: Levanah Lin, Request #7)**  
 ___
 ### Version 2.11 [11-08-2021]
 **• Added an option to enable/disable combat text repeat in Chat**  
