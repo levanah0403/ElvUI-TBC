@@ -1,4 +1,6 @@
 ### Version 2.12 [ ETA: 🍨 ]
+**• Added missing tag info for classcolor:target**  
+**• Updated Avoidance DataText (Merge Request #8)**  
 ___
 ### Version 2.11 [11-08-2021]
 **• Added an option to enable/disable combat text repeat in Chat**  
