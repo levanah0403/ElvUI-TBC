@@ -213,6 +213,8 @@ end
 
 function E:NudgeMover(nudgeX, nudgeY)
 	local mover = ElvUIMoverNudgeWindow.child
+	if not mover then return end
+
 	local x, y, point = E:CalculateMoverPoints(mover, nudgeX, nudgeY)
 
 	mover:ClearAllPoints()
@@ -491,7 +493,7 @@ function E:CreateMoverPopup()
 	resetButton:Point('TOP', nudgeFrame, 'CENTER', 0, 2)
 	resetButton:Size(100, 25)
 	resetButton:SetScript('OnClick', function()
-		if ElvUIMoverNudgeWindow.child.textString then
+		if ElvUIMoverNudgeWindow.child and ElvUIMoverNudgeWindow.child.textString then
 			E:ResetMovers(ElvUIMoverNudgeWindow.child.textString)
 		end
 	end)
