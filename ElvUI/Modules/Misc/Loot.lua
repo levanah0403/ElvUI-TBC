@@ -355,5 +355,5 @@ function M:LoadLoot()
 	tinsert(_G.UISpecialFrames, 'ElvLootFrame')
 
 	-- fix blizzard setpoint connection bs
-	hooksecurefunc(_G.MasterLooterFrame, 'Hide', self.ClearAllPoints)
+	hooksecurefunc(_G.MasterLooterFrame, 'Hide', _G.MasterLooterFrame.ClearAllPoints)
 end
