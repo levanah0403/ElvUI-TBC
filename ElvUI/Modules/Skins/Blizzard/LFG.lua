@@ -2,9 +2,7 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule('Skins')
 
 local _G = _G
-local pairs, select, unpack = pairs, select, unpack
-
--- TODO: Figure out the name of the Blizzard LFG AddOn, until then - skin won't load.
+local pairs, select = pairs, select
 
 function S:LFGFrame()
 	if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.lfg) then return end
@@ -16,14 +14,46 @@ function S:LFGFrame()
 
 	local lfgButtons = {
 		'LFGFrameClearAllButton',
+		'LFGFramePostButton',
+		'LFMFrameGroupInviteButton',
 		'LFMFrameSearchButton',
 		'LFMFrameSendMessageButton',
-		'LFMFrameGroupInviteButton'
 	}
 
 	for _, button in pairs(lfgButtons) do
 		_G[button]:StripTextures()
 		S:HandleButton(_G[button])
+	end
+
+	local dropDownFrames = {
+		'LFGFrameTypeDropDown1',
+		'LFGFrameTypeDropDown2',
+		'LFGFrameTypeDropDown3',
+		'LFGFrameActivityDropDown1',
+		'LFGFrameActivityDropDown2',
+		'LFGFrameActivityDropDown3',
+	}
+
+	-- Icon stuff right side of the DropDowns
+	local LFGSearchBg = _G.LFGSearchBg
+	_G.LFGSearchIcon1Shine:Kill()
+	_G.LFGSearchIcon2Shine:Kill()
+	_G.LFGSearchIcon3Shine:Kill()
+	LFGSearchBg1:StripTextures()
+	LFGSearchBg1:CreateBackdrop('Transparent')
+	LFGSearchBg1:Width(58)
+	LFGSearchBg1:Height(53)
+	LFGSearchBg2:StripTextures()
+	LFGSearchBg2:CreateBackdrop('Transparent')
+	LFGSearchBg2:Width(58)
+	LFGSearchBg2:Height(53)
+	LFGSearchBg3:StripTextures()
+	LFGSearchBg3:CreateBackdrop('Transparent')
+	LFGSearchBg3:Width(58)
+	LFGSearchBg3:Height(53)
+
+	for _, dropDown in pairs(dropDownFrames) do
+		S:HandleDropDownBox(_G[dropDown], 245)
 	end
 
 	LFMFrameGroupInviteButton:Point('BOTTOMRIGHT', -40, 85)
