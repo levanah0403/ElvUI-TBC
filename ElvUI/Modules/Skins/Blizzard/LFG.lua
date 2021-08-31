@@ -6,7 +6,7 @@ local pairs, select, unpack = pairs, select, unpack
 
 -- TODO: Figure out the name of the Blizzard LFG AddOn, until then - skin won't load.
 
-function S:Blizzard_LookingForGroup()
+function S:LFGFrame()
 	if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.lfg) then return end
 
 	LFGParentFrame:StripTextures(true)
@@ -173,4 +173,4 @@ function S:Blizzard_LookingForGroup()
 	end)
 end
 
-S:AddCallbackForAddon('Blizzard_LookingForGroup')
+S:AddCallback('LFGFrame')
