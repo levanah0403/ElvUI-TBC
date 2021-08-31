@@ -10,8 +10,8 @@ function S:LFGFrame()
 	local LFGParentFrame = _G.LFGParentFrame
 	LFGParentFrame:StripTextures(true)
 	LFGParentFrame:CreateBackdrop('Transparent')
-	LFGParentFrame.backdrop:Point('TOPLEFT', 10, -12)
-	LFGParentFrame.backdrop:Point('BOTTOMRIGHT', -31, 75)
+	LFGParentFrame.backdrop:Point('TOPLEFT', 10, -10)
+	LFGParentFrame.backdrop:Point('BOTTOMRIGHT', -24, 75)
 
 	local lfgButtons = {
 		'LFGFrameClearAllButton',
@@ -39,6 +39,12 @@ function S:LFGFrame()
 		S:HandleDropDownBox(_G[dropDown], 245)
 	end
 
+	-- LFM DropDowns, different sizes
+	local LFMFrameTypeDropDown = _G.LFMFrameTypeDropDown
+	local LFMFrameActivityDropDown = _G.LFMFrameActivityDropDown
+	S:HandleDropDownBox(LFMFrameTypeDropDown, 150)
+	S:HandleDropDownBox(LFMFrameActivityDropDown, 225)
+
 	local LFGSearchBg = _G.LFGSearchBg
 	-- 1st icon
 	LFGSearchBg1:StripTextures()
@@ -55,6 +61,13 @@ function S:LFGFrame()
 	LFGSearchBg3:CreateBackdrop('Transparent')
 	LFGSearchBg3:Width(58)
 	LFGSearchBg3:Height(53)
+
+	local LFMFrameInsetBg = _G.LFMFrameInsetBg
+	LFMFrameInsetBg:StripTextures()
+	LFMFrameInsetBg:CreateBackdrop('Transparent')
+
+	local LFMFrameInset = _G.LFMFrameInset
+	LFMFrameInset:StripTextures()
 
 	local LFMFrameGroupInviteButton = _G.LFMFrameGroupInviteButton
 	LFMFrameGroupInviteButton:Point('BOTTOMRIGHT', -40, 85)
@@ -80,46 +93,8 @@ function S:LFGFrame()
 	LFGComment.SetPoint = E.noop
 
 	for i = 1, 4 do
-		_G['LFMFrameColumnHeader'..i]:StripTextures()
-		_G['LFMFrameColumnHeader'..i]:StyleButton()
-		_G['LFMFrameColumnHeader'..i]:ClearAllPoints()
-	end
-
-	LFMFrameColumnHeader3:Point('TOPLEFT', 25, -110)
-
-	LFMFrameColumnHeader4:Point('LEFT', LFMFrameColumnHeader3, 'RIGHT', -2, -0)
-	LFMFrameColumnHeader4:Width(48)
-
-	LFMFrameColumnHeader1:Point('LEFT', LFMFrameColumnHeader4, 'RIGHT', -2, -0)
-	LFMFrameColumnHeader1:Width(105)
-
-	LFMFrameColumnHeader2:Point('LEFT', LFMFrameColumnHeader1, 'RIGHT', -2, -0)
-	LFMFrameColumnHeader2:Width(127)
-
-	for i = 1, 14 do
-		local button = _G['LFMFrameButton'..i]
-		local name = _G['LFMFrameButton'..i..'Name']
-		local level = _G['LFMFrameButton'..i..'Level']
-		local class = _G['LFMFrameButton'..i..'Class']
-		local zone = _G['LFMFrameButton'..i..'Zone']
-
-		button.icon = button:CreateTexture('$parentIcon', 'ARTWORK')
-		button.icon:Point('LEFT', 35, 0)
-		button.icon:Size(15)
-		button.icon:SetTexture('Interface\\WorldStateFrame\\Icons-Classes')
-
-		button:CreateBackdrop('Default', true)
-		button.backdrop:SetAllPoints(button.icon)
-		S:HandleButtonHighlight(button)
-
-		level:ClearAllPoints()
-		level:Point('TOPLEFT', 0, -1)
-
-		name:Size(100, 14)
-		name:ClearAllPoints()
-		name:Point('LEFT', 76, 0)
-
-		class:Hide()
+		local frame = _G['LFMFrameColumnHeader'..i]
+		frame:StripTextures()
 	end
 end
 
