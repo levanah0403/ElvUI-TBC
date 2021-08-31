@@ -3,6 +3,7 @@
 **Added skin for Guild Bank**  
 **Added skin for LFG**  
 **Added skin for LFM**  
+**Added support for LFG Minimap icon**  
 **Fixed a rare mover error**  
 **Fixed oUF_RaidDebuffs error**  
 **Fixes for Master Looter**  
