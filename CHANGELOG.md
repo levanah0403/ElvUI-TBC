@@ -1,12 +1,11 @@
 ### Version 2.13 [ ETA: 🍨 ]
+**Added skin for Guild Bank**  
+**Added skin for LFG**  
+**Added skin for LFM**  
 **Fixed a rare mover error**  
 **Fixed oUF_RaidDebuffs error**  
 **Fixes for Master Looter**  
 **Smart Raid Filter will no longer disable Raid Pets**  
-**PHASE 2 CHANGELOG:**
-**Added skin for Guild Bank**  
-**Added skin for LFG**  
-**Added skin for LFM**  
 **Updated skin for Mailbox**  
 ___
 ### Version 2.12 [14-08-2021]
