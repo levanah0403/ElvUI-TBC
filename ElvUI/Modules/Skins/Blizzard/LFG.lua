@@ -34,6 +34,10 @@ function S:LFGFrame()
 		'LFGFrameActivityDropDown3',
 	}
 
+	for _, dropDown in pairs(dropDownFrames) do
+		S:HandleDropDownBox(_G[dropDown], 245)
+	end
+
 	-- Icon stuff right side of the DropDowns
 	local LFGSearchBg = _G.LFGSearchBg
 	_G.LFGSearchIcon1Shine:Kill()
@@ -51,10 +55,6 @@ function S:LFGFrame()
 	LFGSearchBg3:CreateBackdrop('Transparent')
 	LFGSearchBg3:Width(58)
 	LFGSearchBg3:Height(53)
-
-	for _, dropDown in pairs(dropDownFrames) do
-		S:HandleDropDownBox(_G[dropDown], 245)
-	end
 
 	LFMFrameGroupInviteButton:Point('BOTTOMRIGHT', -40, 85)
 
