@@ -7,6 +7,7 @@ local pairs, select = pairs, select
 function S:LFGFrame()
 	if not (E.private.skins.blizzard.enable and E.private.skins.blizzard.lfg) then return end
 
+	local LFGParentFrame = _G.LFGParentFrame
 	LFGParentFrame:StripTextures(true)
 	LFGParentFrame:CreateBackdrop('Transparent')
 	LFGParentFrame.backdrop:Point('TOPLEFT', 10, -12)
@@ -38,24 +39,24 @@ function S:LFGFrame()
 		S:HandleDropDownBox(_G[dropDown], 245)
 	end
 
-	-- Icon stuff right side of the DropDowns
 	local LFGSearchBg = _G.LFGSearchBg
-	_G.LFGSearchIcon1Shine:Kill()
-	_G.LFGSearchIcon2Shine:Kill()
-	_G.LFGSearchIcon3Shine:Kill()
+	-- 1st icon
 	LFGSearchBg1:StripTextures()
 	LFGSearchBg1:CreateBackdrop('Transparent')
 	LFGSearchBg1:Width(58)
 	LFGSearchBg1:Height(53)
+	-- 2nd icon
 	LFGSearchBg2:StripTextures()
 	LFGSearchBg2:CreateBackdrop('Transparent')
 	LFGSearchBg2:Width(58)
 	LFGSearchBg2:Height(53)
+	-- 3rd icon
 	LFGSearchBg3:StripTextures()
 	LFGSearchBg3:CreateBackdrop('Transparent')
 	LFGSearchBg3:Width(58)
 	LFGSearchBg3:Height(53)
 
+	local LFMFrameGroupInviteButton = _G.LFMFrameGroupInviteButton
 	LFMFrameGroupInviteButton:Point('BOTTOMRIGHT', -40, 85)
 
 	for i = 1, 2 do
@@ -72,6 +73,7 @@ function S:LFGFrame()
 		end
 	end
 
+	local LFGComment = _G.LFGComment
 	S:HandleEditBox(LFGComment)
 	LFGComment:Size(323, 19)
 	LFGComment:Point('BOTTOMLEFT', LFGParentFrame, 'BOTTOMLEFT', 20, 110)
