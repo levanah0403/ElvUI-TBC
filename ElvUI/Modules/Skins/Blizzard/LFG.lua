@@ -10,8 +10,8 @@ function S:LFGFrame()
 	local LFGParentFrame = _G.LFGParentFrame
 	LFGParentFrame:StripTextures(true)
 	LFGParentFrame:CreateBackdrop('Transparent')
-	LFGParentFrame.backdrop:Point('TOPLEFT', 10, -12)
-	LFGParentFrame.backdrop:Point('BOTTOMRIGHT', -31, 75)
+	LFGParentFrame.backdrop:Point('TOPLEFT', 10, -10)
+	LFGParentFrame.backdrop:Point('BOTTOMRIGHT', -24, 75)
 
 	local lfgButtons = {
 		'LFGFrameClearAllButton',
@@ -39,6 +39,12 @@ function S:LFGFrame()
 		S:HandleDropDownBox(_G[dropDown], 245)
 	end
 
+	-- LFM DropDowns, different sizes
+	local LFMFrameTypeDropDown = _G.LFMFrameTypeDropDown
+	local LFMFrameActivityDropDown = _G.LFMFrameActivityDropDown
+	S:HandleDropDownBox(LFMFrameTypeDropDown, 150)
+	S:HandleDropDownBox(LFMFrameActivityDropDown, 225)
+
 	local LFGSearchBg = _G.LFGSearchBg
 	-- 1st icon
 	LFGSearchBg1:StripTextures()
@@ -55,6 +61,13 @@ function S:LFGFrame()
 	LFGSearchBg3:CreateBackdrop('Transparent')
 	LFGSearchBg3:Width(58)
 	LFGSearchBg3:Height(53)
+
+	local LFMFrameInsetBg = _G.LFMFrameInsetBg
+	LFMFrameInsetBg:StripTextures()
+	LFMFrameInsetBg:CreateBackdrop('Transparent')
+
+	local LFMFrameInset = _G.LFMFrameInset
+	LFMFrameInset:StripTextures()
 
 	local LFMFrameGroupInviteButton = _G.LFMFrameGroupInviteButton
 	LFMFrameGroupInviteButton:Point('BOTTOMRIGHT', -40, 85)
