@@ -82,6 +82,7 @@ V.skins = {
 		friends = true,
 		gossip = true,
 		guild = true,
+		guildBank = true,
 		guildcontrol = true,
 		guildregistrar = true,
 		help = true,

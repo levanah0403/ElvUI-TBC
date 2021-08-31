@@ -44,6 +44,7 @@ E.Options.args.skins.args.blizzard.values = {
 	friends = L["FRIENDS"],
 	gossip = L["Gossip Frame"],
 	guild = L["GUILD"],
+	guildBank = L["GUILD_BANK"],
 	guildcontrol = L["Guild Control Frame"],
 	guildregistrar = L["Guild Registrar"],
 	help = L["Help Frame"],
