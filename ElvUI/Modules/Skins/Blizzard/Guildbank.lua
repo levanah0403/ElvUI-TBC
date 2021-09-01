@@ -2,7 +2,6 @@ local E, L, V, P, G = unpack(ElvUI)
 local S = E:GetModule('Skins')
 
 local _G = _G
-
 local CreateFrame = CreateFrame
 
 function S:Blizzard_GuildBankUI()
@@ -15,7 +14,6 @@ function S:Blizzard_GuildBankUI()
 	GuildBankFrame.backdrop:Point('BOTTOMRIGHT', 0, 6)
 	GuildBankFrame:Width(770)
 	GuildBankFrame:Height(450)
-
 	GuildBankFrame.Emblem:Kill()
 
 	for i = 1, GuildBankFrame:GetNumChildren() do
@@ -25,18 +23,34 @@ function S:Blizzard_GuildBankUI()
 		end
 	end
 
-	for i = 1, _G.MAX_GUILDBANK_TABS do
-		_G['GuildBankTab'..i]:StripTextures()
+	for i=1, _G.MAX_GUILDBANK_TABS do
+		local tab = _G['GuildBankTab'..i]
+		tab:StripTextures()
+
+		local button = tab.Button
+		local icon = button.IconTexture
+		local texture = icon:GetTexture()
+		button:StripTextures()
+		button:StyleButton(true)
+		button:SetTemplate(nil, true)
+		icon:SetTexture(texture)
+		icon:SetTexCoord(unpack(E.TexCoords))
+		icon:SetInside()
 	end
 
 	for i = 1, 7 do
-
-		_G['GuildBankFrame']['Column'..i]:StripTextures()
+		local column = _G.GuildBankFrame['Column'..i]
+		column:StripTextures()
 
 		for x = 1, 14 do
-
-			local button = _G['GuildBankFrame']['Column'..i]['Button'..x]
+			local button = column['Button'..x]
+			button:StripTextures()
 			button:SetTemplate('Transparent')
+
+			button.icon:SetInside()
+			button.icon:SetTexCoord(unpack(E.TexCoords))
+
+			--S:HandleIconBorder(button.IconBorder) tbc doesnt have vertex color on iconborder rn?
 		end
 	end
 
@@ -53,10 +67,10 @@ function S:Blizzard_GuildBankUI()
 	GuildBankInfoScrollFrame:StripTextures()
 	GuildBankInfoScrollFrame:Width(685)
 
-	S:HandleScrollBar(GuildBankInfoScrollFrameScrollBar)
-	GuildBankInfoScrollFrameScrollBar:ClearAllPoints()
-	GuildBankInfoScrollFrameScrollBar:Point('TOPRIGHT', GuildBankInfoScrollFrame, 'TOPRIGHT', 29, -12)
-	GuildBankInfoScrollFrameScrollBar:Point('BOTTOMRIGHT', GuildBankInfoScrollFrame, 'BOTTOMRIGHT', 0, 17)
+	S:HandleScrollBar(_G.GuildBankInfoScrollFrameScrollBar)
+	_G.GuildBankInfoScrollFrameScrollBar:ClearAllPoints()
+	_G.GuildBankInfoScrollFrameScrollBar:Point('TOPRIGHT', GuildBankInfoScrollFrame, 'TOPRIGHT', 29, -12)
+	_G.GuildBankInfoScrollFrameScrollBar:Point('BOTTOMRIGHT', GuildBankInfoScrollFrame, 'BOTTOMRIGHT', 0, 17)
 
 	local GuildBankTabInfoEditBox = _G.GuildBankTabInfoEditBox
 	GuildBankTabInfoEditBox:Width(685)
@@ -64,17 +78,17 @@ function S:Blizzard_GuildBankUI()
 	local GuildBankTransactionsScrollFrame = _G.GuildBankTransactionsScrollFrame
 	GuildBankTransactionsScrollFrame:StripTextures()
 
-	S:HandleScrollBar(GuildBankTransactionsScrollFrameScrollBar)
-	GuildBankTransactionsScrollFrameScrollBar:ClearAllPoints()
-	GuildBankTransactionsScrollFrameScrollBar:Point('TOPRIGHT', GuildBankTransactionsScrollFrame, 'TOPRIGHT', 29, -8)
-	GuildBankTransactionsScrollFrameScrollBar:Point('BOTTOMRIGHT', GuildBankTransactionsScrollFrame, 'BOTTOMRIGHT', 0, 16)
+	S:HandleScrollBar(_G.GuildBankTransactionsScrollFrameScrollBar)
+	_G.GuildBankTransactionsScrollFrameScrollBar:ClearAllPoints()
+	_G.GuildBankTransactionsScrollFrameScrollBar:Point('TOPRIGHT', GuildBankTransactionsScrollFrame, 'TOPRIGHT', 29, -8)
+	_G.GuildBankTransactionsScrollFrameScrollBar:Point('BOTTOMRIGHT', GuildBankTransactionsScrollFrame, 'BOTTOMRIGHT', 0, 16)
 
 	GuildBankFrame.inset = CreateFrame('Frame', nil, GuildBankFrame)
 	GuildBankFrame.inset:SetTemplate('Default')
 	GuildBankFrame.inset:Point('TOPLEFT', 24, -64)
 	GuildBankFrame.inset:Point('BOTTOMRIGHT', -18, 62)
 
-	GuildBankLimitLabel:Point('CENTER', GuildBankTabLimitBackground, 'CENTER', -40, 1)
+	_G.GuildBankLimitLabel:Point('CENTER', _G.GuildBankTabLimitBackground, 'CENTER', -40, 1)
 
 	for i = 1, 4 do
 		local tab = _G['GuildBankFrameTab'..i]
@@ -87,13 +101,12 @@ function S:Blizzard_GuildBankUI()
 		end
 	end
 
-	local GuildBankTab = _G.GuildBankTab
-	GuildBankTab1:Point('TOPLEFT', GuildBankFrame, 'TOPRIGHT', E.PixelMode and -3 or -1, -36)
-	GuildBankTab2:Point('TOPLEFT', GuildBankTab1, 'BOTTOMLEFT', 0, 7)
-	GuildBankTab3:Point('TOPLEFT', GuildBankTab2, 'BOTTOMLEFT', 0, 7)
-	GuildBankTab4:Point('TOPLEFT', GuildBankTab3, 'BOTTOMLEFT', 0, 7)
-	GuildBankTab5:Point('TOPLEFT', GuildBankTab4, 'BOTTOMLEFT', 0, 7)
-	GuildBankTab6:Point('TOPLEFT', GuildBankTab5, 'BOTTOMLEFT', 0, 7)
+	_G.GuildBankTab1:Point('TOPLEFT', GuildBankFrame, 'TOPRIGHT', E.PixelMode and -3 or -1, -36)
+	_G.GuildBankTab2:Point('TOPLEFT', _G.GuildBankTab1, 'BOTTOMLEFT', 0, 7)
+	_G.GuildBankTab3:Point('TOPLEFT', _G.GuildBankTab2, 'BOTTOMLEFT', 0, 7)
+	_G.GuildBankTab4:Point('TOPLEFT', _G.GuildBankTab3, 'BOTTOMLEFT', 0, 7)
+	_G.GuildBankTab5:Point('TOPLEFT', _G.GuildBankTab4, 'BOTTOMLEFT', 0, 7)
+	_G.GuildBankTab6:Point('TOPLEFT', _G.GuildBankTab5, 'BOTTOMLEFT', 0, 7)
 end
 
 S:AddCallbackForAddon('Blizzard_GuildBankUI')
