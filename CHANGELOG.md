@@ -1,4 +1,4 @@
-### Version 2.13 [ ETA: 🍨 ]
+### Version 2.13 [01-09-2021]
 **Added NoLabel checkbox for Friends, Guild, System DataText (PR !9, Xii)**  
 **Added skin for Guild Bank**  
 **Added skin for LFG**  
