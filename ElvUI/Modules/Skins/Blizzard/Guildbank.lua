@@ -13,7 +13,10 @@ function S:Blizzard_GuildBankUI()
 	GuildBankFrame:CreateBackdrop('Transparent')
 	GuildBankFrame.backdrop:Point('TOPLEFT', 8, -11)
 	GuildBankFrame.backdrop:Point('BOTTOMRIGHT', 0, 6)
-	GuildBankFrame:Width(654)
+	GuildBankFrame:Width(770)
+	GuildBankFrame:Height(450)
+
+	GuildBankFrame.Emblem:Kill()
 
 	for i = 1, GuildBankFrame:GetNumChildren() do
 		local child = select(i, GuildBankFrame:GetChildren())
@@ -22,17 +25,41 @@ function S:Blizzard_GuildBankUI()
 		end
 	end
 
+	for i = 1, _G.MAX_GUILDBANK_TABS do
+		_G['GuildBankTab'..i]:StripTextures()
+	end
+
+	for i = 1, 7 do
+
+		_G['GuildBankFrame']['Column'..i]:StripTextures()
+
+		for x = 1, 14 do
+
+			local button = _G['GuildBankFrame']['Column'..i]['Button'..x]
+			button:SetTemplate('Transparent')
+		end
+	end
+
+	S:HandleButton(GuildBankFrame.BuyInfo.PurchaseButton)
+	S:HandleButton(GuildBankFrame.DepositButton)
+	S:HandleButton(GuildBankFrame.WithdrawButton)
+	GuildBankFrame.WithdrawButton:ClearAllPoints()
+	GuildBankFrame.WithdrawButton:Point('LEFT', GuildBankFrame.DepositButton, 'LEFT', -102, 0)
+
+	local GuildBankInfoSaveButton = _G.GuildBankInfoSaveButton
+	S:HandleButton(GuildBankInfoSaveButton)
+
 	local GuildBankInfoScrollFrame = _G.GuildBankInfoScrollFrame
 	GuildBankInfoScrollFrame:StripTextures()
-	GuildBankInfoScrollFrame:Width(572)
+	GuildBankInfoScrollFrame:Width(685)
 
 	S:HandleScrollBar(GuildBankInfoScrollFrameScrollBar)
 	GuildBankInfoScrollFrameScrollBar:ClearAllPoints()
-	GuildBankInfoScrollFrameScrollBar:Point('TOPRIGHT', GuildBankInfoScrollFrame, 'TOPRIGHT', 29, -9)
+	GuildBankInfoScrollFrameScrollBar:Point('TOPRIGHT', GuildBankInfoScrollFrame, 'TOPRIGHT', 29, -12)
 	GuildBankInfoScrollFrameScrollBar:Point('BOTTOMRIGHT', GuildBankInfoScrollFrame, 'BOTTOMRIGHT', 0, 17)
 
 	local GuildBankTabInfoEditBox = _G.GuildBankTabInfoEditBox
-	GuildBankTabInfoEditBox:Width(570)
+	GuildBankTabInfoEditBox:Width(685)
 
 	local GuildBankTransactionsScrollFrame = _G.GuildBankTransactionsScrollFrame
 	GuildBankTransactionsScrollFrame:StripTextures()
