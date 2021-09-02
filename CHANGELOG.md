@@ -1,4 +1,5 @@
-### Version 2.14 [ ETA: 🍨 ]
+### Version 2.14 [02-09-2021]
+**Fixed Merchant skin (Repair All, Guild Repair)**  
 ___
 ### Version 2.13 [01-09-2021]
 **Added NoLabel checkbox for Friends, Guild, System DataText (PR !9, Xii)**  
