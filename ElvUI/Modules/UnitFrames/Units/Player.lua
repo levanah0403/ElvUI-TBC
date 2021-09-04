@@ -31,17 +31,21 @@ function UF:Construct_PlayerFrame(frame)
 	frame.ClassBarHolder = CreateFrame('Frame', nil, frame)
 	frame.ClassBarHolder:Point('BOTTOM', E.UIParent, 'BOTTOM', 0, 150)
 
-	--Combo points was moved to the ClassPower element, so all classes need to have a ClassBar now.
-	frame.ClassPower = UF:Construct_ClassBar(frame)
-	frame.ClassBar = 'ClassPower'
+	--Create a holder frame all "classbars" can be positioned into
+	frame.ClassBarHolder = CreateFrame("Frame", nil, frame)
+	frame.ClassBarHolder:Point("BOTTOM", E.UIParent, "BOTTOM", 0, 150)
 
-	--Some classes need another set of different classbars.
-	if E.myclass == 'DRUID' then
-		frame.AdditionalPower = UF:Construct_AdditionalPowerBar(frame)
-	elseif E.myclass == 'PRIEST' then
-		frame.AdditionalPower = UF:Construct_AdditionalPowerBar(frame)
-	elseif E.myclass == 'SHAMAN' then
-		frame.AdditionalPower = UF:Construct_AdditionalPowerBar(frame)
+	--Combo points was moved to the ClassPower element, so all classes need to have a ClassBar now.
+	if E.myclass == "SHAMAN" then
+		frame.Totems = self:Construct_Totems(frame)
+	else
+		frame.ClassPower = self:Construct_ClassBar(frame)
+		frame.ClassBar = 'ClassPower'
+
+		--Some classes need another set of different classbars.
+		if E.myclass == "DRUID" then
+			frame.AdditionalPower = self:Construct_AdditionalPowerBar(frame)
+		end
 	end
 
 	frame.PowerPrediction = UF:Construct_PowerPrediction(frame) -- must be AFTER Power & AdditionalPower
