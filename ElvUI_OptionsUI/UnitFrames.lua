@@ -3645,30 +3645,6 @@ E.Options.args.unitframe = {
 									type = 'color',
 									hasAlpha = true,
 								},
-								absorbs = {
-									order = 5,
-									name = L["Absorbs"],
-									type = 'color',
-									hasAlpha = true,
-								},
-								healAbsorbs = {
-									order = 6,
-									name = L["Heal Absorbs"],
-									type = 'color',
-									hasAlpha = true,
-								},
-								overabsorbs = {
-									order = 7,
-									name = L["Over Absorbs"],
-									type = 'color',
-									hasAlpha = true,
-								},
-								overhealabsorbs = {
-									order = 8,
-									name = L["Over Heal Absorbs"],
-									type = 'color',
-									hasAlpha = true,
-								},
 							},
 						},
 						powerPrediction = {
