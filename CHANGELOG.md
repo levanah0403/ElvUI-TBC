@@ -1,3 +1,7 @@
+### Version 2.17 [10-09-2021]
+**Fixed Shaman totems classbar**  
+**HealComm for Group UnitFrames**  
+___
 ### Version 2.16 [10-09-2021]
 **LibHealComm is now used until Blizzard fixed the API**  
 **Updated links, development is now on GitHub (was GitLab)**  
