@@ -1,3 +1,7 @@
+### Version 2.16 [10-09-2021]
+**LibHealComm is now used until Blizzard fixed the API**  
+**Updated links, development is now on GitHub (was GitLab)**  
+___
 ### Version 2.15 [08-09-2021]
 **Added back old player UnitFrame classbar for Shaman totems**  
 **Blizzard added heal prediction API. This version will support it.**  
