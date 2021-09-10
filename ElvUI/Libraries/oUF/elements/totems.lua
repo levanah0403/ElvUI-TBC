@@ -77,6 +77,7 @@ local function UpdateTotem(self, event, slot)
 
 	local totem = element[slot]
 	local haveTotem, name, start, duration, icon = GetTotemInfo(slot)
+
 	if(haveTotem and duration > 0) then
 		if(totem.Icon) then
 			totem.Icon:SetTexture(icon)
@@ -88,6 +89,7 @@ local function UpdateTotem(self, event, slot)
 
 		if totem:IsObjectType("Statusbar") then
 			totem:SetValue(0)
+			totem:Show()
 			totem:SetScript("OnUpdate",function(self,elapsed)
 				self.total = (self.total or 0) + elapsed
 				if (self.total >= .01) then
@@ -166,6 +168,7 @@ local function Enable(self)
 			end
 		end
 
+		element:Show()
 		self:RegisterEvent('PLAYER_TOTEM_UPDATE', Path, true)
 
 		return true
@@ -179,6 +182,7 @@ local function Disable(self)
 			element[i]:Hide()
 		end
 
+		element:Hide()
 		self:UnregisterEvent('PLAYER_TOTEM_UPDATE', Path)
 	end
 end

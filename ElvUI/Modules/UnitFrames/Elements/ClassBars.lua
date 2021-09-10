@@ -71,9 +71,6 @@ function UF:Configure_ClassBar(frame)
 		if db.classbar then db.classbar.height = 10 end
 	end
 
-	-- keep after classbar height update
-	UF.ToggleResourceBar(bars)
-
 	--We don't want to modify the original frame.CLASSBAR_WIDTH value, as it bugs out when the classbar gains more buttons
 	local CLASSBAR_WIDTH = E:Scale(frame.CLASSBAR_WIDTH)
 	local SPACING = E:Scale((UF.BORDER + UF.SPACING)*2)
@@ -252,6 +249,9 @@ function UF:Configure_ClassBar(frame)
 			frame:DisableElement("Totems")
 		end
 	end
+
+	-- keep after classbar height update
+	UF.ToggleResourceBar(bars)
 end
 
 local function ToggleResourceBar(bars)
