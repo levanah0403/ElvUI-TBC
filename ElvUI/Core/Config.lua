@@ -1073,7 +1073,7 @@ function E:ToggleOptionsUI(msg)
 			LoadAddOn('ElvUI_OptionsUI')
 
 			-- version check elvui options if it's actually enabled
-			if GetAddOnMetadata('ElvUI_OptionsUI', 'Version') ~= '2.15' then
+			if GetAddOnMetadata('ElvUI_OptionsUI', 'Version') ~= '2.16' then
 				self:StaticPopup_Show('CLIENT_UPDATE_REQUEST')
 			end
 		else
