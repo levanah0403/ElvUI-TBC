@@ -2,8 +2,8 @@
 local E = unpack(select(2, ...)) --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 local L = E.Libs.ACL:NewLocale("ElvUI", "zhTW")
 
-L["BoP"] = true
-L["BoE"] = true
+L["BoP"] = "拾綁"
+L["BoE"] = "裝綁"
 L["BoU"] = true
 L[" |cff00ff00bound to |r"] = " |cff00ff00綁定到 |r"
 L["(Hold Shift) Memory Usage"] = "(按住 Shift) 記憶體使用量"
